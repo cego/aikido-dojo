@@ -90,6 +90,14 @@ func TestAssembleFailures(t *testing.T) {
 			wantErr: "/reference/bad.md: HTTP 500",
 		},
 		{
+			name:  "refuses to follow a redirect",
+			pages: []string{"/reference/a.md"},
+			handlers: map[string]http.HandlerFunc{"/reference/a.md": func(w http.ResponseWriter, r *http.Request) {
+				http.Redirect(w, r, "https://elsewhere.test/evil.md", http.StatusFound)
+			}},
+			wantErr: "refusing redirect to https://elsewhere.test/evil.md",
+		},
+		{
 			name:  "rejects an oversized page",
 			pages: []string{"/reference/big.md"},
 			handlers: map[string]http.HandlerFunc{"/reference/big.md": func(w http.ResponseWriter, _ *http.Request) {

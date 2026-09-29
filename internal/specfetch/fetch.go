@@ -26,6 +26,12 @@ func Assemble(ctx context.Context, c *http.Client, indexURL string) (map[string]
 	if err != nil {
 		return nil, time.Time{}, fmt.Errorf("parse index url: %w", err)
 	}
+	// A redirect would fetch a URL the index never listed and bypass PageURLs' origin check.
+	noRedirects := *c
+	noRedirects.CheckRedirect = func(req *http.Request, _ []*http.Request) error {
+		return fmt.Errorf("refusing redirect to %s", req.URL)
+	}
+	c = &noRedirects
 	index, err := get(ctx, c, indexURL)
 	if err != nil {
 		return nil, time.Time{}, err
