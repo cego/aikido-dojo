@@ -4,7 +4,6 @@ package main
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"net/http"
 	"os"
@@ -24,7 +23,7 @@ func main() {
 func run() error {
 	// spec/ is resolved against the working directory, so refuse to scatter it elsewhere.
 	if _, err := os.Stat("go.mod"); err != nil {
-		return errors.New("run from the repository root")
+		return fmt.Errorf("run from the repository root: %w", err)
 	}
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer stop()
