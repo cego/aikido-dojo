@@ -70,6 +70,42 @@ func TestWriteFailureLeavesNoTempFiles(t *testing.T) {
 	}
 }
 
+func TestWriteFailureKeepsPreviousFiles(t *testing.T) {
+	if os.Geteuid() == 0 {
+		t.Skip("root ignores directory permissions")
+	}
+	dir := t.TempDir()
+	for _, name := range []string{"openapi.json", "snapshot.json"} {
+		if err := os.WriteFile(filepath.Join(dir, name), []byte("OLD\n"), 0o600); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if err := os.Chmod(dir, 0o500); err != nil { //nolint:gosec // a read-only directory, which needs the x bit
+		t.Fatal(err)
+	}
+	t.Cleanup(func() {
+		if err := os.Chmod(dir, 0o700); err != nil { //nolint:gosec // restores the test directory so TempDir can remove it
+			t.Error(err)
+		}
+	})
+	err := Write(dir, map[string]any{"openapi": "3.1.0"}, time.Now())
+	wantErr(t, err, "create temp")
+	for _, name := range []string{"openapi.json", "snapshot.json"} {
+		if got := readFile(t, filepath.Join(dir, name)); got != "OLD\n" {
+			t.Errorf("%s = %q, want the previous content", name, got)
+		}
+	}
+}
+
+func TestWriteReportsAnUncreatableDir(t *testing.T) {
+	file := filepath.Join(t.TempDir(), "file")
+	if err := os.WriteFile(file, nil, 0o600); err != nil {
+		t.Fatal(err)
+	}
+	err := Write(filepath.Join(file, "spec"), map[string]any{"openapi": "3.1.0"}, time.Now())
+	wantErr(t, err, "create ")
+}
+
 func readFile(t *testing.T, path string) string {
 	t.Helper()
 	b, err := os.ReadFile(path) //nolint:gosec // path comes from t.TempDir

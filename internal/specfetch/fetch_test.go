@@ -106,6 +106,23 @@ func TestAssembleFailures(t *testing.T) {
 			wantErr: "exceeds",
 		},
 		{
+			name:  "names a page without front matter",
+			pages: []string{"/reference/nofront.md"},
+			handlers: map[string]http.HandlerFunc{"/reference/nofront.md": func(w http.ResponseWriter, _ *http.Request) {
+				fmt.Fprint(w, "# T\n\n# OpenAPI definition\n\n```json\n"+opDoc("/a")+"\n```\n")
+			}},
+			wantErr: "/reference/nofront.md: no front matter",
+		},
+		{
+			name:  "rejects pages that disagree",
+			pages: []string{"/reference/a.md", "/reference/b.md"},
+			handlers: map[string]http.HandlerFunc{
+				"/reference/a.md": servePage("2026-05-27T10:04:31Z", opDoc("/a")),
+				"/reference/b.md": servePage("2026-05-27T10:04:31Z", `{"openapi":"3.1.0","info":{"title":"Other","version":"1"},"paths":{"/b":{"get":{}}}}`),
+			},
+			wantErr: "/reference/b.md: info differs from earlier pages",
+		},
+		{
 			name:  "names a page without a spec",
 			pages: []string{"/reference/prose.md"},
 			handlers: map[string]http.HandlerFunc{"/reference/prose.md": func(w http.ResponseWriter, _ *http.Request) {
@@ -127,4 +144,16 @@ func TestAssembleFailures(t *testing.T) {
 			wantErr(t, err, tt.wantErr)
 		})
 	}
+}
+
+func TestAssembleNamesAFailingIndex(t *testing.T) {
+	srv := docsServer(t, nil, nil)
+	_, _, err := Assemble(t.Context(), srv.Client(), srv.URL+"/missing.txt")
+	wantErr(t, err, "/missing.txt: HTTP 404")
+}
+
+func TestAssembleNamesAnEmptyIndex(t *testing.T) {
+	srv := docsServer(t, nil, nil)
+	_, _, err := Assemble(t.Context(), srv.Client(), srv.URL+"/llms.txt")
+	wantErr(t, err, "/llms.txt: index lists no API reference pages")
 }

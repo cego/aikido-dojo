@@ -30,13 +30,13 @@ func decoded(t *testing.T, s string) any {
 }
 
 func TestMergeCombinesPagesAndKeepsNumbersExact(t *testing.T) {
-	a := `{` + shared + `,"paths":{"/a":{"get":{"operationId":"getA","parameters":[{"$ref":"#/components/parameters/Page"}]}}},` +
+	a := `{` + shared + `,"paths":{"/a":{"summary":"A","get":{"operationId":"getA","parameters":[{"$ref":"#/components/parameters/Page"}]}}},` +
 		`"components":{"parameters":{"Page":{"name":"page","in":"query"}}}}`
-	b := `{` + shared + `,"paths":{"/a":{"post":{"operationId":"postA"}},` +
+	b := `{` + shared + `,"paths":{"/a":{"summary":"A","post":{"operationId":"postA"}},` +
 		`"/b":{"get":{"operationId":"getB","responses":{"200":{"description":"<b> & c","content":{"application/json":{"schema":{"maximum":9007199254740993}}}}}}}},` +
 		`"components":{"parameters":{"Page":{"name":"page","in":"query"}}}}`
 	want := `{` + shared + `,"paths":{` +
-		`"/a":{"get":{"operationId":"getA","parameters":[{"$ref":"#/components/parameters/Page"}]},"post":{"operationId":"postA"}},` +
+		`"/a":{"summary":"A","get":{"operationId":"getA","parameters":[{"$ref":"#/components/parameters/Page"}]},"post":{"operationId":"postA"}},` +
 		`"/b":{"get":{"operationId":"getB","responses":{"200":{"description":"<b> & c","content":{"application/json":{"schema":{"maximum":9007199254740993}}}}}}}},` +
 		`"components":{"parameters":{"Page":{"name":"page","in":"query"}}}}`
 
@@ -69,11 +69,28 @@ func TestMergeRejectsDisagreement(t *testing.T) {
 			b:       `{"openapi":"3.1.0","info":{"title":"Other","version":"1"},"paths":{"/b":{"get":{}}}}`,
 			wantErr: "b.md: info differs from earlier pages",
 		},
+		{
+			name:    "conflicting path-level field",
+			b:       `{` + shared + `,"paths":{"/a":{"summary":"B","post":{}}}}`,
+			wantErr: "b.md: paths./a.summary differs from earlier pages",
+		},
+		{name: "paths not an object", b: `{` + shared + `,"paths":[]}`, wantErr: "b.md: paths is not an object"},
+		{name: "path item not an object", b: `{` + shared + `,"paths":{"/b":[]}}`, wantErr: "b.md: paths./b is not an object"},
+		{
+			name:    "components not an object",
+			b:       `{` + shared + `,"paths":{"/b":{"get":{}}},"components":[]}`,
+			wantErr: "b.md: components is not an object",
+		},
+		{
+			name:    "component kind not an object",
+			b:       `{` + shared + `,"paths":{"/b":{"get":{}}},"components":{"parameters":[]}}`,
+			wantErr: "b.md: components.parameters is not an object",
+		},
 		{name: "no operation", b: `{` + shared + `,"paths":{}}`, wantErr: "b.md: page defines no operation"},
 		{name: "not an object", b: `null`, wantErr: "b.md: not a JSON object"},
 		{name: "invalid json", b: `{`, wantErr: "b.md: decode"},
 	}
-	a := `{` + shared + `,"paths":{"/a":{"get":{"operationId":"getA"}}},"components":{"parameters":{"Page":{"name":"page"}}}}`
+	a := `{` + shared + `,"paths":{"/a":{"summary":"A","get":{"operationId":"getA"}}},"components":{"parameters":{"Page":{"name":"page"}}}}`
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			_, err := Merge(map[string][]byte{"a.md": []byte(a), "b.md": []byte(tt.b)})

@@ -2,6 +2,7 @@ package specfetch
 
 import (
 	"slices"
+	"strings"
 	"testing"
 )
 
@@ -63,6 +64,16 @@ func TestPageURLs(t *testing.T) {
 			name:    "rejects plain http on an https origin",
 			index:   "## API Reference: Issues\n- [x](http://docs.test/reference/x.md): y\n",
 			wantErr: "is not on https://docs.test",
+		},
+		{
+			name:    "reports a link it cannot parse",
+			index:   "## API Reference: Issues\n- [x](https://docs.test/reference/%zz.md): y\n",
+			wantErr: "parse link",
+		},
+		{
+			name:    "reports a line too long to scan",
+			index:   "## API Reference: Issues\n- [" + strings.Repeat("x", 70000) + "](https://docs.test/reference/a.md): y\n",
+			wantErr: "scan index",
 		},
 		{
 			name:    "fails when no operation pages are listed",
