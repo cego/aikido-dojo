@@ -45,6 +45,16 @@ func TestPageURLs(t *testing.T) {
 			},
 		},
 		{
+			name:  "keeps a title that contains brackets",
+			index: "## API Reference: Issues\n- [[Beta] List things](https://docs.test/reference/beta.md): x\n",
+			want:  []string{"https://docs.test/reference/beta.md"},
+		},
+		{
+			name:    "rejects an entry it cannot read instead of skipping it",
+			index:   "## API Reference: Issues\n- [Broken](https://docs.test/reference/broken): no .md\n",
+			wantErr: `unrecognised index entry "- [Broken](https://docs.test/reference/broken): no .md"`,
+		},
+		{
 			name:    "rejects a link to another host",
 			index:   "## API Reference: Issues\n- [x](https://evil.test/reference/x.md): y\n",
 			wantErr: "link https://evil.test/reference/x.md is not on https://docs.test",

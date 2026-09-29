@@ -19,7 +19,11 @@ var skippedSections = map[string]bool{
 	"Authorization": true,
 }
 
-var linkRE = regexp.MustCompile(`^\s*- \[[^\]]*\]\(([^)\s]+\.md)\)`)
+var (
+	entryRE = regexp.MustCompile(`^\s*- \[`)
+	// The lazy title match lets titles contain brackets, as in "[Beta] List things".
+	linkRE = regexp.MustCompile(`^\s*- \[.*?\]\(([^)\s]+\.md)\)`)
+)
 
 // PageURLs returns the reference pages llms.txt lists, in index order. Links
 // must stay on the index's origin so a tampered index can't send the fetcher
@@ -42,9 +46,13 @@ func PageURLs(index string, origin *url.URL) ([]string, error) {
 		if section == "" {
 			continue
 		}
+		if !entryRE.MatchString(line) {
+			continue
+		}
+		// Skipping an entry would silently drop an operation from the spec.
 		m := linkRE.FindStringSubmatch(line)
 		if m == nil {
-			continue
+			return nil, fmt.Errorf("unrecognised index entry %q", line)
 		}
 		u, err := url.Parse(m[1])
 		if err != nil {
