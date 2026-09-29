@@ -109,10 +109,13 @@ func TestAssembleFailures(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			srv := docsServer(t, tt.pages, tt.handlers)
-			// A regression that waits on the hanging pages hits this deadline and fails, rather than hanging the suite.
+			// Assemble must return long before this deadline; reaching it means it waited on the hanging pages.
 			ctx, cancel := context.WithTimeout(t.Context(), 5*time.Second)
 			defer cancel()
 			_, _, err := Assemble(ctx, srv.Client(), srv.URL+"/llms.txt")
+			if ctx.Err() != nil {
+				t.Fatal("Assemble returned only at the test deadline")
+			}
 			wantErr(t, err, tt.wantErr)
 		})
 	}
