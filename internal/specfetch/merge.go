@@ -45,11 +45,7 @@ func mergeDoc(out map[string]any, data []byte) error {
 	for key, val := range doc {
 		switch key {
 		case "paths":
-			dst, err := child(out, "paths", "paths")
-			if err != nil {
-				return err
-			}
-			n, err := mergePaths(dst, val)
+			n, err := mergePaths(child(out, "paths"), val)
 			if err != nil {
 				return err
 			}
@@ -82,10 +78,7 @@ func mergePaths(dst map[string]any, val any) (int, error) {
 		if err != nil {
 			return 0, err
 		}
-		dstItem, err := child(dst, path, label)
-		if err != nil {
-			return 0, err
-		}
+		dstItem := child(dst, path)
 		for key, v := range item {
 			if !httpMethods[key] {
 				if err := setOrMatch(dstItem, key, v, label+"."+key); err != nil {
@@ -108,20 +101,14 @@ func mergeComponents(out map[string]any, val any) error {
 	if err != nil {
 		return err
 	}
-	dst, err := child(out, "components", "components")
-	if err != nil {
-		return err
-	}
+	dst := child(out, "components")
 	for kind, rawEntries := range comps {
 		label := "components." + kind
 		entries, err := object(rawEntries, label)
 		if err != nil {
 			return err
 		}
-		dstKind, err := child(dst, kind, label)
-		if err != nil {
-			return err
-		}
+		dstKind := child(dst, kind)
 		for name, v := range entries {
 			if err := setOrMatch(dstKind, name, v, label+"."+name); err != nil {
 				return err
@@ -139,15 +126,15 @@ func object(v any, label string) (map[string]any, error) {
 	return m, nil
 }
 
-// child returns dst[key] as an object, creating it when absent.
-func child(dst map[string]any, key, label string) (map[string]any, error) {
-	v, ok := dst[key]
-	if !ok {
-		m := map[string]any{}
-		dst[key] = m
-		return m, nil
+// child returns dst[key] as an object, creating it when absent. Merge stores
+// only objects under the keys it passes here.
+func child(dst map[string]any, key string) map[string]any {
+	if m, ok := dst[key].(map[string]any); ok {
+		return m
 	}
-	return object(v, label)
+	m := map[string]any{}
+	dst[key] = m
+	return m
 }
 
 // setOrMatch stores val, or checks that it equals what an earlier page stored.
