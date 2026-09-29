@@ -14,8 +14,8 @@ const IndexURL = "https://apidocs.aikido.dev/llms.txt"
 
 const (
 	fetchConcurrency = 4
-	// The largest reference page is about 15 KB. The cap only stops a
-	// misbehaving server from exhausting memory.
+	// Far above any real page; the cap only stops a misbehaving server from
+	// exhausting memory.
 	maxBodyBytes = 8 << 20
 )
 
