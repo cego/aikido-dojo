@@ -20,6 +20,10 @@ linters:
     nolintlint:
       require-explanation: true
       require-specific: true
+    wrapcheck:
+      # Our own packages already return errors with context (clierr carries code and hint).
+      ignore-package-globs:
+        - github.com/cego/aikido-dojo/*
   exclusions:
     presets:
       - comments
