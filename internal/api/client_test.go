@@ -3,14 +3,20 @@ package api
 import (
 	"bytes"
 	"compress/gzip"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
+	"net/http/httptest"
 	"strings"
 	"sync/atomic"
 	"testing"
 
+	"github.com/zalando/go-keyring"
+
+	"github.com/cego/aikido-dojo/internal/auth"
 	"github.com/cego/aikido-dojo/internal/clierr"
+	"github.com/cego/aikido-dojo/internal/config"
 )
 
 func TestDoSendsTheTokenAndTheBody(t *testing.T) {
@@ -81,6 +87,8 @@ func TestDoFailures(t *testing.T) {
 			code: "bad_request", exit: clierr.ExitUsage, wantText: "Request too big", wantAttempts: 1},
 		{name: "a failed write is never retried", req: Request{Method: http.MethodPost, Path: "/teams", Body: []byte(`{}`)}, status: 500,
 			code: "server_error", exit: clierr.ExitUnexpected, wantText: "POST /teams", wantAttempts: 1},
+		{name: "a long plain-text body becomes the status text", req: Request{Method: http.MethodGet, Path: "/x"}, status: 404,
+			body: strings.Repeat("x", 300), code: "not_found", exit: clierr.ExitNotFound, wantText: "GET /x: Not Found", wantAttempts: 1},
 		{name: "an HTML error page becomes its status text", req: Request{Method: http.MethodPost, Path: "/teams"}, status: 503,
 			contentType: "text/html", body: "<html><h1>Service Unavailable</h1></html>",
 			code: "server_error", exit: clierr.ExitUnexpected, wantText: "POST /teams: Service Unavailable", wantAttempts: 1},
@@ -153,5 +161,71 @@ func TestDoAsksForGzipAndDecodesIt(t *testing.T) {
 	}
 	if got := readBody(t, resp); got != `[{"id":1}]` {
 		t.Errorf("body = %q, want the decompressed JSON", got)
+	}
+}
+
+func TestDoReportsATokenFailure(t *testing.T) {
+	ta := newTestAPI(t, func(w http.ResponseWriter, _ *http.Request) { fmt.Fprint(w, `{}`) }, nil)
+	src, err := auth.NewSource(ta.client.http, config.Resolved{ClientID: "id", Secret: "wrong", Region: "eu", Host: ta.host})
+	if err != nil {
+		t.Fatal(err)
+	}
+	ta.client.tokens = src
+	err = doErr(t, ta.client, Request{Method: http.MethodGet, Path: "/workspace"})
+	wantCode(t, err, "auth_failed", clierr.ExitAuth)
+}
+
+func TestDebugLogsATransportError(t *testing.T) {
+	srv := httptest.NewTLSServer(http.NotFoundHandler())
+	transport, u := srv.Client().Transport, srv.URL+"/x"
+	srv.Close()
+	var log bytes.Buffer
+	hc := &http.Client{Transport: Debug(transport, &log)}
+	req, err := http.NewRequestWithContext(t.Context(), http.MethodGet, u, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	resp, err := hc.Do(req)
+	if err == nil {
+		defer resp.Body.Close()
+		t.Fatal("request to a closed server succeeded")
+	}
+	if want := "debug: GET " + u + " -> "; !strings.Contains(log.String(), want) {
+		t.Errorf("debug log = %q, want a line starting %q", log.String(), want)
+	}
+}
+
+func TestDoReportsATransportFailure(t *testing.T) {
+	ta := newTestAPI(t, func(w http.ResponseWriter, _ *http.Request) { fmt.Fprint(w, `{}`) }, nil)
+	resp, err := ta.client.Do(t.Context(), Request{Method: http.MethodGet, Path: "/workspace"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	readBody(t, resp)
+	ta.close()
+	err = doErr(t, ta.client, Request{Method: http.MethodGet, Path: "/workspace"})
+	if !strings.Contains(err.Error(), "GET /workspace: ") {
+		t.Errorf("err = %v, want the failed request named", err)
+	}
+}
+
+func TestDoReportsAFailedTokenInvalidation(t *testing.T) {
+	keyring.MockInit()
+	if err := keyring.Set("aikido-dojo", "cego/client_secret", testSecret); err != nil {
+		t.Fatal(err)
+	}
+	ta := newTestAPI(t, func(w http.ResponseWriter, _ *http.Request) { w.WriteHeader(http.StatusUnauthorized) }, nil)
+	src, err := auth.NewSource(ta.client.http, config.Resolved{Profile: "cego", ClientID: "id", Region: "eu", Host: ta.host})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := src.Token(t.Context()); err != nil {
+		t.Fatal(err)
+	}
+	ta.client.tokens = src
+	keyring.MockInitWithError(errors.New("keychain locked"))
+	err = doErr(t, ta.client, Request{Method: http.MethodGet, Path: "/workspace"})
+	if !strings.Contains(err.Error(), "drop the cached access token: keychain locked") {
+		t.Errorf("err = %v", err)
 	}
 }

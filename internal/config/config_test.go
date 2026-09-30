@@ -130,6 +130,11 @@ func TestLoad(t *testing.T) {
 		wantCode(t, err, "bad_config", clierr.ExitUsage)
 	})
 
+	t.Run("rejects a profile that is not an object", func(t *testing.T) {
+		_, err := Load(write(t, `{"profiles":{"cego":1}}`))
+		wantCode(t, err, "bad_config", clierr.ExitUsage)
+	})
+
 	t.Run("rejects invalid JSON", func(t *testing.T) {
 		_, err := Load(write(t, `{`))
 		wantCode(t, err, "bad_config", clierr.ExitUsage)

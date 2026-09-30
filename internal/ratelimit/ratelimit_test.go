@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"os"
+	"path/filepath"
 	"slices"
 	"strings"
 	"sync"
@@ -182,5 +183,28 @@ func TestWaitCapsFutureTimestampsInTheStateFile(t *testing.T) {
 	}
 	if want := []time.Duration{time.Minute}; !slices.Equal(c.slept, want) {
 		t.Errorf("slept %v, want %v", c.slept, want)
+	}
+}
+
+func TestWaitReportsAnUnusableStateLocation(t *testing.T) {
+	file := filepath.Join(t.TempDir(), "file")
+	if err := os.WriteFile(file, nil, 0o600); err != nil {
+		t.Fatal(err)
+	}
+	if err := New(filepath.Join(file, "dir"), "AIK_CLIENT_a").Wait(t.Context()); err == nil || !strings.Contains(err.Error(), "create the rate-limit directory") {
+		t.Errorf("err = %v", err)
+	}
+	l := New(t.TempDir(), "AIK_CLIENT_a")
+	if err := os.Mkdir(l.path, 0o700); err != nil {
+		t.Fatal(err)
+	}
+	if err := l.Wait(t.Context()); err == nil || !strings.Contains(err.Error(), "open the rate-limit state") {
+		t.Errorf("err = %v", err)
+	}
+}
+
+func TestSleepReturnsAfterTheDelay(t *testing.T) {
+	if err := sleep(t.Context(), time.Millisecond); err != nil {
+		t.Error(err)
 	}
 }

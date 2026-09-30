@@ -156,6 +156,16 @@ func TestItemsFailures(t *testing.T) {
 			pages:  []page{{body: `{"assets":[1],"hasMore":"yes"}`}}, wantText: `"hasMore"`,
 		},
 		{
+			name:   "an envelope body that is not an object",
+			paging: Paging{Style: PageEnvelope, SizeParam: "limit", Size: 1, Items: "assets"},
+			pages:  []page{{body: `[1]`}}, wantText: "want a JSON object",
+		},
+		{
+			name:   "an envelope whose items are not an array",
+			paging: Paging{Style: PageEnvelope, SizeParam: "limit", Size: 1, Items: "assets"},
+			pages:  []page{{body: `{"assets":{}}`}}, wantText: `field "assets"`,
+		},
+		{
 			name: "a body that is not an array", paging: Paging{Style: PageArray, SizeParam: "per_page", Size: 1},
 			pages: []page{{body: `{"items":[]}`}}, wantText: "decode page 0",
 		},

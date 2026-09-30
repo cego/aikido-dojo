@@ -25,6 +25,7 @@ type testAPI struct {
 	slept      []time.Duration
 	tokenCalls atomic.Int32
 	host       string
+	close      func()
 }
 
 // newTestAPI serves the token endpoint and routes /api/public/v1/ to handler.
@@ -44,6 +45,7 @@ func newTestAPI(t *testing.T, handler http.HandlerFunc, debug io.Writer) *testAP
 	mux.Handle("/api/public/v1/", handler)
 	srv := httptest.NewTLSServer(mux)
 	t.Cleanup(srv.Close)
+	ta.close = srv.Close
 	hc := srv.Client()
 	if debug != nil {
 		hc = &http.Client{Transport: Debug(hc.Transport, debug)}

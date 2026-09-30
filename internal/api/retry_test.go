@@ -141,3 +141,52 @@ func TestSleepStopsWhenTheContextEnds(t *testing.T) {
 		t.Errorf("err = %v, want context.Canceled", err)
 	}
 }
+
+func TestDoReadsAnHTTPDateRetryAfter(t *testing.T) {
+	fixed := time.Date(2026, 9, 30, 12, 0, 0, 0, time.UTC)
+	var attempts atomic.Int32
+	ta := newTestAPI(t, func(w http.ResponseWriter, _ *http.Request) {
+		if attempts.Add(1) == 1 {
+			w.Header().Set("Retry-After", fixed.Add(5*time.Second).Format(http.TimeFormat))
+			w.WriteHeader(http.StatusTooManyRequests)
+			return
+		}
+		fmt.Fprint(w, `{}`)
+	}, nil)
+	ta.client.now = func() time.Time { return fixed }
+	resp, err := ta.client.Do(t.Context(), Request{Method: http.MethodGet, Path: "/workspace"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer resp.Body.Close()
+	if want := []time.Duration{5 * time.Second}; !slices.Equal(ta.slept, want) {
+		t.Errorf("slept %v, want %v", ta.slept, want)
+	}
+}
+
+func TestDoStopsWaitingForARetryWhenTheContextEnds(t *testing.T) {
+	for _, status := range []int{http.StatusTooManyRequests, http.StatusServiceUnavailable} {
+		t.Run(http.StatusText(status), func(t *testing.T) {
+			var attempts atomic.Int32
+			ta := newTestAPI(t, sequence(&attempts, status, status), nil)
+			ta.client.sleep = sleep
+			ta.client.backoff = func(int) time.Duration { return time.Hour }
+			ctx, cancel := context.WithTimeout(t.Context(), 50*time.Millisecond)
+			defer cancel()
+			resp, err := ta.client.Do(ctx, Request{Method: http.MethodGet, Path: "/workspace"})
+			if err == nil {
+				defer resp.Body.Close()
+				t.Fatal("Do returned a response instead of stopping")
+			}
+			if !errors.Is(err, context.DeadlineExceeded) {
+				t.Errorf("err = %v, want context.DeadlineExceeded", err)
+			}
+		})
+	}
+}
+
+func TestSleepReturnsAfterTheDelay(t *testing.T) {
+	if err := sleep(t.Context(), time.Millisecond); err != nil {
+		t.Error(err)
+	}
+}

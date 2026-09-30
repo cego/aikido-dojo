@@ -60,3 +60,10 @@ func TestReport(t *testing.T) {
 		})
 	}
 }
+
+func TestErrorUnwrapsToItsCause(t *testing.T) {
+	cause := errors.New("cause")
+	if !errors.Is(&Error{Message: "m", Err: cause}, cause) {
+		t.Error("errors.Is does not find the wrapped cause")
+	}
+}

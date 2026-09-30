@@ -279,3 +279,73 @@ func TestTokenCacheIsBoundToTheClientAndHost(t *testing.T) {
 		t.Errorf("the new host's token endpoint was called %d times, want 1", n)
 	}
 }
+
+func TestTokenSurfacesKeychainAndTransportFailures(t *testing.T) {
+	locked := errors.New("keychain locked")
+	source := func(t *testing.T, ts *tokenServer, profile string) *Source {
+		t.Helper()
+		s, err := NewSource(ts.Client(), ts.resolved(profile))
+		if err != nil {
+			t.Fatal(err)
+		}
+		return s
+	}
+
+	t.Run("reading the cache fails", func(t *testing.T) {
+		keyring.MockInit()
+		storeSecret(t, "cego")
+		s := source(t, newTokenServer(t, 0, ""), "cego")
+		keyring.MockInitWithError(locked)
+		if _, err := s.Token(t.Context()); err == nil || !strings.Contains(err.Error(), "read the cached access token: keychain locked") {
+			t.Errorf("err = %v", err)
+		}
+	})
+
+	t.Run("dropping the cache fails", func(t *testing.T) {
+		keyring.MockInit()
+		storeSecret(t, "cego")
+		s := source(t, newTokenServer(t, 0, ""), "cego")
+		if _, err := s.Token(t.Context()); err != nil {
+			t.Fatal(err)
+		}
+		keyring.MockInitWithError(locked)
+		if err := s.Invalidate(); err == nil || !strings.Contains(err.Error(), "drop the cached access token: keychain locked") {
+			t.Errorf("err = %v", err)
+		}
+	})
+
+	t.Run("a token in memory needs no keychain", func(t *testing.T) {
+		keyring.MockInit()
+		storeSecret(t, "cego")
+		s := source(t, newTokenServer(t, 0, ""), "cego")
+		if _, err := s.Token(t.Context()); err != nil {
+			t.Fatal(err)
+		}
+		keyring.MockInitWithError(locked)
+		if tok, err := s.Token(t.Context()); err != nil || tok != "tok-1" {
+			t.Errorf("token = %s, %v; want tok-1 from memory", tok, err)
+		}
+	})
+
+	t.Run("the token endpoint is unreachable", func(t *testing.T) {
+		keyring.MockInit()
+		ts := newTokenServer(t, 0, "")
+		s := source(t, ts, "")
+		ts.Close()
+		if _, err := s.Token(t.Context()); err == nil || !strings.Contains(err.Error(), "request an access token") {
+			t.Errorf("err = %v", err)
+		}
+	})
+}
+
+func TestInvalidateOnTheEnvironmentProfileTouchesNoKeychain(t *testing.T) {
+	keyring.MockInitWithError(errors.New("keychain locked"))
+	ts := newTokenServer(t, 0, "")
+	s, err := NewSource(ts.Client(), ts.resolved(""))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := s.Invalidate(); err != nil {
+		t.Errorf("err = %v, want nil", err)
+	}
+}
