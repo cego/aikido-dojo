@@ -98,6 +98,33 @@ func TestLoad(t *testing.T) {
 		})
 	}
 
+	t.Run("accepts profile names that sound secret", func(t *testing.T) {
+		f, err := Load(write(t, `{"profiles":{"github-token":{"client_id":"a"},"secrets-team":{"client_id":"b"}}}`))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if len(f.Profiles) != 2 {
+			t.Errorf("profiles = %v", f.Profiles)
+		}
+	})
+
+	for _, tc := range []struct{ name, content string }{
+		{"a second JSON value", `{"profiles":{}} {"client_secret":"x"}`},
+		{"trailing garbage", `{"profiles":{}} garbage`},
+	} {
+		t.Run("rejects "+tc.name, func(t *testing.T) {
+			_, err := Load(write(t, tc.content))
+			wantCode(t, err, "bad_config", clierr.ExitUsage)
+		})
+	}
+
+	t.Run("reports an unreadable file", func(t *testing.T) {
+		_, err := Load(t.TempDir())
+		if err == nil || !strings.Contains(err.Error(), "read config") {
+			t.Fatalf("err = %v, want a read error", err)
+		}
+	})
+
 	t.Run("rejects an unknown field", func(t *testing.T) {
 		_, err := Load(write(t, `{"profiles":{"cego":{"clientid":"a"}}}`))
 		wantCode(t, err, "bad_config", clierr.ExitUsage)

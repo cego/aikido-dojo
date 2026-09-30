@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"io/fs"
 	"maps"
 	"os"
@@ -84,40 +85,48 @@ func Load(path string) (File, error) {
 	dec := json.NewDecoder(bytes.NewReader(data))
 	dec.DisallowUnknownFields()
 	var f File
-	if err := dec.Decode(&f); err != nil {
+	err = dec.Decode(&f)
+	if err == nil {
+		// A second value would otherwise be ignored unchecked, secrets included.
+		if _, next := dec.Token(); !errors.Is(next, io.EOF) {
+			err = errors.New("unexpected data after the JSON object")
+		}
+	}
+	if err != nil {
 		return File{}, &clierr.Error{Code: "bad_config", Message: "parse config " + path, Err: err,
 			Hint: "fix the file; it holds default_profile and profiles with client_id and region", Exit: clierr.ExitUsage}
 	}
 	return f, nil
 }
 
-// secretKey returns the first secret-shaped key, visiting keys in sorted
-// order, or "" if there is none. Invalid JSON returns "": the strict decode
-// in Load reports it.
+// secretKey returns the first secret-shaped key at the top level or inside a
+// profile, in sorted order, or "" if there is none. Profile names are the
+// user's to choose, so they aren't checked, and anything nested deeper is
+// rejected by the strict decode. Invalid JSON returns "": Load reports it.
 func secretKey(data []byte) string {
-	var v any
-	if json.Unmarshal(data, &v) != nil {
+	var top map[string]json.RawMessage
+	if json.Unmarshal(data, &top) != nil {
 		return ""
 	}
-	return findSecretKey(v)
+	if k := firstSecret(top); k != "" {
+		return k
+	}
+	var profiles map[string]map[string]json.RawMessage
+	if json.Unmarshal(top["profiles"], &profiles) != nil {
+		return ""
+	}
+	for _, name := range slices.Sorted(maps.Keys(profiles)) {
+		if k := firstSecret(profiles[name]); k != "" {
+			return k
+		}
+	}
+	return ""
 }
 
-func findSecretKey(v any) string {
-	switch v := v.(type) {
-	case map[string]any:
-		for _, k := range slices.Sorted(maps.Keys(v)) {
-			if looksSecret(k) {
-				return k
-			}
-			if found := findSecretKey(v[k]); found != "" {
-				return found
-			}
-		}
-	case []any:
-		for _, e := range v {
-			if found := findSecretKey(e); found != "" {
-				return found
-			}
+func firstSecret(m map[string]json.RawMessage) string {
+	for _, k := range slices.Sorted(maps.Keys(m)) {
+		if looksSecret(k) {
+			return k
 		}
 	}
 	return ""
