@@ -1,6 +1,7 @@
-// Package ratelimit keeps calls under Aikido's per-workspace limit across
-// every process on the machine. Agents run the CLI as many short processes,
-// so a limiter inside one process would never engage.
+// Package ratelimit paces each API client under Aikido's limit of 20 calls per
+// minute per workspace, across every process on the machine. Agents run the
+// CLI as many short processes, so a limiter inside one process would never
+// engage. Two clients of one workspace each get their own window.
 package ratelimit
 
 import (
