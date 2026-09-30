@@ -128,8 +128,9 @@ func looksSecret(key string) bool {
 	return strings.Contains(k, "secret") || strings.Contains(k, "password") || strings.HasSuffix(k, "token")
 }
 
-// Resolve picks the profile and region. A stored profile always uses its own
-// client ID, so the secret the keychain holds for it still matches.
+// Resolve picks the profile and region. A stored profile's client ID comes only
+// from its entry: taking one from the environment would send the profile's
+// secret to another client.
 func Resolve(f File, flags Flags, getenv func(string) string) (Resolved, error) {
 	r, err := pick(f, flags, getenv)
 	if err != nil {

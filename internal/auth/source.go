@@ -36,9 +36,13 @@ type Source struct {
 	token    cachedToken
 }
 
+// cachedToken records which client and token endpoint issued it: a profile
+// can be repointed at another client or region while its cache entry lives on.
 type cachedToken struct {
 	Token     string    `json:"token"`
 	ExpiresAt time.Time `json:"expires_at"`
+	ClientID  string    `json:"client_id"`
+	TokenURL  string    `json:"token_url"`
 }
 
 // NewSource builds the token source for r. A stored profile's secret comes
@@ -112,7 +116,8 @@ func (s *Source) Invalidate() error {
 }
 
 func (s *Source) valid(t cachedToken) bool {
-	return t.Token != "" && s.now().Add(expiryMargin).Before(t.ExpiresAt)
+	return t.Token != "" && t.ClientID == s.clientID && t.TokenURL == s.tokenURL &&
+		s.now().Add(expiryMargin).Before(t.ExpiresAt)
 }
 
 func (s *Source) readCache() (cachedToken, error) {
@@ -171,7 +176,12 @@ func (s *Source) fetch(ctx context.Context) (cachedToken, error) {
 		return cachedToken{}, &clierr.Error{Code: "auth_failed", Message: "the token endpoint returned no access token",
 			HTTPStatus: resp.StatusCode, Err: decodeErr, Hint: "check the API client in Aikido's workspace settings", Exit: clierr.ExitAuth}
 	}
-	return cachedToken{Token: body.AccessToken, ExpiresAt: s.now().Add(time.Duration(body.ExpiresIn) * time.Second)}, nil
+	return cachedToken{
+		Token:     body.AccessToken,
+		ExpiresAt: s.now().Add(time.Duration(body.ExpiresIn) * time.Second),
+		ClientID:  s.clientID,
+		TokenURL:  s.tokenURL,
+	}, nil
 }
 
 // Aikido reports every client and grant problem as 401 invalid_client and

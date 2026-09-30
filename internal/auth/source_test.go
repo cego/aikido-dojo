@@ -241,3 +241,41 @@ func TestTokenFailures(t *testing.T) {
 		})
 	}
 }
+
+func TestTokenCacheIsBoundToTheClientAndHost(t *testing.T) {
+	keyring.MockInit()
+	storeSecret(t, "cego")
+	ts := newTokenServer(t, 0, "")
+	s, err := NewSource(ts.Client(), ts.resolved("cego"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := s.Token(t.Context()); err != nil {
+		t.Fatal(err)
+	}
+
+	// The same profile repointed at another client must not reuse tok-1.
+	other := ts.resolved("cego")
+	other.ClientID = "other"
+	s2, err := NewSource(ts.Client(), other)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if tok, err := s2.Token(t.Context()); err == nil || tok == "tok-1" {
+		t.Errorf("token = %q, %v; want a new token request for the other client", tok, err)
+	}
+
+	// Or at another region's host.
+	ts2 := newTokenServer(t, 0, "")
+	moved := ts2.resolved("cego")
+	s3, err := NewSource(ts2.Client(), moved)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := s3.Token(t.Context()); err != nil {
+		t.Fatal(err)
+	}
+	if n := ts2.calls.Load(); n != 1 {
+		t.Errorf("the new host's token endpoint was called %d times, want 1", n)
+	}
+}
