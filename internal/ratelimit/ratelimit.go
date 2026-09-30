@@ -77,8 +77,14 @@ func (l *Limiter) reserve() (time.Duration, error) {
 	}
 	now := l.now()
 	calls = slices.DeleteFunc(calls, func(t int64) bool { return now.Sub(time.Unix(0, t)) >= window })
+	for i, t := range calls {
+		// A call dated after now means the clock stepped back; counting it as
+		// made now keeps every wait within one window.
+		calls[i] = min(t, now.UnixNano())
+	}
 	if len(calls) >= limit {
-		return time.Unix(0, calls[0]).Add(window).Sub(now), nil
+		// Saved even when full, so the clamped times age out instead of being clamped again.
+		return time.Unix(0, calls[0]).Add(window).Sub(now), writeCalls(f, calls)
 	}
 	calls = append(calls, now.UnixNano())
 	slices.Sort(calls)

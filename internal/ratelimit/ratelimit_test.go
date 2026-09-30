@@ -5,6 +5,7 @@ import (
 	"errors"
 	"os"
 	"slices"
+	"strings"
 	"sync"
 	"sync/atomic"
 	"testing"
@@ -145,5 +146,41 @@ func TestReserveIsExclusiveAcrossProcesses(t *testing.T) {
 	wg.Wait()
 	if got := granted.Load(); got != 20 {
 		t.Errorf("granted %d calls in one window, want exactly 20", got)
+	}
+}
+
+func TestWaitSurvivesTheClockSteppingBack(t *testing.T) {
+	c := &fakeClock{t: time.Unix(1_800_000_000, 0)}
+	l := limiter(t.TempDir(), "AIK_CLIENT_a", c)
+	for range 20 {
+		if err := l.Wait(t.Context()); err != nil {
+			t.Fatal(err)
+		}
+		c.t = c.t.Add(time.Second)
+	}
+	c.t = c.t.Add(-time.Hour)
+	if err := l.Wait(t.Context()); err != nil {
+		t.Fatal(err)
+	}
+	if want := []time.Duration{time.Minute}; !slices.Equal(c.slept, want) {
+		t.Errorf("slept %v, want %v: a clock step must not stretch the wait past one window", c.slept, want)
+	}
+}
+
+func TestWaitCapsFutureTimestampsInTheStateFile(t *testing.T) {
+	c := &fakeClock{t: time.Unix(1_800_000_000, 0)}
+	l := limiter(t.TempDir(), "AIK_CLIENT_a", c)
+	future := make([]string, 20)
+	for i := range future {
+		future[i] = "9000000000000000000"
+	}
+	if err := os.WriteFile(l.path, []byte("["+strings.Join(future, ",")+"]"), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	if err := l.Wait(t.Context()); err != nil {
+		t.Fatal(err)
+	}
+	if want := []time.Duration{time.Minute}; !slices.Equal(c.slept, want) {
+		t.Errorf("slept %v, want %v", c.slept, want)
 	}
 }
