@@ -12,7 +12,6 @@ import (
 	"strings"
 )
 
-// JSONSchema is a JSON Schema object as decoded from the spec.
 type JSONSchema = map[string]any
 
 type Spec struct {

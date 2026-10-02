@@ -19,7 +19,6 @@ type Output struct {
 	Search  []byte // search.json
 }
 
-// Generate builds the catalog from the spec's JSON and the overlay.
 func Generate(specJSON []byte, overlays map[string]overlay.Op) (Output, error) {
 	s, err := LoadSpec(specJSON)
 	if err != nil {

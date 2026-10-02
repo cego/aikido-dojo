@@ -29,7 +29,6 @@ import (
 	"github.com/cego/aikido-dojo/internal/validate"
 )
 
-// buildRoot is the root with every generated command under it.
 func buildRoot(env Env) (*cobra.Command, error) {
 	root, a := newRoot(env)
 	if err := addGenerated(root, catalog.All, a.runOp); err != nil {

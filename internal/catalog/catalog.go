@@ -30,7 +30,6 @@ var loadSchemas = sync.OnceValues(func() (map[string]ops.SchemaSet, error) {
 	return m, nil
 })
 
-// Schemas returns the schemas of the operation with this ID.
 func Schemas(id string) (ops.SchemaSet, error) {
 	m, err := loadSchemas()
 	if err != nil {
