@@ -61,3 +61,17 @@ func Report(w io.Writer, err error) int {
 	}{out})
 	return out.Exit
 }
+
+// Warn writes a warning to w as {"warning":{"message":...}} on one line, so an
+// agent reading stderr can tell it from the error object.
+func Warn(w io.Writer, msg string) {
+	type warning struct {
+		Message string `json:"message"`
+	}
+	enc := json.NewEncoder(w)
+	enc.SetEscapeHTML(false)
+	// stderr is the only place to report to, so a failed write there has no remedy.
+	_ = enc.Encode(struct {
+		Warning warning `json:"warning"`
+	}{warning{msg}})
+}

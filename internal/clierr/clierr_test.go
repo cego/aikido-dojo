@@ -67,3 +67,11 @@ func TestErrorUnwrapsToItsCause(t *testing.T) {
 		t.Error("errors.Is does not find the wrapped cause")
 	}
 }
+
+func TestWarn(t *testing.T) {
+	var b bytes.Buffer
+	Warn(&b, `--filter-status: "a<b>" is not one of "open"`)
+	if got, want := b.String(), `{"warning":{"message":"--filter-status: \"a<b>\" is not one of \"open\""}}`+"\n"; got != want {
+		t.Errorf("Warn wrote %q, want %q", got, want)
+	}
+}
