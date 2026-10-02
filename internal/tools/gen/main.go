@@ -30,7 +30,7 @@ func run(args []string) error {
 	if *specPath == "" || *dir == "" {
 		return errors.New("usage: gen -spec <openapi.json> -dir <catalog dir>")
 	}
-	data, err := os.ReadFile(*specPath) //nolint:gosec // the path comes from the go:generate line
+	data, err := os.ReadFile(*specPath)
 	if err != nil {
 		return fmt.Errorf("read the spec: %w", err)
 	}

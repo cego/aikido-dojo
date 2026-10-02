@@ -6,7 +6,6 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"path/filepath"
 	"strings"
 	"testing"
 
@@ -20,6 +19,8 @@ import (
 )
 
 var update = flag.Bool("update", false, "rewrite testdata/tree.golden")
+
+const golden = "testdata/tree.golden"
 
 func nopRun(*cobra.Command, command, []string) error { return nil }
 
@@ -46,7 +47,6 @@ func execute(root *cobra.Command, args ...string) (string, error) {
 
 func TestTreeGolden(t *testing.T) {
 	got := renderTree(treeWith(t, catalog.All, nopRun))
-	golden := filepath.Join("testdata", "tree.golden")
 	if *update {
 		if err := os.WriteFile(golden, []byte(got), 0o600); err != nil {
 			t.Fatal(err)

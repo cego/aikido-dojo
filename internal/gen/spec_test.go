@@ -2,6 +2,7 @@ package gen
 
 import (
 	"encoding/json"
+	"net/http"
 	"os"
 	"reflect"
 	"strings"
@@ -50,7 +51,7 @@ func TestLoadSpecReadsAnOperation(t *testing.T) {
 		"parameters": [{"$ref": "#/components/parameters/PageParam"},
 			{"in": "path", "name": "thing_id", "required": true, "description": "The thing.", "schema": {"type": "integer"}}],
 		"responses": {"400": {}, "201": {"content": {"text/csv": {}, "application/json": {"schema": {"type": "array"}}}}}}}}`)
-	if op.ID != "getThing" || op.Method != "GET" || op.Path != "/things/{thing_id}" || op.Scope != "things:read" ||
+	if op.ID != "getThing" || op.Method != http.MethodGet || op.Path != "/things/{thing_id}" || op.Scope != "things:read" ||
 		op.Summary != "Get a thing" || op.Description != "All of it." {
 		t.Errorf("op = %+v", op)
 	}

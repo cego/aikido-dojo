@@ -21,7 +21,7 @@ func get(t *testing.T, c *http.Client, url string) (string, error) {
 	}
 	resp, err := c.Do(req)
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("GET %s: %w", url, err)
 	}
 	defer resp.Body.Close()
 	b, err := io.ReadAll(resp.Body)
