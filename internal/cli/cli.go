@@ -34,7 +34,10 @@ type app struct {
 
 // Run executes one command line and returns the process exit code.
 func Run(ctx context.Context, args []string, env Env) int {
-	root, _ := newRoot(env)
+	root, err := buildRoot(env)
+	if err != nil {
+		return clierr.Report(env.Stderr, err)
+	}
 	root.SetArgs(args)
 	if err := root.ExecuteContext(ctx); err != nil {
 		return clierr.Report(env.Stderr, err)
