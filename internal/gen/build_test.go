@@ -274,6 +274,7 @@ func TestBuildVendoredSpec(t *testing.T) {
 		{"repo delete", func(op ops.Op) bool { return op.Destructive }, "destructive"},
 		{"pr-check-config-all update", func(op ops.Op) bool { return op.Destructive }, "destructive from the overlay"},
 		{"container-connectivity update", func(op ops.Op) bool { return op.Scope == "containers:write" }, "the corrected scope"},
+		{"user-request list", func(op ops.Op) bool { return strings.Contains(op.Help, "returns what one call returns") }, "the paging caveat"},
 		{"code-scanning-token update", func(op ops.Op) bool {
 			return op.Body != nil && len(op.Body.Fields) == 0 && reflect.DeepEqual(op.Body.Secret, []string{"access_token"})
 		}, "the token only through --body"},

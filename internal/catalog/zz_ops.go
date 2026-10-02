@@ -2737,6 +2737,7 @@ var All = []ops.Op{
 		Path:        "/request-inbox/requests",
 		Summary:     "List user requests",
 		Description: "Returns a paginated list of user requests in your account. Use the header X-Has-Next-Page for pagination.",
+		Help:        "Aikido documents this list as paged by an X-Has-Next-Page header but defines no page parameters, so the command returns what one call returns.",
 		Scope:       "request_inbox:read",
 		Flags: []ops.Param{
 			{Name: "filter_status", Kind: ops.String, Required: false, Usage: "Filter by status (one of: pending, approved, rejected)"},

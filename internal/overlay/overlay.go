@@ -37,7 +37,8 @@ var (
 
 var Ops = map[string]Op{
 	// Spec gives per_page no maximum; its schema description says max 50.
-	"listActivityLog":                 {Cmd: "activity-log list", Page: UntilEmpty, PageSize: 50},
+	"listActivityLog": {Cmd: "activity-log list", Page: UntilEmpty, PageSize: 50},
+	// The spec says to page by X-Has-Next-Page, but live on 2026-10-02 no page carried that header and a filtered page came back full, so an empty page ends the list.
 	"listAikidoImages":                {Cmd: "aikido-image list", Page: UntilEmpty},
 	"getContainerAutofixSettings":     {Cmd: "autofix-container-config get"},
 	"updateContainerAutofixSettings":  {Cmd: "autofix-container-config update"},
@@ -252,8 +253,10 @@ var Ops = map[string]Op{
 	"getUser":              {Cmd: "user get", Unbounded: []string{"user_id"}},
 	"listUsers":            {Cmd: "user list"},
 	"listUserLoginHistory": {Cmd: "user-login list", Page: UntilEmpty},
-	"listUserRequests":     {Cmd: "user-request list"},
-	"reviewUserRequest":    {Cmd: "user-request review"},
+	// Spec: the description says the list pages by X-Has-Next-Page, but it defines no page parameters; not checked live (the read clients lack request_inbox:read, 2026-10-02).
+	"listUserRequests": {Cmd: "user-request list",
+		Help: "Aikido documents this list as paged by an X-Has-Next-Page header but defines no page parameters, so the command returns what one call returns."},
+	"reviewUserRequest": {Cmd: "user-request review"},
 	// Spec bounds user_id to 0..1, copied from listUsers.include_inactive; live on 2026-10-02, GET /users/{id} with an id above 1 answered 200.
 	"updateUserRights":                {Cmd: "user-role update", Unbounded: []string{"user_id"}},
 	"listVirtualMachines":             {Cmd: "virtual-machine list"},
