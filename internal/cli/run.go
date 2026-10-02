@@ -199,6 +199,14 @@ func buildBody(fs *pflag.FlagSet, c command, schema map[string]any, stdin io.Rea
 	if err != nil {
 		return nil, nil, err
 	}
+	// An inline --body is argv, which ps and shell history keep.
+	if obj, ok := body.(map[string]any); ok && fs.Changed("body") {
+		for _, name := range b.Secret {
+			if _, set := obj[name]; set {
+				return nil, nil, invalid("--body: "+name+" is a credential; pass the body with --body-file <path> or --body-file - (stdin)", c.op)
+			}
+		}
+	}
 	fields := map[string]any{}
 	for _, p := range c.bodyFlags {
 		if !fs.Changed(ops.FlagName(p.Name)) {

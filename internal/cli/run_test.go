@@ -198,7 +198,7 @@ func TestBody(t *testing.T) {
 		{"an optional body is left out", []string{"issue", "unsnooze", "5"}, "", ``},
 		{"an integer field", []string{"team-member", "create", "3", "--user-id", "7"}, "", `{"user_id":7}`},
 		{"a boolean field", []string{"repo-dev-dep-scan", "update", "1", "--dev-dep-scanning-enabled"}, "", `{"dev_dep_scanning_enabled":true}`},
-		{"a credential through --body", []string{"code-scanning-token", "update", "--body", `{"access_token":"x"}`}, "", `{"access_token":"x"}`},
+		{"a credential through --body-file", []string{"code-scanning-token", "update", "--body-file", "-"}, `{"access_token":"x"}`, `{"access_token":"x"}`},
 		{"HTML characters stay as typed", []string{"issue-group-note", "create", "5", "--note", "<b> & co"}, "", `{"note":"<b> & co"}`},
 	}
 	for _, tt := range tests {
@@ -238,6 +238,7 @@ func TestBodyMistakes(t *testing.T) {
 		{[]string{"issue-group-note", "create", "5", "--body", `{"note":1}`}, "body.note: want string, got number"},
 		{[]string{"issue-group-note", "create", "5", "--body-file", "/nonexistent/body.json"}, "--body-file"},
 		{[]string{"firewall-bot-list", "update", "1"}, "needs a body"},
+		{[]string{"code-scanning-token", "update", "--body", `{"access_token":"x"}`}, "access_token is a credential"},
 	}
 	for _, tt := range tests {
 		f, env, _ := newFake(t, respond(`{}`))

@@ -171,6 +171,13 @@ func TestHelpNamesTheScopeAndTheOverlayNote(t *testing.T) {
 	}
 }
 
+func TestHelpSaysWhereCredentialsGo(t *testing.T) {
+	out, err := execute(treeWith(t, catalog.All, nopRun), "code-scanning-token", "update", "--help")
+	if err != nil || !strings.Contains(out, "Credentials (access_token) are accepted only through --body-file") {
+		t.Errorf("help = %q, %v", out, err)
+	}
+}
+
 func TestArgumentMistakes(t *testing.T) {
 	tests := []struct {
 		args       []string

@@ -133,7 +133,7 @@ func longHelp(op ops.Op, clashes []string) string {
 	if op.Body != nil {
 		notes = append(notes, "Fields without a flag, nested ones included, go in --body or --body-file.")
 		if len(op.Body.Secret) > 0 {
-			notes = append(notes, "Credentials ("+strings.Join(op.Body.Secret, ", ")+") are accepted only there, which keeps them out of shell history.")
+			notes = append(notes, "Credentials ("+strings.Join(op.Body.Secret, ", ")+") are accepted only through --body-file (a path, or - for stdin), which keeps them out of argv and shell history.")
 		}
 		if len(clashes) > 0 {
 			notes = append(notes, strings.Join(clashes, ", ")+" share a name with a built-in flag, so they have no flag of their own.")
