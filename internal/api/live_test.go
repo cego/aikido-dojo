@@ -50,20 +50,45 @@ func TestLive(t *testing.T) {
 	// what 1-indexed or overlapping pages would produce.
 	t.Run("array paging: code repos", func(t *testing.T) {
 		n := pageThrough(t, c, Request{Method: http.MethodGet, Path: "/repositories/code", Scope: "repositories:read"},
-			Paging{Style: PageArray, SizeParam: "per_page", Size: 10}, 60)
+			Paging{End: EndEmpty, SizeParam: "per_page", Size: 10}, 60)
 		t.Logf("read %d repos", n)
 	})
 
 	t.Run("header paging: open issue groups", func(t *testing.T) {
 		n := pageThrough(t, c, Request{Method: http.MethodGet, Path: "/open-issue-groups", Scope: "issues:read"},
-			Paging{Style: PageHeader, SizeParam: "per_page", Size: 10}, 35)
+			Paging{End: EndHeader, SizeParam: "per_page", Size: 10}, 35)
 		t.Logf("read %d issue groups", n)
 	})
 
 	t.Run("envelope paging: cloud assets", func(t *testing.T) {
 		n := pageThrough(t, c, Request{Method: http.MethodGet, Path: "/clouds/assets", Scope: "clouds:read"},
-			Paging{Style: PageEnvelope, SizeParam: "limit", Size: 10, Items: "assets", More: "hasMore"}, 25)
+			Paging{End: EndField, SizeParam: "limit", Size: 10, Items: "assets", More: "hasMore"}, 25)
 		t.Logf("read %d cloud assets", n)
+	})
+
+	t.Run("envelope paging that ends by header: code-quality findings", func(t *testing.T) {
+		var repoID json.RawMessage
+		for item, err := range c.Items(t.Context(), Request{Method: http.MethodGet, Path: "/repositories/code", Scope: "repositories:read"},
+			Paging{End: EndEmpty, SizeParam: "per_page", Size: 10}) {
+			if err != nil {
+				t.Fatal(err)
+			}
+			var v struct {
+				ID json.RawMessage `json:"id"`
+			}
+			if err := json.Unmarshal(item, &v); err != nil {
+				t.Fatal(err)
+			}
+			repoID = v.ID
+			break
+		}
+		if repoID == nil {
+			t.Skip("the workspace has no code repos")
+		}
+		req := Request{Method: http.MethodGet, Path: "/code-quality/repo-findings", Scope: "code_quality:read",
+			Query: map[string][]string{"code_repo_id": {string(repoID)}}}
+		n := pageThrough(t, c, req, Paging{End: EndHeader, SizeParam: "per_page", Size: 10, Items: "findings"}, 25)
+		t.Logf("read %d findings", n)
 	})
 }
 

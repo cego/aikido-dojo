@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
 	"iter"
 	"maps"
 	"net/http"
@@ -11,26 +12,25 @@ import (
 	"strconv"
 )
 
-// Style is how an operation pages. Pages are 0-indexed in every style.
-type Style int
+// End is how a paged list marks its last page. Pages are 0-indexed in every style.
+type End int
 
 const (
-	// PageArray: the body is an array and the list ends on an empty page.
-	PageArray Style = iota + 1
-	// PageHeader: the body is an array and only X-Has-Next-Page ends the
-	// list. Aikido filters after paging, so a short or empty page is not the end.
-	PageHeader
-	// PageEnvelope: the body is an object holding the items. The list ends
-	// when More is false, or on an empty page when there is no More field.
-	PageEnvelope
+	// EndEmpty: the list ends on an empty page.
+	EndEmpty End = iota + 1
+	// EndHeader: only X-Has-Next-Page ends the list. Aikido filters after
+	// paging, so a short or empty page is not the end.
+	EndHeader
+	// EndField: the list ends when the More field is false.
+	EndField
 )
 
 type Paging struct {
-	Style     Style
+	End       End
 	SizeParam string // "per_page" or "limit"
 	Size      int
-	Items     string // PageEnvelope: the field holding the items
-	More      string // PageEnvelope: the field saying more pages exist, or ""
+	Items     string // the field holding the items when the body is an object; "" when the body is the array
+	More      string // EndField: the boolean field saying more pages exist
 }
 
 // Items fetches page after page and yields each item. Stopping the loop stops
@@ -68,37 +68,46 @@ func (c *Client) Items(ctx context.Context, req Request, p Paging) iter.Seq2[jso
 
 func decodePage(resp *http.Response, p Paging) ([]json.RawMessage, bool, error) {
 	defer resp.Body.Close()
-	dec := json.NewDecoder(resp.Body)
-	if p.Style != PageEnvelope {
-		var items []json.RawMessage
+	items, env, err := decodeItems(resp.Body, p.Items)
+	if err != nil {
+		return nil, false, err
+	}
+	switch p.End {
+	case EndHeader:
+		return items, resp.Header.Get("X-Has-Next-Page") == "true", nil
+	case EndField:
+		var more bool
+		if raw, ok := env[p.More]; ok {
+			if err := json.Unmarshal(raw, &more); err != nil {
+				return nil, false, fmt.Errorf("field %q is not a boolean: %w", p.More, err)
+			}
+		}
+		return items, more, nil
+	}
+	return items, len(items) > 0, nil
+}
+
+// decodeItems returns a page's items and, when they sit in an object, that
+// object's fields.
+func decodeItems(r io.Reader, field string) ([]json.RawMessage, map[string]json.RawMessage, error) {
+	dec := json.NewDecoder(r)
+	var items []json.RawMessage
+	if field == "" {
 		if err := dec.Decode(&items); err != nil {
-			return nil, false, fmt.Errorf("want a JSON array: %w", err)
+			return nil, nil, fmt.Errorf("want a JSON array: %w", err)
 		}
-		if p.Style == PageHeader {
-			return items, resp.Header.Get("X-Has-Next-Page") == "true", nil
-		}
-		return items, len(items) > 0, nil
+		return items, nil, nil
 	}
 	var env map[string]json.RawMessage
 	if err := dec.Decode(&env); err != nil {
-		return nil, false, fmt.Errorf("want a JSON object: %w", err)
+		return nil, nil, fmt.Errorf("want a JSON object: %w", err)
 	}
-	raw, ok := env[p.Items]
+	raw, ok := env[field]
 	if !ok {
-		return nil, false, fmt.Errorf("no %q field in the response", p.Items)
+		return nil, nil, fmt.Errorf("no %q field in the response", field)
 	}
-	var items []json.RawMessage
 	if err := json.Unmarshal(raw, &items); err != nil {
-		return nil, false, fmt.Errorf("field %q: %w", p.Items, err)
+		return nil, nil, fmt.Errorf("field %q: %w", field, err)
 	}
-	if p.More == "" {
-		return items, len(items) > 0, nil
-	}
-	var more bool
-	if raw, ok := env[p.More]; ok {
-		if err := json.Unmarshal(raw, &more); err != nil {
-			return nil, false, fmt.Errorf("field %q is not a boolean: %w", p.More, err)
-		}
-	}
-	return items, more, nil
+	return items, env, nil
 }

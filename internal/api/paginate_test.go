@@ -64,7 +64,7 @@ func collect(seq iter.Seq2[json.RawMessage, error]) ([]string, error) {
 }
 
 func TestItems(t *testing.T) {
-	arrays := Paging{Style: PageArray, SizeParam: "per_page", Size: 2}
+	arrays := Paging{End: EndEmpty, SizeParam: "per_page", Size: 2}
 	tests := []struct {
 		name       string
 		paging     Paging
@@ -79,25 +79,31 @@ func TestItems(t *testing.T) {
 			want:  []string{"1", "2", "3"}, wantCalls: 3, wantFirstQ: "filter_x=a&page=0&per_page=2",
 		},
 		{
-			name: "a header list keeps going past an empty page", paging: Paging{Style: PageHeader, SizeParam: "per_page", Size: 100},
+			name: "a header list keeps going past an empty page", paging: Paging{End: EndHeader, SizeParam: "per_page", Size: 100},
 			pages: []page{{body: `[1]`, hasNext: "true"}, {body: `[]`, hasNext: "true"}, {body: `[2]`, hasNext: "false"}},
 			want:  []string{"1", "2"}, wantCalls: 3, wantFirstQ: "filter_x=a&page=0&per_page=100",
 		},
 		{
-			name: "a header list stops when the header is missing", paging: Paging{Style: PageHeader, SizeParam: "per_page", Size: 100},
+			name: "a header list stops when the header is missing", paging: Paging{End: EndHeader, SizeParam: "per_page", Size: 100},
 			pages: []page{{body: `[1]`}}, want: []string{"1"}, wantCalls: 1, wantFirstQ: "filter_x=a&page=0&per_page=100",
 		},
 		{
 			name:   "an envelope list follows hasMore",
-			paging: Paging{Style: PageEnvelope, SizeParam: "limit", Size: 50, Items: "assets", More: "hasMore"},
+			paging: Paging{End: EndField, SizeParam: "limit", Size: 50, Items: "assets", More: "hasMore"},
 			pages:  []page{{body: `{"assets":[1],"hasMore":true,"totalCount":2}`}, {body: `{"assets":[2],"hasMore":false,"totalCount":2}`}},
 			want:   []string{"1", "2"}, wantCalls: 2, wantFirstQ: "filter_x=a&limit=50&page=0",
 		},
 		{
 			name:   "an envelope list without hasMore ends on an empty page",
-			paging: Paging{Style: PageEnvelope, SizeParam: "per_page", Size: 50, Items: "users"},
+			paging: Paging{End: EndEmpty, SizeParam: "per_page", Size: 50, Items: "users"},
 			pages:  []page{{body: `{"users":[1]}`}, {body: `{"users":[]}`}},
 			want:   []string{"1"}, wantCalls: 2, wantFirstQ: "filter_x=a&page=0&per_page=50",
+		},
+		{
+			name:   "an envelope list can end by header",
+			paging: Paging{End: EndHeader, SizeParam: "per_page", Size: 20, Items: "findings"},
+			pages:  []page{{body: `{"findings":[1]}`, hasNext: "true"}, {body: `{"findings":[]}`, hasNext: "true"}, {body: `{"findings":[2]}`, hasNext: "false"}},
+			want:   []string{"1", "2"}, wantCalls: 3, wantFirstQ: "filter_x=a&page=0&per_page=20",
 		},
 	}
 	for _, tt := range tests {
@@ -125,7 +131,7 @@ func TestItems(t *testing.T) {
 func TestItemsStopsFetchingWhenTheCallerStops(t *testing.T) {
 	srv := &pageServer{pages: []page{{body: `[1,2]`}, {body: `[3,4]`}}}
 	ta := newTestAPI(t, srv.ServeHTTP, nil)
-	for range ta.client.Items(t.Context(), Request{Method: http.MethodGet, Path: "/list"}, Paging{Style: PageArray, SizeParam: "per_page", Size: 2}) {
+	for range ta.client.Items(t.Context(), Request{Method: http.MethodGet, Path: "/list"}, Paging{End: EndEmpty, SizeParam: "per_page", Size: 2}) {
 		break
 	}
 	if got := len(srv.seen()); got != 1 {
@@ -142,31 +148,31 @@ func TestItemsFailures(t *testing.T) {
 		wantText string
 	}{
 		{
-			name: "an API error after the first page keeps the items already yielded", paging: Paging{Style: PageArray, SizeParam: "per_page", Size: 1},
+			name: "an API error after the first page keeps the items already yielded", paging: Paging{End: EndEmpty, SizeParam: "per_page", Size: 1},
 			pages: []page{{body: `[1]`}, {body: `{"error":"gone"}`, status: 404}}, want: []string{"1"}, wantText: "gone",
 		},
 		{
 			name:   "an envelope without its items field",
-			paging: Paging{Style: PageEnvelope, SizeParam: "limit", Size: 1, Items: "assets"},
+			paging: Paging{End: EndEmpty, SizeParam: "limit", Size: 1, Items: "assets"},
 			pages:  []page{{body: `{"things":[]}`}}, wantText: `no "assets" field`,
 		},
 		{
 			name:   "a hasMore that is not a boolean",
-			paging: Paging{Style: PageEnvelope, SizeParam: "limit", Size: 1, Items: "assets", More: "hasMore"},
+			paging: Paging{End: EndField, SizeParam: "limit", Size: 1, Items: "assets", More: "hasMore"},
 			pages:  []page{{body: `{"assets":[1],"hasMore":"yes"}`}}, wantText: `"hasMore"`,
 		},
 		{
 			name:   "an envelope body that is not an object",
-			paging: Paging{Style: PageEnvelope, SizeParam: "limit", Size: 1, Items: "assets"},
+			paging: Paging{End: EndEmpty, SizeParam: "limit", Size: 1, Items: "assets"},
 			pages:  []page{{body: `[1]`}}, wantText: "want a JSON object",
 		},
 		{
 			name:   "an envelope whose items are not an array",
-			paging: Paging{Style: PageEnvelope, SizeParam: "limit", Size: 1, Items: "assets"},
+			paging: Paging{End: EndEmpty, SizeParam: "limit", Size: 1, Items: "assets"},
 			pages:  []page{{body: `{"assets":{}}`}}, wantText: `field "assets"`,
 		},
 		{
-			name: "a body that is not an array", paging: Paging{Style: PageArray, SizeParam: "per_page", Size: 1},
+			name: "a body that is not an array", paging: Paging{End: EndEmpty, SizeParam: "per_page", Size: 1},
 			pages: []page{{body: `{"items":[]}`}}, wantText: "decode page 0",
 		},
 	}
@@ -186,7 +192,7 @@ func TestItemsFailures(t *testing.T) {
 	t.Run("the API error keeps its exit code", func(t *testing.T) {
 		srv := &pageServer{pages: []page{{body: `{}`, status: 404}}}
 		ta := newTestAPI(t, srv.ServeHTTP, nil)
-		_, err := collect(ta.client.Items(t.Context(), Request{Method: http.MethodGet, Path: "/list"}, Paging{Style: PageArray, SizeParam: "per_page", Size: 1}))
+		_, err := collect(ta.client.Items(t.Context(), Request{Method: http.MethodGet, Path: "/list"}, Paging{End: EndEmpty, SizeParam: "per_page", Size: 1}))
 		wantCode(t, err, "not_found", clierr.ExitNotFound)
 	})
 }
