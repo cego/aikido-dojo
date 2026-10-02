@@ -289,9 +289,12 @@ func bodyOf(sop SpecOp, o overlay.Op) (*ops.Body, error) {
 	return b, nil
 }
 
+// looksSecret is broad on purpose: a false match costs one evidenced overlay
+// entry, a miss puts a credential on the command line.
 func looksSecret(name string) bool {
-	for _, w := range []string{"token", "secret", "password", "key"} {
-		if strings.Contains(name, w) {
+	lower := strings.ToLower(name)
+	for _, w := range []string{"token", "secret", "pass", "key", "credential", "cookie"} {
+		if strings.Contains(lower, w) {
 			return true
 		}
 	}
