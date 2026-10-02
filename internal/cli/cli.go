@@ -53,6 +53,8 @@ func newRoot(env Env) (*cobra.Command, *app) {
 		RunE:          showHelp,
 		SilenceErrors: true,
 		SilenceUsage:  true,
+		// cobra applies its default of 2 only on its own unknown-command path, which unknownCommand replaces.
+		SuggestionsMinimumDistance: 2,
 	}
 	root.SetIn(env.Stdin)
 	root.SetOut(env.Stdout)

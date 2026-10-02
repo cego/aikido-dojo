@@ -1,0 +1,911 @@
+activity-log list
+	GET /report/activityLog scope=reports:read paged=per_page:50:empty
+	--action-filter string
+	--cloud-id int64
+	--end int64
+	--limit int
+	--repository-id int64
+	--search string
+	--start int64
+	--user-type-filter string
+aikido-image list
+	GET /autofix/aikido-images scope=autofix:read paged=per_page:50:empty
+	--filter-image-name string
+	--filter-image-tag string
+	--limit int
+autofix-container-config get
+	GET /repositories/autofix/container/settings scope=autofix:read
+autofix-container-config update
+	PUT /repositories/autofix/container/settings scope=autofix:write
+	--body string
+	--body-file string
+autofix-dependency-config get
+	GET /repositories/autofix/dependency/settings scope=autofix:read
+autofix-dependency-config update
+	PUT /repositories/autofix/dependency/settings scope=autofix:write
+	--body string
+	--body-file string
+autofix-pentest-config get
+	GET /repositories/autofix/pentest/settings scope=autofix:read
+autofix-pentest-config update
+	PUT /repositories/autofix/pentest/settings scope=autofix:write
+	--body string
+	--body-file string
+autofix-sast-config get
+	GET /repositories/autofix/sast/settings scope=autofix:read
+autofix-sast-config update
+	PUT /repositories/autofix/sast/settings scope=autofix:write
+	--body string
+	--body-file string
+autofix-task list
+	GET /autofix/history scope=autofix:read paged=per_page:20:header
+	--limit int
+autofix-task-issue list <autofix_task_id>
+	GET /autofix/history/{autofix_task_id}/issues scope=autofix:read
+broker-app list
+	GET /broker/apps scope=broker:read
+broker-resource-url create <broker_app_id>
+	POST /broker/apps/{broker_app_id}/resource-urls scope=broker:write
+	--body string
+	--body-file string
+	--internal-url string required body
+broker-resource-url delete <resource_url_id>
+	DELETE /broker/apps/resource-urls/{resource_url_id} scope=broker:write destructive
+bug-bounty-report create <program_id>
+	POST /bug_bounty/program/{program_id}/report scope=bug_bounty:write
+	--body string
+	--body-file string
+	--description string required body
+changelog-summary get
+	GET /changelog-summary scope=research:read
+	--from-version string required
+	--language string required
+	--package-name string required
+	--to-version string required
+cloud delete <cloud_id>
+	DELETE /clouds/{cloud_id} scope=clouds:write destructive
+cloud list
+	GET /clouds scope=clouds:read paged=per_page:100:empty
+	--limit int
+cloud-asset list
+	GET /clouds/assets scope=clouds:read paged=limit:100:field:items=assets:more=hasMore
+	--asset-type stringSlice
+	--cloud-id stringSlice
+	--include-metadata bool
+	--limit int
+	--metadata-fields stringSlice
+	--prompt-id int64
+	--provider stringSlice
+	--region stringSlice
+	--search string
+	--sort string
+	--source-id stringSlice
+cloud-aws create
+	POST /clouds/aws scope=clouds:write
+	--body string
+	--body-file string
+	--environment string required body
+	--name string required body
+	--role-arn string required body
+cloud-azure create
+	POST /clouds/azure scope=clouds:write
+	--application-id string required body
+	--body string
+	--body-file string
+	--directory-id string required body
+	--environment string required body
+	--name string required body
+	--subscription-id string required body
+cloud-azure-credentials update <cloud_id>
+	PUT /clouds/azure/{cloud_id}/credentials scope=clouds:write
+	--body string
+	--body-file string
+cloud-gcp create
+	POST /clouds/gcp scope=clouds:write
+	--body string
+	--body-file string
+	--environment string required body
+	--name string required body
+	--project-id string required body
+cloud-kubernetes create
+	POST /clouds/kubernetes scope=clouds:write
+	--body string
+	--body-file string
+	--enable-image-scanning bool body
+	--environment string required body
+	--name string required body
+cloud-rule list
+	GET /clouds/rules scope=clouds:read
+	--cloud-id int64
+code-quality-finding list
+	GET /code-quality/repo-findings scope=code_quality:read paged=per_page:100:header:items=findings
+	--code-repo-id int64 required
+	--filter-state string
+	--limit int
+code-quality-pr-finding list
+	GET /code-quality/findings scope=code_quality:read
+	--code-repo-id int64 required
+	--pr-number string required
+code-scanning-token update
+	POST /access-tokens/code-scanning scope=access_tokens:write
+	--body string
+	--body-file string
+compliance-cis get
+	GET /report/cis/overview scope=reports:read
+compliance-cis-aws get
+	GET /report/cis_aws/overview scope=reports:read
+compliance-dora get
+	GET /report/dora/overview scope=reports:read
+compliance-fedramp-dast get
+	GET /report/oscal-dast scope=reports:read
+compliance-gdpr get
+	GET /report/gdpr/overview scope=reports:read
+compliance-iso get
+	GET /report/iso/overview scope=reports:read
+compliance-nis2 get
+	GET /report/nis2/overview scope=reports:read
+compliance-pci get
+	GET /report/pci/overview scope=reports:read
+compliance-soc2 get
+	GET /report/soc2/overview scope=reports:read
+container activate
+	POST /containers/activate scope=containers:write
+	--body string
+	--body-file string
+	--container-repo-id int64 required body
+container clone
+	POST /containers/clone scope=containers:write
+	--body string
+	--body-file string
+	--container-repo-id int64 required body
+	--tag-filter int64 required body
+container create
+	POST /containers/public scope=containers:write
+	--body string
+	--body-file string
+	--container-repo-name string required body
+	--registry-kind string required body
+	--tag string required body
+container deactivate
+	POST /containers/deactivate scope=containers:write destructive
+	--body string
+	--body-file string
+	--container-repo-id int64 required body
+container delete <container_repo_id>
+	DELETE /containers/{container_repo_id} scope=containers:write destructive
+container get <container_repo_id>
+	GET /containers/{container_repo_id} scope=containers:read
+container list
+	GET /containers scope=repositories:read paged=per_page:100:empty
+	--filter-name string
+	--filter-reachability string
+	--filter-status string
+	--filter-tag string
+	--filter-team-id int64
+	--include-connectivity bool
+	--include-is-running bool
+	--include-labels bool
+	--include-sensitivity bool
+	--limit int
+container scan <container_repo_id>
+	POST /containers/{container_repo_id}/scan scope=containers:write
+container-connectivity update <container_repo_id>
+	PUT /containers/{container_repo_id}/internetConnection scope=containers:write
+	--body string
+	--body-file string
+	--internet-exposed string required body
+container-label create <container_repo_id>
+	POST /containers/{container_repo_id}/labels scope=containers:write
+	--body string
+	--body-file string
+	--name string required body
+container-label delete <container_repo_id> <label_id>
+	DELETE /containers/{container_repo_id}/labels/{label_id} scope=containers:write destructive
+container-label update <container_repo_id> <label_id>
+	POST /containers/{container_repo_id}/labels/{label_id} scope=containers:write
+	--body string
+	--body-file string
+	--name string required body
+container-license export <container_repo_id>
+	GET /containers/{container_repo_id}/licenses/export scope=repositories:read
+	--format string
+	--include-risk-reason int64
+container-registry get <registry_id>
+	GET /containers/registries/{registry_id} scope=containers:read
+container-registry-acr create
+	POST /containers/registries/acr scope=containers:write
+	--body string
+	--body-file string
+	--registry-name string required body
+	--username string required body
+container-registry-gcp create
+	POST /containers/registries/gcp-artifact-registry scope=containers:write
+	--body string
+	--body-file string
+	--project-id string required body
+container-registry-gitlab create
+	POST /containers/registries/gitlab-self scope=containers:write
+	--api-url string required body
+	--body string
+	--body-file string
+	--registry-name string required body
+	--username string required body
+container-repo-link create
+	POST /containers/linkCodeRepo scope=containers:write
+	--body string
+	--body-file string
+	--code-repo-id int64 required body
+	--container-repo-id int64 required body
+container-repo-link delete
+	POST /containers/unlinkCodeRepo scope=containers:write destructive
+	--body string
+	--body-file string
+	--container-repo-id int64 required body
+container-runner list <container_repo_id>
+	GET /containers/{container_repo_id}/runners scope=containers:read
+container-sbom export <container_repo_id>
+	GET /containers/{container_repo_id}/sbom/exportRaw scope=containers:read
+container-sbom import
+	POST /containers/sbom scope=containers:write
+	--allow-multiple-tags bool body
+	--body string
+	--body-file string
+	--container-image-name string required body
+	--digest string body
+	--tag string body
+container-sbom-bulk export
+	POST /containers/sbom/generate scope=repositories:write
+	--body string
+	--body-file string
+	--format string body
+	--include-risk-reason int64 body
+container-sensitivity update <container_repo_id>
+	PUT /containers/{container_repo_id}/sensitivity scope=containers:write
+	--body string
+	--body-file string
+	--sensitivity string required body
+container-tag-filter update
+	POST /containers/updateTagFilter scope=containers:write
+	--body string
+	--body-file string
+	--container-repo-id int64 required body
+	--tag-filter int64 body
+cve get <cve_id>
+	GET /cve/{cve_id} scope=research:read
+domain create
+	POST /domains scope=domains:write
+	--body string
+	--body-file string
+	--domain string required body
+	--kind string required body
+	--openapi-spec-base64 string body
+	--openapi-spec-url string body
+	--zen-service-id int64 body
+domain delete <domain_id>
+	DELETE /domains/{domain_id} scope=domains:write destructive
+domain list
+	GET /domains scope=domains:read paged=per_page:100:empty
+	--limit int
+domain scan
+	POST /domains/scan scope=domains:write
+	--body string
+	--body-file string
+	--domain-id int64 required body
+domain-auth-header update <domain_id>
+	POST /domains/{domain_id}/headers scope=domains:write
+	--body string
+	--body-file string
+domain-openapi-spec update <domain_id>
+	PUT /domains/{domain_id}/update/openapi-spec scope=domains:write
+	--body string
+	--body-file string
+	--openapi-spec string required body
+domain-scan-header update <domain_id>
+	POST /domains/{domain_id}/custom-headers scope=domains:write
+	--body string
+	--body-file string
+endpoint-activity-log list
+	GET /endpoint-protection/activityLogs scope=endpoint_protection:read paged=per_page:50:empty
+	--after-timestamp int64
+	--limit int
+endpoint-device delete <device_id>
+	DELETE /endpoint-protection/devices/{device_id} scope=endpoint_protection:write destructive
+endpoint-device list
+	GET /endpoint-protection/devices scope=endpoint_protection:read
+endpoint-exception create <ecosystem>
+	POST /endpoint-protection/{ecosystem}/exceptions scope=endpoint_protection:write
+	--body string
+	--body-file string
+	--bypass-default-minimum-allowed-age bool body
+	--package-name string body
+	--permission-group-id int64 body
+	--status string body
+endpoint-exception delete <package_exception_id>
+	DELETE /endpoint-protection/exceptions/{package_exception_id} scope=endpoint_protection:write destructive
+endpoint-exception list <ecosystem>
+	GET /endpoint-protection/{ecosystem}/exceptions scope=endpoint_protection:read
+endpoint-package list
+	GET /endpoint-protection/installed-packages scope=endpoint_protection:read paged=per_page:100:empty
+	--filter-device int64
+	--filter-ecosystem string
+	--limit int
+endpoint-permission-group list
+	GET /endpoint-protection/permission-groups scope=endpoint_protection:read
+firewall-app create
+	POST /firewall/apps scope=firewall:write
+	--body string
+	--body-file string
+	--environment string required body
+	--name string required body
+	--repo-id int64 body
+firewall-app delete <app_id>
+	DELETE /firewall/apps/{app_id} scope=firewall:write destructive
+firewall-app get <app_id>
+	GET /firewall/apps/{app_id} scope=firewall:read
+firewall-app list
+	GET /firewall/apps scope=firewall:read
+firewall-app update <app_id>
+	PUT /firewall/apps/{app_id} scope=firewall:write
+	--body string
+	--body-file string
+	--environment string required body
+	--name string required body
+firewall-app-token rotate <app_id>
+	POST /firewall/apps/{app_id}/token scope=firewall:write destructive
+firewall-blocking update <service_id>
+	PUT /firewall/apps/{service_id}/blocking scope=firewall:write
+	--block bool required body
+	--body string
+	--body-file string
+	--disable-minimum-wait-check bool body
+firewall-bot-list get <app_id>
+	GET /firewall/apps/{app_id}/bot-lists scope=firewall:read
+firewall-bot-list update <app_id>
+	PUT /firewall/apps/{app_id}/bot-lists scope=firewall:write
+	--body string
+	--body-file string
+firewall-country-list get <app_id>
+	GET /firewall/apps/{app_id}/countries scope=firewall:read
+firewall-country-list update <app_id>
+	PUT /firewall/apps/{app_id}/countries scope=firewall:write
+	--body string
+	--body-file string
+	--mode string required body
+firewall-event get <app_id> <event_id>
+	GET /firewall/apps/{app_id}/events/{event_id} scope=firewall:read
+firewall-ip-blocklist update <app_id>
+	PUT /firewall/apps/{app_id}/ip-blocklist scope=firewall:write
+	--body string
+	--body-file string
+firewall-threat-list get <app_id>
+	GET /firewall/apps/{app_id}/ip-lists scope=firewall:read
+firewall-threat-list update <app_id>
+	PUT /firewall/apps/{app_id}/ip-lists scope=firewall:write
+	--body string
+	--body-file string
+firewall-user list <app_id>
+	GET /firewall/apps/{app_id}/users scope=firewall:read paged=per_page:50:empty:items=users
+	--limit int
+firewall-user update <app_id> <user_id>
+	PUT /firewall/{app_id}/users/{user_id} scope=firewall:write
+	--block bool required body
+	--body string
+	--body-file string
+iac-rule list
+	GET /repositories/code/iac/rules scope=repositories:read
+	--repo-id int64
+ide-adoption list
+	GET /users/ide/adoption scope=users:read
+	--ide string
+image-request create
+	POST /autofix/aikido-images/request scope=autofix:write
+	--body string
+	--body-file string
+	--image-name string required body
+	--image-tag string required body
+	--urgency string required body
+image-request list
+	GET /autofix/aikido-images/requests scope=autofix:read
+internal-package create
+	POST /licenses/markInternal scope=licenses:write
+	--body string
+	--body-file string
+	--language string required body
+	--org-name string body
+	--package-name string required body
+issue export
+	GET /issues/export scope=issues:read
+	--filter-code-repo-id int64
+	--filter-code-repo-name string
+	--filter-container-repo-id int64
+	--filter-container-repo-ids string
+	--filter-container-repo-name string
+	--filter-domain-id int64
+	--filter-issue-group-id int64
+	--filter-issue-type string
+	--filter-language string
+	--filter-severities string
+	--filter-status string
+	--filter-team-id int64
+	--filter-virtual-machine-id int64
+	--format string
+	--page int64
+	--per-page int64
+	--sla-remediate-by-after int64
+	--sla-remediate-by-before int64
+issue get <issue_id>
+	GET /issues/{issue_id} scope=issues:read
+	--include-epss-score bool
+issue ignore <issue_id>
+	PUT /issues/{issue_id}/ignore scope=issues:write
+	--apply-for-all-tags bool body
+	--body string
+	--body-file string
+	--reason string body
+issue list
+	GET /issues/detail/bulk scope=issues:read
+	--include-epss-score bool
+	--issue-ids string required
+issue snooze <issue_id>
+	PUT /issues/{issue_id}/snooze scope=issues:write
+	--apply-for-all-tags bool body
+	--body string
+	--body-file string
+	--reason string body
+	--snooze-until int64 required body
+issue solve <issue_id>
+	PUT /issues/{issue_id}/solve scope=issues:write
+issue unignore <issue_id>
+	PUT /issues/{issue_id}/unignore scope=issues:write
+	--apply-for-all-tags bool body
+	--body string
+	--body-file string
+	--reason string body
+issue unsnooze <issue_id>
+	PUT /issues/{issue_id}/unsnooze scope=issues:write
+	--apply-for-all-tags bool body
+	--body string
+	--body-file string
+issue-count get
+	GET /issues/counts scope=issues:read
+	--filter-code-repo-id int64
+	--filter-code-repo-name string
+	--filter-container-repo-id int64
+	--filter-external-code-repo-id string
+	--filter-team-id int64
+	--since-timestamp int64
+issue-cve-exploitability get <issue_id>
+	GET /issues/{issue_id}/cveExploitability scope=issues:read
+issue-cve-exploitability list
+	GET /issues/cveExploitability/bulk scope=issues:read
+	--issue-ids string required
+issue-group get <issue_group_id>
+	GET /issues/groups/{issue_group_id} scope=issues:read
+issue-group ignore <issue_group_id>
+	PUT /issues/groups/{issue_group_id}/ignore scope=issues:write
+	--body string
+	--body-file string
+	--reason string body
+issue-group list
+	GET /open-issue-groups scope=issues:read paged=per_page:100:header
+	--filter-code-repo-id int64
+	--filter-code-repo-name string
+	--filter-container-repo-id int64
+	--filter-external-code-repo-id string
+	--filter-issue-type string
+	--filter-status string
+	--filter-team-id int64
+	--limit int
+issue-group snooze <issue_group_id>
+	PUT /issues/groups/{issue_group_id}/snooze scope=issues:write
+	--body string
+	--body-file string
+	--reason string body
+	--snooze-until int64 required body
+issue-group unignore <issue_group_id>
+	PUT /issues/groups/{issue_group_id}/unignore scope=issues:write
+	--body string
+	--body-file string
+	--reason string body
+issue-group unsnooze <issue_group_id>
+	PUT /issues/groups/{issue_group_id}/unsnooze scope=issues:write
+issue-group-note create <issue_group_id>
+	POST /issues/groups/{issue_group_id}/notes scope=issues:write
+	--body string
+	--body-file string
+	--cve-id string body
+	--note string required body
+issue-group-note list <issue_group_id>
+	GET /issues/groups/{issue_group_id}/notes scope=issues:read
+	--include-personal-notes bool
+issue-group-severity update <issue_group_id>
+	POST /issues/groups/{issue_group_id}/severity/adjust scope=issues:write
+	--adjusted-severity string required body
+	--body string
+	--body-file string
+	--reason string required body
+issue-group-task create
+	POST /task_tracking/linkTaskToIssueGroup scope=task_tracking:write
+	--body string
+	--body-file string
+	--integration-id int64 body
+	--issue-group-id int64 required body
+	--project-id string required body
+	--scope string body
+	--scope-id int64 body
+	--task-id string required body
+issue-group-task list <issue_group_id>
+	GET /issues/groups/{issue_group_id}/tasks scope=issues:read
+issue-reachability get <issue_id>
+	GET /issues/{issue_id}/reachability scope=issues:read
+	--include-dev-deps bool
+issue-severity update <issue_id>
+	POST /issues/{issue_id}/severity/adjust scope=issues:write
+	--adjusted-severity string required body
+	--body string
+	--body-file string
+	--reason string required body
+license list
+	GET /licenses scope=licenses:read paged=per_page:300:empty
+	--limit int
+	--scope string
+	--search string
+local-scanner-version get
+	GET /localscan/latest
+malware-package list
+	GET /research/malware/packages scope=research:read paged=per_page:20:empty
+	--filter-ecosystem string
+	--limit int
+	--search string
+mobile-rule list
+	GET /repositories/code/mobile/rules scope=repositories:read
+	--repo-id int64
+openapi-spec get
+	GET /openapi/spec scope=basics:read
+package-health list
+	GET /research/package-health/bulk scope=research:read
+	--ecosystem string required
+	--packages string required
+package-license update
+	POST /licenses/overwrite scope=licenses:write
+	--body string
+	--body-file string
+	--language string required body
+	--license-type string required body
+	--org-name string body
+	--package-name string required body
+	--reason string body
+	--risk string required body
+pentest-assessment create
+	POST /pentests/assessments/createDraft scope=pentests:write
+	--body string
+	--body-file string
+	--project-name string required body
+	--repository-download-url string body
+	--repository-name string body
+pentest-assessment get <assessment_id>
+	GET /pentests/assessments/{assessment_id}/detail scope=pentests:read
+pentest-attack-analysis get <issue_id>
+	GET /pentests/issues/{issue_id}/attackAnalysis scope=pentests:read
+pr-check get <scan_id>
+	GET /report/ciScans/{scan_id}/detail scope=reports:read
+pr-check list
+	GET /report/ciScans scope=reports:read paged=per_page:50:empty
+	--filter-code-repo-id int64
+	--filter-gate-status string
+	--limit int
+	--search string
+pr-check-action list
+	GET /report/ciScans/issueActions scope=reports:read paged=per_page:100:empty
+	--limit int
+pr-check-config list
+	GET /repositories/code/continuous_integration/checks scope=repositories:read paged=per_page:100:empty
+	--filter-code-repo-id int64
+	--limit int
+pr-check-config update
+	POST /repositories/code/continuous_integration/checks scope=repositories:write
+	--body string
+	--body-file string
+	--code-repo-id int64 required body
+	--enable-code-quality-scan bool required body
+	--fail-on-code-quality-scan bool required body
+	--fail-on-dependency-scan bool required body
+	--fail-on-iac-scan bool required body
+	--fail-on-malware-scan bool required body
+	--fail-on-sast-scan bool required body
+	--fail-on-secrets-scan bool required body
+	--minimum-license-severity string required body
+	--minimum-severity string required body
+	--post-code-quality-inline-comments-min-severity string required body
+	--post-inline-comments-min-severity string body
+	--run-deep-audit-pr-scan bool body
+pr-check-config-all update
+	POST /repositories/code/continuous_integration/checks/all scope=repositories:write destructive
+	--body string
+	--body-file string
+	--enable-code-quality-scan bool required body
+	--fail-on-code-quality-scan bool required body
+	--fail-on-dependency-scan bool required body
+	--fail-on-iac-scan bool required body
+	--fail-on-malware-scan bool required body
+	--fail-on-sast-scan bool required body
+	--fail-on-secrets-scan bool required body
+	--minimum-license-severity string required body
+	--minimum-severity string required body
+	--post-code-quality-inline-comments-min-severity string required body
+	--post-inline-comments-min-severity string body
+	--run-deep-audit-pr-scan bool body
+pr-check-config-default get
+	GET /repositories/code/continuous_integration/checks/default scope=repositories:read
+pr-check-config-default update
+	POST /repositories/code/continuous_integration/checks/default scope=repositories:write
+	--body string
+	--body-file string
+	--enable-code-quality-scan bool required body
+	--fail-on-code-quality-scan bool required body
+	--fail-on-dependency-scan bool required body
+	--fail-on-iac-scan bool required body
+	--fail-on-malware-scan bool required body
+	--fail-on-sast-scan bool required body
+	--fail-on-secrets-scan bool required body
+	--minimum-license-severity string body
+	--minimum-severity string required body
+	--post-code-quality-inline-comments-min-severity string body
+	--post-inline-comments-min-severity string body
+	--run-deep-audit-pr-scan bool body
+private-registry update
+	POST /repositories/code/private-registries scope=repositories:write
+	--body string
+	--body-file string
+	--type string required body
+repo activate
+	POST /repositories/code/activate scope=repositories:write
+	--body string
+	--body-file string
+	--code-repo-id int64 required body
+repo clone
+	POST /repositories/code/clone scope=repositories:write
+	--body string
+	--body-file string
+	--branch string required body
+	--code-repo-id int64 required body
+repo deactivate
+	POST /repositories/code/deactivate scope=repositories:write destructive
+	--body string
+	--body-file string
+	--code-repo-id int64 required body
+repo delete <code_repo_id>
+	DELETE /repositories/code/{code_repo_id} scope=repositories:write destructive
+repo get <code_repo_id>
+	GET /repositories/code/{code_repo_id} scope=repositories:read
+repo import
+	POST /repositories/import scope=repositories:write
+repo list
+	GET /repositories/code scope=repositories:read paged=per_page:200:empty
+	--filter-branch string
+	--filter-name string
+	--include-config-issues-info bool
+	--include-inactive bool
+	--include-labels bool
+	--limit int
+repo scan <code_repo_id>
+	POST /repositories/code/{code_repo_id}/scan scope=repositories:write
+	--include-iac-scan bool
+	--include-sast-scan bool
+	--include-secrets-scan bool
+repo-connectivity update <code_repo_id>
+	PUT /repositories/code/{code_repo_id}/connectivity scope=repositories:write
+	--body string
+	--body-file string
+	--connectivity string required body
+repo-dev-dep-scan update <code_repo_id>
+	PUT /repositories/code/{code_repo_id}/devdep-scan scope=repositories:write
+	--body string
+	--body-file string
+	--dev-dep-scanning-enabled bool required body
+repo-exclude-path create <code_repo_id>
+	POST /repositories/code/{code_repo_id}/exclude-path scope=repositories:write
+	--body string
+	--body-file string
+	--path string required body
+	--reason string body
+repo-exclude-path delete <code_repo_id>
+	POST /repositories/code/{code_repo_id}/exclude-path/remove scope=repositories:write destructive
+	--body string
+	--body-file string
+	--path string required body
+repo-label create <code_repo_id>
+	POST /repositories/code/{code_repo_id}/labels scope=repositories:write
+	--body string
+	--body-file string
+	--name string required body
+repo-label delete <code_repo_id> <label_id>
+	DELETE /repositories/code/{code_repo_id}/labels/{label_id} scope=repositories:write destructive
+repo-label update <code_repo_id> <label_id>
+	POST /repositories/code/{code_repo_id}/labels/{label_id} scope=repositories:write
+	--body string
+	--body-file string
+	--name string required body
+repo-license export <code_repo_id>
+	GET /repositories/code/{code_repo_id}/licenses/export scope=repositories:read
+	--format string
+	--include-risk-reason int64
+	--include-vex int64
+	--language string
+	--location string
+	--scope string
+repo-sensitivity update <code_repo_id>
+	PUT /repositories/code/{code_repo_id}/sensitivity scope=repositories:write
+	--body string
+	--body-file string
+	--sensitivity string required body
+report export
+	GET /report/export/pdf scope=reports:read
+	--included-sections string required
+	--repo-id int64
+	--team-id int64
+sast-custom-rule create
+	POST /repositories/sast/custom-rules scope=custom_sast_rules:write
+	--body string
+	--body-file string
+	--how-to-fix string required body
+	--issue-title string required body
+	--language string required body
+	--priority int64 required body
+	--semgrep-rule string required body
+	--tldr string required body
+sast-custom-rule delete <rule_id>
+	DELETE /repositories/sast/custom-rules/{rule_id} scope=custom_sast_rules:write destructive
+sast-custom-rule get <rule_id>
+	GET /repositories/sast/custom-rules/{rule_id} scope=custom_sast_rules:read
+sast-custom-rule list
+	GET /repositories/sast/custom-rules scope=custom_sast_rules:read
+sast-custom-rule update <rule_id>
+	PUT /repositories/sast/custom-rules/{rule_id} scope=custom_sast_rules:write
+	--body string
+	--body-file string
+	--how-to-fix string required body
+	--issue-title string required body
+	--language string required body
+	--priority int64 required body
+	--semgrep-rule string required body
+	--tldr string required body
+sast-rule list
+	GET /repositories/code/sast/rules scope=repositories:read
+	--repo-id int64
+sla-config get
+	GET /workspace/slaSettings scope=basics:read
+subdomain create <domain_id>
+	POST /domains/{domain_id}/subdomains scope=domains:write
+	--body string
+	--body-file string
+	--subdomain-name string required body
+subdomain list <domain_id>
+	GET /domains/{domain_id}/subdomains scope=domains:read paged=per_page:100:empty
+	--limit int
+task list <project_id>
+	GET /task_tracking/projects/{project_id}/tasks scope=task_tracking:read
+	--integration-id int64
+	--search string
+task-integration list
+	GET /task_tracking/integrations scope=task_tracking:read
+task-mapping get
+	GET /task_tracking/projectMapping scope=task_tracking:read
+	--integration-id int64
+task-project list
+	GET /task_tracking/projects scope=task_tracking:read
+	--integration-id int64
+task-repo-mapping update
+	POST /task_tracking/mapCodeReposToProjects scope=task_tracking:write
+	--body string
+	--body-file string
+	--integration-id int64 body
+task-team-mapping update
+	POST /task_tracking/mapTeamsToProjects scope=task_tracking:write
+	--body string
+	--body-file string
+	--integration-id int64 body
+team create
+	POST /teams scope=teams:write
+	--body string
+	--body-file string
+	--name string required body
+team delete <team_id>
+	DELETE /teams/{team_id} scope=teams:write destructive
+team list
+	GET /teams scope=teams:read paged=per_page:100:empty
+	--limit int
+team update <team_id>
+	PUT /teams/{team_id} scope=teams:write
+	--body string
+	--body-file string
+	--name string body
+team-license export <team_id>
+	GET /repositories/code/team/{team_id}/licenses/export scope=repositories:read
+	--format string
+	--include-risk-reason int64
+	--language string
+	--location string
+	--scope string
+team-member create <team_id>
+	POST /teams/{team_id}/addUser scope=teams:write
+	--body string
+	--body-file string
+	--user-id int64 required body
+team-member delete <team_id>
+	POST /teams/{team_id}/removeUser scope=teams:write destructive
+	--body string
+	--body-file string
+	--user-id int64 required body
+team-repo-path-limitation update <team_id>
+	POST /teams/{team_id}/updateRepoPathLimitation scope=teams:write
+	--body string
+	--body-file string
+	--repo-id int64 required body
+team-resource create <team_id>
+	POST /teams/{team_id}/linkResource scope=teams:write
+	--body string
+	--body-file string
+	--cloud-id int64 body
+	--domain-id int64 body
+	--image-id int64 body
+	--repo-id int64 body
+	--zen-app-id int64 body
+team-resource delete <team_id>
+	POST /teams/{team_id}/unlinkResource scope=teams:write destructive
+	--body string
+	--body-file string
+	--cloud-id int64 body
+	--domain-id int64 body
+	--image-id int64 body
+	--repo-id int64 body
+	--zen-app-id int64 body
+user get <user_id>
+	GET /users/{user_id} scope=users:read
+user list
+	GET /users scope=users:read
+	--filter-team-id int64
+	--include-inactive int64
+user-login list
+	GET /users/login/history scope=users:read paged=per_page:100:empty
+	--filter-user-id int64
+	--limit int
+user-request list
+	GET /request-inbox/requests scope=request_inbox:read
+	--filter-status string
+user-request review <request_id>
+	POST /request-inbox/requests/{request_id}/review scope=request_inbox:write
+	--body string
+	--body-file string
+	--status string required body
+user-role update <user_id>
+	PUT /users/{user_id}/rights scope=users:write
+	--body string
+	--body-file string
+	--read-only int64 body
+	--role string required body
+virtual-machine list
+	GET /virtual-machines scope=virtual_machines:read
+	--cloud-id int64
+	--filter-os string
+	--filter-os-version string
+	--include-os-info int64
+	--search string
+virtual-machine-sbom export <virtual_machine_id> <format>
+	GET /virtual-machines/{virtual_machine_id}/export/{format} scope=virtual_machines:read
+wallet-balance get
+	GET /workspace/wallet scope=basics:read
+webhook create
+	POST /webhooks scope=webhooks:write
+	--body string
+	--body-file string
+	--event-type string required body
+	--target-url string required body
+webhook delete <webhook_id>
+	DELETE /webhooks/{webhook_id} scope=webhooks:write destructive
+webhook list
+	GET /webhooks scope=webhooks:read
+workspace get
+	GET /workspace scope=basics:read
+workspace-config-error list
+	GET /workspace/configurationErrors scope=basics:read
