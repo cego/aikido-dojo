@@ -79,11 +79,15 @@ func build(sop SpecOp, o overlay.Op) (ops.Op, ops.SchemaSet, error) {
 		return ops.Op{}, ops.SchemaSet{}, err
 	}
 	op.Paging = paging
-	args, argsSchema, err := argsOf(sop)
+	unbounded, err := unboundedOf(sop, o)
 	if err != nil {
 		return ops.Op{}, ops.SchemaSet{}, err
 	}
-	flags, flagsSchema, err := flagsOf(sop, owned)
+	args, argsSchema, err := argsOf(sop, unbounded)
+	if err != nil {
+		return ops.Op{}, ops.SchemaSet{}, err
+	}
+	flags, flagsSchema, err := flagsOf(sop, owned, unbounded)
 	if err != nil {
 		return ops.Op{}, ops.SchemaSet{}, err
 	}
@@ -158,8 +162,28 @@ func pagingOf(sop SpecOp, o overlay.Op) (*api.Paging, map[string]bool, error) {
 	return p, map[string]bool{"page": true, size.Name: true}, nil
 }
 
+// unboundedOf checks the overlay's Unbounded against the spec: each name must
+// be a parameter that has a bound to drop.
+func unboundedOf(sop SpecOp, o overlay.Op) (map[string]bool, error) {
+	set := map[string]bool{}
+	for _, name := range o.Unbounded {
+		i := slices.IndexFunc(sop.Params, func(p SpecParam) bool { return p.Name == name })
+		if i < 0 {
+			return nil, fmt.Errorf("the overlay's Unbounded names %s, which is no parameter", name)
+		}
+		s := sop.Params[i].Schema
+		if _, lo := s["minimum"]; !lo {
+			if _, hi := s["maximum"]; !hi {
+				return nil, fmt.Errorf("the overlay's Unbounded names %s, which has no bounds", name)
+			}
+		}
+		set[name] = true
+	}
+	return set, nil
+}
+
 // argsOf returns the path parameters in the order the path names them.
-func argsOf(sop SpecOp) ([]ops.Param, map[string]any, error) {
+func argsOf(sop SpecOp, unbounded map[string]bool) ([]ops.Param, map[string]any, error) {
 	byName := map[string]SpecParam{}
 	for _, p := range sop.Params {
 		if p.In == "path" {
@@ -179,7 +203,7 @@ func argsOf(sop SpecOp) ([]ops.Param, map[string]any, error) {
 			return nil, nil, fmt.Errorf("path parameter %s: want an integer or string", name)
 		}
 		args = append(args, ops.Param{Name: name, Kind: kind, Required: true, Usage: usage(p.Description, p.Schema, false)})
-		obj.add(name, described(p), true)
+		obj.add(name, described(p, unbounded[name]), true)
 	}
 	if len(byName) > 0 {
 		return nil, nil, fmt.Errorf("path parameters %v don't appear in the path", slices.Sorted(maps.Keys(byName)))
@@ -204,7 +228,7 @@ func pathNames(path string) []string {
 	}
 }
 
-func flagsOf(sop SpecOp, owned map[string]bool) ([]ops.Param, map[string]any, error) {
+func flagsOf(sop SpecOp, owned, unbounded map[string]bool) ([]ops.Param, map[string]any, error) {
 	var flags []ops.Param
 	var obj object
 	for _, p := range sop.Params {
@@ -216,7 +240,7 @@ func flagsOf(sop SpecOp, owned map[string]bool) ([]ops.Param, map[string]any, er
 			return nil, nil, fmt.Errorf("query parameter %s: unsupported schema type %v", p.Name, p.Schema["type"])
 		}
 		flags = append(flags, ops.Param{Name: p.Name, Kind: kind, Required: p.Required, Usage: usage(p.Description, p.Schema, p.Required)})
-		obj.add(p.Name, described(p), p.Required)
+		obj.add(p.Name, described(p, unbounded[p.Name]), p.Required)
 	}
 	slices.SortFunc(flags, func(a, b ops.Param) int { return strings.Compare(a.Name, b.Name) })
 	return flags, obj.schema(), nil
@@ -398,9 +422,13 @@ func usage(desc string, s map[string]any, required bool) string {
 }
 
 // described copies a parameter's schema with its description, because
-// shared parameters share one schema map.
-func described(p SpecParam) map[string]any {
+// shared parameters share one schema map. unbounded drops a wrong minimum and maximum.
+func described(p SpecParam, unbounded bool) map[string]any {
 	s := maps.Clone(p.Schema)
+	if unbounded {
+		delete(s, "minimum")
+		delete(s, "maximum")
+	}
 	if _, ok := s["description"]; !ok && p.Description != "" {
 		s["description"] = p.Description
 	}

@@ -47,7 +47,7 @@ func TestCommandsAreUnique(t *testing.T) {
 // operation destructive beyond its verb. Each needs a reason a reviewer can check.
 var needsEvidence = map[string]bool{
 	"Destructive": true, "Scope": true, "ResponseArray": true, "PageSize": true,
-	"NotPaged": true, "Secret": true, "Help": true, "BadRequestHint": true,
+	"NotPaged": true, "Secret": true, "Help": true, "BadRequestHint": true, "Unbounded": true,
 }
 
 func TestCorrectionsCiteEvidence(t *testing.T) {

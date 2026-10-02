@@ -193,6 +193,42 @@ func TestBuildRejectsSpecShapes(t *testing.T) {
 	}
 }
 
+func TestBuildDropsBoundsTheOverlayMarksWrong(t *testing.T) {
+	s, err := LoadSpec(specWith(`{"/a/{x}": {"get": {"operationId": "a", "parameters": [
+		{"in": "path", "name": "x", "required": true, "schema": {"type": "integer", "minimum": 0, "maximum": 1}},
+		{"in": "query", "name": "q", "schema": {"type": "integer", "minimum": 0, "maximum": 1}}]}}}`))
+	if err != nil {
+		t.Fatal(err)
+	}
+	m, err := Build(s, map[string]overlay.Op{"a": {Cmd: "a get", Unbounded: []string{"x"}}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	x := m.Schemas["a"].Args["properties"].(map[string]any)["x"].(map[string]any)
+	q := m.Schemas["a"].Flags["properties"].(map[string]any)["q"].(map[string]any)
+	if _, ok := x["maximum"]; ok || x["minimum"] != nil || q["maximum"] == nil {
+		t.Errorf("x = %v, q = %v; want x's bounds dropped and q's kept", x, q)
+	}
+	for _, tt := range []struct {
+		unbounded []string
+		want      string
+	}{
+		{[]string{"nope"}, "Unbounded names nope, which is no parameter"},
+	} {
+		_, err := Build(s, map[string]overlay.Op{"a": {Cmd: "a get", Unbounded: tt.unbounded}})
+		if err == nil || !strings.Contains(err.Error(), tt.want) {
+			t.Errorf("Unbounded %v: err = %v, want %q", tt.unbounded, err, tt.want)
+		}
+	}
+	s2, err := LoadSpec(specWith(`{"/a/{x}": {"get": {"operationId": "a", "parameters": [{"in": "path", "name": "x", "required": true, "schema": {"type": "integer"}}]}}}`))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := Build(s2, map[string]overlay.Op{"a": {Cmd: "a get", Unbounded: []string{"x"}}}); err == nil || !strings.Contains(err.Error(), "x, which has no bounds") {
+		t.Errorf("err = %v, want Unbounded on an unbounded parameter refused", err)
+	}
+}
+
 func TestBuildVendoredSpec(t *testing.T) {
 	data, err := os.ReadFile("../../spec/openapi.json")
 	if err != nil {

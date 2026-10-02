@@ -119,6 +119,11 @@ func TestPathArguments(t *testing.T) {
 	if n := len(f.seen()); n != 1 {
 		t.Errorf("API calls = %d, want only the first command's", n)
 	}
+	// The spec bounds user_id to 0..1; the overlay drops that wrong bound.
+	mustRun(t, env, "user", "get", "5")
+	if got := f.seen()[1].URI; got != "/api/public/v1/users/5" {
+		t.Errorf("URI = %q, want user 5", got)
+	}
 }
 
 func TestQueryHoldsOnlyTheFlagsSet(t *testing.T) {

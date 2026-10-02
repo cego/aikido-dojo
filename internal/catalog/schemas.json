@@ -8613,8 +8613,6 @@
         "user_id": {
           "description": "The ID of the user",
           "format": "int32",
-          "maximum": 1,
-          "minimum": 0,
           "type": "integer"
         }
       },
@@ -17145,8 +17143,6 @@
         "user_id": {
           "description": "The ID of the user",
           "format": "int32",
-          "maximum": 1,
-          "minimum": 0,
           "type": "integer"
         }
       },
