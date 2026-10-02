@@ -3,7 +3,7 @@ activity-log list
 	--action-filter string
 	--cloud-id int64
 	--end int64
-	--limit int
+	--limit int64
 	--repository-id int64
 	--search string
 	--start int64
@@ -12,7 +12,7 @@ aikido-image list
 	GET /autofix/aikido-images scope=autofix:read paged=per_page:50:empty
 	--filter-image-name string
 	--filter-image-tag string
-	--limit int
+	--limit int64
 autofix-container-config get
 	GET /repositories/autofix/container/settings scope=autofix:read
 autofix-container-config update
@@ -39,7 +39,7 @@ autofix-sast-config update
 	--body-file string
 autofix-task list
 	GET /autofix/history scope=autofix:read paged=per_page:20:header
-	--limit int
+	--limit int64
 autofix-task-issue list <autofix_task_id>
 	GET /autofix/history/{autofix_task_id}/issues scope=autofix:read
 broker-app list
@@ -66,13 +66,13 @@ cloud delete <cloud_id>
 	DELETE /clouds/{cloud_id} scope=clouds:write destructive
 cloud list
 	GET /clouds scope=clouds:read paged=per_page:100:empty
-	--limit int
+	--limit int64
 cloud-asset list
 	GET /clouds/assets scope=clouds:read paged=limit:100:field:items=assets:more=hasMore
 	--asset-type stringSlice
 	--cloud-id stringSlice
 	--include-metadata bool
-	--limit int
+	--limit int64
 	--metadata-fields stringSlice
 	--prompt-id int64
 	--provider stringSlice
@@ -121,7 +121,7 @@ code-quality-finding list
 	GET /code-quality/repo-findings scope=code_quality:read paged=per_page:100:header:items=findings
 	--code-repo-id int64 required
 	--filter-state string
-	--limit int
+	--limit int64
 code-quality-pr-finding list
 	GET /code-quality/findings scope=code_quality:read
 	--code-repo-id int64 required
@@ -186,7 +186,7 @@ container list
 	--include-is-running bool
 	--include-labels bool
 	--include-sensitivity bool
-	--limit int
+	--limit int64
 container scan <container_repo_id>
 	POST /containers/{container_repo_id}/scan scope=containers:write
 container-connectivity update <container_repo_id>
@@ -285,7 +285,7 @@ domain delete <domain_id>
 	DELETE /domains/{domain_id} scope=domains:write destructive
 domain list
 	GET /domains scope=domains:read paged=per_page:100:empty
-	--limit int
+	--limit int64
 domain scan
 	POST /domains/scan scope=domains:write
 	--body string
@@ -307,7 +307,7 @@ domain-scan-header update <domain_id>
 endpoint-activity-log list
 	GET /endpoint-protection/activityLogs scope=endpoint_protection:read paged=per_page:50:empty
 	--after-timestamp int64
-	--limit int
+	--limit int64
 endpoint-device delete <device_id>
 	DELETE /endpoint-protection/devices/{device_id} scope=endpoint_protection:write destructive
 endpoint-device list
@@ -328,7 +328,7 @@ endpoint-package list
 	GET /endpoint-protection/installed-packages scope=endpoint_protection:read paged=per_page:100:empty
 	--filter-device int64
 	--filter-ecosystem string
-	--limit int
+	--limit int64
 endpoint-permission-group list
 	GET /endpoint-protection/permission-groups scope=endpoint_protection:read
 firewall-app create
@@ -385,7 +385,7 @@ firewall-threat-list update <app_id>
 	--body-file string
 firewall-user list <app_id>
 	GET /firewall/apps/{app_id}/users scope=firewall:read paged=per_page:50:empty:items=users
-	--limit int
+	--limit int64
 firewall-user update <app_id> <user_id>
 	PUT /firewall/{app_id}/users/{user_id} scope=firewall:write
 	--block bool required body
@@ -495,7 +495,7 @@ issue-group list
 	--filter-issue-type string
 	--filter-status string
 	--filter-team-id int64
-	--limit int
+	--limit int64
 issue-group snooze <issue_group_id>
 	PUT /issues/groups/{issue_group_id}/snooze scope=issues:write
 	--body string
@@ -547,7 +547,7 @@ issue-severity update <issue_id>
 	--reason string required body
 license list
 	GET /licenses scope=licenses:read paged=per_page:300:empty
-	--limit int
+	--limit int64
 	--scope string
 	--search string
 local-scanner-version get
@@ -555,7 +555,7 @@ local-scanner-version get
 malware-package list
 	GET /research/malware/packages scope=research:read paged=per_page:20:empty
 	--filter-ecosystem string
-	--limit int
+	--limit int64
 	--search string
 mobile-rule list
 	GET /repositories/code/mobile/rules scope=repositories:read
@@ -593,15 +593,15 @@ pr-check list
 	GET /report/ciScans scope=reports:read paged=per_page:50:empty
 	--filter-code-repo-id int64
 	--filter-gate-status string
-	--limit int
+	--limit int64
 	--search string
 pr-check-action list
 	GET /report/ciScans/issueActions scope=reports:read paged=per_page:100:empty
-	--limit int
+	--limit int64
 pr-check-config list
 	GET /repositories/code/continuous_integration/checks scope=repositories:read paged=per_page:100:empty
 	--filter-code-repo-id int64
-	--limit int
+	--limit int64
 pr-check-config update
 	POST /repositories/code/continuous_integration/checks scope=repositories:write
 	--body string
@@ -687,7 +687,7 @@ repo list
 	--include-config-issues-info bool
 	--include-inactive bool
 	--include-labels bool
-	--limit int
+	--limit int64
 repo scan <code_repo_id>
 	POST /repositories/code/{code_repo_id}/scan scope=repositories:write
 	--include-iac-scan bool
@@ -782,7 +782,7 @@ subdomain create <domain_id>
 	--subdomain-name string required body
 subdomain list <domain_id>
 	GET /domains/{domain_id}/subdomains scope=domains:read paged=per_page:100:empty
-	--limit int
+	--limit int64
 task list <project_id>
 	GET /task_tracking/projects/{project_id}/tasks scope=task_tracking:read
 	--integration-id int64
@@ -814,7 +814,7 @@ team delete <team_id>
 	DELETE /teams/{team_id} scope=teams:write destructive
 team list
 	GET /teams scope=teams:read paged=per_page:100:empty
-	--limit int
+	--limit int64
 team update <team_id>
 	PUT /teams/{team_id} scope=teams:write
 	--body string
@@ -869,7 +869,7 @@ user list
 user-login list
 	GET /users/login/history scope=users:read paged=per_page:100:empty
 	--filter-user-id int64
-	--limit int
+	--limit int64
 user-request list
 	GET /request-inbox/requests scope=request_inbox:read
 	--filter-status string

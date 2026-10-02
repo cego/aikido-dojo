@@ -3,6 +3,7 @@ package cli
 import (
 	"fmt"
 	"slices"
+	"strconv"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -57,7 +58,7 @@ func opCommand(root *cobra.Command, verb string, op ops.Op, run runFunc) (*cobra
 		return name == "help" || fs.Lookup(name) != nil || root.PersistentFlags().Lookup(name) != nil
 	}
 	if op.Paging != nil {
-		fs.Int("limit", 0, "stop after this many items; 0 prints every item")
+		fs.Var(new(decimal), "limit", "stop after this many items; 0 prints every item")
 	}
 	if op.Body != nil {
 		fs.String("body", "", "the request body as JSON")
@@ -94,13 +95,31 @@ func addFlag(fs *pflag.FlagSet, p ops.Param) {
 	case ops.Boolean:
 		fs.Bool(name, false, p.Usage)
 	case ops.Integer:
-		fs.Int64(name, 0, p.Usage)
+		fs.Var(new(decimal), name, p.Usage)
 	case ops.StringList, ops.IntegerList:
 		fs.StringSlice(name, nil, p.Usage)
 	default:
 		fs.String(name, "", p.Usage)
 	}
 }
+
+// decimal is an integer flag read in base 10 only. pflag's own Int64 reads 010
+// as octal 8 and 0x10 as 16, which would send a different ID.
+type decimal int64
+
+func (d *decimal) String() string { return strconv.FormatInt(int64(*d), 10) }
+
+func (d *decimal) Set(s string) error {
+	n, err := strconv.ParseInt(s, 10, 64)
+	if err != nil {
+		return fmt.Errorf("%q is not a base-10 integer", s)
+	}
+	*d = decimal(n)
+	return nil
+}
+
+// Type is int64, so FlagSet.GetInt64 reads the value.
+func (d *decimal) Type() string { return "int64" }
 
 func exactArgs(params []ops.Param) cobra.PositionalArgs {
 	return func(cmd *cobra.Command, args []string) error {

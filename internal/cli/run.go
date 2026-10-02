@@ -113,14 +113,14 @@ func (a *app) client() (*api.Client, error) {
 // list reads every page, or up to limit items, and prints them as one JSON
 // array. It prints only after the last page, so a failure never leaves a
 // truncated array on stdout.
-func (a *app) list(ctx context.Context, c *api.Client, req api.Request, p api.Paging, limit int) error {
+func (a *app) list(ctx context.Context, c *api.Client, req api.Request, p api.Paging, limit int64) error {
 	items := []json.RawMessage{}
 	for item, err := range c.Items(ctx, req, p) {
 		if err != nil {
 			return err
 		}
 		items = append(items, item)
-		if len(items) == limit {
+		if int64(len(items)) == limit {
 			break
 		}
 	}
@@ -301,11 +301,11 @@ func readBodyFile(path string, stdin io.Reader) ([]byte, error) {
 	return data, nil
 }
 
-func limitOf(fs *pflag.FlagSet, op ops.Op) (int, error) {
+func limitOf(fs *pflag.FlagSet, op ops.Op) (int64, error) {
 	if op.Paging == nil {
 		return 0, nil
 	}
-	n, err := fs.GetInt("limit")
+	n, err := fs.GetInt64("limit")
 	if err != nil {
 		return 0, fmt.Errorf("read --limit: %w", err)
 	}

@@ -338,3 +338,19 @@ func TestDebugLogsTheCall(t *testing.T) {
 		t.Errorf("exit %d, stderr %q", code, stderr)
 	}
 }
+
+func TestIntegersAreBase10(t *testing.T) {
+	f, env, _ := newFake(t, respond(`{}`))
+	mustRun(t, env, "team-member", "create", "3", "--user-id", "010")
+	if got := f.first(t).Body; got != `{"user_id":10}` {
+		t.Errorf("body = %q, want 010 sent as 10", got)
+	}
+	_, stderr, code := run(t, env, "team-member", "create", "3", "--user-id", "0x10")
+	if code != clierr.ExitUsage || !strings.Contains(errorOf(t, stderr).Message, `"0x10" is not a base-10 integer`) {
+		t.Errorf("exit %d, stderr %q; want 0x10 refused", code, stderr)
+	}
+	_, env2, _ := newFake(t, pages(`[1,2,3,4,5,6,7,8,9,10,11,12]`, `[]`))
+	if out := mustRun(t, env2, "repo", "list", "--limit", "010"); out != "[1,2,3,4,5,6,7,8,9,10]\n" {
+		t.Errorf("stdout = %q, want ten items", out)
+	}
+}
