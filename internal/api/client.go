@@ -167,8 +167,9 @@ func failure(req Request, resp *http.Response) error {
 	return e
 }
 
-// apiMessage extracts Aikido's error text ({"error": …} or {"message": …}),
-// else a short plain-text body, else the status text.
+// apiMessage extracts Aikido's error text ({"error": …}, {"message": …}, or
+// {"reason_phrase": …} as seen live on 2026-09-30), else a short plain-text
+// body, else the status text.
 func apiMessage(resp *http.Response) string {
 	fallback := http.StatusText(resp.StatusCode)
 	if strings.HasPrefix(resp.Header.Get("Content-Type"), "text/html") {
@@ -178,9 +179,13 @@ func apiMessage(resp *http.Response) string {
 	if err != nil {
 		return fallback
 	}
-	var body struct{ Error, Message string }
+	var body struct {
+		Error        string `json:"error"`
+		Message      string `json:"message"`
+		ReasonPhrase string `json:"reason_phrase"`
+	}
 	if json.Unmarshal(data, &body) == nil {
-		if m := cmp.Or(body.Error, body.Message); m != "" {
+		if m := cmp.Or(body.Error, body.Message, body.ReasonPhrase); m != "" {
 			return m
 		}
 	}
