@@ -35,6 +35,9 @@ func buildRoot(env Env) (*cobra.Command, error) {
 		return nil, err
 	}
 	root.AddCommand(a.versionCmd(), a.searchCmd(), a.schemaCmd(), a.apiCmd(), a.authCmd())
+	if err := a.addRepoCurrent(root); err != nil {
+		return nil, err
+	}
 	return root, nil
 }
 
