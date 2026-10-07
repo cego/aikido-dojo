@@ -16,21 +16,7 @@ import (
 //
 //	AIKIDO_DOJO_CLIENT_ID=… AIKIDO_DOJO_CLIENT_SECRET=… go test -tags live ./internal/cli/
 func TestLiveCommands(t *testing.T) {
-	if os.Getenv(config.EnvClientID) == "" || os.Getenv(config.EnvClientSecret) == "" {
-		t.Skip("set " + config.EnvClientID + " and " + config.EnvClientSecret)
-	}
-	noConfig := filepath.Join(t.TempDir(), "config.json")
-	cache := t.TempDir() // shared, so the calls below are paced by one window
-	env := Env{
-		Stdin: strings.NewReader(""),
-		Getenv: func(k string) string {
-			if k == config.EnvConfig {
-				return noConfig
-			}
-			return os.Getenv(k)
-		},
-		CacheDir: func() (string, error) { return cache, nil },
-	}
+	env := liveEnv(t)
 	tests := []struct {
 		args  []string
 		limit int // > 0: the output is an array of at most this many items
@@ -61,4 +47,76 @@ func TestLiveCommands(t *testing.T) {
 			t.Logf("%d items", len(items))
 		})
 	}
+}
+
+// liveEnv runs as the AIKIDO_DOJO_CLIENT_ID pair, with no config file, the
+// real network, and one rate-limit window for the test's calls.
+func liveEnv(t *testing.T) Env {
+	t.Helper()
+	if os.Getenv(config.EnvClientID) == "" || os.Getenv(config.EnvClientSecret) == "" {
+		t.Skip("set " + config.EnvClientID + " and " + config.EnvClientSecret)
+	}
+	noConfig := filepath.Join(t.TempDir(), "config.json")
+	cache := t.TempDir()
+	return Env{
+		Stdin: strings.NewReader(""),
+		Getenv: func(k string) string {
+			if k == config.EnvConfig {
+				return noConfig
+			}
+			return os.Getenv(k)
+		},
+		CacheDir: func() (string, error) { return cache, nil },
+	}
+}
+
+// Hand-written commands against a real workspace. Run with a read-only API client:
+//
+//	AIKIDO_DOJO_CLIENT_ID=… AIKIDO_DOJO_CLIENT_SECRET=… go test -tags live -run TestLiveHandWritten ./internal/cli/
+func TestLiveHandWritten(t *testing.T) {
+	env := liveEnv(t)
+	t.Run("auth status", func(t *testing.T) {
+		var st authStatus
+		if err := json.Unmarshal([]byte(mustRun(t, env, "auth", "status")), &st); err != nil {
+			t.Fatal(err)
+		}
+		if st.Source != "environment" || len(st.Scopes.Granted) == 0 || len(st.Scopes.Unknown) != 0 {
+			t.Errorf("status = %+v, want the token's claimed scopes", st)
+		}
+		for _, s := range st.Scopes.Granted {
+			if strings.HasSuffix(s, ":write") {
+				t.Errorf("a READ pair holds %s", s)
+			}
+		}
+		t.Logf("%d scopes granted, %d denied", len(st.Scopes.Granted), len(st.Scopes.Denied))
+	})
+	t.Run("api", func(t *testing.T) {
+		var ws map[string]json.RawMessage
+		if err := json.Unmarshal([]byte(mustRun(t, env, "api", "GET", "/workspace")), &ws); err != nil || len(ws) == 0 {
+			t.Errorf("api GET /workspace = %v, %v; want a JSON object", ws, err)
+		}
+	})
+	t.Run("repo current", func(t *testing.T) {
+		var listed []struct {
+			ID  json.RawMessage `json:"id"`
+			URL string          `json:"url"`
+		}
+		if err := json.Unmarshal([]byte(mustRun(t, env, "repo", "list", "--limit", "1")), &listed); err != nil {
+			t.Fatal(err)
+		}
+		if len(listed) == 0 {
+			t.Skip("the workspace has no code repos")
+		}
+		inRepo(t, listed[0].URL)
+		var found []repoMatch
+		if err := json.Unmarshal([]byte(mustRun(t, env, "repo", "current")), &found); err != nil {
+			t.Fatal(err)
+		}
+		var repo struct {
+			ID json.RawMessage `json:"id"`
+		}
+		if len(found) != 1 || json.Unmarshal(found[0].Repo, &repo) != nil || string(repo.ID) != string(listed[0].ID) {
+			t.Errorf("repo current found %d repos, want the one repo list gave", len(found))
+		}
+	})
 }
