@@ -34,6 +34,7 @@ type Source struct {
 	profile  string
 	now      func() time.Time
 	token    cachedToken
+	login    bool // set by Login, whose failure can't send the user back to auth login
 }
 
 // cachedToken records which client and token endpoint issued it: a profile
@@ -50,7 +51,7 @@ type cachedToken struct {
 func NewSource(c *http.Client, r config.Resolved) (*Source, error) {
 	s := &Source{
 		http:     c,
-		tokenURL: "https://" + r.Host + "/api/oauth/token",
+		tokenURL: tokenURL(r.Host),
 		clientID: r.ClientID,
 		secret:   r.Secret,
 		profile:  r.Profile,
@@ -72,6 +73,8 @@ func NewSource(c *http.Client, r config.Resolved) (*Source, error) {
 }
 
 func account(profile, item string) string { return profile + "/" + item }
+
+func tokenURL(host string) string { return "https://" + host + "/api/oauth/token" }
 
 // Token returns a valid access token from memory, then the keychain cache,
 // then the token endpoint.
@@ -200,6 +203,8 @@ func (s *Source) failure(status int, body tokenResponse) error {
 		e.Code, e.Exit, e.Hint = "server_error", clierr.ExitUnexpected, "Aikido's token endpoint failed; retry later"
 	case strings.Contains(body.ErrorDescription, "public"):
 		e.Hint = "this API client is a Public app, which only allows browser login; create a non-public API client in Aikido's workspace settings"
+	case s.login:
+		e.Hint = "check the client ID and secret against the API client in Aikido's workspace settings"
 	case s.profile == "":
 		e.Hint = "check " + config.EnvClientID + " and " + config.EnvClientSecret
 	default:
