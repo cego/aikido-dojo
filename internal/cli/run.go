@@ -34,7 +34,7 @@ func buildRoot(env Env) (*cobra.Command, error) {
 	if err := addGenerated(root, catalog.All, a.runOp); err != nil {
 		return nil, err
 	}
-	root.AddCommand(a.versionCmd(), a.searchCmd(), a.schemaCmd(), a.apiCmd())
+	root.AddCommand(a.versionCmd(), a.searchCmd(), a.schemaCmd(), a.apiCmd(), a.authCmd())
 	return root, nil
 }
 
@@ -84,20 +84,35 @@ func (a *app) runOp(cmd *cobra.Command, c command, args []string) error {
 	return nil
 }
 
-func (a *app) client() (*api.Client, error) {
-	flags := config.Flags{Config: a.config, Profile: a.profile}
-	path, err := config.Path(flags, a.env.Getenv)
+func (a *app) flags() config.Flags { return config.Flags{Config: a.config, Profile: a.profile} }
+
+// configFile returns the config path and its contents; a missing file is empty.
+func (a *app) configFile() (string, config.File, error) {
+	path, err := config.Path(a.flags(), a.env.Getenv)
 	if err != nil {
-		return nil, err
+		return "", config.File{}, err
 	}
 	f, err := config.Load(path)
+	return path, f, err
+}
+
+func (a *app) resolve() (config.Resolved, error) {
+	_, f, err := a.configFile()
+	if err != nil {
+		return config.Resolved{}, err
+	}
+	return config.Resolve(f, a.flags(), a.env.Getenv)
+}
+
+func (a *app) client() (*api.Client, error) {
+	r, err := a.resolve()
 	if err != nil {
 		return nil, err
 	}
-	r, err := config.Resolve(f, flags, a.env.Getenv)
-	if err != nil {
-		return nil, err
-	}
+	return a.clientFor(r)
+}
+
+func (a *app) clientFor(r config.Resolved) (*api.Client, error) {
 	hc := newHTTPClient(a.env, r.Host, a.debug)
 	src, err := auth.NewSource(hc, r)
 	if err != nil {

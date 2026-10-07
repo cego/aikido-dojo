@@ -16,12 +16,13 @@ import (
 
 // Env is everything a run touches outside the process, so tests can supply their own.
 type Env struct {
-	Stdin     io.Reader
-	Stdout    io.Writer
-	Stderr    io.Writer
-	Getenv    func(string) string
-	CacheDir  func() (string, error)
-	Transport http.RoundTripper // nil in production; tests route requests to a fake server
+	Stdin      io.Reader
+	Stdout     io.Writer
+	Stderr     io.Writer
+	Getenv     func(string) string
+	CacheDir   func() (string, error)
+	Transport  http.RoundTripper                                        // nil in production; tests route requests to a fake server
+	ReadSecret func(ctx context.Context, prompt string) (string, error) // the hidden prompt auth login asks with
 }
 
 // app holds a run's environment and the global flags' values.

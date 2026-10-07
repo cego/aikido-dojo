@@ -2,7 +2,9 @@ package cli
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"path/filepath"
@@ -11,21 +13,26 @@ import (
 	"sync"
 	"testing"
 
+	"github.com/zalando/go-keyring"
+
 	"github.com/cego/aikido-dojo/internal/config"
 )
 
-// testEnv can't reach the user's config, keychain or network: the config
-// path points into a temp dir, and any request fails until a test routes it.
-// Tests set more variables in the returned map.
+// testEnv can't reach the user's config, keychain or network. The config
+// path points into a temp dir, the keychain is go-keyring's in-memory mock,
+// and any request fails until a test routes it. A prompt for a secret fails
+// unless the test answers it. Tests set more variables in the returned map.
 func testEnv(t *testing.T) (Env, map[string]string) {
 	t.Helper()
+	keyring.MockInit()
 	vars := map[string]string{config.EnvConfig: filepath.Join(t.TempDir(), "config.json")}
 	cache := t.TempDir()
 	return Env{
-		Stdin:     strings.NewReader(""),
-		Getenv:    func(k string) string { return vars[k] },
-		CacheDir:  func() (string, error) { return cache, nil },
-		Transport: noNetwork{},
+		Stdin:      strings.NewReader(""),
+		Getenv:     func(k string) string { return vars[k] },
+		CacheDir:   func() (string, error) { return cache, nil },
+		Transport:  noNetwork{},
+		ReadSecret: func(context.Context, string) (string, error) { return "", errors.New("the test has no terminal") },
 	}, vars
 }
 

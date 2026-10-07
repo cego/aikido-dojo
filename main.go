@@ -14,11 +14,12 @@ import (
 func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	code := cli.Run(ctx, os.Args[1:], cli.Env{
-		Stdin:    os.Stdin,
-		Stdout:   os.Stdout,
-		Stderr:   os.Stderr,
-		Getenv:   os.Getenv,
-		CacheDir: os.UserCacheDir,
+		Stdin:      os.Stdin,
+		Stdout:     os.Stdout,
+		Stderr:     os.Stderr,
+		Getenv:     os.Getenv,
+		CacheDir:   os.UserCacheDir,
+		ReadSecret: cli.TerminalSecret(os.Stdin, os.Stderr),
 	})
 	stop()
 	os.Exit(code)

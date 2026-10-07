@@ -24,6 +24,8 @@ import (
 type fakeAPI struct {
 	mu       sync.Mutex
 	requests []seen
+	logins   []string // id:secret of each token request
+	token    func(id, secret string) (int, string)
 	rewrite  *rewrite
 }
 
@@ -32,14 +34,29 @@ type seen struct {
 	URI    string
 	Body   string
 	Query  url.Values
+	Auth   string
 }
 
 func newFake(t *testing.T, handler http.HandlerFunc) (*fakeAPI, Env, map[string]string) {
 	t.Helper()
 	f := &fakeAPI{}
 	mux := http.NewServeMux()
-	mux.HandleFunc("POST /api/oauth/token", func(w http.ResponseWriter, _ *http.Request) {
-		fmt.Fprint(w, `{"access_token":"tok","expires_in":3600}`)
+	mux.HandleFunc("POST /api/oauth/token", func(w http.ResponseWriter, r *http.Request) {
+		id, secret, _ := r.BasicAuth()
+		f.mu.Lock()
+		f.logins = append(f.logins, id+":"+secret)
+		issue := f.token
+		f.mu.Unlock()
+		status, tok := http.StatusOK, "tok"
+		if issue != nil {
+			status, tok = issue(id, secret)
+		}
+		if status != http.StatusOK {
+			w.WriteHeader(status)
+			fmt.Fprint(w, `{"error":"invalid_client","error_description":"The provided credentials are invalid"}`)
+			return
+		}
+		fmt.Fprintf(w, `{"access_token":%q,"expires_in":3600}`, tok)
 	})
 	mux.HandleFunc("/api/public/v1/", func(w http.ResponseWriter, r *http.Request) {
 		body, err := io.ReadAll(r.Body)
@@ -47,7 +64,7 @@ func newFake(t *testing.T, handler http.HandlerFunc) (*fakeAPI, Env, map[string]
 			t.Error(err)
 		}
 		f.mu.Lock()
-		f.requests = append(f.requests, seen{Method: r.Method, URI: r.RequestURI, Body: string(body), Query: r.URL.Query()})
+		f.requests = append(f.requests, seen{Method: r.Method, URI: r.RequestURI, Body: string(body), Query: r.URL.Query(), Auth: r.Header.Get("Authorization")})
 		f.mu.Unlock()
 		handler(w, r)
 	})
@@ -64,6 +81,20 @@ func (f *fakeAPI) seen() []seen {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	return slices.Clone(f.requests)
+}
+
+// issueTokens decides each token request's status and token, in place of
+// "tok" for everyone.
+func (f *fakeAPI) issueTokens(issue func(id, secret string) (int, string)) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	f.token = issue
+}
+
+func (f *fakeAPI) seenLogins() []string {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	return slices.Clone(f.logins)
 }
 
 // first is the first API request; the test fails if there was none.
