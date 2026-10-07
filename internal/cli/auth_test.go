@@ -175,7 +175,9 @@ func TestLoginMistakesCostNoCall(t *testing.T) {
 
 func TestStatusReportsTheTokensScopes(t *testing.T) {
 	f, env, _ := newFake(t, respond(`{}`))
-	f.issueTokens(func(string, string) (int, string) { return http.StatusOK, testJWT("issues:read basics:read extra:read") })
+	f.issueTokens(func(string, string) (int, string) {
+		return http.StatusOK, testJWT("issues:read basics:read extra:read")
+	})
 	var got authStatus
 	if err := json.Unmarshal([]byte(mustRun(t, env, "auth", "status")), &got); err != nil {
 		t.Fatal(err)
