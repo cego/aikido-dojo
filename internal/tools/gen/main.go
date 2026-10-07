@@ -23,18 +23,23 @@ func main() {
 func run(args []string) error {
 	fs := flag.NewFlagSet("gen", flag.ContinueOnError)
 	specPath := fs.String("spec", "", "the vendored OpenAPI spec")
+	snapshotPath := fs.String("snapshot", "", "the spec's snapshot.json, which dates it")
 	dir := fs.String("dir", "", "the catalog package directory to write into")
 	if err := fs.Parse(args); err != nil {
 		return fmt.Errorf("parse flags: %w", err)
 	}
-	if *specPath == "" || *dir == "" {
-		return errors.New("usage: gen -spec <openapi.json> -dir <catalog dir>")
+	if *specPath == "" || *snapshotPath == "" || *dir == "" {
+		return errors.New("usage: gen -spec <openapi.json> -snapshot <snapshot.json> -dir <catalog dir>")
 	}
 	data, err := os.ReadFile(*specPath)
 	if err != nil {
 		return fmt.Errorf("read the spec: %w", err)
 	}
-	out, err := gen.Generate(data, overlay.Ops)
+	snapshot, err := os.ReadFile(*snapshotPath)
+	if err != nil {
+		return fmt.Errorf("read the snapshot: %w", err)
+	}
+	out, err := gen.Generate(data, snapshot, overlay.Ops)
 	if err != nil {
 		return err
 	}

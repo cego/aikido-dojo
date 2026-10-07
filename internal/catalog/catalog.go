@@ -3,7 +3,7 @@
 // after changing spec/openapi.json or internal/overlay.
 package catalog
 
-//go:generate go run ../tools/gen -spec ../../spec/openapi.json -dir .
+//go:generate go run ../tools/gen -spec ../../spec/openapi.json -snapshot ../../spec/snapshot.json -dir .
 
 import (
 	"bytes"

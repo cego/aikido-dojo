@@ -7,6 +7,12 @@ import (
 	"github.com/cego/aikido-dojo/internal/ops"
 )
 
+// SpecUpdatedAt and SpecSHA256 identify the spec snapshot this catalog was generated from.
+const (
+	SpecUpdatedAt = "2026-09-28T13:47:27Z"
+	SpecSHA256    = "184c6c71d1cd9e96882198a958f53d8fcbbcd32f4ac2895486fba290a57c41f1"
+)
+
 // All is every generated command, sorted by command.
 var All = []ops.Op{
 	{

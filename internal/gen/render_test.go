@@ -23,7 +23,7 @@ func TestRenderOps(t *testing.T) {
 			Args: []ops.Param{{Name: "thing_id", Kind: ops.Integer, Required: true}},
 			Body: &ops.Body{Required: true, Object: true, Secret: []string{"api_token"}, Fields: []ops.Param{{Name: "name", Kind: ops.String}}}},
 	}
-	src, err := renderOps(all)
+	src, err := renderOps(all, specInfo{UpdatedAt: "2026-09-28T13:47:27Z", SHA256: "abc"})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -40,6 +40,8 @@ func TestRenderOps(t *testing.T) {
 		`Args: []ops.Param{ {Name: "thing_id", Kind: ops.Integer, Required: true, Usage: ""}, }`,
 		`Body: &ops.Body{Required: true, Object: true, Fields: []ops.Param{ {Name: "name", Kind: ops.String, Required: false, Usage: ""}, }, Secret: []string{"api_token"}, }`,
 		"Destructive: true",
+		`SpecUpdatedAt = "2026-09-28T13:47:27Z"`,
+		`SpecSHA256 = "abc"`,
 	} {
 		if !strings.Contains(flat, want) {
 			t.Errorf("rendered source lacks %s\n%s", want, src)
@@ -48,7 +50,7 @@ func TestRenderOps(t *testing.T) {
 }
 
 func TestRenderOpsImportsAPIOnlyWhenPaging(t *testing.T) {
-	src, err := renderOps([]ops.Op{{ID: "a", Command: "a get", Method: "GET", Path: "/a"}})
+	src, err := renderOps([]ops.Op{{ID: "a", Command: "a get", Method: "GET", Path: "/a"}}, specInfo{})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -65,5 +67,21 @@ func TestRenderJSONKeepsHTMLCharacters(t *testing.T) {
 	var back map[string]string
 	if err := json.Unmarshal(out, &back); err != nil || back["d"] != "<b> & co" || !strings.Contains(string(out), "<b> & co") {
 		t.Errorf("renderJSON = %s, want <b> & co unescaped", out)
+	}
+}
+
+func TestIdentify(t *testing.T) {
+	info, err := identify([]byte(`{"openapi":"3.1.0"}`), []byte(`{"updated_at":"2026-09-28T15:47:27+02:00"}`))
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := specInfo{UpdatedAt: "2026-09-28T13:47:27Z", SHA256: "1f7b61c52c664d551376cf25d7c387f8c0832ba9fe00995f7d12dd1909ea0de5"}
+	if info != want {
+		t.Errorf("identify = %+v, want %+v", info, want)
+	}
+	for _, snapshot := range []string{`{}`, `not json`} {
+		if _, err := identify(nil, []byte(snapshot)); err == nil {
+			t.Errorf("snapshot %s: want an error", snapshot)
+		}
 	}
 }

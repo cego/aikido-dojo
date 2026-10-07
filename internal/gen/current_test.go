@@ -16,7 +16,11 @@ func TestGeneratedFilesAreCurrent(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	out, err := Generate(spec, overlay.Ops)
+	snapshot, err := os.ReadFile("../../spec/snapshot.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	out, err := Generate(spec, snapshot, overlay.Ops)
 	if err != nil {
 		t.Fatal(err)
 	}
