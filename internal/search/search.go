@@ -4,6 +4,9 @@
 package search
 
 import (
+	"cmp"
+	"math"
+	"slices"
 	"strings"
 	"unicode"
 )
@@ -48,4 +51,55 @@ func singular(w string) string {
 		return w[:len(w)-1]
 	}
 	return w
+}
+
+// Hit is a command search found. Score is the BM25 score, rounded; only the
+// order it gives is meaningful.
+type Hit struct {
+	Command string  `json:"command"`
+	Summary string  `json:"summary"`
+	Score   float64 `json:"score"`
+}
+
+// BM25's usual constants: k1 limits how much a repeated word counts, b how
+// much a long description is discounted.
+const (
+	k1 = 1.2
+	b  = 0.75
+)
+
+// Rank scores every command against query with BM25 and returns the best n,
+// best first. A command sharing no word with the query is left out.
+func (idx *Index) Rank(query string, n int) []Hit {
+	terms := slices.Compact(slices.Sorted(slices.Values(Tokens(query))))
+	type scored struct {
+		doc   *Doc
+		score float64
+	}
+	var all []scored
+	docs := float64(len(idx.Docs))
+	for i := range idx.Docs {
+		d := &idx.Docs[i]
+		var s float64
+		for _, t := range terms {
+			tf := float64(d.TF[t])
+			if tf == 0 {
+				continue
+			}
+			df := float64(idx.DF[t])
+			idf := math.Log(1 + (docs-df+0.5)/(df+0.5))
+			s += idf * tf * (k1 + 1) / (tf + k1*(1-b+b*float64(d.Len)/idx.AvgLen))
+		}
+		if s > 0 {
+			all = append(all, scored{d, s})
+		}
+	}
+	slices.SortFunc(all, func(x, y scored) int {
+		return cmp.Or(cmp.Compare(y.score, x.score), strings.Compare(x.doc.Command, y.doc.Command))
+	})
+	hits := []Hit{}
+	for _, s := range all[:min(n, len(all))] {
+		hits = append(hits, Hit{Command: s.doc.Command, Summary: s.doc.Summary, Score: math.Round(s.score*100) / 100})
+	}
+	return hits
 }
