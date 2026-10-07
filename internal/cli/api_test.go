@@ -20,6 +20,15 @@ func TestAPISendsTheRequest(t *testing.T) {
 	}
 }
 
+// An escaped slash inside one segment is an ID, not a way out of the prefix.
+func TestAPIKeepsAnEscapedSlashInAnID(t *testing.T) {
+	f, env, _ := newFake(t, respond(`{}`))
+	mustRun(t, env, "api", "GET", "/containers/org%2Fimage")
+	if got := f.first(t).URI; got != "/api/public/v1/containers/org%2Fimage" {
+		t.Errorf("URI = %q, want the escaped slash kept", got)
+	}
+}
+
 func TestAPIFieldsBecomeABodyForWrites(t *testing.T) {
 	f, env, _ := newFake(t, respond(`{}`))
 	mustRun(t, env, "api", "POST", "/issues/groups/12/notes", "-f", "note=<b>&ok", "-f", "cve_id=CVE-1")
@@ -56,6 +65,10 @@ func TestAPIMistakesCostNoCall(t *testing.T) {
 		{"api", "GET", "https://app.aikido.dev/api/public/v1/x"},
 		{"api", "GET", "/../oauth/token"},
 		{"api", "GET", "/issues/%2e%2e/x"},
+		{"api", "GET", "/issues%2f..%2f..%2foauth%2ftoken"},
+		{"api", "GET", "/%2e%2e%2f%2e%2e%2foauth"},
+		{"api", "GET", "/..%5c..%5coauth"},
+		{"api", "GET", `/x\..\oauth`},
 		{"api", "GET", "/issues/%zz"},
 		{"api", "GET", "/x?a=%zz"},
 		{"api", "POST", "/x", "-f", "novalue"},

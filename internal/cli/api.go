@@ -105,7 +105,8 @@ func (a *app) callAPI(ctx context.Context, method, target string, fields []strin
 
 // apiTarget splits /repositories/code?per_page=5 into the path under
 // /api/public/v1 and its query. It refuses what would leave that prefix: a
-// URL of its own, or a . or .. segment, escaped or not.
+// URL of its own, or a . or .. segment, escaped or not, including one that an
+// escaped / or a \ splits off inside a segment, as a server may do.
 func apiTarget(s string) (string, url.Values, error) {
 	if strings.Contains(s, "://") {
 		return "", nil, apiUsage(fmt.Sprintf("%q: give the path under /api/public/v1, such as /repositories/code", s))
@@ -119,8 +120,10 @@ func apiTarget(s string) (string, url.Values, error) {
 		if err != nil {
 			return "", nil, apiUsage(fmt.Sprintf("path %q: %v", path, err))
 		}
-		if dec == "." || dec == ".." {
-			return "", nil, apiUsage(fmt.Sprintf("path %q: . and .. segments could leave /api/public/v1", path))
+		for _, part := range strings.FieldsFunc(dec, func(r rune) bool { return r == '/' || r == '\\' }) {
+			if part == "." || part == ".." {
+				return "", nil, apiUsage(fmt.Sprintf("path %q: . and .. segments could leave /api/public/v1", path))
+			}
 		}
 	}
 	query, err := url.ParseQuery(rawQuery)
