@@ -146,6 +146,29 @@ func TestRepoCurrentAcrossProfiles(t *testing.T) {
 	}
 }
 
+// A profile that can't be resolved is skipped like one that fails a call.
+func TestRepoCurrentSkipsAMisconfiguredProfile(t *testing.T) {
+	inRepo(t, "git@gitlab.example.com:g/r.git")
+	f, env, vars := newFake(t, repos(`{"id":1,"name":"r","url":"https://gitlab.example.com/g/r.git"}`))
+	noPair(vars)
+	writeConfig(t, vars, `{"profiles":{"a":{"client_id":"a"},"bare":{},"far":{"client_id":"f","region":"mars"}}}`)
+	if err := keyring.Set("aikido-dojo", "a/client_secret", "s"); err != nil {
+		t.Fatal(err)
+	}
+	stdout, stderr, code := run(t, env, "repo", "current")
+	if code != clierr.ExitOK || !strings.HasPrefix(stdout, `[{"profile":"a",`) {
+		t.Errorf("exit %d, stdout %s, stderr %s; want profile a's match", code, stdout, stderr)
+	}
+	for _, want := range []string{`profile \"bare\" skipped`, `profile \"far\" skipped`} {
+		if !strings.Contains(stderr, want) {
+			t.Errorf("stderr = %s, want %s", stderr, want)
+		}
+	}
+	if n := len(f.seenLogins()); n != 1 {
+		t.Errorf("token requests = %d, want only profile a's", n)
+	}
+}
+
 func TestRepoCurrentAsksOnlyTheSelectedProfile(t *testing.T) {
 	inRepo(t, "git@gitlab.example.com:g/r.git")
 	f, env, vars := newFake(t, repos(`{"id":1,"name":"r","url":"https://gitlab.example.com/g/r.git"}`))

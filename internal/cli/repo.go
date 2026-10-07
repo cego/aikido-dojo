@@ -29,6 +29,13 @@ type repoMatch struct {
 	Repo    json.RawMessage `json:"repo"`
 }
 
+// candidate is a profile repo current asks, or the reason it can't be asked.
+type candidate struct {
+	label string
+	r     config.Resolved
+	err   error
+}
+
 // remote is a repo URL reduced to what its SSH and HTTPS forms share.
 type remote struct {
 	key  string // lowercased host/path
@@ -73,20 +80,24 @@ func (a *app) repoCurrent(ctx context.Context, list ops.Op) error {
 		return &clierr.Error{Code: "unsupported_remote", Message: "origin is not a URL with a host and a path",
 			Hint: "repo current needs an origin such as git@host:group/repo.git or https://host/group/repo.git", Exit: clierr.ExitUsage}
 	}
-	profiles, err := a.everyProfile()
+	candidates, err := a.everyProfile()
 	if err != nil {
 		return err
 	}
 	matches := []repoMatch{}
 	var firstErr error
 	searched := 0
-	for _, r := range profiles {
-		repo, err := a.findRepo(ctx, r, list, want)
+	for _, c := range candidates {
+		err := c.err
+		var repo json.RawMessage
+		if err == nil {
+			repo, err = a.findRepo(ctx, c.r, list, want)
+		}
 		if ctx.Err() != nil {
 			return fmt.Errorf("repo current: %w", ctx.Err())
 		}
 		if err != nil {
-			clierr.Warn(a.env.Stderr, profileLabel(r)+" skipped: "+explain(err))
+			clierr.Warn(a.env.Stderr, c.label+" skipped: "+explain(err))
 			if firstErr == nil {
 				firstErr = err
 			}
@@ -94,7 +105,7 @@ func (a *app) repoCurrent(ctx context.Context, list ops.Op) error {
 		}
 		searched++
 		if repo != nil {
-			matches = append(matches, repoMatch{Profile: r.Profile, Repo: repo})
+			matches = append(matches, repoMatch{Profile: c.r.Profile, Repo: repo})
 		}
 	}
 	if searched == 0 {
@@ -109,8 +120,9 @@ func (a *app) repoCurrent(ctx context.Context, list ops.Op) error {
 
 // everyProfile is who repo current asks: the profile --profile or
 // AIKIDO_DOJO_PROFILE selects, else the environment pair, if set, and every
-// stored profile.
-func (a *app) everyProfile() ([]config.Resolved, error) {
+// stored profile. Of those, one that can't be resolved comes with its error,
+// so the others are still asked.
+func (a *app) everyProfile() ([]candidate, error) {
 	_, f, err := a.configFile()
 	if err != nil {
 		return nil, err
@@ -121,24 +133,18 @@ func (a *app) everyProfile() ([]config.Resolved, error) {
 		if err != nil {
 			return nil, err
 		}
-		return []config.Resolved{r}, nil
+		return []candidate{{label: profileLabel(r.Profile), r: r}}, nil
 	}
-	var out []config.Resolved
+	var out []candidate
 	if a.env.Getenv(config.EnvClientID) != "" || a.env.Getenv(config.EnvClientSecret) != "" {
 		// An empty file, so Resolve takes the pair rather than the default profile.
 		r, err := config.Resolve(config.File{}, flags, a.env.Getenv)
-		if err != nil {
-			return nil, err
-		}
-		out = append(out, r)
+		out = append(out, candidate{label: profileLabel(""), r: r, err: err})
 	}
 	for _, name := range slices.Sorted(maps.Keys(f.Profiles)) {
 		flags.Profile = name
 		r, err := config.Resolve(f, flags, a.env.Getenv)
-		if err != nil {
-			return nil, err
-		}
-		out = append(out, r)
+		out = append(out, candidate{label: profileLabel(name), r: r, err: err})
 	}
 	return out, nil
 }
@@ -235,11 +241,11 @@ func parseRemote(raw string) (remote, bool) {
 	return remote{key: host + "/" + strings.ToLower(path), name: path[strings.LastIndex(path, "/")+1:]}, true
 }
 
-func profileLabel(r config.Resolved) string {
-	if r.Profile == "" {
+func profileLabel(name string) string {
+	if name == "" {
 		return "the " + config.EnvClientID + " pair"
 	}
-	return "profile " + strconv.Quote(r.Profile)
+	return "profile " + strconv.Quote(name)
 }
 
 // explain is err's message with its hint, for a warning that stands in for the error.
