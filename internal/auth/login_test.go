@@ -10,12 +10,14 @@ import (
 	"github.com/cego/aikido-dojo/internal/clierr"
 )
 
+func noRecord() error { return nil }
+
 func TestLoginStoresTheSecretAndTheToken(t *testing.T) {
 	keyring.MockInit()
 	ts := newTokenServer(t, 0, "")
 	r := ts.resolved("cego")
 	r.Secret = testSecret
-	if err := Login(t.Context(), ts.Client(), r); err != nil {
+	if err := Login(t.Context(), ts.Client(), r, noRecord); err != nil {
 		t.Fatal(err)
 	}
 	if got, err := keyring.Get(keychainService, account("cego", "client_secret")); err != nil || got != testSecret {
@@ -37,7 +39,7 @@ func TestLoginReplacesTheCachedToken(t *testing.T) {
 	r := ts.resolved("cego")
 	r.Secret = testSecret
 	for range 2 {
-		if err := Login(t.Context(), ts.Client(), r); err != nil {
+		if err := Login(t.Context(), ts.Client(), r, noRecord); err != nil {
 			t.Fatal(err)
 		}
 	}
@@ -55,9 +57,24 @@ func TestLoginStoresNothingWhenAikidoRefuses(t *testing.T) {
 	ts := newTokenServer(t, 0, "")
 	r := ts.resolved("cego")
 	r.Secret = "wrong"
-	e := wantCode(t, Login(t.Context(), ts.Client(), r), "auth_failed", clierr.ExitAuth)
+	e := wantCode(t, Login(t.Context(), ts.Client(), r, noRecord), "auth_failed", clierr.ExitAuth)
 	if !strings.Contains(e.Hint, "Aikido's workspace settings") || strings.Contains(e.Hint, "auth login") {
 		t.Errorf("hint = %q, want it to point at the API client, not back at auth login", e.Hint)
+	}
+	for _, item := range []string{"client_secret", "access_token"} {
+		if _, err := keyring.Get(keychainService, account("cego", item)); !errors.Is(err, keyring.ErrNotFound) {
+			t.Errorf("%s: %v, want nothing stored", item, err)
+		}
+	}
+}
+
+func TestLoginStoresNothingWhenRecordFails(t *testing.T) {
+	keyring.MockInit()
+	ts := newTokenServer(t, 0, "")
+	r := ts.resolved("cego")
+	r.Secret = testSecret
+	if err := Login(t.Context(), ts.Client(), r, func() error { return errors.New("disk full") }); err == nil || !strings.Contains(err.Error(), "disk full") {
+		t.Errorf("err = %v, want record's error", err)
 	}
 	for _, item := range []string{"client_secret", "access_token"} {
 		if _, err := keyring.Get(keychainService, account("cego", item)); !errors.Is(err, keyring.ErrNotFound) {
@@ -71,7 +88,7 @@ func TestLoginReportsAKeychainFailure(t *testing.T) {
 	keyring.MockInitWithError(errors.New("keychain locked"))
 	r := ts.resolved("cego")
 	r.Secret = testSecret
-	if err := Login(t.Context(), ts.Client(), r); err == nil || !strings.Contains(err.Error(), "keychain locked") {
+	if err := Login(t.Context(), ts.Client(), r, noRecord); err == nil || !strings.Contains(err.Error(), "keychain locked") {
 		t.Errorf("err = %v", err)
 	}
 }

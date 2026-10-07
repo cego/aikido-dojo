@@ -110,18 +110,23 @@ func (a *app) login(ctx context.Context, flagID, flagRegion string) error {
 			Hint: "enter the API client's secret from Aikido's workspace settings", Exit: clierr.ExitUsage}
 	}
 	r := config.Resolved{Profile: name, ClientID: p.ClientID, Secret: secret, Region: region, Host: host}
-	if err := auth.Login(ctx, newHTTPClient(a.env, host, a.debug), r); err != nil {
-		return err
-	}
-	if p != old {
+	record := func() error {
+		if p == old {
+			return nil
+		}
 		if len(f.Profiles) == 0 {
 			f.Profiles = map[string]config.Profile{}
 			f.DefaultProfile = cmp.Or(f.DefaultProfile, name)
 		}
 		f.Profiles[name] = p
 		if err := config.Save(path, f); err != nil {
-			return err
+			return &clierr.Error{Code: "config_not_saved", Message: "save profile " + strconv.Quote(name), Err: err,
+				Hint: "nothing was stored; pass --config with a file you can write to keep the profile there", Exit: clierr.ExitUnexpected}
 		}
+		return nil
+	}
+	if err := auth.Login(ctx, newHTTPClient(a.env, host, a.debug), r, record); err != nil {
+		return err
 	}
 	return a.printJSON(loginResult{Profile: name, ClientID: p.ClientID, Region: region})
 }

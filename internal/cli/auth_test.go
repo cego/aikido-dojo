@@ -152,6 +152,31 @@ func TestLoginLeavesASharedConfigAlone(t *testing.T) {
 	}
 }
 
+// A login whose profile can't be saved keeps the working one: the secret
+// stays the one the config's client ID was stored with.
+func TestLoginThatCantSaveKeepsTheWorkingProfile(t *testing.T) {
+	f, env, vars := newFake(t, respond(`{}`))
+	delete(vars, config.EnvClientID)
+	writeConfig(t, vars, `{"default_profile":"cego","profiles":{"cego":{"client_id":"id-1","region":"eu"}}}`)
+	if err := keyring.Set("aikido-dojo", "cego/client_secret", "old"); err != nil {
+		t.Fatal(err)
+	}
+	readOnly(t, vars)
+	_, stderr, code := run(t, env, "auth", "login", "--client-id", "id-2")
+	if e := errorOf(t, stderr); code == clierr.ExitOK || e.Code != "config_not_saved" || !strings.Contains(e.Hint, "--config") {
+		t.Errorf("exit %d, error %+v; want config_not_saved with a hint naming --config", code, e)
+	}
+	if s, err := keyring.Get("aikido-dojo", "cego/client_secret"); err != nil || s != "old" {
+		t.Errorf("keychain secret = %q, %v; want the old one kept", s, err)
+	}
+	if _, err := keyring.Get("aikido-dojo", "cego/access_token"); !errors.Is(err, keyring.ErrNotFound) {
+		t.Errorf("cached token: %v, want none for the unsaved client", err)
+	}
+	if got := f.seenLogins(); !slices.Equal(got, []string{"id-2:secret"}) {
+		t.Errorf("token requests = %q, want the one check of id-2", got)
+	}
+}
+
 func TestLoginRefusedStoresNothing(t *testing.T) {
 	f, env, vars := newFake(t, respond(`{}`))
 	noPair(vars)
