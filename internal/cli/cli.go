@@ -65,6 +65,11 @@ func newRoot(env Env) (*cobra.Command, *app) {
 	root.SetFlagErrorFunc(func(cmd *cobra.Command, err error) error {
 		return &clierr.Error{Code: "usage", Message: err.Error(), Hint: "run " + cmd.CommandPath() + " --help", Exit: clierr.ExitUsage}
 	})
+	// Only the root's help gets the footer: it is where an agent starts.
+	root.SetUsageTemplate(root.UsageTemplate() + `{{if not .HasParent}}
+Find the commands for a task:  aikido-dojo search "<what you want to do>"
+See what a command takes:      aikido-dojo schema <resource> <verb>
+{{end}}`)
 	pf := root.PersistentFlags()
 	pf.StringVar(&a.config, "config", "", "the config file (default ~/.config/aikido-dojo/config.json; also AIKIDO_DOJO_CONFIG)")
 	pf.StringVar(&a.profile, "profile", "", "the profile to run as (also AIKIDO_DOJO_PROFILE)")

@@ -34,3 +34,15 @@ func TestCommandLineMistakesAreUsageErrors(t *testing.T) {
 		}
 	}
 }
+
+func TestRootHelpEndsWithSearchAndSchema(t *testing.T) {
+	env, _ := testEnv(t)
+	stdout, _, code := run(t, env, "--help")
+	lines := strings.Split(strings.TrimSpace(stdout), "\n")
+	if n := len(lines); code != clierr.ExitOK || n < 2 || !strings.Contains(lines[n-2], "aikido-dojo search") || !strings.Contains(lines[n-1], "aikido-dojo schema") {
+		t.Errorf("exit %d, root help ends %q", code, lines[max(0, len(lines)-3):])
+	}
+	if sub, _, _ := run(t, env, "repo", "--help"); strings.Contains(sub, "aikido-dojo search") {
+		t.Errorf("repo help repeats the root's pointer:\n%s", sub)
+	}
+}

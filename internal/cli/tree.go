@@ -24,7 +24,6 @@ type runFunc func(cmd *cobra.Command, c command, args []string) error
 // addGenerated adds a command per resource and, under it, one per operation.
 func addGenerated(root *cobra.Command, all []ops.Op, run runFunc) error {
 	resources := map[string]*cobra.Command{}
-	verbs := map[string][]string{}
 	for _, op := range all {
 		resource, verb, _ := strings.Cut(op.Command, " ")
 		parent, ok := resources[resource]
@@ -38,13 +37,20 @@ func addGenerated(root *cobra.Command, all []ops.Op, run runFunc) error {
 			return err
 		}
 		parent.AddCommand(cmd)
-		verbs[resource] = append(verbs[resource], verb)
 	}
-	for resource, parent := range resources {
-		slices.Sort(verbs[resource])
-		parent.Short = strings.Join(verbs[resource], ", ")
+	for _, parent := range resources {
+		parent.Short = strings.Join(subcommandNames(parent), ", ")
 	}
 	return nil
+}
+
+// subcommandNames lists cmd's subcommands in cobra's sorted order.
+func subcommandNames(cmd *cobra.Command) []string {
+	var names []string
+	for _, c := range cmd.Commands() {
+		names = append(names, c.Name())
+	}
+	return names
 }
 
 func opCommand(root *cobra.Command, verb string, op ops.Op, run runFunc) (*cobra.Command, error) {

@@ -55,3 +55,13 @@ func SearchIndex() (*search.Index, error) {
 	}
 	return &idx, nil
 }
+
+// Command finds a generated command by name, such as "repo list".
+func Command(name string) (ops.Op, bool) {
+	for _, op := range All {
+		if op.Command == name {
+			return op, true
+		}
+	}
+	return ops.Op{}, false
+}

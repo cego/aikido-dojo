@@ -48,3 +48,12 @@ func TestSearchIndexHasEveryCommand(t *testing.T) {
 		t.Errorf("index has %d docs and avg_len %v, want %d and above 0", len(idx.Docs), idx.AvgLen, len(All))
 	}
 }
+
+func TestCommand(t *testing.T) {
+	if op, ok := Command("repo list"); !ok || op.ID != "listCodeRepos" {
+		t.Errorf("Command(repo list) = %s, %v", op.ID, ok)
+	}
+	if _, ok := Command("repo nosuch"); ok {
+		t.Error("found a command that doesn't exist")
+	}
+}
