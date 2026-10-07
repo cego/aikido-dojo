@@ -1,6 +1,7 @@
 package config
 
 import (
+	"encoding/json"
 	"errors"
 	"os"
 	"path/filepath"
@@ -177,11 +178,6 @@ func TestResolve(t *testing.T) {
 			want: Resolved{Profile: "cego", ClientID: "AIK_CLIENT_cego", Region: "us", Host: "app.us.aikido.dev"},
 		},
 		{
-			name: "--region beats AIKIDO_DOJO_REGION and the profile", file: file,
-			flags: Flags{Region: "au"}, vars: map[string]string{EnvRegion: "me"},
-			want: Resolved{Profile: "cego", ClientID: "AIK_CLIENT_cego", Region: "au", Host: "app.au.aikido.dev"},
-		},
-		{
 			name: "AIKIDO_DOJO_REGION beats the profile", file: file,
 			vars: map[string]string{EnvRegion: "me"},
 			want: Resolved{Profile: "cego", ClientID: "AIK_CLIENT_cego", Region: "me", Host: "app.me.aikido.dev"},
@@ -239,5 +235,12 @@ func TestResolveFailures(t *testing.T) {
 				t.Errorf("message/hint %q / %q should mention %q", e.Message, e.Hint, tt.wantText)
 			}
 		})
+	}
+}
+
+func TestResolvedNeverEncodesTheSecret(t *testing.T) {
+	b, err := json.Marshal(Resolved{ClientID: "id", Secret: "s3cr3t"})
+	if err != nil || strings.Contains(string(b), "s3cr3t") {
+		t.Errorf("Resolved encodes as %s, %v; want no secret", b, err)
 	}
 }

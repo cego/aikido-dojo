@@ -41,7 +41,6 @@ type Profile struct {
 type Flags struct {
 	Config  string
 	Profile string
-	Region  string
 }
 
 // Resolved is who a call runs as. Profile is "" for the environment profile,
@@ -50,7 +49,7 @@ type Flags struct {
 type Resolved struct {
 	Profile  string
 	ClientID string
-	Secret   string
+	Secret   string `json:"-"` // never encoded, so no output built from a Resolved can carry it
 	Region   string
 	Host     string
 }
@@ -145,7 +144,7 @@ func Resolve(f File, flags Flags, getenv func(string) string) (Resolved, error) 
 	if err != nil {
 		return Resolved{}, err
 	}
-	r.Region = cmp.Or(flags.Region, getenv(EnvRegion), r.Region, DefaultRegion)
+	r.Region = cmp.Or(getenv(EnvRegion), r.Region, DefaultRegion)
 	host, err := regionHost(r.Region)
 	if err != nil {
 		return Resolved{}, err
