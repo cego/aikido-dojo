@@ -34,6 +34,7 @@ func buildRoot(env Env) (*cobra.Command, error) {
 	if err := addGenerated(root, catalog.All, a.runOp); err != nil {
 		return nil, err
 	}
+	root.AddCommand(a.versionCmd())
 	return root, nil
 }
 
@@ -123,12 +124,7 @@ func (a *app) list(ctx context.Context, c *api.Client, req api.Request, p api.Pa
 			break
 		}
 	}
-	enc := json.NewEncoder(a.env.Stdout)
-	enc.SetEscapeHTML(false)
-	if err := enc.Encode(items); err != nil {
-		return fmt.Errorf("write the list: %w", err)
-	}
-	return nil
+	return a.printJSON(items)
 }
 
 // withHint swaps in the operation's own hint for a 400, where the overlay
