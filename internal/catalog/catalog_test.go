@@ -29,3 +29,22 @@ func TestSchemasOfAnUnknownOperation(t *testing.T) {
 		t.Errorf("err = %v, want one naming the operation", err)
 	}
 }
+
+func TestSearchIndexHasEveryCommand(t *testing.T) {
+	idx, err := SearchIndex()
+	if err != nil {
+		t.Fatal(err)
+	}
+	indexed := map[string]bool{}
+	for _, d := range idx.Docs {
+		indexed[d.Command] = true
+	}
+	for _, op := range All {
+		if !indexed[op.Command] {
+			t.Errorf("%s is not in the search index", op.Command)
+		}
+	}
+	if len(idx.Docs) != len(All) || idx.AvgLen <= 0 {
+		t.Errorf("index has %d docs and avg_len %v, want %d and above 0", len(idx.Docs), idx.AvgLen, len(All))
+	}
+}

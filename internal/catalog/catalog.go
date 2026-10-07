@@ -13,6 +13,7 @@ import (
 	"sync"
 
 	"github.com/cego/aikido-dojo/internal/ops"
+	"github.com/cego/aikido-dojo/internal/search"
 )
 
 //go:embed schemas.json
@@ -40,4 +41,17 @@ func Schemas(id string) (ops.SchemaSet, error) {
 		return ops.SchemaSet{}, fmt.Errorf("no schemas for operation %s", id)
 	}
 	return s, nil
+}
+
+//go:embed search.json
+var searchJSON []byte
+
+// SearchIndex decodes the embedded index. Only search needs it, so it isn't
+// decoded at startup.
+func SearchIndex() (*search.Index, error) {
+	var idx search.Index
+	if err := json.Unmarshal(searchJSON, &idx); err != nil {
+		return nil, fmt.Errorf("decode the embedded search index: %w", err)
+	}
+	return &idx, nil
 }

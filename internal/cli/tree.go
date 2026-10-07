@@ -139,6 +139,17 @@ func exactArgs(params []ops.Param) cobra.PositionalArgs {
 	}
 }
 
+// someArgs requires at least one argument; what names it in the error.
+func someArgs(what string) cobra.PositionalArgs {
+	return func(cmd *cobra.Command, args []string) error {
+		if len(args) > 0 {
+			return nil
+		}
+		return &clierr.Error{Code: "usage", Message: cmd.CommandPath() + " needs " + what,
+			Hint: "run " + cmd.CommandPath() + " --help", Exit: clierr.ExitUsage}
+	}
+}
+
 func longHelp(op ops.Op, clashes []string) string {
 	var parts, notes []string
 	for _, s := range []string{op.Summary, op.Description, op.Help} {
