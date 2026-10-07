@@ -34,7 +34,7 @@ func buildRoot(env Env) (*cobra.Command, error) {
 	if err := addGenerated(root, catalog.All, a.runOp); err != nil {
 		return nil, err
 	}
-	root.AddCommand(a.versionCmd(), a.searchCmd(), a.schemaCmd())
+	root.AddCommand(a.versionCmd(), a.searchCmd(), a.schemaCmd(), a.apiCmd())
 	return root, nil
 }
 

@@ -57,3 +57,22 @@ func TestCommand(t *testing.T) {
 		t.Error("found a command that doesn't exist")
 	}
 }
+
+func TestMatch(t *testing.T) {
+	tests := []struct{ method, path, want string }{
+		{"GET", "/repositories/code", "repo list"},
+		{"GET", "/repositories/code/", "repo list"},
+		{"PUT", "/issues/groups/12/ignore", "issue-group ignore"},
+		{"GET", "/issues/12", "issue get"},
+		// /issues/{issue_id} fits too; the literal segment wins.
+		{"GET", "/issues/export", "issue export"},
+		{"DELETE", "/repositories/code", ""},
+		{"GET", "/nosuch", ""},
+	}
+	for _, tt := range tests {
+		op, ok := Match(tt.method, tt.path)
+		if op.Command != tt.want || ok != (tt.want != "") {
+			t.Errorf("Match(%s %s) = %q, %v; want %q", tt.method, tt.path, op.Command, ok, tt.want)
+		}
+	}
+}

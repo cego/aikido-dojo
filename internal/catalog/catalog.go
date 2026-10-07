@@ -10,6 +10,7 @@ import (
 	_ "embed"
 	"encoding/json"
 	"fmt"
+	"strings"
 	"sync"
 
 	"github.com/cego/aikido-dojo/internal/ops"
@@ -64,4 +65,39 @@ func Command(name string) (ops.Op, bool) {
 		}
 	}
 	return ops.Op{}, false
+}
+
+// Match finds the operation a concrete request calls, such as PUT
+// /issues/groups/12/ignore. Where two path templates fit, the one with more
+// literal segments wins, so /issues/export isn't taken for /issues/{issue_id}.
+func Match(method, path string) (ops.Op, bool) {
+	segs := strings.Split(strings.Trim(path, "/"), "/")
+	var best ops.Op
+	bestLiterals := -1
+	for _, op := range All {
+		tmpl := strings.Split(strings.Trim(op.Path, "/"), "/")
+		if op.Method != method || len(tmpl) != len(segs) {
+			continue
+		}
+		if n, ok := fits(tmpl, segs); ok && n > bestLiterals {
+			best, bestLiterals = op, n
+		}
+	}
+	return best, bestLiterals >= 0
+}
+
+// fits reports whether segs fill tmpl, where {name} takes any one non-empty
+// segment, and how many segments matched literally.
+func fits(tmpl, segs []string) (int, bool) {
+	literals := 0
+	for i, t := range tmpl {
+		switch {
+		case t == segs[i]:
+			literals++
+		case strings.HasPrefix(t, "{") && strings.HasSuffix(t, "}") && segs[i] != "":
+		default:
+			return 0, false
+		}
+	}
+	return literals, true
 }
