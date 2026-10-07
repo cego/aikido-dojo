@@ -19,7 +19,7 @@ import (
 // and AIKIDO_DOJO_CLIENT_SECRET are the only ways a secret comes in.
 func TerminalSecret(in *os.File, w io.Writer) func(ctx context.Context, prompt string) (string, error) {
 	return func(ctx context.Context, prompt string) (string, error) {
-		fd := int(in.Fd()) //nolint:gosec // a file descriptor fits in an int
+		fd := int(in.Fd())
 		if !term.IsTerminal(fd) {
 			return "", &clierr.Error{Code: "no_terminal", Message: "no terminal to read the client secret from",
 				Hint: "set " + config.EnvClientSecret + " for this one command instead", Exit: clierr.ExitUsage}

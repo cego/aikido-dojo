@@ -120,10 +120,10 @@ func TestLoginLeavesAnUnchangedConfigAlone(t *testing.T) {
 	delete(vars, config.EnvClientID)
 	writeConfig(t, vars, `{"default_profile":"cego","profiles":{"cego":{"client_id":"id-1","region":"eu"}}}`)
 	dir := filepath.Dir(vars[config.EnvConfig])
-	if err := os.Chmod(dir, 0o500); err != nil {
+	if err := os.Chmod(dir, 0o500); err != nil { //nolint:gosec // a directory, which needs its execute bit
 		t.Fatal(err)
 	}
-	t.Cleanup(func() { _ = os.Chmod(dir, 0o700) })
+	t.Cleanup(func() { _ = os.Chmod(dir, 0o700) }) //nolint:gosec // a directory, which needs its execute bit
 	mustRun(t, env, "auth", "login")
 	if s, err := keyring.Get("aikido-dojo", "cego/client_secret"); err != nil || s != "secret" {
 		t.Errorf("keychain secret = %q, %v", s, err)

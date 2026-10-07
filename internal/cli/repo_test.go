@@ -30,7 +30,7 @@ func inRepo(t *testing.T, origin string) {
 	t.Setenv("GIT_CEILING_DIRECTORIES", filepath.Dir(dir))
 	if origin != "" {
 		for _, args := range [][]string{{"init", "-q"}, {"remote", "add", "origin", origin}} {
-			cmd := exec.CommandContext(t.Context(), "git", args...)
+			cmd := exec.CommandContext(t.Context(), "git", args...) //nolint:gosec // git with this helper's own arguments
 			cmd.Dir = dir
 			// Only the subcommand is named: the origin may be a real tenant's URL.
 			if out, err := cmd.CombinedOutput(); err != nil {

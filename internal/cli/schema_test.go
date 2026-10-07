@@ -3,6 +3,7 @@ package cli
 import (
 	"encoding/json"
 	"maps"
+	"net/http"
 	"slices"
 	"testing"
 
@@ -25,7 +26,7 @@ func TestSchemaKeysFlagsByFlagName(t *testing.T) {
 	if flags["filter-code-repo-id"] == nil || flags["filter_code_repo_id"] != nil || flags["limit"] == nil {
 		t.Errorf("flags = %q, want --filter-code-repo-id and --limit by flag name", slices.Sorted(maps.Keys(flags)))
 	}
-	if doc.Command != "issue-group list" || doc.Usage != "aikido-dojo issue-group list [flags]" || doc.Scope != "issues:read" || doc.Method != "GET" {
+	if doc.Command != "issue-group list" || doc.Usage != "aikido-dojo issue-group list [flags]" || doc.Scope != "issues:read" || doc.Method != http.MethodGet {
 		t.Errorf("doc = %+v", doc)
 	}
 	// A list prints one array of every item, not a page.

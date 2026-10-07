@@ -35,7 +35,7 @@ type app struct {
 
 // Run executes one command line and returns the process exit code.
 func Run(ctx context.Context, args []string, env Env) int {
-	root, err := buildRoot(env)
+	root, err := buildRoot(env) //nolint:contextcheck // commands get ctx from root.ExecuteContext below
 	if err != nil {
 		return clierr.Report(env.Stderr, err)
 	}
