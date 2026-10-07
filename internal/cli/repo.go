@@ -235,7 +235,8 @@ func parseRemote(raw string) (remote, bool) {
 	if rest, ok := strings.CutPrefix(path, "repos/"); ok && host == "api.github.com" {
 		host, path = "github.com", rest
 	}
-	if host == "" || path == "" {
+	// A repo path has no @; one here is a credential the URL failed to keep apart.
+	if host == "" || path == "" || strings.Contains(path, "@") {
 		return remote{}, false
 	}
 	return remote{key: host + "/" + strings.ToLower(path), name: path[strings.LastIndex(path, "/")+1:]}, true

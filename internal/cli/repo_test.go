@@ -80,7 +80,10 @@ func TestParseRemote(t *testing.T) {
 			t.Errorf("parseRemote(%q) = %+v, %v; want %s and %s", tt.in, got, ok, tt.key, tt.name)
 		}
 	}
-	for _, in := range []string{"", "/srv/git/repo.git", "../repo", "file:///srv/repo.git", "https://host.example.com/"} {
+	// The last two are malformed remotes git can't use, whose credential
+	// would otherwise land in the key that not_found quotes.
+	for _, in := range []string{"", "/srv/git/repo.git", "../repo", "file:///srv/repo.git", "https://host.example.com/",
+		"user:hunter2@gitlab.example.com:g/r.git", "https://user:12/hunter2@gitlab.example.com/g/r.git"} {
 		if got, ok := parseRemote(in); ok {
 			t.Errorf("parseRemote(%q) = %+v, want no remote", in, got)
 		}
