@@ -84,16 +84,18 @@ func (a *app) login(ctx context.Context, flagID, flagRegion string) error {
 		return err
 	}
 	name := cmp.Or(a.profile, a.env.Getenv(config.EnvProfile), f.DefaultProfile, "default")
-	old := f.Profiles[name]
-	p := config.Profile{
-		ClientID: cmp.Or(flagID, a.env.Getenv(config.EnvClientID), old.ClientID),
-		Region:   cmp.Or(flagRegion, a.env.Getenv(config.EnvRegion), old.Region, config.DefaultRegion),
+	old, exists := f.Profiles[name]
+	region := cmp.Or(flagRegion, a.env.Getenv(config.EnvRegion), old.Region, config.DefaultRegion)
+	p := config.Profile{ClientID: cmp.Or(flagID, a.env.Getenv(config.EnvClientID), old.ClientID), Region: region}
+	// An entry that omits its region keeps omitting it while the region is the default.
+	if exists && old.Region == "" && region == config.DefaultRegion {
+		p.Region = ""
 	}
 	if p.ClientID == "" {
 		return &clierr.Error{Code: "no_client_id", Message: "no client ID for profile " + strconv.Quote(name),
 			Hint: "pass --client-id; Aikido shows it with the API client in its workspace settings", Exit: clierr.ExitUsage}
 	}
-	host, err := config.RegionHost(p.Region)
+	host, err := config.RegionHost(region)
 	if err != nil {
 		return err
 	}
@@ -107,21 +109,21 @@ func (a *app) login(ctx context.Context, flagID, flagRegion string) error {
 		return &clierr.Error{Code: "empty_secret", Message: "the client secret is empty",
 			Hint: "enter the API client's secret from Aikido's workspace settings", Exit: clierr.ExitUsage}
 	}
-	r := config.Resolved{Profile: name, ClientID: p.ClientID, Secret: secret, Region: p.Region, Host: host}
+	r := config.Resolved{Profile: name, ClientID: p.ClientID, Secret: secret, Region: region, Host: host}
 	if err := auth.Login(ctx, newHTTPClient(a.env, host, a.debug), r); err != nil {
 		return err
 	}
-	if p != old || f.DefaultProfile == "" {
-		if f.Profiles == nil {
+	if p != old {
+		if len(f.Profiles) == 0 {
 			f.Profiles = map[string]config.Profile{}
+			f.DefaultProfile = cmp.Or(f.DefaultProfile, name)
 		}
 		f.Profiles[name] = p
-		f.DefaultProfile = cmp.Or(f.DefaultProfile, name)
 		if err := config.Save(path, f); err != nil {
 			return err
 		}
 	}
-	return a.printJSON(loginResult{Profile: name, ClientID: p.ClientID, Region: p.Region})
+	return a.printJSON(loginResult{Profile: name, ClientID: p.ClientID, Region: region})
 }
 
 func (a *app) statusCmd() *cobra.Command {

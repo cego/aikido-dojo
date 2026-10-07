@@ -119,14 +119,36 @@ func TestLoginLeavesAnUnchangedConfigAlone(t *testing.T) {
 	_, env, vars := newFake(t, respond(`{}`))
 	delete(vars, config.EnvClientID)
 	writeConfig(t, vars, `{"default_profile":"cego","profiles":{"cego":{"client_id":"id-1","region":"eu"}}}`)
+	readOnly(t, vars)
+	mustRun(t, env, "auth", "login")
+	if s, err := keyring.Get("aikido-dojo", "cego/client_secret"); err != nil || s != "secret" {
+		t.Errorf("keychain secret = %q, %v", s, err)
+	}
+}
+
+// readOnly makes the config's directory unwritable, as a shared one is.
+func readOnly(t *testing.T, vars map[string]string) {
+	t.Helper()
 	dir := filepath.Dir(vars[config.EnvConfig])
 	if err := os.Chmod(dir, 0o500); err != nil { //nolint:gosec // a directory, which needs its execute bit
 		t.Fatal(err)
 	}
 	t.Cleanup(func() { _ = os.Chmod(dir, 0o700) }) //nolint:gosec // a directory, which needs its execute bit
-	mustRun(t, env, "auth", "login")
-	if s, err := keyring.Get("aikido-dojo", "cego/client_secret"); err != nil || s != "secret" {
-		t.Errorf("keychain secret = %q, %v", s, err)
+}
+
+// An entry that omits its region, in a file with no default profile, is
+// already what login would record.
+func TestLoginLeavesASharedConfigAlone(t *testing.T) {
+	_, env, vars := newFake(t, respond(`{}`))
+	delete(vars, config.EnvClientID)
+	shared := `{"profiles":{"github":{"client_id":"id-1"},"gitlab":{"client_id":"id-2"}}}`
+	writeConfig(t, vars, shared)
+	readOnly(t, vars)
+	if out := mustRun(t, env, "--profile", "gitlab", "auth", "login"); out != `{"profile":"gitlab","client_id":"id-2","region":"eu"}`+"\n" {
+		t.Errorf("stdout = %q", out)
+	}
+	if data, err := os.ReadFile(vars[config.EnvConfig]); err != nil || string(data) != shared {
+		t.Errorf("config = %s, %v; want it unchanged", data, err)
 	}
 }
 
