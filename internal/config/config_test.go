@@ -5,6 +5,7 @@ import (
 	"errors"
 	"os"
 	"path/filepath"
+	"reflect"
 	"strings"
 	"testing"
 
@@ -243,4 +244,51 @@ func TestResolvedNeverEncodesTheSecret(t *testing.T) {
 	if err != nil || strings.Contains(string(b), "s3cr3t") {
 		t.Errorf("Resolved encodes as %s, %v; want no secret", b, err)
 	}
+}
+
+func TestSave(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "new", "config.json")
+	f := File{DefaultProfile: "cego", Profiles: map[string]Profile{"cego": {ClientID: "id", Region: "us"}, "ci": {ClientID: "id2"}}}
+	if err := Save(path, f); err != nil {
+		t.Fatal(err)
+	}
+	got, err := Load(path)
+	if err != nil || !reflect.DeepEqual(got, f) {
+		t.Errorf("Load after Save = %+v, %v; want %+v", got, err, f)
+	}
+	for p, want := range map[string]os.FileMode{path: 0o600, filepath.Dir(path): 0o700} {
+		info, err := os.Stat(p)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if info.Mode().Perm() != want {
+			t.Errorf("%s: mode %v, want %v", p, info.Mode().Perm(), want)
+		}
+	}
+	if entries, _ := os.ReadDir(filepath.Dir(path)); len(entries) != 1 {
+		t.Errorf("the directory holds %d files, want only the config", len(entries))
+	}
+}
+
+func TestSaveFailureLeavesNoTempFile(t *testing.T) {
+	dir := t.TempDir()
+	// A directory where the file should go makes the final rename fail.
+	path := filepath.Join(dir, "config.json")
+	if err := os.Mkdir(path, 0o700); err != nil {
+		t.Fatal(err)
+	}
+	if err := Save(path, File{}); err == nil || !strings.Contains(err.Error(), path) {
+		t.Errorf("err = %v, want one naming %s", err, path)
+	}
+	if entries, _ := os.ReadDir(dir); len(entries) != 1 {
+		t.Errorf("the directory holds %d entries, want no temp file left", len(entries))
+	}
+}
+
+func TestRegionHost(t *testing.T) {
+	if h, err := RegionHost("us"); err != nil || h != "app.us.aikido.dev" {
+		t.Errorf("RegionHost(us) = %q, %v", h, err)
+	}
+	_, err := RegionHost("mars")
+	wantCode(t, err, "unknown_region", clierr.ExitUsage)
 }

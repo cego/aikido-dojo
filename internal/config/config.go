@@ -145,12 +145,40 @@ func Resolve(f File, flags Flags, getenv func(string) string) (Resolved, error) 
 		return Resolved{}, err
 	}
 	r.Region = cmp.Or(getenv(EnvRegion), r.Region, DefaultRegion)
-	host, err := regionHost(r.Region)
+	host, err := RegionHost(r.Region)
 	if err != nil {
 		return Resolved{}, err
 	}
 	r.Host = host
 	return r, nil
+}
+
+// Save writes f to path through a temp file and a rename, so a failed write
+// keeps the old file. CreateTemp makes the file 0600.
+func Save(path string, f File) error {
+	data, err := json.MarshalIndent(f, "", "  ")
+	if err != nil {
+		return fmt.Errorf("encode the config: %w", err)
+	}
+	dir := filepath.Dir(path)
+	if err := os.MkdirAll(dir, 0o700); err != nil {
+		return fmt.Errorf("create %s: %w", dir, err)
+	}
+	tmp, err := os.CreateTemp(dir, ".config-*.json")
+	if err != nil {
+		return fmt.Errorf("write config %s: %w", path, err)
+	}
+	defer os.Remove(tmp.Name()) // fails harmlessly once the rename has moved it
+	if _, err := tmp.Write(append(data, '\n')); err != nil {
+		return fmt.Errorf("write config %s: %w", path, errors.Join(err, tmp.Close()))
+	}
+	if err := tmp.Close(); err != nil {
+		return fmt.Errorf("write config %s: %w", path, err)
+	}
+	if err := os.Rename(tmp.Name(), path); err != nil {
+		return fmt.Errorf("write config %s: %w", path, err)
+	}
+	return nil
 }
 
 func pick(f File, flags Flags, getenv func(string) string) (Resolved, error) {

@@ -18,7 +18,9 @@ var regionHosts = map[string]string{
 
 const DefaultRegion = "eu"
 
-func regionHost(region string) (string, error) {
+// RegionHost is the host serving region's API and token endpoint, or a usage
+// error listing the regions there are.
+func RegionHost(region string) (string, error) {
 	if h, ok := regionHosts[region]; ok {
 		return h, nil
 	}
