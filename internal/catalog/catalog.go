@@ -71,8 +71,9 @@ func Command(name string) (ops.Op, bool) {
 // Match finds the operation a concrete request calls, such as PUT
 // /issues/groups/12/ignore. Where two path templates fit, the one with more
 // literal segments wins, so /issues/export isn't taken for /issues/{issue_id}.
-// Spellings a server may route alike, by case, escapes or empty segments,
-// match alike, so the destructive guard on api can't be dodged by one.
+// Spellings a server may route alike, by case, escapes, backslashes or empty
+// segments, match alike, so a typo can't slip a destructive path past api's
+// guard.
 func Match(method, path string) (ops.Op, bool) {
 	segs := segments(path)
 	var best ops.Op
@@ -89,17 +90,15 @@ func Match(method, path string) (ops.Op, bool) {
 	return best, bestLiterals >= 0
 }
 
-// segments splits a path into its non-empty segments, unescaped.
+// segments splits a path into its non-empty segments, unescaped, and splits
+// again at an escaped / or a \, which a server may also take as a separator.
 func segments(path string) []string {
 	var out []string
 	for _, s := range strings.Split(path, "/") {
-		if s == "" {
-			continue
-		}
 		if u, err := url.PathUnescape(s); err == nil {
 			s = u
 		}
-		out = append(out, s)
+		out = append(out, strings.FieldsFunc(s, func(r rune) bool { return r == '/' || r == '\\' })...)
 	}
 	return out
 }

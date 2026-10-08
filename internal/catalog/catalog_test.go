@@ -1,6 +1,7 @@
 package catalog
 
 import (
+	"regexp"
 	"strings"
 	"testing"
 )
@@ -70,6 +71,9 @@ func TestMatch(t *testing.T) {
 		{"POST", "/repositories/code/Deactivate", "repo deactivate"},
 		{"POST", "/repositories/code/%64eactivate", "repo deactivate"},
 		{"POST", "/repositories//code/deactivate", "repo deactivate"},
+		{"POST", "/repositories/code%2Fdeactivate", "repo deactivate"},
+		{"POST", "/repositories%2Fcode%2Fdeactivate", "repo deactivate"},
+		{"POST", `/repositories\code\deactivate`, "repo deactivate"},
 		{"DELETE", "/repositories/code", ""},
 		{"GET", "/nosuch", ""},
 	}
@@ -77,6 +81,17 @@ func TestMatch(t *testing.T) {
 		op, ok := Match(tt.method, tt.path)
 		if op.Command != tt.want || ok != (tt.want != "") {
 			t.Errorf("Match(%s %s) = %q, %v; want %q", tt.method, tt.path, op.Command, ok, tt.want)
+		}
+	}
+}
+
+// Normalising spellings must not move a real path to another operation.
+func TestEveryOperationMatchesItsOwnPath(t *testing.T) {
+	placeholder := regexp.MustCompile(`\{[^}]+\}`)
+	for _, op := range All {
+		path := placeholder.ReplaceAllString(op.Path, "1")
+		if got, ok := Match(op.Method, path); !ok || got.ID != op.ID {
+			t.Errorf("Match(%s %s) = %s, want %s", op.Method, path, got.Command, op.Command)
 		}
 	}
 }
