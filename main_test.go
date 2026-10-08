@@ -1,106 +1,124 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
-	"io/fs"
 	"os"
-	"path/filepath"
+	"os/exec"
 	"regexp"
+	"slices"
 	"strings"
 	"testing"
 	"unicode/utf8"
 )
 
-var tenantPatterns = []*regexp.Regexp{
-	regexp.MustCompile(`eyJ[A-Za-z0-9_-]{8,}\.eyJ[A-Za-z0-9_-]{8,}`), // a JWT, such as an access token
-	regexp.MustCompile(`AIK_CLIENT_[A-Za-z0-9]{16,}`),                // a real API client ID
-	regexp.MustCompile(`\bcego\.dk\b`),                               // the company's own hosts
-	regexp.MustCompile(`-----BEGIN [A-Z ]*PRIVATE KEY-----`),
+var tenantPatterns = []struct {
+	name string
+	re   *regexp.Regexp
+}{
+	{"a JWT", regexp.MustCompile(`eyJ[A-Za-z0-9_-]{8,}\.eyJ[A-Za-z0-9_-]{8,}`)},
+	{"an API client ID", regexp.MustCompile(`AIK_CLIENT_[A-Za-z0-9]{16,}`)},
+	{"an internal host", regexp.MustCompile(`\bcego\.dk\b`)},
+	{"a private key", regexp.MustCompile(`-----BEGIN [A-Z ]*PRIVATE KEY-----`)},
 }
 
-var email = regexp.MustCompile(`[A-Za-z0-9._%+-]+@((?:[A-Za-z0-9-]+\.)+[A-Za-z]{2,})`)
+var (
+	email = regexp.MustCompile(`[A-Za-z0-9._%+-]+@((?:[A-Za-z0-9-]+\.)+[A-Za-z]{2,})`)
+	// A cego repository other than this one and its tap names an internal project.
+	cegoRepo = regexp.MustCompile(`github\.com[/:]cego/([A-Za-z0-9._-]+)`)
+)
 
-// tenantData lists what in s looks like a credential or a tenant's
-// identifier. An address is allowed only on a domain no tenant has: the
-// RFC 2606 examples, and github.com in git@github.com remotes.
-func tenantData(s string) []string {
-	var hits []string
-	for _, p := range tenantPatterns {
-		hits = append(hits, p.FindAllString(s, -1)...)
-	}
-	for _, m := range email.FindAllStringSubmatch(s, -1) {
-		domain := strings.ToLower(m[1])
-		if domain == "github.com" || strings.HasSuffix("."+domain, ".example.com") || strings.HasSuffix("."+domain, ".example.org") {
-			continue
+type finding struct {
+	line    int
+	pattern string
+}
+
+// tenantData lists the lines of s that hold a credential or a tenant's
+// identifier, and what each looks like. An address is allowed only on a
+// domain no tenant has, the RFC 2606 examples and github.com; a git@host:
+// remote isn't an address.
+func tenantData(s string) []finding {
+	var found []finding
+	for i, line := range strings.Split(s, "\n") {
+		for _, p := range tenantPatterns {
+			if p.re.MatchString(line) {
+				found = append(found, finding{i + 1, p.name})
+			}
 		}
-		hits = append(hits, m[0])
+		for _, m := range email.FindAllStringSubmatchIndex(line, -1) {
+			domain := strings.ToLower(line[m[2]:m[3]])
+			remote := m[1] < len(line) && line[m[1]] == ':'
+			if remote || domain == "github.com" || strings.HasSuffix("."+domain, ".example.com") || strings.HasSuffix("."+domain, ".example.org") {
+				continue
+			}
+			found = append(found, finding{i + 1, "an e-mail address"})
+		}
+		for _, m := range cegoRepo.FindAllStringSubmatch(line, -1) {
+			if repo := strings.TrimSuffix(m[1], ".git"); repo != "aikido-dojo" && repo != "homebrew-tap" {
+				found = append(found, finding{i + 1, "a cego repository"})
+			}
+		}
 	}
-	return hits
+	return found
 }
 
+// The samples are built from pieces, so this file passes its own scan.
 func TestTenantDataPatterns(t *testing.T) {
-	hits := []string{
-		"token eyJhbGciOiJSUzI1NiJ9.eyJzY29wZSI6Imlzc3VlczpyZWFkIn0.sig",
-		"AIK_CLIENT_0123456789abcdef0123456789abcdef",
-		"mail someone@company.io about it",
-		"https://cego.dk/group/repo.git",
-		"-----BEGIN RSA PRIVATE KEY-----",
+	hits := map[string]string{
+		"token " + "eyJ" + "hbGciOiJSUzI1NiJ9.eyJ" + "zY29wZSI6Imlzc3VlczpyZWFkIn0.sig": "a JWT",
+		"AIK_" + "CLIENT_0123456789abcdef0123456789abcdef":                              "an API client ID",
+		"https://cego" + ".dk/group/repo.git":                                           "an internal host",
+		"-----BEGIN RSA PRIVATE " + "KEY-----":                                          "a private key",
+		"mail someone@" + "company.io about it":                                         "an e-mail address",
+		"see https://github.com/" + "cego/internal-tool":                                "a cego repository",
 	}
-	for _, s := range hits {
-		if len(tenantData(s)) == 0 {
-			t.Errorf("tenantData(%q) found nothing", s)
+	for s, want := range hits {
+		if got := tenantData(s); len(got) != 1 || got[0].pattern != want {
+			t.Errorf("tenantData(%q) = %v, want %s", s, got, want)
 		}
 	}
 	misses := []string{
 		"AIK_CLIENT_cego and AIK_CLIENT_…",
 		"git@github.com:cego/aikido-dojo.git and git@gitlab.example.com:g/r.git",
+		"git@gitlab.com:group/repo.git and git@bitbucket.org:team/repo.git",
 		"user@example.com, ops@example.org",
 		"41898282+github-actions[bot]@users.noreply.github.com",
-		"github.com/cego/aikido-dojo",
+		"github.com/cego/aikido-dojo and github.com/cego/homebrew-tap",
 	}
 	for _, s := range misses {
 		if got := tenantData(s); len(got) != 0 {
-			t.Errorf("tenantData(%q) = %q, want nothing", s, got)
+			t.Errorf("tenantData(%q) = %v, want nothing", s, got)
 		}
 	}
 }
 
 // Tests use hand-written fakes, not recordings, so nothing is scrubbed on
-// the way in; this fails if tenant data reaches a file anyway. Skipped: the
-// vendored spec and the catalog generated from it, which are Aikido's own
-// document, and this file, which holds the samples above.
+// the way in; this fails if tenant data reaches a tracked file anyway. It
+// names the file, line and kind, never the text, which CI logs would keep.
+// Skipped: the vendored spec and the catalog generated from it, which are
+// Aikido's own document.
 func TestRepositoryHoldsNoTenantData(t *testing.T) {
-	skip := map[string]bool{
-		".git": true, "dist": true, "spec": true,
-		"internal/catalog/schemas.json": true, "internal/catalog/search.json": true, "internal/catalog/zz_ops.go": true,
-		"main_test.go": true,
+	if _, err := exec.LookPath("git"); err != nil {
+		t.Skip("git is not installed")
 	}
-	err := filepath.WalkDir(".", func(path string, d fs.DirEntry, err error) error {
-		if err != nil {
-			return err
-		}
-		if skip[filepath.ToSlash(path)] {
-			if d.IsDir() {
-				return filepath.SkipDir
-			}
-			return nil
-		}
-		if d.IsDir() {
-			return nil
-		}
-		data, err := os.ReadFile(path) //nolint:gosec // the repository's own files
-		if err != nil {
-			return fmt.Errorf("read %s: %w", path, err)
-		}
-		if !utf8.Valid(data) {
-			return nil
-		}
-		for _, hit := range tenantData(string(data)) {
-			t.Errorf("%s holds tenant data: %s", path, hit)
-		}
-		return nil
-	})
+	out, err := exec.CommandContext(t.Context(), "git", "ls-files", "-z").Output()
 	if err != nil {
-		t.Fatal(err)
+		t.Fatalf("list the tracked files: %v", err)
+	}
+	generated := []string{"internal/catalog/schemas.json", "internal/catalog/search.json", "internal/catalog/zz_ops.go"}
+	for _, path := range strings.Split(strings.TrimSuffix(string(out), "\x00"), "\x00") {
+		if strings.HasPrefix(path, "spec/") || slices.Contains(generated, path) {
+			continue
+		}
+		data, err := os.ReadFile(path) //nolint:gosec // a file git tracks here
+		if err != nil {
+			t.Fatal(fmt.Errorf("read %s: %w", path, err))
+		}
+		if !utf8.Valid(data) || bytes.IndexByte(data, 0) >= 0 {
+			continue
+		}
+		for _, f := range tenantData(string(data)) {
+			t.Errorf("%s:%d holds %s", path, f.line, f.pattern)
+		}
 	}
 }
