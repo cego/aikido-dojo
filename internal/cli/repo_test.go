@@ -194,6 +194,34 @@ func TestRepoCurrentAsksAClientOnce(t *testing.T) {
 	}
 }
 
+// A stored profile that can't call, here after auth logout, doesn't stand in
+// for the environment pair of the same client: the pair is still asked.
+func TestRepoCurrentFallsBackToThePairOfAProfileThatFails(t *testing.T) {
+	inRepo(t, "git@gitlab.example.com:g/r.git")
+	_, env, vars := newFake(t, repos(`{"id":1,"name":"r","url":"https://gitlab.example.com/g/r.git"}`))
+	vars[config.EnvClientID] = "a"
+	writeConfig(t, vars, `{"profiles":{"a":{"client_id":"a"}}}`)
+	stdout, stderr, code := run(t, env, "repo", "current")
+	if code != clierr.ExitOK || !strings.HasPrefix(stdout, `[{"repo":`) || !strings.Contains(stderr, `profile \"a\" skipped`) {
+		t.Errorf("exit %d, stdout %s, stderr %s; want the pair's match and a warning for a", code, stdout, stderr)
+	}
+}
+
+// The same client in another region is another workspace, so both are asked.
+func TestRepoCurrentAsksTheSameClientInAnotherRegion(t *testing.T) {
+	inRepo(t, "git@gitlab.example.com:g/r.git")
+	f, env, vars := newFake(t, repos(`{"id":1,"name":"r","url":"https://gitlab.example.com/g/r.git"}`))
+	vars[config.EnvClientID] = "a"
+	writeConfig(t, vars, `{"profiles":{"a":{"client_id":"a","region":"au"}}}`)
+	if err := keyring.Set("aikido-dojo", "a/client_secret", "s"); err != nil {
+		t.Fatal(err)
+	}
+	out := mustRun(t, env, "repo", "current")
+	if n := len(f.seenLogins()); n != 2 || strings.Count(out, `"id":1`) != 2 {
+		t.Errorf("token requests = %d, stdout %s; want both the au profile and the eu pair", n, out)
+	}
+}
+
 func TestRepoCurrentAsksOnlyTheSelectedProfile(t *testing.T) {
 	inRepo(t, "git@gitlab.example.com:g/r.git")
 	f, env, vars := newFake(t, repos(`{"id":1,"name":"r","url":"https://gitlab.example.com/g/r.git"}`))

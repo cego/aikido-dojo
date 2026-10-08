@@ -87,7 +87,14 @@ func (a *app) repoCurrent(ctx context.Context, list ops.Op) error {
 	matches := []repoMatch{}
 	var firstErr error
 	searched := 0
+	// A client asked once in a region needn't be asked again under another name,
+	// but one that failed, say for want of a stored secret, may still answer.
+	asked := map[string]bool{}
 	for _, c := range candidates {
+		client := c.r.ClientID + "@" + c.r.Host
+		if c.err == nil && asked[client] {
+			continue
+		}
 		err := c.err
 		var repo json.RawMessage
 		if err == nil {
@@ -107,6 +114,7 @@ func (a *app) repoCurrent(ctx context.Context, list ops.Op) error {
 			continue
 		}
 		searched++
+		asked[client] = true
 		if repo != nil {
 			matches = append(matches, repoMatch{Profile: c.r.Profile, Repo: repo})
 		}
@@ -147,16 +155,10 @@ func (a *app) everyProfile() ([]candidate, error) {
 	if a.env.Getenv(config.EnvClientID) == "" && a.env.Getenv(config.EnvClientSecret) == "" {
 		return stored, nil
 	}
-	// An empty file and no profile, so Resolve takes the pair.
+	// An empty file and no profile, so Resolve takes the pair. It comes last,
+	// so a stored profile of the same client answers as the named profile.
 	r, err := config.Resolve(config.File{}, a.flags(), a.env.Getenv)
-	pair := candidate{label: profileLabel(""), r: r, err: err}
-	// A pair that is a stored profile's API client would find its repo twice.
-	if err == nil && slices.ContainsFunc(stored, func(c candidate) bool {
-		return c.err == nil && c.r.ClientID == r.ClientID && c.r.Host == r.Host
-	}) {
-		return stored, nil
-	}
-	return append([]candidate{pair}, stored...), nil
+	return append(stored, candidate{label: profileLabel(""), r: r, err: err}), nil
 }
 
 // findRepo looks in one profile's workspace for the repo with want's URL.
