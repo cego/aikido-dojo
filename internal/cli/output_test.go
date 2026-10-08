@@ -293,3 +293,14 @@ func TestTerminalOutputEscapesC1Controls(t *testing.T) {
 		}
 	}
 }
+
+// api reports a write whose response --jq can't read as one that took
+// effect, and names an empty response as such.
+func TestAPIWriteWithAnUnreadableResponse(t *testing.T) {
+	f, env, _ := newFake(t, func(w http.ResponseWriter, _ *http.Request) { w.WriteHeader(http.StatusNoContent) })
+	_, stderr, code := run(t, env, "api", "POST", "/nosuch", "--jq", ".")
+	e := errorOf(t, stderr)
+	if code != clierr.ExitUnexpected || e.Code != "output_failed" || !strings.Contains(e.Message, "has no content type") || len(f.seen()) != 1 {
+		t.Errorf("exit %d, error %+v; want output_failed naming the empty response", code, e)
+	}
+}

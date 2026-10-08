@@ -86,7 +86,7 @@ See what a command takes:      aikido-dojo schema <resource> <verb>
 	pf.StringVar(&a.config, "config", "", "the config file (default ~/.config/aikido-dojo/config.json; also AIKIDO_DOJO_CONFIG)")
 	pf.StringVar(&a.profile, "profile", "", "the profile to run as (also AIKIDO_DOJO_PROFILE)")
 	pf.BoolVar(&a.debug, "debug", false, "log each request's method, URL, status and timing to stderr")
-	pf.StringVar(&a.jq, "jq", "", "filter the JSON output with a jq expression; strings print without quotes. It holds the whole output, except with --ndjson, where it runs on each item as it arrives")
+	pf.StringVar(&a.jq, "jq", "", "filter the JSON output with a jq expression; strings print without quotes. It reads the whole output into memory first, except with --ndjson, where it runs on each item as it arrives")
 	pf.BoolVar(&a.ndjson, "ndjson", false, "print a list one item per line as it arrives, instead of one array")
 	pf.BoolVar(&a.readOnlyFlag, "read-only", false, "refuse every call that isn't a GET, and auth login and logout (also "+config.EnvReadOnly+"=1)")
 	root.PersistentPreRunE = func(*cobra.Command, []string) error { return a.prepare() }

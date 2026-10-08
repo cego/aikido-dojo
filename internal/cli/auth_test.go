@@ -365,3 +365,15 @@ func TestLogoutWithAFailingFilterSaysItTookEffect(t *testing.T) {
 		t.Errorf("exit %d, error %+v; want output_failed saying logout took effect", code, e)
 	}
 }
+
+func TestLoginWithAFailingFilterSaysItTookEffect(t *testing.T) {
+	_, env, vars := newFake(t, respond(`{}`))
+	delete(vars, config.EnvClientID)
+	_, stderr, code := run(t, env, "auth", "login", "--client-id", "id-1", "--jq", ".[0]")
+	if e := errorOf(t, stderr); code != clierr.ExitUnexpected || e.Code != "output_failed" || !strings.Contains(e.Message, "auth login succeeded") {
+		t.Errorf("exit %d, error %+v; want output_failed saying login took effect", code, e)
+	}
+	if s, err := keyring.Get("aikido-dojo", "default/client_secret"); err != nil || s != "secret" {
+		t.Errorf("secret %q, %v; want the login stored", s, err)
+	}
+}

@@ -200,6 +200,9 @@ func (o *output) write(raw []byte) error {
 // CSV and PDF always do.
 func (o *output) response(ctx context.Context, r io.Reader, contentType string) error {
 	if (o.jq != nil || o.ndjson) && !isJSON(contentType) {
+		if contentType == "" {
+			return notJSON("the response has no content type")
+		}
 		return notJSON("the response is " + contentType)
 	}
 	if o.ndjson {
