@@ -50,12 +50,14 @@ homebrew_casks:
       name: homebrew-tap
       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
     homepage: https://github.com/cego/aikido-dojo
+    skip_upload: auto
     description: Unofficial command-line client for the Aikido Security public API
     caveats: |
       aikido-dojo is not signed or notarized yet. If macOS refuses to open it after an install or upgrade, run:
         xattr -d com.apple.quarantine "$(readlink -f "$(command -v aikido-dojo)")"
 
 release:
+  prerelease: auto
   github:
     owner: cego
     name: aikido-dojo
