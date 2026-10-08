@@ -6,9 +6,11 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"testing"
 
+	"github.com/cego/aikido-dojo/internal/clierr"
 	"github.com/cego/aikido-dojo/internal/config"
 )
 
@@ -117,6 +119,38 @@ func TestLiveHandWritten(t *testing.T) {
 		}
 		if len(found) != 1 || json.Unmarshal(found[0].Repo, &repo) != nil || string(repo.ID) != string(listed[0].ID) {
 			t.Errorf("repo current found %d repos, want the one repo list gave", len(found))
+		}
+	})
+}
+
+// Output and safety flags against a real workspace, with GETs only.
+func TestLiveOutput(t *testing.T) {
+	env := liveEnv(t)
+	t.Run("jq", func(t *testing.T) {
+		out := strings.TrimSpace(mustRun(t, env, "repo", "list", "--limit", "2", "--jq", "length"))
+		if n, err := strconv.Atoi(out); err != nil || n > 2 {
+			t.Errorf("--jq length = %q, %v; want a number up to 2", out, err)
+		}
+	})
+	t.Run("ndjson", func(t *testing.T) {
+		out := mustRun(t, env, "issue-group", "list", "--limit", "3", "--ndjson")
+		lines := strings.Split(strings.TrimSuffix(out, "\n"), "\n")
+		if out == "" {
+			lines = nil
+		}
+		if len(lines) > 3 {
+			t.Errorf("%d lines, want at most 3", len(lines))
+		}
+		for _, l := range lines {
+			if !strings.HasPrefix(l, "{") || !json.Valid([]byte(l)) {
+				t.Errorf("line %.80s is not a JSON object", l)
+			}
+		}
+		t.Logf("%d lines", len(lines))
+	})
+	t.Run("read-only", func(t *testing.T) {
+		if _, stderr, code := run(t, env, "--read-only", "team", "create", "--name", "x"); code != clierr.ExitRefused {
+			t.Errorf("exit %d: %s; want 7", code, stderr)
 		}
 	})
 }
