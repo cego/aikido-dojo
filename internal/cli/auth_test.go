@@ -280,6 +280,7 @@ func TestAuthNeverPrintsASecretOrAToken(t *testing.T) {
 	f.issueTokens(func(string, string) (int, string) { return http.StatusOK, tok })
 	for _, args := range [][]string{
 		{"--profile", "cego", "auth", "login"},
+		{"--profile", "cego", "--debug", "auth", "login"},
 		{"auth", "status"},
 		{"--debug", "auth", "status"},
 		{"--profile", "cego", "--debug", "auth", "status"},

@@ -271,6 +271,19 @@ func TestRepoCurrentNeedsAnOrigin(t *testing.T) {
 	}
 }
 
+func TestRepoCurrentWithoutGit(t *testing.T) {
+	t.Chdir(t.TempDir())
+	t.Setenv("PATH", t.TempDir())
+	f, env, _ := newFake(t, repos())
+	_, stderr, code := run(t, env, "repo", "current")
+	if e := errorOf(t, stderr); code != clierr.ExitUsage || e.Code != "no_git" || !strings.Contains(e.Hint, "repo list --filter-name") {
+		t.Errorf("exit %d, error %+v; want no_git pointing at repo list", code, e)
+	}
+	if n := len(f.seenLogins()); n != 0 {
+		t.Errorf("token requests = %d, want none", n)
+	}
+}
+
 func TestRepoCurrentIsAmongTheRepoVerbs(t *testing.T) {
 	env, _ := testEnv(t)
 	root, err := buildRoot(env)

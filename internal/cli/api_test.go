@@ -1,10 +1,12 @@
 package cli
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 	"testing"
 
+	"github.com/cego/aikido-dojo/internal/catalog"
 	"github.com/cego/aikido-dojo/internal/clierr"
 )
 
@@ -54,6 +56,19 @@ func TestAPINamesTheScopeOfAMatchingCommand(t *testing.T) {
 	}
 	if _, stderr, _ := run(t, env, "api", "GET", "/nosuch"); errorOf(t, stderr).Code != "forbidden" {
 		t.Errorf("an unknown path: %s, want forbidden", stderr)
+	}
+}
+
+// A 400 on a path a generated command calls gets that command's hint.
+func TestAPIUsesTheMatchingCommandsBadRequestHint(t *testing.T) {
+	_, env, _ := newFake(t, func(w http.ResponseWriter, _ *http.Request) {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprint(w, `{"status_code":400,"reason_phrase":"This feature is not enabled on your workspace."}`)
+	})
+	op, ok := catalog.Match(http.MethodGet, "/issues/detail/bulk")
+	_, stderr, code := run(t, env, "api", "GET", "/issues/detail/bulk", "-f", "issue_ids=1")
+	if e := errorOf(t, stderr); !ok || op.BadRequestHint == "" || code != clierr.ExitUsage || e.Hint != op.BadRequestHint {
+		t.Errorf("exit %d, hint %q; want %s's hint %q", code, e.Hint, op.Command, op.BadRequestHint)
 	}
 }
 
