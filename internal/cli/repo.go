@@ -138,18 +138,25 @@ func (a *app) everyProfile() ([]candidate, error) {
 		}
 		return []candidate{{label: profileLabel(r.Profile), r: r}}, nil
 	}
-	var out []candidate
-	if a.env.Getenv(config.EnvClientID) != "" || a.env.Getenv(config.EnvClientSecret) != "" {
-		// An empty file, so Resolve takes the pair rather than the default profile.
-		r, err := config.Resolve(config.File{}, flags, a.env.Getenv)
-		out = append(out, candidate{label: profileLabel(""), r: r, err: err})
-	}
+	var stored []candidate
 	for _, name := range slices.Sorted(maps.Keys(f.Profiles)) {
 		flags.Profile = name
 		r, err := config.Resolve(f, flags, a.env.Getenv)
-		out = append(out, candidate{label: profileLabel(name), r: r, err: err})
+		stored = append(stored, candidate{label: profileLabel(name), r: r, err: err})
 	}
-	return out, nil
+	if a.env.Getenv(config.EnvClientID) == "" && a.env.Getenv(config.EnvClientSecret) == "" {
+		return stored, nil
+	}
+	// An empty file and no profile, so Resolve takes the pair.
+	r, err := config.Resolve(config.File{}, a.flags(), a.env.Getenv)
+	pair := candidate{label: profileLabel(""), r: r, err: err}
+	// A pair that is a stored profile's API client would find its repo twice.
+	if err == nil && slices.ContainsFunc(stored, func(c candidate) bool {
+		return c.err == nil && c.r.ClientID == r.ClientID && c.r.Host == r.Host
+	}) {
+		return stored, nil
+	}
+	return append([]candidate{pair}, stored...), nil
 }
 
 // findRepo looks in one profile's workspace for the repo with want's URL.

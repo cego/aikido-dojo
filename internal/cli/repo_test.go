@@ -13,6 +13,7 @@ import (
 	"github.com/zalando/go-keyring"
 
 	"github.com/cego/aikido-dojo/internal/clierr"
+	"github.com/cego/aikido-dojo/internal/config"
 )
 
 // inRepo runs the rest of the test in a new directory: a git checkout whose
@@ -169,6 +170,27 @@ func TestRepoCurrentSkipsAMisconfiguredProfile(t *testing.T) {
 	}
 	if n := len(f.seenLogins()); n != 1 {
 		t.Errorf("token requests = %d, want only profile a's", n)
+	}
+}
+
+// The environment pair and a stored profile of the same API client are one
+// workspace; it is asked once, as the profile, whose name other commands take.
+func TestRepoCurrentAsksAClientOnce(t *testing.T) {
+	inRepo(t, "git@gitlab.example.com:g/r.git")
+	f, env, vars := newFake(t, repos(`{"id":1,"name":"r","url":"https://gitlab.example.com/g/r.git"}`))
+	vars[config.EnvClientID] = "a"
+	writeConfig(t, vars, `{"profiles":{"a":{"client_id":"a"},"b":{"client_id":"b"}}}`)
+	for _, p := range []string{"a", "b"} {
+		if err := keyring.Set("aikido-dojo", p+"/client_secret", "s"); err != nil {
+			t.Fatal(err)
+		}
+	}
+	out := mustRun(t, env, "repo", "current")
+	if want := `[{"profile":"a","repo":{"id":1,"name":"r","url":"https://gitlab.example.com/g/r.git"}},{"profile":"b","repo":{"id":1,"name":"r","url":"https://gitlab.example.com/g/r.git"}}]` + "\n"; out != want {
+		t.Errorf("stdout = %s, want a and b once each", out)
+	}
+	if n := len(f.seenLogins()); n != 2 {
+		t.Errorf("token requests = %d, want one per client", n)
 	}
 }
 
