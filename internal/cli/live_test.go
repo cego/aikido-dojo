@@ -29,6 +29,9 @@ func TestLiveCommands(t *testing.T) {
 		{args: []string{"pr-check-config", "list", "--limit", "5"}, limit: 5},
 		{args: []string{"issue-group", "list", "--limit", "150"}, limit: 150},
 		{args: []string{"cloud-asset", "list", "--limit", "5"}, limit: 5},
+		{args: []string{"cwe", "list"}},
+		{args: []string{"user-invite", "list"}},
+		{args: []string{"eol-runtime", "list", "--limit", "150"}, limit: 150},
 	}
 	for _, tt := range tests {
 		t.Run(strings.Join(tt.args, " "), func(t *testing.T) {
