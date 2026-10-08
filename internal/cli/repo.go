@@ -39,7 +39,7 @@ type candidate struct {
 // remote is a repo URL reduced to what its SSH and HTTPS forms share.
 type remote struct {
 	key  string // lowercased host/path
-	name string // the last path segment as written: Aikido's name for 744 of 751 repos (live, 2026-10-02)
+	name string // the last path segment as written, which findRepo looks the repo up by
 }
 
 // addRepoCurrent puts the hand-written repo current beside the generated repo verbs.
@@ -59,8 +59,9 @@ func (a *app) repoCurrentCmd(list ops.Op) *cobra.Command {
 		Use:   "current",
 		Short: "Find the Aikido code repo of this directory's git origin, in every profile",
 		Long: "current reads git remote get-url origin in the working directory and finds the Aikido code repo with " +
-			"that URL. It asks the profile --profile or AIKIDO_DOJO_PROFILE selects; otherwise the AIKIDO_DOJO_CLIENT_ID " +
-			"pair, if set, and every profile in the config file. A profile that fails is skipped with a warning.\n\n" +
+			"that URL. It asks the profile --profile or AIKIDO_DOJO_PROFILE selects; otherwise every profile in the " +
+			"config file, then the AIKIDO_DOJO_CLIENT_ID pair if set. A client that already answered under another " +
+			"name isn't asked again. When several are asked, one that fails is skipped with a warning.\n\n" +
 			"It prints a JSON array of {profile, repo}, where repo is the entry repo list prints; pass its id, with " +
 			"that --profile, to other commands. SSH and HTTPS remotes of one repo match. Inactive repos aren't searched.\n\n" +
 			"Needs the " + list.Scope + " scope.",
@@ -130,8 +131,8 @@ func (a *app) repoCurrent(ctx context.Context, list ops.Op) error {
 }
 
 // everyProfile is who repo current asks: the profile --profile or
-// AIKIDO_DOJO_PROFILE selects, else the environment pair, if set, and every
-// stored profile. Of those, one that can't be resolved comes with its error,
+// AIKIDO_DOJO_PROFILE selects, else every stored profile and then the
+// environment pair, if set. Of those, one that can't be resolved comes with its error,
 // so the others are still asked.
 func (a *app) everyProfile() ([]candidate, error) {
 	_, f, err := a.configFile()

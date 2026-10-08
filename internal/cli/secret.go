@@ -34,9 +34,10 @@ func TerminalSecret(in *os.File, w io.Writer) func(ctx context.Context, prompt s
 }
 
 // readHidden writes prompt and returns what read gets, trimmed. read runs
-// aside so that a cancelled ctx ends the wait at once: read has turned echo
-// off and waits for Enter until the process exits, so restore gives the
-// terminal its echo back first. After an earlier cancel no read starts.
+// aside so that a cancelled ctx ends the wait at once: read turns echo off
+// and waits for Enter until the process exits, so restore gives the terminal
+// its echo back. After an earlier cancel no read starts; only a cancel in the
+// instant before read turns echo off can still leave it off.
 func readHidden(ctx context.Context, w io.Writer, prompt string, read func() ([]byte, error), restore func() error) (string, error) {
 	if err := ctx.Err(); err != nil {
 		return "", fmt.Errorf("read the client secret: %w", err)
