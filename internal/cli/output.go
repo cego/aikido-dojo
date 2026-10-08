@@ -228,6 +228,12 @@ func (o *output) items(ctx context.Context, r io.Reader) error {
 	return nil
 }
 
+// transforms reports whether printing a response of contentType changes it,
+// rather than copying it through.
+func (o *output) transforms(contentType string) bool {
+	return o.jq != nil || o.ndjson || (o.pretty && isJSON(contentType))
+}
+
 func isJSON(contentType string) bool { return strings.HasPrefix(contentType, "application/json") }
 
 func (a *app) printJSON(ctx context.Context, v any) error { return a.out.value(ctx, v) }

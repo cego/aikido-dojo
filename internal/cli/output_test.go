@@ -258,3 +258,26 @@ func TestAPIOutputFlagsOnAnUnknownPath(t *testing.T) {
 		t.Errorf("--ndjson: stdout = %q", out)
 	}
 }
+
+// After a filter fails part-way, stdout holds Aikido's response alone, not
+// some results followed by it.
+func TestWriteResultReprintsOnlyTheRawResponse(t *testing.T) {
+	_, env, _ := newFake(t, respond(`{"id":7}`))
+	stdout, stderr, code := run(t, env, "team", "create", "--name", "x", "--jq", ".id, .[0]")
+	if stdout != "{\"id\":7}\n" || code != clierr.ExitUnexpected || errorOf(t, stderr).Code != "output_failed" {
+		t.Errorf("stdout %q, exit %d, stderr %s; want only the raw response and output_failed", stdout, code, stderr)
+	}
+}
+
+// A write's response that breaks off is still a write that went through.
+func TestWriteResultThatBreaksOff(t *testing.T) {
+	_, env, _ := newFake(t, func(w http.ResponseWriter, _ *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Length", "100")
+		fmt.Fprint(w, `{"id":`)
+	})
+	_, stderr, code := run(t, env, "team", "create", "--name", "x")
+	if e := errorOf(t, stderr); code != clierr.ExitUnexpected || e.Code != "output_failed" || !strings.Contains(e.Message, "team create succeeded") {
+		t.Errorf("exit %d, error %+v; want output_failed", code, e)
+	}
+}

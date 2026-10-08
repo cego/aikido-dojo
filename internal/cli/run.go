@@ -123,25 +123,38 @@ func commandLine(cmd *cobra.Command, op ops.Op, args []string) string {
 	return strings.Join(parts, " ")
 }
 
-// writeResult prints a write's response. It reads it whole first, as a
-// write's answer is small, so that if printing fails the bytes still reach
-// stdout and the error says the write took effect.
+// writeResult prints a write's response. With nothing to change it streams,
+// as an SBOM export can be large. Otherwise the response is read whole and
+// printed into a buffer first, so that if printing fails, stdout holds
+// Aikido's response alone and the error says the write took effect.
 func (a *app) writeResult(ctx context.Context, what string, resp *http.Response) error {
+	ct := resp.Header.Get("Content-Type")
+	if !a.out.transforms(ct) {
+		if err := a.out.response(ctx, resp.Body, ct); err != nil {
+			return tookEffect(what, err, "read the result with a GET")
+		}
+		return nil
+	}
 	data, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return tookEffect(what, fmt.Errorf("read the response: %w", err), "read the result with a GET")
 	}
-	err = a.out.response(ctx, bytes.NewReader(data), resp.Header.Get("Content-Type"))
-	if err == nil {
-		return nil
-	}
-	next := "read the result with a GET"
-	if len(data) > 0 {
-		if _, werr := a.env.Stdout.Write(append(data, '\n')); werr == nil {
-			next = "its response is on stdout as Aikido sent it"
+	var buf bytes.Buffer
+	into := *a.out
+	into.w = &buf
+	if err := into.response(ctx, bytes.NewReader(data), ct); err != nil {
+		next := "read the result with a GET"
+		if len(data) > 0 {
+			if _, werr := a.env.Stdout.Write(append(data, '\n')); werr == nil {
+				next = "its response is on stdout as Aikido sent it"
+			}
 		}
+		return tookEffect(what, err, next)
 	}
-	return tookEffect(what, err, next)
+	if _, err := a.env.Stdout.Write(buf.Bytes()); err != nil {
+		return tookEffect(what, fmt.Errorf("write the output: %w", err), "read the result with a GET")
+	}
+	return nil
 }
 
 func (a *app) flags() config.Flags { return config.Flags{Config: a.config, Profile: a.profile} }
