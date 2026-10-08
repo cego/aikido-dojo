@@ -123,7 +123,14 @@ func apiTarget(s string) (string, url.Values, error) {
 	// Checked here, so a path no URL can hold, such as one with a control
 	// character, costs no token request.
 	if _, err := url.Parse("https://host" + path); err != nil {
+		var ue *url.Error
+		if errors.As(err, &ue) {
+			err = ue.Err
+		}
 		return "", nil, apiUsage(fmt.Sprintf("path %q: %v", path, err))
+	}
+	if strings.Contains(path, "#") {
+		return "", nil, apiUsage(fmt.Sprintf("path %q: a # starts a fragment, which is never sent; write it as %%23", path))
 	}
 	for _, seg := range strings.Split(path, "/") {
 		dec, err := url.PathUnescape(seg)

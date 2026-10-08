@@ -85,6 +85,8 @@ func TestAPIMistakesCostNoCall(t *testing.T) {
 		{"api", "GET", "/..%5c..%5coauth"},
 		{"api", "GET", `/x\..\oauth`},
 		{"api", "GET", "/x\ny"},
+		// The rest would be a fragment, never sent: the call would drop the query.
+		{"api", "GET", "/repositories/code#x?per_page=5"},
 		{"api", "GET", "/issues/%zz"},
 		{"api", "GET", "/x?a=%zz"},
 		{"api", "POST", "/x", "-f", "novalue"},
@@ -119,6 +121,14 @@ func TestAPIRefusesACredentialInAField(t *testing.T) {
 		if strings.Contains(stderr, "s3cr3t") || len(f.seenLogins()) != 0 {
 			t.Errorf("%q: stderr %s, %d token requests; want the value unechoed and no call", args, stderr, len(f.seenLogins()))
 		}
+	}
+}
+
+func TestAPIPathErrorNamesOnlyThePath(t *testing.T) {
+	env, _ := testEnv(t)
+	_, stderr, _ := run(t, env, "api", "GET", "/x\ny")
+	if e := errorOf(t, stderr); !strings.Contains(e.Message, "control character") || strings.Contains(e.Message, "https://") {
+		t.Errorf("message = %q, want the problem with the path alone", e.Message)
 	}
 }
 
