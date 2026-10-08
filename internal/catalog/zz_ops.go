@@ -933,7 +933,9 @@ var All = []ops.Op{
 		Args: []ops.Param{
 			{Name: "domain_id", Kind: ops.Integer, Required: true, Usage: "The ID of the domain to be deleted"},
 		},
-		Body: &ops.Body{Required: true, Object: true},
+		Body: &ops.Body{Required: true, Object: true,
+			Secret: []string{"http_headers"},
+		},
 	},
 	{
 		ID:          "updateDomainOpenAPISpec",
@@ -963,7 +965,9 @@ var All = []ops.Op{
 		Args: []ops.Param{
 			{Name: "domain_id", Kind: ops.Integer, Required: true, Usage: "The ID of the domain to update the custom scan headers for"},
 		},
-		Body: &ops.Body{Required: true, Object: true},
+		Body: &ops.Body{Required: true, Object: true,
+			Secret: []string{"custom_scan_headers"},
+		},
 	},
 	{
 		ID:          "listEndpointProtectionActivityLogs",
@@ -1868,6 +1872,7 @@ var All = []ops.Op{
 				{Name: "repository_download_url", Kind: ops.String, Required: false, Usage: "URL to download a custom code repository. Must be provided together with 'repository_name'. If provided, 'repository_ids' should not be provided."},
 				{Name: "repository_name", Kind: ops.String, Required: false, Usage: "Name for the custom code repository. Must be provided together with 'repository_download_url'. If provided, 'repository_ids' should not be provided."},
 			},
+			Secret: []string{"custom_headers"},
 		},
 	},
 	{

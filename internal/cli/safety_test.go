@@ -209,3 +209,27 @@ func TestDryRunNeedsAProfile(t *testing.T) {
 		t.Errorf("exit %d, error %+v; want no_credentials and no token request", code, e)
 	}
 }
+
+// Three bodies carry credentials inside a list or map of headers; the whole
+// field is the credential, so it is refused inline and redacted in a dry run.
+func TestHeaderCredentialsAreSecret(t *testing.T) {
+	for _, tt := range []struct {
+		args []string
+		body string
+	}{
+		{[]string{"domain-auth-header", "update", "5"}, `{"http_headers":[{"name":"Authorization","value":"Bearer s3cr3t"}]}`},
+		{[]string{"domain-scan-header", "update", "5"}, `{"custom_scan_headers":[{"name":"Authorization","value":"Bearer s3cr3t"}]}`},
+		{[]string{"pentest-assessment", "create"}, `{"project_name":"p","domains":["https://example.com"],"custom_headers":{"Authorization":"Bearer s3cr3t"}}`},
+	} {
+		_, env, _ := newFake(t, respond(`{}`))
+		env.Stdin = strings.NewReader(tt.body)
+		stdout, stderr, _ := run(t, env, append(tt.args, "--body-file", "-", "--dry-run")...)
+		if strings.Contains(stdout+stderr, "s3cr3t") || !strings.Contains(stdout, "[redacted]") {
+			t.Errorf("%q --dry-run: stdout %s stderr %s; want the headers redacted", tt.args, stdout, stderr)
+		}
+		_, stderr, code := run(t, env, append(tt.args, "--body", tt.body)...)
+		if code != clierr.ExitUsage || !strings.Contains(stderr, "--body-file") {
+			t.Errorf("%q --body: exit %d, %s; want the inline credential refused", tt.args, code, stderr)
+		}
+	}
+}
