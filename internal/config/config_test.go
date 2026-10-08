@@ -337,7 +337,7 @@ func TestSaveDoesNotFollowALinkInASharedDirectory(t *testing.T) {
 	if err := Save(link, File{}); err != nil {
 		t.Fatal(err)
 	}
-	if data, err := os.ReadFile(target); err != nil || string(data) != "keep\n" {
+	if data, err := os.ReadFile(target); err != nil || string(data) != "keep\n" { //nolint:gosec // the test's own temp file
 		t.Errorf("target = %q, %v; want it untouched", data, err)
 	}
 	if info, err := os.Lstat(link); err != nil || info.Mode()&os.ModeSymlink != 0 {
