@@ -106,7 +106,7 @@ func (a *app) callAPI(ctx context.Context, method, target string, f apiFlags) er
 	}
 	req := api.Request{Method: method, Path: path, Query: query, Body: body, Scope: op.Scope}
 	if f.dryRun {
-		return a.dryRun(ctx, req, secretFields(op))
+		return a.dryRun(ctx, req)
 	}
 	if err := a.refuseWrite(method, "api "+method+" "+path); err != nil {
 		return err

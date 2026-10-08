@@ -73,7 +73,7 @@ func (a *app) runOp(cmd *cobra.Command, c command, args []string) error {
 	req := api.Request{Method: c.op.Method, Path: path, Query: query, Body: body, Scope: c.op.Scope}
 	// Only writes have the flag; a dry run sends nothing, so read-only mode allows it.
 	if dry, _ := cmd.Flags().GetBool("dry-run"); dry {
-		return a.dryRun(cmd.Context(), req, secretFields(c.op))
+		return a.dryRun(cmd.Context(), req)
 	}
 	if err := a.refuseWrite(c.op.Method, c.op.Command); err != nil {
 		return err

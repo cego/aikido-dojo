@@ -7,10 +7,12 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"slices"
+	"sync"
 
 	"github.com/cego/aikido-dojo/internal/api"
+	"github.com/cego/aikido-dojo/internal/catalog"
 	"github.com/cego/aikido-dojo/internal/clierr"
-	"github.com/cego/aikido-dojo/internal/ops"
 )
 
 const (
@@ -50,7 +52,7 @@ type dryRunRequest struct {
 // dryRun prints req as a call would send it, with the token and the body's
 // credential fields redacted. It resolves the profile to name the host, but
 // reads no secret and sends nothing.
-func (a *app) dryRun(ctx context.Context, req api.Request, secret []string) error {
+func (a *app) dryRun(ctx context.Context, req api.Request) error {
 	r, err := a.resolve()
 	if err != nil {
 		return err
@@ -59,7 +61,7 @@ func (a *app) dryRun(ctx context.Context, req api.Request, secret []string) erro
 		Headers: map[string]string{"Authorization": "Bearer [redacted]"}}
 	if req.Body != nil {
 		out.Headers["Content-Type"] = "application/json"
-		if out.Body, err = redacted(req.Body, secret); err != nil {
+		if out.Body, err = redacted(req.Body, credentialFields()); err != nil {
 			return err
 		}
 	}
@@ -84,12 +86,19 @@ func redacted(body []byte, secret []string) (json.RawMessage, error) {
 	return compact(obj)
 }
 
-func secretFields(op ops.Op) []string {
-	if op.Body == nil {
-		return nil
+// credentialFields names every body field any operation takes a credential
+// in. A dry run redacts them all, so an api call with the wrong method or a
+// misspelt path, which matches no operation, still hides them.
+var credentialFields = sync.OnceValue(func() []string {
+	var names []string
+	for _, op := range catalog.All {
+		if op.Body != nil {
+			names = append(names, op.Body.Secret...)
+		}
 	}
-	return op.Body.Secret
-}
+	slices.Sort(names)
+	return slices.Compact(names)
+})
 
 // refuseWrite enforces read-only mode: every call that isn't a GET is
 // refused before any credential is read. The hint names no way out, since

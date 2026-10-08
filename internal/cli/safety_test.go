@@ -82,6 +82,9 @@ func TestDryRunRedactsCredentials(t *testing.T) {
 	for _, args := range [][]string{
 		{"code-scanning-token", "update", "--body-file", "-", "--dry-run"},
 		{"api", "POST", "/access-tokens/code-scanning", "--input", "-", "--dry-run"},
+		// The wrong method, or a path no command calls: a credential is still a credential.
+		{"api", "PUT", "/access-tokens/code-scanning", "--input", "-", "--dry-run"},
+		{"api", "POST", "/nosuch", "--input", "-", "--dry-run"},
 	} {
 		_, env, _ := newFake(t, respond(`{}`))
 		env.Stdin = strings.NewReader(`{"access_token":"s3cr3t"}`)
