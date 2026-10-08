@@ -138,10 +138,17 @@ func (a *app) everyProfile() ([]candidate, error) {
 		}
 		return []candidate{{label: profileLabel(r.Profile), r: r}}, nil
 	}
+	// Each stored profile keeps its own region; AIKIDO_DOJO_REGION is the pair's.
+	ownRegion := func(k string) string {
+		if k == config.EnvRegion {
+			return ""
+		}
+		return a.env.Getenv(k)
+	}
 	var stored []candidate
 	for _, name := range slices.Sorted(maps.Keys(f.Profiles)) {
 		flags.Profile = name
-		r, err := config.Resolve(f, flags, a.env.Getenv)
+		r, err := config.Resolve(f, flags, ownRegion)
 		stored = append(stored, candidate{label: profileLabel(name), r: r, err: err})
 	}
 	if a.env.Getenv(config.EnvClientID) == "" && a.env.Getenv(config.EnvClientSecret) == "" {

@@ -194,6 +194,26 @@ func TestRepoCurrentAsksAClientOnce(t *testing.T) {
 	}
 }
 
+// Asking every profile, each goes to its own region: AIKIDO_DOJO_REGION is
+// the environment pair's.
+func TestRepoCurrentAsksEachProfileInItsRegion(t *testing.T) {
+	inRepo(t, "git@gitlab.example.com:g/r.git")
+	f, env, vars := newFake(t, repos())
+	noPair(vars)
+	vars[config.EnvRegion] = "us"
+	writeConfig(t, vars, `{"profiles":{"a":{"client_id":"a","region":"au"},"b":{"client_id":"b"}}}`)
+	for _, p := range []string{"a", "b"} {
+		if err := keyring.Set("aikido-dojo", p+"/client_secret", "s"); err != nil {
+			t.Fatal(err)
+		}
+	}
+	run(t, env, "repo", "current")
+	hosts := strings.Join(f.rewrite.seenHosts(), " ")
+	if !strings.Contains(hosts, "app.au.aikido.dev") || !strings.Contains(hosts, "app.aikido.dev") || strings.Contains(hosts, "app.us.aikido.dev") {
+		t.Errorf("hosts = %s, want a on au and b on eu", hosts)
+	}
+}
+
 func TestRepoCurrentAsksOnlyTheSelectedProfile(t *testing.T) {
 	inRepo(t, "git@gitlab.example.com:g/r.git")
 	f, env, vars := newFake(t, repos(`{"id":1,"name":"r","url":"https://gitlab.example.com/g/r.git"}`))
