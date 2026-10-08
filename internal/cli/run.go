@@ -109,18 +109,26 @@ func (a *app) runOp(cmd *cobra.Command, c command, args []string) error {
 	return nil
 }
 
-// commandLine is the command as typed, for the destructive question: seven
+// commandLine is the command as typed, for the destructive question: some
 // destructive commands take their target in a flag (repo deactivate
 // --code-repo-id 5), so the flags set are named too.
 func commandLine(cmd *cobra.Command, op ops.Op, args []string) string {
 	parts := append([]string{op.Command}, args...)
 	// LocalFlags is a fresh set whose Visit sees nothing set, but its flags are the command's own.
 	cmd.LocalFlags().VisitAll(func(f *pflag.Flag) {
-		if f.Changed && f.Name != "yes" {
-			parts = append(parts, "--"+f.Name+" "+f.Value.String())
+		if f.Changed {
+			parts = append(parts, "--"+f.Name, quoted(f.Value.String()))
 		}
 	})
 	return strings.Join(parts, " ")
+}
+
+// quoted quotes a value that a space or a quote would make ambiguous in the question.
+func quoted(v string) string {
+	if v == "" || strings.ContainsAny(v, " \t\"'") {
+		return strconv.Quote(v)
+	}
+	return v
 }
 
 // writeResult prints a write's response. With nothing to change it streams,

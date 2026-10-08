@@ -83,7 +83,7 @@ func (a *app) callAPI(ctx context.Context, method, target string, f apiFlags) er
 		}
 		// argv and shell history keep -f values, and a query also reaches logs, so
 		// credentials come in through --input, as with the generated command.
-		if op.Body != nil && slices.Contains(op.Body.Secret, k) {
+		if slices.Contains(credentialFields(), k) {
 			return apiUsage(fmt.Sprintf("-f %s: a credential; pass the body with --input <file> or --input - (stdin)", k))
 		}
 		if toQuery {
@@ -116,12 +116,17 @@ func (a *app) callAPI(ctx context.Context, method, target string, f apiFlags) er
 		if err := a.out.check(op, sc); err != nil {
 			return err
 		}
+		// The raw page of an envelope list is an object; the generated command unwraps it.
+		if a.out.ndjson && op.Paging != nil && op.Paging.Items != "" {
+			return &clierr.Error{Code: "invalid_input", Message: "--ndjson needs a list, but " + path + " returns its items inside an object",
+				Hint: "use aikido-dojo " + op.Command + " --ndjson, which pages and unwraps them", Exit: clierr.ExitUsage}
+		}
 	}
 	if err := a.refuseWrite(method, "api "+method+" "+path); err != nil {
 		return err
 	}
 	if method == http.MethodDelete || op.Destructive {
-		if err := a.confirm(ctx, f.yes, "api "+method+" "+path); err != nil {
+		if err := a.confirm(ctx, f.yes, apiCommandLine(method, target, f)); err != nil {
 			return err
 		}
 	}
@@ -201,6 +206,19 @@ func jsonInput(path string, stdin io.Reader) ([]byte, error) {
 		return nil, apiUsage("--input: unexpected data after the JSON value")
 	}
 	return data, nil
+}
+
+// apiCommandLine is the call as typed, for the destructive question: -f and
+// --input may name its target.
+func apiCommandLine(method, target string, f apiFlags) string {
+	parts := []string{"api", method, target}
+	for _, field := range f.fields {
+		parts = append(parts, "-f", quoted(field))
+	}
+	if f.hasInput {
+		parts = append(parts, "--input", quoted(f.input))
+	}
+	return strings.Join(parts, " ")
 }
 
 func apiUsage(msg string) error {

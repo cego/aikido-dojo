@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"strings"
@@ -138,5 +139,38 @@ func TestAPIAllowsAURLInTheQuery(t *testing.T) {
 	mustRun(t, env, "api", "GET", "/repositories/code?next=https://example.com/a")
 	if got := f.first(t).Query.Get("next"); got != "https://example.com/a" {
 		t.Errorf("next = %q", got)
+	}
+}
+
+// A credential is refused in -f by name, whatever the method or path.
+func TestAPIRefusesACredentialFieldOnAnyPath(t *testing.T) {
+	f, env, _ := newFake(t, respond(`{}`))
+	env.Stdin = strings.NewReader(`{}`)
+	_, stderr, code := run(t, env, "api", "PUT", "/access-tokens/code-scanning", "-f", "access_token=s3cr3t", "--input", "-", "--dry-run")
+	if code != clierr.ExitUsage || strings.Contains(stderr, "s3cr3t") || len(f.seen()) != 0 {
+		t.Errorf("exit %d, stderr %s; want the credential refused unechoed", code, stderr)
+	}
+}
+
+// An envelope list's raw page is an object, which --ndjson can't split; the generated command can.
+func TestAPIRefusesNDJSONOnAnEnvelopeList(t *testing.T) {
+	f, env, _ := newFake(t, respond(`{"assets":[]}`))
+	_, stderr, code := run(t, env, "api", "GET", "/clouds/assets", "--ndjson")
+	if e := errorOf(t, stderr); code != clierr.ExitUsage || !strings.Contains(e.Hint+e.Message, "cloud-asset list") || len(f.seen()) != 0 {
+		t.Errorf("exit %d, error %+v; want a usage error naming cloud-asset list, before any call", code, e)
+	}
+}
+
+// The destructive question names -f and --input, which may hold the target.
+func TestAPIQuestionNamesItsFields(t *testing.T) {
+	_, env, _ := newFake(t, respond(`{}`))
+	var prompt string
+	env.Confirm = func(_ context.Context, p string) (bool, error) {
+		prompt = p
+		return false, nil
+	}
+	run(t, env, "api", "POST", "/teams/1/removeUser", "-f", "user_id=5")
+	if !strings.Contains(prompt, "api POST /teams/1/removeUser -f user_id=5") {
+		t.Errorf("prompt = %q, want the field named", prompt)
 	}
 }
