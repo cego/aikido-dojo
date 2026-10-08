@@ -132,7 +132,7 @@ func TestNDJSONStreamsAList(t *testing.T) {
 func TestNDJSONStreamsAnArrayResponse(t *testing.T) {
 	_, env, _ := newFake(t, respond(`[{"a":1},{"a":"x\/y"}]`))
 	env.StdoutTTY = true
-	// Each line is Aikido's own bytes, as off a terminal: re-encoding would lose key order.
+	// Each line is Aikido's own bytes, as everything is off a terminal.
 	if out := mustRun(t, env, "issue", "export", "--ndjson"); out != "{\"a\":1}\n{\"a\":\"x\\/y\"}\n" {
 		t.Errorf("stdout = %q, want one compact line per item, even on a terminal", out)
 	}

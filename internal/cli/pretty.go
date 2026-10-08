@@ -10,9 +10,9 @@ import (
 )
 
 // prettyCopy indents the JSON in r as it reads it, two spaces a level, as
-// json.Indent would. It holds one token at a time, so an export of any
-// size streams; it keeps keys in their order; and it writes strings anew,
-// which drops the \/ and \u escapes Aikido sends.
+// json.Indent would. It holds one token at a time, so an export of any size
+// streams, and it keeps keys in their order. Strings are written anew, which
+// drops the \/ escapes Aikido sends; control characters stay escaped.
 func prettyCopy(w io.Writer, r io.Reader) error {
 	dec := json.NewDecoder(r)
 	dec.UseNumber()
