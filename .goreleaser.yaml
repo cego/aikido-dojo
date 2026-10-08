@@ -49,6 +49,8 @@ homebrew_casks:
       owner: cego
       name: homebrew-tap
       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+      pull_request:
+        enabled: true
     homepage: https://github.com/cego/aikido-dojo
     skip_upload: auto
     description: Unofficial command-line client for the Aikido Security public API
