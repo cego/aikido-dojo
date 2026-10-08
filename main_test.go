@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io/fs"
 	"os"
 	"path/filepath"
@@ -88,7 +89,7 @@ func TestRepositoryHoldsNoTenantData(t *testing.T) {
 		}
 		data, err := os.ReadFile(path) //nolint:gosec // the repository's own files
 		if err != nil {
-			return err
+			return fmt.Errorf("read %s: %w", path, err)
 		}
 		if !utf8.Valid(data) {
 			return nil

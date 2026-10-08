@@ -1,0 +1,14 @@
+# Every command AGENTS.md shows, against the fake Aikido the test starts.
+env AIKIDO_DOJO_CONFIG=$WORK/config.json
+env AIKIDO_DOJO_CLIENT_ID=AIK_CLIENT_xxxx
+env AIKIDO_DOJO_CLIENT_SECRET=s3cr3t
+
+exec aikido-dojo search 'list open issues for a repository'
+stdout '"command":"issue-group list"'
+exec aikido-dojo schema issue-group list
+stdout '"usage":"aikido-dojo issue-group list \[flags\]"'
+
+exec git init -q
+exec git remote add origin git@gitlab.example.com:acme/api.git
+exec aikido-dojo repo current --jq '.[0].repo.id'
+stdout '^1$'

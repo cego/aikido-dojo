@@ -1,0 +1,37 @@
+# Every command README.md shows, against the fake Aikido the test starts.
+env AIKIDO_DOJO_CONFIG=$WORK/config.json
+
+# Authenticate. A script has no terminal to prompt on, so the secret comes from the environment.
+env AIKIDO_DOJO_CLIENT_SECRET=s3cr3t
+exec aikido-dojo auth login --client-id AIK_CLIENT_xxxx
+stdout '"profile":"default","client_id":"AIK_CLIENT_xxxx","region":"eu"'
+! stdout s3cr3t
+env AIKIDO_DOJO_CLIENT_ID=AIK_CLIENT_xxxx
+exec aikido-dojo auth status
+stdout '"granted":\["basics:read","issues:read","issues:write","repositories:read","teams:write"\]'
+
+# Examples.
+exec aikido-dojo repo list --limit 5
+stdout '^\[\{"id":1,"name":"api"'
+exec aikido-dojo issue-group list --filter-code-repo-id 1 --jq '.[] | .title'
+stdout '^Prototype pollution in lodash$'
+
+exec git init -q
+exec git remote add origin git@gitlab.example.com:acme/api.git
+exec aikido-dojo repo current
+stdout '^\[\{"repo":\{"id":1,'
+
+exec aikido-dojo issue-group-note create 12 --note 'Accepted: only reachable in tests'
+stdout '"note_id":1'
+exec aikido-dojo team delete 7 --dry-run
+stdout '"method":"DELETE","url":"https://app.aikido.dev/api/public/v1/teams/7"'
+exec aikido-dojo api GET /workspace
+stdout '"name":"Pied Piper"'
+
+# For agents.
+exec aikido-dojo search 'ignore a finding'
+stdout '"command":"issue ignore"'
+exec aikido-dojo schema issue-group ignore
+stdout '"command":"issue-group ignore"'
+! exec aikido-dojo --read-only team delete 7
+stderr '"code":"read_only"'
