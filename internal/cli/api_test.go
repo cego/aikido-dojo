@@ -105,13 +105,20 @@ func TestAPIMistakesCostNoCall(t *testing.T) {
 // argv and shell history keep -f values, so a credential field of a known
 // operation's body must come through --input, as with the generated command.
 func TestAPIRefusesACredentialInAField(t *testing.T) {
-	f, env, _ := newFake(t, respond(`{}`))
-	_, stderr, code := run(t, env, "api", "POST", "/access-tokens/code-scanning", "-f", "access_token=s3cr3t")
-	if e := errorOf(t, stderr); code != clierr.ExitUsage || !strings.Contains(e.Message, "--input") {
-		t.Errorf("exit %d, error %+v; want a usage error pointing at --input", code, e)
-	}
-	if strings.Contains(stderr, "s3cr3t") || len(f.seenLogins()) != 0 {
-		t.Errorf("stderr %s, %d token requests; want the value unechoed and no call", stderr, len(f.seenLogins()))
+	for _, args := range [][]string{
+		{"api", "POST", "/access-tokens/code-scanning", "-f", "access_token=s3cr3t"},
+		// With --input the field would go into the URL, which --debug and server logs show.
+		{"--debug", "api", "POST", "/access-tokens/code-scanning", "--input", "-", "-f", "access_token=s3cr3t"},
+	} {
+		f, env, _ := newFake(t, respond(`{}`))
+		env.Stdin = strings.NewReader(`{}`)
+		_, stderr, code := run(t, env, args...)
+		if e := errorOf(t, stderr); code != clierr.ExitUsage || !strings.Contains(e.Message, "--input") {
+			t.Errorf("%q: exit %d, error %+v; want a usage error pointing at --input", args, code, e)
+		}
+		if strings.Contains(stderr, "s3cr3t") || len(f.seenLogins()) != 0 {
+			t.Errorf("%q: stderr %s, %d token requests; want the value unechoed and no call", args, stderr, len(f.seenLogins()))
+		}
 	}
 }
 

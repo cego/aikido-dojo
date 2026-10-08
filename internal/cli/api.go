@@ -70,16 +70,17 @@ func (a *app) callAPI(ctx context.Context, method, target string, fields []strin
 		if !ok || k == "" {
 			return apiUsage(fmt.Sprintf("-f %q: want key=value", f))
 		}
+		// argv and shell history keep -f values, and a query also reaches logs, so
+		// credentials come in through --input, as with the generated command.
+		if op.Body != nil && slices.Contains(op.Body.Secret, k) {
+			return apiUsage(fmt.Sprintf("-f %s: a credential; pass the body with --input <file> or --input - (stdin)", k))
+		}
 		if toQuery {
 			query.Add(k, v)
 			continue
 		}
 		if _, dup := obj[k]; dup {
 			return apiUsage(fmt.Sprintf("-f %s is given twice", k))
-		}
-		// argv and shell history keep -f values, so credentials come in as --input, as with the generated command.
-		if op.Body != nil && slices.Contains(op.Body.Secret, k) {
-			return apiUsage(fmt.Sprintf("-f %s: a credential; pass the body with --input <file> or --input - (stdin)", k))
 		}
 		obj[k] = v
 	}
