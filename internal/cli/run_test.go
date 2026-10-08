@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"bytes"
 	"context"
 	"errors"
 	"fmt"
@@ -410,5 +411,27 @@ func TestReadBodyFileStopsOnCancel(t *testing.T) {
 	time.AfterFunc(20*time.Millisecond, cancel)
 	if _, err := readBodyFile(ctx, "-", r); !errors.Is(err, context.Canceled) {
 		t.Errorf("err = %v, want context.Canceled", err)
+	}
+}
+
+// Ctrl-C while a body is read from stdin ends the run like Ctrl-C during a
+// call: exit 1, not a usage error.
+func TestCtrlCOnStdinIsNotAUsageError(t *testing.T) {
+	for _, args := range [][]string{
+		{"team", "create", "--body-file", "-"},
+		{"api", "POST", "/teams", "--input", "-"},
+	} {
+		_, env, _ := newFake(t, respond(`{}`))
+		r, w := io.Pipe()
+		defer w.Close()
+		env.Stdin = r
+		var stderr bytes.Buffer
+		env.Stdout, env.Stderr = io.Discard, &stderr
+		ctx, cancel := context.WithTimeout(t.Context(), 50*time.Millisecond)
+		code := Run(ctx, args, env)
+		cancel()
+		if code != clierr.ExitUnexpected || strings.Contains(stderr.String(), "invalid_input") {
+			t.Errorf("%q: exit %d, stderr %s; want exit 1", args, code, stderr.String())
+		}
 	}
 }

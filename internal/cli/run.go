@@ -378,6 +378,10 @@ func bodyInput(ctx context.Context, fs *pflag.FlagSet, stdin io.Reader, op ops.O
 			return nil, false, fmt.Errorf("read --body-file: %w", err)
 		}
 		if raw, err = readBodyFile(ctx, path, stdin); err != nil {
+			// Ctrl-C isn't a mistake in the input: it ends the run as it would a call.
+			if ctx.Err() != nil {
+				return nil, false, fmt.Errorf("--body-file: %w", err)
+			}
 			return nil, false, invalid("--body-file: "+err.Error(), op)
 		}
 	default:

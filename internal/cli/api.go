@@ -195,6 +195,10 @@ func apiTarget(s string) (string, url.Values, error) {
 func jsonInput(ctx context.Context, path string, stdin io.Reader) ([]byte, error) {
 	data, err := readBodyFile(ctx, path, stdin)
 	if err != nil {
+		// Ctrl-C isn't a mistake in the input: it ends the run as it would a call.
+		if ctx.Err() != nil {
+			return nil, fmt.Errorf("--input: %w", err)
+		}
 		return nil, apiUsage("--input: " + err.Error())
 	}
 	dec := json.NewDecoder(bytes.NewReader(data))
