@@ -281,3 +281,15 @@ func TestWriteResultThatBreaksOff(t *testing.T) {
 		t.Errorf("exit %d, error %+v; want output_failed", code, e)
 	}
 }
+
+// U+009B and its kin act as escape sequences on some terminals; indented
+// output escapes them as it does C0 controls.
+func TestTerminalOutputEscapesC1Controls(t *testing.T) {
+	for _, args := range [][]string{{"workspace", "get"}, {"workspace", "get", "--jq", "."}} {
+		_, env, _ := newFake(t, respond(`{"name":"a\u009b31mb"}`))
+		env.StdoutTTY = true
+		if out := mustRun(t, env, args...); strings.ContainsRune(out, 0x9b) || !strings.Contains(out, `\u009b`) {
+			t.Errorf("%q: stdout = %q, want U+009B escaped", args, out)
+		}
+	}
+}

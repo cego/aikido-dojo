@@ -8,6 +8,7 @@ import (
 	"io"
 	"slices"
 	"strings"
+	"unicode/utf8"
 
 	"github.com/itchyny/gojq"
 
@@ -131,6 +132,24 @@ func escapeControls(s string) string {
 	return b.String()
 }
 
+// escapeC1 writes DEL and the C1 controls, U+007F to U+009F, as \u escapes.
+// encoding/json escapes only the C0 controls, but some terminals act on C1 as
+// on an escape sequence. In JSON they can only stand inside strings, so the
+// result is the same JSON.
+func escapeC1(b []byte) []byte {
+	var out bytes.Buffer
+	for len(b) > 0 {
+		r, n := utf8.DecodeRune(b)
+		if r >= 0x7f && r <= 0x9f {
+			fmt.Fprintf(&out, "\\u%04x", r)
+		} else {
+			out.Write(b[:n])
+		}
+		b = b[n:]
+	}
+	return out.Bytes()
+}
+
 // check refuses, before any call, an output flag the command's response
 // can't satisfy: --jq needs JSON, which a CSV or PDF download isn't.
 func (o *output) check(op ops.Op, sc ops.SchemaSet) error {
@@ -161,16 +180,16 @@ func notJSON(what string) error {
 
 // write prints one compact JSON value, indented on a terminal.
 func (o *output) write(raw []byte) error {
-	var b bytes.Buffer
+	out := raw
 	if o.pretty {
+		var b bytes.Buffer
 		if err := json.Indent(&b, raw, "", "  "); err != nil {
 			return fmt.Errorf("indent the output: %w", err)
 		}
-	} else {
-		b.Write(raw)
+		out = escapeC1(b.Bytes())
 	}
-	b.WriteByte('\n')
-	if _, err := o.w.Write(b.Bytes()); err != nil {
+	// Clipped, so the newline never lands in the backing array of the caller's slice.
+	if _, err := o.w.Write(append(slices.Clip(out), '\n')); err != nil {
 		return fmt.Errorf("write the output: %w", err)
 	}
 	return nil

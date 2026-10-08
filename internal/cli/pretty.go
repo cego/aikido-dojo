@@ -11,8 +11,9 @@ import (
 
 // prettyCopy indents the JSON in r as it reads it, two spaces a level, as
 // json.Indent would. It holds one token at a time, so an export of any size
-// streams, and it keeps keys in their order. Strings are written anew, which
-// drops the \/ escapes Aikido sends; control characters stay escaped.
+// streams, and it keeps keys in their order. Strings are written anew: the
+// \/ and \u escapes Aikido sends become the characters, except control
+// characters, which stay escaped.
 func prettyCopy(w io.Writer, r io.Reader) error {
 	dec := json.NewDecoder(r)
 	dec.UseNumber()
@@ -120,11 +121,12 @@ func encodeScalar(tok json.Token) []byte {
 	return []byte("null")
 }
 
-// encodeString writes s as JSON without HTML escaping: nothing renders the output as HTML.
+// encodeString writes s as JSON for a terminal: without HTML escaping, which
+// nothing here renders, and with C1 controls escaped as well as C0.
 func encodeString(s string) []byte {
 	var b bytes.Buffer
 	enc := json.NewEncoder(&b)
 	enc.SetEscapeHTML(false)
 	_ = enc.Encode(s) // a string always encodes
-	return bytes.TrimSuffix(b.Bytes(), []byte("\n"))
+	return escapeC1(bytes.TrimSuffix(b.Bytes(), []byte("\n")))
 }
