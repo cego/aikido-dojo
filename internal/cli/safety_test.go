@@ -184,3 +184,17 @@ func TestDestructiveCancelledIsNotConfirmed(t *testing.T) {
 		}
 	}
 }
+
+// Seven destructive commands take their target in a flag, so the question names the flags too.
+func TestDestructiveQuestionNamesTheTarget(t *testing.T) {
+	_, env, _ := newFake(t, respond(`{}`))
+	var prompt string
+	env.Confirm = func(_ context.Context, p string) (bool, error) {
+		prompt = p
+		return false, nil
+	}
+	run(t, env, "repo", "deactivate", "--code-repo-id", "5")
+	if !strings.Contains(prompt, "repo deactivate --code-repo-id 5") {
+		t.Errorf("prompt = %q, want the target named", prompt)
+	}
+}

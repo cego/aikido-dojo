@@ -84,7 +84,7 @@ func (a *app) runOp(cmd *cobra.Command, c command, args []string) error {
 	}
 	if c.op.Destructive {
 		yes, _ := cmd.Flags().GetBool("yes")
-		if err := a.confirm(cmd.Context(), yes, strings.Join(append([]string{c.op.Command}, args...), " ")); err != nil {
+		if err := a.confirm(cmd.Context(), yes, commandLine(cmd, c.op, args)); err != nil {
 			return err
 		}
 	}
@@ -107,6 +107,20 @@ func (a *app) runOp(cmd *cobra.Command, c command, args []string) error {
 		return fmt.Errorf("%s: %w", c.op.Command, err)
 	}
 	return nil
+}
+
+// commandLine is the command as typed, for the destructive question: seven
+// destructive commands take their target in a flag (repo deactivate
+// --code-repo-id 5), so the flags set are named too.
+func commandLine(cmd *cobra.Command, op ops.Op, args []string) string {
+	parts := append([]string{op.Command}, args...)
+	// LocalFlags is a fresh set whose Visit sees nothing set, but its flags are the command's own.
+	cmd.LocalFlags().VisitAll(func(f *pflag.Flag) {
+		if f.Changed && f.Name != "yes" {
+			parts = append(parts, "--"+f.Name+" "+f.Value.String())
+		}
+	})
+	return strings.Join(parts, " ")
 }
 
 // writeResult prints a write's response. It reads it whole first, as a
