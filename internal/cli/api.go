@@ -102,8 +102,8 @@ func (a *app) callAPI(ctx context.Context, method, target string, fields []strin
 		return withHint(err, op)
 	}
 	defer resp.Body.Close()
-	if _, err := io.Copy(a.env.Stdout, resp.Body); err != nil {
-		return fmt.Errorf("api %s %s: read the response: %w", method, path, err)
+	if err := a.out.response(ctx, resp.Body, resp.Header.Get("Content-Type")); err != nil {
+		return fmt.Errorf("api %s %s: %w", method, path, err)
 	}
 	return nil
 }

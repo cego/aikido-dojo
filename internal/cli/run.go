@@ -80,9 +80,8 @@ func (a *app) runOp(cmd *cobra.Command, c command, args []string) error {
 		return withHint(err, c.op)
 	}
 	defer resp.Body.Close()
-	// Copied as it arrives: exports are large, and CSV or PDF bodies aren't JSON.
-	if _, err := io.Copy(a.env.Stdout, resp.Body); err != nil {
-		return fmt.Errorf("%s: read the response: %w", c.op.Command, err)
+	if err := a.out.response(cmd.Context(), resp.Body, resp.Header.Get("Content-Type")); err != nil {
+		return fmt.Errorf("%s: %w", c.op.Command, err)
 	}
 	return nil
 }
@@ -142,7 +141,7 @@ func (a *app) list(ctx context.Context, c *api.Client, req api.Request, p api.Pa
 			break
 		}
 	}
-	return a.printJSON(items)
+	return a.out.value(ctx, items)
 }
 
 // withHint swaps in the operation's own hint for a 400, where the overlay

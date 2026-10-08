@@ -23,11 +23,13 @@ type Env struct {
 	CacheDir   func() (string, error)
 	Transport  http.RoundTripper                                        // nil in production; tests route requests to a fake server
 	ReadSecret func(ctx context.Context, prompt string) (string, error) // the hidden prompt auth login asks with
+	StdoutTTY  bool                                                     // stdout is a terminal, where a person reads indented JSON
 }
 
 // app holds a run's environment and the global flags' values.
 type app struct {
 	env     Env
+	out     *output
 	config  string
 	profile string
 	debug   bool
@@ -47,7 +49,7 @@ func Run(ctx context.Context, args []string, env Env) int {
 }
 
 func newRoot(env Env) (*cobra.Command, *app) {
-	a := &app{env: env}
+	a := &app{env: env, out: &output{w: env.Stdout, pretty: env.StdoutTTY}}
 	root := &cobra.Command{
 		Use:   "aikido-dojo",
 		Short: "An unofficial command-line client for the Aikido Security public API",

@@ -8,6 +8,8 @@ import (
 	"os/signal"
 	"syscall"
 
+	"golang.org/x/term"
+
 	"github.com/cego/aikido-dojo/internal/cli"
 )
 
@@ -20,6 +22,7 @@ func main() {
 		Getenv:     os.Getenv,
 		CacheDir:   os.UserCacheDir,
 		ReadSecret: cli.TerminalSecret(os.Stdin, os.Stderr),
+		StdoutTTY:  term.IsTerminal(int(os.Stdout.Fd())),
 	})
 	stop()
 	os.Exit(code)
