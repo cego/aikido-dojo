@@ -209,3 +209,20 @@ func TestDryRunTakesJQ(t *testing.T) {
 		t.Errorf("stdout = %q", out)
 	}
 }
+
+// Aikido's data includes names from scanned repos; on a terminal a raw string
+// mustn't carry escape sequences to it. A program off a terminal gets it exact.
+func TestJQStringsCarryNoControlCharactersToATerminal(t *testing.T) {
+	for _, tty := range []bool{true, false} {
+		_, env, _ := newFake(t, respond(`{"name":"a\u001b[31mb\tc"}`))
+		env.StdoutTTY = tty
+		out := mustRun(t, env, "workspace", "get", "--jq", ".name")
+		want := "a\x1b[31mb\tc\n"
+		if tty {
+			want = "a\\u001b[31mb\tc\n"
+		}
+		if out != want {
+			t.Errorf("tty %v: stdout = %q, want %q", tty, out, want)
+		}
+	}
+}

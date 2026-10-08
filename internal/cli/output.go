@@ -98,6 +98,9 @@ func (o *output) filter(ctx context.Context, raw []byte, emit func([]byte) error
 		case error:
 			return &clierr.Error{Code: "jq_failed", Message: "--jq: " + r.Error(), Hint: "check the filter against: aikido-dojo schema <command>", Exit: clierr.ExitUsage}
 		case string:
+			if o.pretty {
+				r = escapeControls(r)
+			}
 			if _, err := io.WriteString(o.w, r+"\n"); err != nil {
 				return fmt.Errorf("write the output: %w", err)
 			}
@@ -111,6 +114,21 @@ func (o *output) filter(ctx context.Context, raw []byte, emit func([]byte) error
 			}
 		}
 	}
+}
+
+// escapeControls writes control characters other than newline and tab as
+// \u escapes: a raw string bound for a terminal comes from Aikido's data,
+// such as names in scanned repos, and mustn't carry escape sequences to it.
+func escapeControls(s string) string {
+	var b strings.Builder
+	for _, r := range s {
+		if (r < 0x20 && r != '\n' && r != '\t') || (r >= 0x7f && r <= 0x9f) {
+			fmt.Fprintf(&b, "\\u%04x", r)
+			continue
+		}
+		b.WriteRune(r)
+	}
+	return b.String()
 }
 
 // check refuses, before any call, an output flag the command's response
