@@ -10,6 +10,7 @@ import (
 	_ "embed"
 	"encoding/json"
 	"fmt"
+	"net/url"
 	"strings"
 	"sync"
 
@@ -70,12 +71,14 @@ func Command(name string) (ops.Op, bool) {
 // Match finds the operation a concrete request calls, such as PUT
 // /issues/groups/12/ignore. Where two path templates fit, the one with more
 // literal segments wins, so /issues/export isn't taken for /issues/{issue_id}.
+// Spellings a server may route alike, by case, escapes or empty segments,
+// match alike, so the destructive guard on api can't be dodged by one.
 func Match(method, path string) (ops.Op, bool) {
-	segs := strings.Split(strings.Trim(path, "/"), "/")
+	segs := segments(path)
 	var best ops.Op
 	bestLiterals := -1
 	for _, op := range All {
-		tmpl := strings.Split(strings.Trim(op.Path, "/"), "/")
+		tmpl := segments(op.Path)
 		if op.Method != method || len(tmpl) != len(segs) {
 			continue
 		}
@@ -86,13 +89,28 @@ func Match(method, path string) (ops.Op, bool) {
 	return best, bestLiterals >= 0
 }
 
+// segments splits a path into its non-empty segments, unescaped.
+func segments(path string) []string {
+	var out []string
+	for _, s := range strings.Split(path, "/") {
+		if s == "" {
+			continue
+		}
+		if u, err := url.PathUnescape(s); err == nil {
+			s = u
+		}
+		out = append(out, s)
+	}
+	return out
+}
+
 // fits reports whether segs fill tmpl, where {name} takes any one non-empty
 // segment, and how many segments matched literally.
 func fits(tmpl, segs []string) (int, bool) {
 	literals := 0
 	for i, t := range tmpl {
 		switch {
-		case t == segs[i]:
+		case strings.EqualFold(t, segs[i]):
 			literals++
 		case strings.HasPrefix(t, "{") && strings.HasSuffix(t, "}") && segs[i] != "":
 		default:

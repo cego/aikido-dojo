@@ -66,6 +66,10 @@ func TestMatch(t *testing.T) {
 		{"GET", "/issues/12", "issue get"},
 		// /issues/{issue_id} fits too; the literal segment wins.
 		{"GET", "/issues/export", "issue export"},
+		// Spellings a server may route alike match alike, so api's guard can't be dodged.
+		{"POST", "/repositories/code/Deactivate", "repo deactivate"},
+		{"POST", "/repositories/code/%64eactivate", "repo deactivate"},
+		{"POST", "/repositories//code/deactivate", "repo deactivate"},
 		{"DELETE", "/repositories/code", ""},
 		{"GET", "/nosuch", ""},
 	}
