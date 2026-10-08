@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"bufio"
 	"context"
 	"errors"
 	"fmt"
@@ -28,23 +29,56 @@ func TerminalSecret(in *os.File, w io.Writer) func(ctx context.Context, prompt s
 		if err != nil {
 			return "", fmt.Errorf("read the terminal state: %w", err)
 		}
-		return readHidden(ctx, w, prompt, func() ([]byte, error) { return term.ReadPassword(fd) },
-			func() error { return term.Restore(fd, state) })
+		read := func() ([]byte, error) {
+			b, err := term.ReadPassword(fd)
+			fmt.Fprintln(w) // the Enter wasn't echoed either
+			return b, err
+		}
+		return ask(ctx, w, prompt, "the client secret", read, func() error { return term.Restore(fd, state) })
 	}
 }
 
-// readHidden writes prompt and returns what read gets, trimmed. read runs
-// aside so that a cancelled ctx ends the wait at once: read turns echo off
-// and waits for Enter until the process exits, so restore gives the terminal
-// its echo back. After an earlier cancel no read starts; only a cancel in the
-// instant before read turns echo off can still leave it off.
-func readHidden(ctx context.Context, w io.Writer, prompt string, read func() ([]byte, error), restore func() error) (string, error) {
+// TerminalConfirm asks prompt on w and reads the answer typed at the
+// terminal on in. Off a terminal it fails with no_terminal, so the caller can
+// refuse instead of asking.
+func TerminalConfirm(in *os.File, w io.Writer) func(ctx context.Context, prompt string) (bool, error) {
+	return func(ctx context.Context, prompt string) (bool, error) {
+		if !term.IsTerminal(int(in.Fd())) {
+			return false, &clierr.Error{Code: "no_terminal", Message: "no terminal to confirm on", Exit: clierr.ExitUsage}
+		}
+		read := func() ([]byte, error) {
+			b, err := bufio.NewReader(in).ReadBytes('\n')
+			if errors.Is(err, io.EOF) {
+				return b, nil // Ctrl-D ends the answer, which is then a no
+			}
+			return b, err
+		}
+		answer, err := ask(ctx, w, prompt, "the answer", read, nil)
+		if err != nil {
+			return false, err
+		}
+		return affirmative(answer), nil
+	}
+}
+
+func affirmative(answer string) bool {
+	a := strings.ToLower(answer)
+	return a == "y" || a == "yes"
+}
+
+// ask writes prompt and returns what read gets, trimmed. read runs aside so
+// that a cancelled ctx ends the wait at once. A hidden read turns echo off
+// and waits for Enter until the process exits, so restore, when given,
+// gives the terminal its echo back. After an earlier cancel no read starts;
+// only a cancel in the instant before read turns echo off can still leave it
+// off.
+func ask(ctx context.Context, w io.Writer, prompt, what string, read func() ([]byte, error), restore func() error) (string, error) {
 	if err := ctx.Err(); err != nil {
-		return "", fmt.Errorf("read the client secret: %w", err)
+		return "", fmt.Errorf("read %s: %w", what, err)
 	}
 	fmt.Fprint(w, prompt)
 	type result struct {
-		secret []byte
+		answer []byte
 		err    error
 	}
 	done := make(chan result, 1)
@@ -54,14 +88,16 @@ func readHidden(ctx context.Context, w io.Writer, prompt string, read func() ([]
 	}()
 	select {
 	case r := <-done:
-		fmt.Fprintln(w)
 		if r.err != nil {
-			return "", fmt.Errorf("read the client secret: %w", r.err)
+			return "", fmt.Errorf("read %s: %w", what, r.err)
 		}
-		return strings.TrimSpace(string(r.secret)), nil
+		return strings.TrimSpace(string(r.answer)), nil
 	case <-ctx.Done():
-		restoreErr := restore()
+		var restoreErr error
+		if restore != nil {
+			restoreErr = restore()
+		}
 		fmt.Fprintln(w)
-		return "", errors.Join(fmt.Errorf("read the client secret: %w", ctx.Err()), restoreErr)
+		return "", errors.Join(fmt.Errorf("read %s: %w", what, ctx.Err()), restoreErr)
 	}
 }

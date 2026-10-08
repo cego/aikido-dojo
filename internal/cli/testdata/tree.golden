@@ -57,6 +57,7 @@ broker-resource-url create <broker_app_id>
 broker-resource-url delete <resource_url_id>
 	DELETE /broker/apps/resource-urls/{resource_url_id} scope=broker:write destructive
 	--dry-run bool
+	--yes bool
 bug-bounty-report create <program_id>
 	POST /bug_bounty/program/{program_id}/report scope=bug_bounty:write
 	--body string
@@ -72,6 +73,7 @@ changelog-summary get
 cloud delete <cloud_id>
 	DELETE /clouds/{cloud_id} scope=clouds:write destructive
 	--dry-run bool
+	--yes bool
 cloud list
 	GET /clouds scope=clouds:read paged=per_page:100:empty
 	--limit int64
@@ -189,9 +191,11 @@ container deactivate
 	--body-file string
 	--container-repo-id int64 required body
 	--dry-run bool
+	--yes bool
 container delete <container_repo_id>
 	DELETE /containers/{container_repo_id} scope=containers:write destructive
 	--dry-run bool
+	--yes bool
 container get <container_repo_id>
 	GET /containers/{container_repo_id} scope=containers:read
 container list
@@ -224,6 +228,7 @@ container-label create <container_repo_id>
 container-label delete <container_repo_id> <label_id>
 	DELETE /containers/{container_repo_id}/labels/{label_id} scope=containers:write destructive
 	--dry-run bool
+	--yes bool
 container-label update <container_repo_id> <label_id>
 	POST /containers/{container_repo_id}/labels/{label_id} scope=containers:write
 	--body string
@@ -270,6 +275,7 @@ container-repo-link delete
 	--body-file string
 	--container-repo-id int64 required body
 	--dry-run bool
+	--yes bool
 container-runner list <container_repo_id>
 	GET /containers/{container_repo_id}/runners scope=containers:read
 container-sbom export <container_repo_id>
@@ -318,6 +324,7 @@ domain create
 domain delete <domain_id>
 	DELETE /domains/{domain_id} scope=domains:write destructive
 	--dry-run bool
+	--yes bool
 domain list
 	GET /domains scope=domains:read paged=per_page:100:empty
 	--limit int64
@@ -350,6 +357,7 @@ endpoint-activity-log list
 endpoint-device delete <device_id>
 	DELETE /endpoint-protection/devices/{device_id} scope=endpoint_protection:write destructive
 	--dry-run bool
+	--yes bool
 endpoint-device list
 	GET /endpoint-protection/devices scope=endpoint_protection:read
 endpoint-exception create <ecosystem>
@@ -364,6 +372,7 @@ endpoint-exception create <ecosystem>
 endpoint-exception delete <package_exception_id>
 	DELETE /endpoint-protection/exceptions/{package_exception_id} scope=endpoint_protection:write destructive
 	--dry-run bool
+	--yes bool
 endpoint-exception list <ecosystem>
 	GET /endpoint-protection/{ecosystem}/exceptions scope=endpoint_protection:read
 endpoint-package list
@@ -384,6 +393,7 @@ firewall-app create
 firewall-app delete <app_id>
 	DELETE /firewall/apps/{app_id} scope=firewall:write destructive
 	--dry-run bool
+	--yes bool
 firewall-app get <app_id>
 	GET /firewall/apps/{app_id} scope=firewall:read
 firewall-app list
@@ -398,6 +408,7 @@ firewall-app update <app_id>
 firewall-app-token rotate <app_id>
 	POST /firewall/apps/{app_id}/token scope=firewall:write destructive
 	--dry-run bool
+	--yes bool
 firewall-blocking update <service_id>
 	PUT /firewall/apps/{service_id}/blocking scope=firewall:write
 	--block bool required body
@@ -706,6 +717,7 @@ pr-check-config-all update
 	--post-code-quality-inline-comments-min-severity string required body
 	--post-inline-comments-min-severity string body
 	--run-deep-audit-pr-scan bool body
+	--yes bool
 pr-check-config-default get
 	GET /repositories/code/continuous_integration/checks/default scope=repositories:read
 pr-check-config-default update
@@ -750,9 +762,11 @@ repo deactivate
 	--body-file string
 	--code-repo-id int64 required body
 	--dry-run bool
+	--yes bool
 repo delete <code_repo_id>
 	DELETE /repositories/code/{code_repo_id} scope=repositories:write destructive
 	--dry-run bool
+	--yes bool
 repo get <code_repo_id>
 	GET /repositories/code/{code_repo_id} scope=repositories:read
 repo import
@@ -797,6 +811,7 @@ repo-exclude-path delete <code_repo_id>
 	--body-file string
 	--dry-run bool
 	--path string required body
+	--yes bool
 repo-label create <code_repo_id>
 	POST /repositories/code/{code_repo_id}/labels scope=repositories:write
 	--body string
@@ -806,6 +821,7 @@ repo-label create <code_repo_id>
 repo-label delete <code_repo_id> <label_id>
 	DELETE /repositories/code/{code_repo_id}/labels/{label_id} scope=repositories:write destructive
 	--dry-run bool
+	--yes bool
 repo-label update <code_repo_id> <label_id>
 	POST /repositories/code/{code_repo_id}/labels/{label_id} scope=repositories:write
 	--body string
@@ -845,6 +861,7 @@ sast-custom-rule create
 sast-custom-rule delete <rule_id>
 	DELETE /repositories/sast/custom-rules/{rule_id} scope=custom_sast_rules:write destructive
 	--dry-run bool
+	--yes bool
 sast-custom-rule get <rule_id>
 	GET /repositories/sast/custom-rules/{rule_id} scope=custom_sast_rules:read
 sast-custom-rule list
@@ -907,6 +924,7 @@ team create
 team delete <team_id>
 	DELETE /teams/{team_id} scope=teams:write destructive
 	--dry-run bool
+	--yes bool
 team list
 	GET /teams scope=teams:read paged=per_page:100:empty
 	--limit int64
@@ -935,6 +953,7 @@ team-member delete <team_id>
 	--body-file string
 	--dry-run bool
 	--user-id int64 required body
+	--yes bool
 team-repo-path-limitation update <team_id>
 	POST /teams/{team_id}/updateRepoPathLimitation scope=teams:write
 	--body string
@@ -960,6 +979,7 @@ team-resource delete <team_id>
 	--dry-run bool
 	--image-id int64 body
 	--repo-id int64 body
+	--yes bool
 	--zen-app-id int64 body
 user get <user_id>
 	GET /users/{user_id} scope=users:read
@@ -1007,6 +1027,7 @@ webhook create
 webhook delete <webhook_id>
 	DELETE /webhooks/{webhook_id} scope=webhooks:write destructive
 	--dry-run bool
+	--yes bool
 webhook list
 	GET /webhooks scope=webhooks:read
 workspace get

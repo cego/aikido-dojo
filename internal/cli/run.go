@@ -78,6 +78,12 @@ func (a *app) runOp(cmd *cobra.Command, c command, args []string) error {
 	if err := a.refuseWrite(c.op.Method, c.op.Command); err != nil {
 		return err
 	}
+	if c.op.Destructive {
+		yes, _ := cmd.Flags().GetBool("yes")
+		if err := a.confirm(cmd.Context(), yes, strings.Join(append([]string{c.op.Command}, args...), " ")); err != nil {
+			return err
+		}
+	}
 	client, err := a.client()
 	if err != nil {
 		return err

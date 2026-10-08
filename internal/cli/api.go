@@ -29,6 +29,7 @@ type apiFlags struct {
 	input    string
 	hasInput bool
 	dryRun   bool
+	yes      bool
 }
 
 func (a *app) apiCmd() *cobra.Command {
@@ -53,6 +54,7 @@ func (a *app) apiCmd() *cobra.Command {
 	cmd.Flags().StringArrayVarP(&f.fields, "field", "f", nil, "key=value: a query parameter for GET or with --input, else a string field of the JSON body")
 	cmd.Flags().StringVar(&f.input, "input", "", "a file holding the JSON request body, or - for stdin")
 	cmd.Flags().BoolVar(&f.dryRun, "dry-run", false, dryRunUsage)
+	cmd.Flags().BoolVar(&f.yes, "yes", false, yesUsage+": a DELETE, or a path a destructive command calls")
 	return cmd
 }
 
@@ -108,6 +110,11 @@ func (a *app) callAPI(ctx context.Context, method, target string, f apiFlags) er
 	}
 	if err := a.refuseWrite(method, "api "+method+" "+path); err != nil {
 		return err
+	}
+	if method == http.MethodDelete || op.Destructive {
+		if err := a.confirm(ctx, f.yes, "api "+method+" "+path); err != nil {
+			return err
+		}
 	}
 	client, err := a.client()
 	if err != nil {

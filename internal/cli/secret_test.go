@@ -31,26 +31,26 @@ func TestTerminalSecretRefusesAPipe(t *testing.T) {
 	}
 }
 
-func TestReadHiddenReturnsTheTrimmedSecret(t *testing.T) {
+func TestAskReturnsTheTrimmedSecret(t *testing.T) {
 	var w bytes.Buffer
-	got, err := readHidden(t.Context(), &w, "Secret: ", func() ([]byte, error) { return []byte(" s3cr3t \n"), nil }, func() error {
+	got, err := ask(t.Context(), &w, "Secret: ", "the client secret", func() ([]byte, error) { return []byte(" s3cr3t \n"), nil }, func() error {
 		t.Error("restore ran after a read that ended on its own")
 		return nil
 	})
-	if err != nil || got != "s3cr3t" || w.String() != "Secret: \n" {
-		t.Errorf("readHidden = %q, %v, wrote %q", got, err, w.String())
+	if err != nil || got != "s3cr3t" || w.String() != "Secret: " {
+		t.Errorf("ask = %q, %v, wrote %q", got, err, w.String())
 	}
 }
 
-func TestReadHiddenReportsAReadError(t *testing.T) {
-	_, err := readHidden(t.Context(), io.Discard, "Secret: ", func() ([]byte, error) { return nil, errors.New("tty gone") }, func() error { return nil })
+func TestAskReportsAReadError(t *testing.T) {
+	_, err := ask(t.Context(), io.Discard, "Secret: ", "the client secret", func() ([]byte, error) { return nil, errors.New("tty gone") }, func() error { return nil })
 	if err == nil || !strings.Contains(err.Error(), "read the client secret: tty gone") {
 		t.Errorf("err = %v", err)
 	}
 }
 
 // Ctrl-C while the read waits must give the terminal its echo back at once.
-func TestReadHiddenRestoresTheTerminalOnCancel(t *testing.T) {
+func TestAskRestoresTheTerminalOnCancel(t *testing.T) {
 	ctx, cancel := context.WithCancel(t.Context())
 	unblock := make(chan struct{})
 	defer close(unblock)
@@ -60,7 +60,7 @@ func TestReadHiddenRestoresTheTerminalOnCancel(t *testing.T) {
 		<-unblock
 		return nil, nil
 	}
-	_, err := readHidden(ctx, io.Discard, "Secret: ", read, func() error { restored++; return nil })
+	_, err := ask(ctx, io.Discard, "Secret: ", "the client secret", read, func() error { restored++; return nil })
 	if !errors.Is(err, context.Canceled) || restored != 1 {
 		t.Errorf("err = %v, restored %d times; want context.Canceled and one restore", err, restored)
 	}
@@ -68,15 +68,52 @@ func TestReadHiddenRestoresTheTerminalOnCancel(t *testing.T) {
 
 // A Ctrl-C before the prompt starts no read, which could turn echo off
 // after the process had given up on it.
-func TestReadHiddenAfterACancelReadsNothing(t *testing.T) {
+func TestAskAfterACancelReadsNothing(t *testing.T) {
 	ctx, cancel := context.WithCancel(t.Context())
 	cancel()
 	var w bytes.Buffer
-	_, err := readHidden(ctx, &w, "Secret: ", func() ([]byte, error) {
+	_, err := ask(ctx, &w, "Secret: ", "the client secret", func() ([]byte, error) {
 		t.Error("read started after the cancel")
 		return nil, nil
 	}, func() error { return nil })
 	if !errors.Is(err, context.Canceled) || w.Len() != 0 {
 		t.Errorf("err = %v, wrote %q; want context.Canceled and no prompt", err, w.String())
+	}
+}
+
+// A visible question has no terminal state to restore.
+func TestAskWithoutRestore(t *testing.T) {
+	ctx, cancel := context.WithCancel(t.Context())
+	unblock := make(chan struct{})
+	defer close(unblock)
+	_, err := ask(ctx, io.Discard, "Continue? ", "the answer", func() ([]byte, error) {
+		cancel()
+		<-unblock
+		return nil, nil
+	}, nil)
+	if !errors.Is(err, context.Canceled) {
+		t.Errorf("err = %v, want context.Canceled", err)
+	}
+}
+
+func TestTerminalConfirmRefusesAPipe(t *testing.T) {
+	r, w, err := os.Pipe()
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer r.Close()
+	defer w.Close()
+	_, err = TerminalConfirm(r, io.Discard)(t.Context(), "Continue? ")
+	var e *clierr.Error
+	if !errors.As(err, &e) || e.Code != "no_terminal" {
+		t.Errorf("err = %v, want no_terminal", err)
+	}
+}
+
+func TestAffirmative(t *testing.T) {
+	for in, want := range map[string]bool{"y": true, "Y": true, "yes": true, "YES": true, "": false, "n": false, "no": false, "yeah": false} {
+		if got := affirmative(in); got != want {
+			t.Errorf("affirmative(%q) = %v, want %v", in, got, want)
+		}
 	}
 }

@@ -1,9 +1,11 @@
 package cli
 
 import (
+	"context"
 	"strings"
 	"testing"
 
+	"github.com/cego/aikido-dojo/internal/catalog"
 	"github.com/cego/aikido-dojo/internal/clierr"
 	"github.com/cego/aikido-dojo/internal/config"
 )
@@ -109,4 +111,60 @@ func TestDryRunIsOnlyOnWrites(t *testing.T) {
 	if !strings.Contains(out, `"method":"GET"`) || strings.Contains(out, "Content-Type") || strings.Contains(out, `"body"`) {
 		t.Errorf("api GET --dry-run = %s, want a GET with no body", out)
 	}
+}
+
+func TestDestructiveNeedsYesOffATerminal(t *testing.T) {
+	all, ok := catalog.Command("pr-check-config-all update")
+	if !ok || !all.Destructive {
+		t.Fatal("pr-check-config-all update is not a destructive command")
+	}
+	for _, args := range [][]string{
+		{"team", "delete", "1"},
+		{"api", "DELETE", "/teams/1"},
+		// Not a DELETE, but a path a destructive command calls.
+		{"api", all.Method, all.Path},
+	} {
+		f, env, _ := newFake(t, respond(`{}`))
+		_, stderr, code := run(t, env, args...)
+		e := errorOf(t, stderr)
+		if code != clierr.ExitRefused || e.Code != "confirmation_required" || !strings.Contains(e.Hint, "--yes") || len(f.seen())+len(f.seenLogins()) != 0 {
+			t.Errorf("%q: exit %d, error %+v; want 7 confirmation_required before any call", args, code, e)
+		}
+	}
+}
+
+func TestDestructiveWithYes(t *testing.T) {
+	for _, args := range [][]string{{"team", "delete", "1", "--yes"}, {"api", "DELETE", "/teams/1", "--yes"}} {
+		f, env, _ := newFake(t, respond(`{}`))
+		mustRun(t, env, args...)
+		if n := len(f.seen()); n != 1 {
+			t.Errorf("%q: %d calls, want 1", args, n)
+		}
+	}
+}
+
+func TestDestructiveAsksOnATerminal(t *testing.T) {
+	for _, answer := range []bool{true, false} {
+		f, env, _ := newFake(t, respond(`{}`))
+		var prompt string
+		env.Confirm = func(_ context.Context, p string) (bool, error) {
+			prompt = p
+			return answer, nil
+		}
+		_, stderr, code := run(t, env, "team", "delete", "1")
+		if !strings.Contains(prompt, "team delete 1") {
+			t.Errorf("prompt = %q, want it to name the command", prompt)
+		}
+		if answer && (code != clierr.ExitOK || len(f.seen()) != 1) {
+			t.Errorf("answered yes: exit %d, %d calls, stderr %s", code, len(f.seen()), stderr)
+		}
+		if !answer && (code != clierr.ExitRefused || errorOf(t, stderr).Code != "not_confirmed" || len(f.seen()) != 0) {
+			t.Errorf("answered no: exit %d, %d calls, stderr %s", code, len(f.seen()), stderr)
+		}
+	}
+}
+
+func TestDryRunNeedsNoConfirmation(t *testing.T) {
+	_, env, _ := newFake(t, respond(`{}`))
+	mustRun(t, env, "team", "delete", "1", "--dry-run")
 }

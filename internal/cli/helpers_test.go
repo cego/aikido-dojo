@@ -15,6 +15,7 @@ import (
 
 	"github.com/zalando/go-keyring"
 
+	"github.com/cego/aikido-dojo/internal/clierr"
 	"github.com/cego/aikido-dojo/internal/config"
 )
 
@@ -33,6 +34,9 @@ func testEnv(t *testing.T) (Env, map[string]string) {
 		CacheDir:   func() (string, error) { return cache, nil },
 		Transport:  noNetwork{},
 		ReadSecret: func(context.Context, string) (string, error) { return "", errors.New("the test has no terminal") },
+		Confirm: func(context.Context, string) (bool, error) {
+			return false, &clierr.Error{Code: "no_terminal", Message: "the test has no terminal", Exit: clierr.ExitUsage}
+		},
 	}, vars
 }
 

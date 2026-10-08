@@ -27,6 +27,7 @@ type Env struct {
 	Transport  http.RoundTripper                                        // nil in production; tests route requests to a fake server
 	ReadSecret func(ctx context.Context, prompt string) (string, error) // the hidden prompt auth login asks with
 	StdoutTTY  bool                                                     // stdout is a terminal, where a person reads indented JSON
+	Confirm    func(ctx context.Context, prompt string) (bool, error)   // the question before a destructive call
 }
 
 // app holds a run's environment and the global flags' values.

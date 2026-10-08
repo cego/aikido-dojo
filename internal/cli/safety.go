@@ -3,6 +3,7 @@ package cli
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"net/http"
 
 	"github.com/cego/aikido-dojo/internal/api"
@@ -10,7 +11,31 @@ import (
 	"github.com/cego/aikido-dojo/internal/ops"
 )
 
-const dryRunUsage = "print the request this would send, with secrets redacted, and send nothing"
+const (
+	dryRunUsage = "print the request this would send, with secrets redacted, and send nothing"
+	yesUsage    = "make the destructive call without asking"
+)
+
+// confirm guards a destructive call: on a terminal a person answers the
+// question; off one, as for an agent, --yes must be given.
+func (a *app) confirm(ctx context.Context, yes bool, what string) error {
+	if yes {
+		return nil
+	}
+	ok, err := a.env.Confirm(ctx, what+" is destructive. Continue? [y/N] ")
+	var e *clierr.Error
+	if errors.As(err, &e) && e.Code == "no_terminal" {
+		return &clierr.Error{Code: "confirmation_required", Message: what + " is destructive and needs confirmation",
+			Hint: "pass --yes to confirm it", Exit: clierr.ExitRefused}
+	}
+	if err != nil {
+		return err
+	}
+	if !ok {
+		return &clierr.Error{Code: "not_confirmed", Message: what + " was not confirmed", Exit: clierr.ExitRefused}
+	}
+	return nil
+}
 
 type dryRunRequest struct {
 	DryRun  bool              `json:"dry_run"`

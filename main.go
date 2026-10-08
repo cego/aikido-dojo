@@ -23,6 +23,7 @@ func main() {
 		CacheDir:   os.UserCacheDir,
 		ReadSecret: cli.TerminalSecret(os.Stdin, os.Stderr),
 		StdoutTTY:  term.IsTerminal(int(os.Stdout.Fd())),
+		Confirm:    cli.TerminalConfirm(os.Stdin, os.Stderr),
 	})
 	stop()
 	os.Exit(code)

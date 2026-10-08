@@ -74,6 +74,9 @@ func opCommand(root *cobra.Command, verb string, op ops.Op, run runFunc) (*cobra
 	if op.Method != http.MethodGet {
 		fs.Bool("dry-run", false, dryRunUsage)
 	}
+	if op.Destructive {
+		fs.Bool("yes", false, yesUsage)
+	}
 	for _, p := range op.Flags {
 		if taken(ops.FlagName(p.Name)) {
 			return nil, fmt.Errorf("%s: --%s clashes with a built-in flag", op.Command, ops.FlagName(p.Name))
