@@ -8,42 +8,73 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: spec-drift
+
 jobs:
   spec-drift:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # push the branch
-      pull-requests: write # open the PR
+      contents: write # push the spec-drift branch
+      pull-requests: write # open or update its PR
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
           go-version-file: go.mod
       - run: go run ./internal/tools/specfetch
-      - id: generate
-        run: |
-          if go generate ./internal/catalog && go test ./internal/cli -run TestTreeGolden -update; then
-            echo "result=ok" >> "$GITHUB_OUTPUT"
-          else
-            echo "result=failed" >> "$GITHUB_OUTPUT"
-          fi
-      - env:
-          GH_TOKEN: ${{ github.token }}
-          RESULT: ${{ steps.generate.outputs.result }}
+      - id: check
         run: |
           if git diff --quiet; then
             echo "The published spec is unchanged."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          branch="spec-drift/$(date -u +%Y-%m-%d)"
+          {
+            echo "changed=true"
+            if go generate ./internal/catalog 2>"$RUNNER_TEMP/generate.log" &&
+              go test ./internal/cli -run TestTreeGolden -update >>"$RUNNER_TEMP/generate.log" 2>&1; then
+              echo "generate=ok"
+            else
+              echo "generate=failed"
+            fi
+            if go vet ./... >"$RUNNER_TEMP/test.log" 2>&1 && go test ./... >>"$RUNNER_TEMP/test.log" 2>&1; then
+              echo "tests=ok"
+            else
+              echo "tests=failed"
+            fi
+          } >> "$GITHUB_OUTPUT"
+      - if: steps.check.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GENERATE: ${{ steps.check.outputs.generate }}
+          TESTS: ${{ steps.check.outputs.tests }}
+        run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git switch -c "$branch"
+          git switch -c spec-drift
           git add -A
           git commit -m "chore(spec): update the vendored spec from Aikido's API reference"
-          git push origin "$branch"
-          body="specfetch found changes in Aikido's published API reference; review the golden diff."
-          if [ "$RESULT" = failed ]; then
-            body="$body Regenerating the catalog failed: the overlay needs entries for new or changed operations."
+          git push --force "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:refs/heads/spec-drift
+          body="specfetch found changes in Aikido's published API reference.
+
+          - Generating the catalog: ${GENERATE}
+          - go vet and go test: ${TESTS}
+
+          A PR opened by this workflow runs no other workflow, so the results above are its checks. Logs: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          if [ "$GENERATE" = failed ]; then
+            body="${body}
+
+          Generation failed:
+
+          \`\`\`
+          $(head -c 3000 "$RUNNER_TEMP/generate.log")
+          \`\`\`"
           fi
-          gh pr create --title "chore(spec): update the vendored spec" --body "$body" --head "$branch" --assignee "$GITHUB_ACTOR"
+          if gh pr view spec-drift --json number >/dev/null 2>&1; then
+            gh pr edit spec-drift --body "$body"
+          else
+            gh pr create --head spec-drift --title "chore(spec): update the vendored spec" --body "$body" --assignee "$GITHUB_ACTOR"
+          fi
