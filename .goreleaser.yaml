@@ -1,0 +1,61 @@
+version: 2
+
+project_name: aikido-dojo
+
+builds:
+  - id: aikido-dojo
+    main: .
+    binary: aikido-dojo
+    env:
+      - CGO_ENABLED=0
+    goos: [darwin, linux]
+    goarch: [amd64, arm64]
+    flags:
+      - -trimpath
+    # No -X: the binary reads its version from Go's VCS stamp of the tagged checkout.
+    ldflags:
+      - -s -w
+    mod_timestamp: "{{ .CommitTimestamp }}"
+
+archives:
+  - formats: [tar.gz]
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    files:
+      - LICENSE
+      - README.md
+    builds_info:
+      mtime: "{{ .CommitDate }}"
+
+checksum:
+  name_template: checksums.txt
+
+sboms:
+  - artifacts: archive
+
+signs:
+  - cmd: cosign
+    signature: "${artifact}.sigstore.json"
+    args:
+      - sign-blob
+      - "--bundle=${signature}"
+      - "${artifact}"
+      - "--yes"
+    artifacts: checksum
+    output: true
+
+homebrew_casks:
+  - name: aikido-dojo
+    repository:
+      owner: cego
+      name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+    homepage: https://github.com/cego/aikido-dojo
+    description: Unofficial command-line client for the Aikido Security public API
+    caveats: |
+      aikido-dojo is not signed or notarized yet. If macOS refuses to open it, run:
+        xattr -d com.apple.quarantine "$(readlink -f "$(command -v aikido-dojo)")"
+
+release:
+  github:
+    owner: cego
+    name: aikido-dojo
