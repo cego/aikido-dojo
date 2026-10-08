@@ -12,11 +12,14 @@ import (
 	"net/http/httptest"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 	"testing"
 
 	"github.com/rogpeppe/go-internal/testscript"
 	"github.com/zalando/go-keyring"
+
+	"github.com/cego/aikido-dojo/internal/catalog"
 )
 
 // TestMain lets the scripts in testdata/script run aikido-dojo as a command.
@@ -144,6 +147,10 @@ func TestDocsCommandsAreScripted(t *testing.T) {
 			t.Errorf("%s shows %d commands, want at least %d", doc, len(cmds), least)
 		}
 		for _, cmd := range cmds {
+			// sh and testscript split these differently, so the same text could run another command.
+			if strings.ContainsAny(cmd, `"\$`) {
+				t.Errorf("%s: %q uses \", \\ or $; quote with single quotes only", doc, cmd)
+			}
 			if !scripted[cmd] {
 				t.Errorf("%s: %q runs in no script in testdata/script", doc, cmd)
 			}
@@ -151,19 +158,39 @@ func TestDocsCommandsAreScripted(t *testing.T) {
 	}
 }
 
-// docCommands lists the aikido-dojo command lines in a document's sh blocks.
+// docCommands lists the aikido-dojo command lines in every fenced block of a
+// document, whatever its language and however far it is indented.
 func docCommands(md string) []string {
 	var cmds []string
-	inSh, open := false, false
+	open := false
 	for _, line := range strings.Split(md, "\n") {
+		line = strings.TrimSpace(line)
 		if strings.HasPrefix(line, "```") {
 			open = !open
-			inSh = open && strings.TrimPrefix(line, "```") == "sh"
 			continue
 		}
-		if inSh && strings.HasPrefix(line, "aikido-dojo ") {
+		if open && strings.HasPrefix(line, "aikido-dojo ") {
 			cmds = append(cmds, line)
 		}
 	}
 	return cmds
+}
+
+func TestDocCommands(t *testing.T) {
+	md := "intro\n```sh\naikido-dojo repo list\n```\n- a step:\n  ```bash\n  aikido-dojo team list\n  ```\n```\naikido-dojo api GET /workspace\n```\n```go\nfmt.Println(1)\n```\n"
+	want := []string{"aikido-dojo repo list", "aikido-dojo team list", "aikido-dojo api GET /workspace"}
+	if got := docCommands(md); !slices.Equal(got, want) {
+		t.Errorf("docCommands = %q, want %q", got, want)
+	}
+}
+
+// The README's count of operations is the catalog's.
+func TestReadmeCountsTheOperations(t *testing.T) {
+	data, err := os.ReadFile("../../README.md")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if want := fmt.Sprintf("%d operations", len(catalog.All)); !strings.Contains(string(data), want) {
+		t.Errorf("README.md doesn't say %q", want)
+	}
 }

@@ -6,8 +6,11 @@ env AIKIDO_DOJO_CLIENT_SECRET=s3cr3t
 exec aikido-dojo auth login --client-id AIK_CLIENT_xxxx
 stdout '"profile":"default","client_id":"AIK_CLIENT_xxxx","region":"eu"'
 ! stdout s3cr3t
+# Each command is a process of its own with an in-memory keychain, so the secret login stored is
+# gone; from here on, calls run as the environment pair.
 env AIKIDO_DOJO_CLIENT_ID=AIK_CLIENT_xxxx
 exec aikido-dojo auth status
+stdout '"source":"environment"'
 stdout '"granted":\["basics:read","issues:read","issues:write","repositories:read","teams:write"\]'
 
 # Examples.
