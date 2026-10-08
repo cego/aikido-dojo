@@ -1,7 +1,6 @@
 package cli
 
 import (
-	"bufio"
 	"bytes"
 	"encoding/json"
 	"errors"
@@ -17,7 +16,16 @@ import (
 func prettyCopy(w io.Writer, r io.Reader) error {
 	dec := json.NewDecoder(r)
 	dec.UseNumber()
-	bw := bufio.NewWriter(w)
+	// Written to a buffer, whose writes can't fail, and flushed now and then,
+	// so memory stays small and each write to w is checked.
+	var bw bytes.Buffer
+	flush := func() error {
+		if _, err := w.Write(bw.Bytes()); err != nil {
+			return fmt.Errorf("write the output: %w", err)
+		}
+		bw.Reset()
+		return nil
+	}
 	type frame struct {
 		object bool
 		count  int
@@ -29,6 +37,11 @@ func prettyCopy(w io.Writer, r io.Reader) error {
 		bw.WriteString(strings.Repeat("  ", len(stack)))
 	}
 	for {
+		if bw.Len() > 32<<10 {
+			if err := flush(); err != nil {
+				return err
+			}
+		}
 		tok, err := dec.Token()
 		if errors.Is(err, io.EOF) {
 			break
@@ -83,8 +96,8 @@ func prettyCopy(w io.Writer, r io.Reader) error {
 			top.key = true
 		}
 	}
-	if err := bw.Flush(); err != nil {
-		return fmt.Errorf("write the output: %w", err)
+	if err := flush(); err != nil {
+		return err
 	}
 	if len(stack) > 0 {
 		return errors.New("read the JSON response: it ended early")

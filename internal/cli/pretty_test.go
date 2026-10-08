@@ -49,3 +49,20 @@ func TestPrettyCopyReportsBadJSON(t *testing.T) {
 		t.Error("want an error for truncated JSON")
 	}
 }
+
+// Past the 32 KiB buffer the output is flushed in pieces; the result is the same.
+func TestPrettyCopyFlushesALargeExport(t *testing.T) {
+	in := "[" + strings.TrimSuffix(strings.Repeat(`{"id":12345,"name":"a repository name","tags":["x","y"]},`, 5000), ",") + "]"
+	var want bytes.Buffer
+	if err := json.Indent(&want, []byte(in), "", "  "); err != nil {
+		t.Fatal(err)
+	}
+	want.WriteByte('\n')
+	var got bytes.Buffer
+	if err := prettyCopy(&got, strings.NewReader(in)); err != nil {
+		t.Fatal(err)
+	}
+	if got.Len() < 64<<10 || got.String() != want.String() {
+		t.Errorf("got %d bytes, want the %d bytes json.Indent gives", got.Len(), want.Len())
+	}
+}

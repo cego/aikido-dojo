@@ -32,7 +32,10 @@ func TerminalSecret(in *os.File, w io.Writer) func(ctx context.Context, prompt s
 		read := func() ([]byte, error) {
 			b, err := term.ReadPassword(fd)
 			fmt.Fprintln(w) // the Enter wasn't echoed either
-			return b, err
+			if err != nil {
+				return nil, fmt.Errorf("read the terminal: %w", err)
+			}
+			return b, nil
 		}
 		return ask(ctx, w, prompt, "the client secret", read, func() error { return term.Restore(fd, state) })
 	}
@@ -48,10 +51,11 @@ func TerminalConfirm(in *os.File, w io.Writer) func(ctx context.Context, prompt 
 		}
 		read := func() ([]byte, error) {
 			b, err := bufio.NewReader(in).ReadBytes('\n')
-			if errors.Is(err, io.EOF) {
-				return b, nil // Ctrl-D ends the answer, which is then a no
+			// Ctrl-D ends the answer, which is then a no.
+			if err != nil && !errors.Is(err, io.EOF) {
+				return nil, fmt.Errorf("read the terminal: %w", err)
 			}
-			return b, err
+			return b, nil
 		}
 		answer, err := ask(ctx, w, prompt, "the answer", read, nil)
 		if err != nil {

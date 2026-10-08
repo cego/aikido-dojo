@@ -1,9 +1,11 @@
 package cli
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
 
 	"github.com/cego/aikido-dojo/internal/api"
@@ -64,12 +66,15 @@ func (a *app) dryRun(ctx context.Context, req api.Request, secret []string) erro
 	return a.out.value(ctx, out)
 }
 
-// redacted replaces the credential fields of a JSON object body.
+// redacted replaces the credential fields of a JSON object body. A body that
+// isn't an object has no named fields to redact.
 func redacted(body []byte, secret []string) (json.RawMessage, error) {
-	var obj map[string]json.RawMessage
-	// A body that isn't an object has no named fields to redact.
-	if len(secret) == 0 || json.Unmarshal(body, &obj) != nil {
+	if len(secret) == 0 || !bytes.HasPrefix(bytes.TrimSpace(body), []byte("{")) {
 		return body, nil
+	}
+	var obj map[string]json.RawMessage
+	if err := json.Unmarshal(body, &obj); err != nil {
+		return nil, fmt.Errorf("decode the body to redact it: %w", err)
 	}
 	for _, k := range secret {
 		if _, ok := obj[k]; ok {
