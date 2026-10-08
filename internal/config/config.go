@@ -154,11 +154,20 @@ func Resolve(f File, flags Flags, getenv func(string) string) (Resolved, error) 
 }
 
 // Save writes f to path through a temp file and a rename, so a failed write
-// keeps the old file. CreateTemp makes the file 0600.
+// keeps the old file. A symlinked config, as a dotfiles checkout keeps one, is
+// written through to its target; a new file is 0600 and an existing one keeps
+// its mode.
 func Save(path string, f File) error {
 	data, err := json.MarshalIndent(f, "", "  ")
 	if err != nil {
 		return fmt.Errorf("encode the config: %w", err)
+	}
+	if target, err := filepath.EvalSymlinks(path); err == nil {
+		path = target
+	}
+	mode := os.FileMode(0o600)
+	if info, err := os.Stat(path); err == nil {
+		mode = info.Mode().Perm()
 	}
 	dir := filepath.Dir(path)
 	if err := os.MkdirAll(dir, 0o700); err != nil {
@@ -170,6 +179,9 @@ func Save(path string, f File) error {
 	}
 	defer os.Remove(tmp.Name()) // fails harmlessly once the rename has moved it
 	if _, err := tmp.Write(append(data, '\n')); err != nil {
+		return fmt.Errorf("write config %s: %w", path, errors.Join(err, tmp.Close()))
+	}
+	if err := tmp.Chmod(mode); err != nil {
 		return fmt.Errorf("write config %s: %w", path, errors.Join(err, tmp.Close()))
 	}
 	if err := tmp.Close(); err != nil {

@@ -292,3 +292,29 @@ func TestRegionHost(t *testing.T) {
 	_, err := RegionHost("mars")
 	wantCode(t, err, "unknown_region", clierr.ExitUsage)
 }
+
+// A config kept elsewhere and linked in, as dotfiles often are, stays linked,
+// and an existing file keeps its mode.
+func TestSaveWritesThroughASymlink(t *testing.T) {
+	target := filepath.Join(t.TempDir(), "config.json")
+	if err := os.WriteFile(target, []byte("{}\n"), 0o644); err != nil { //nolint:gosec // the mode under test
+		t.Fatal(err)
+	}
+	link := filepath.Join(t.TempDir(), "config.json")
+	if err := os.Symlink(target, link); err != nil {
+		t.Fatal(err)
+	}
+	f := File{DefaultProfile: "cego", Profiles: map[string]Profile{"cego": {ClientID: "id"}}}
+	if err := Save(link, f); err != nil {
+		t.Fatal(err)
+	}
+	if info, err := os.Lstat(link); err != nil || info.Mode()&os.ModeSymlink == 0 {
+		t.Errorf("%s is no longer a symlink: %v", link, err)
+	}
+	if got, err := Load(target); err != nil || !reflect.DeepEqual(got, f) {
+		t.Errorf("target = %+v, %v; want the saved file", got, err)
+	}
+	if info, err := os.Stat(target); err != nil || info.Mode().Perm() != 0o644 {
+		t.Errorf("target mode = %v, %v; want 0644 kept", info.Mode().Perm(), err)
+	}
+}
