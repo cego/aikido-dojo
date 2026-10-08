@@ -114,3 +114,53 @@ func TestOutputMistakesCostNoCall(t *testing.T) {
 		}
 	}
 }
+
+func TestNDJSONStreamsAList(t *testing.T) {
+	_, env, _ := newFake(t, pages(`[{"id":1},{"id":2}]`, `[{"id":3},{"id":4}]`, `[]`))
+	if out := mustRun(t, env, "repo", "list", "--ndjson", "--limit", "3"); out != "{\"id\":1}\n{\"id\":2}\n{\"id\":3}\n" {
+		t.Errorf("stdout = %q, want three lines", out)
+	}
+	// A failure part-way leaves the lines already printed; the error says the rest is missing.
+	_, env2, _ := newFake(t, pages(`[1,2]`))
+	stdout, stderr, code := run(t, env2, "repo", "list", "--ndjson")
+	if stdout != "1\n2\n" || code != 5 || errorOf(t, stderr).Code != "not_found" {
+		t.Errorf("stdout %q, exit %d, stderr %s; want the first page's lines and the error", stdout, code, stderr)
+	}
+}
+
+func TestNDJSONStreamsAnArrayResponse(t *testing.T) {
+	_, env, _ := newFake(t, respond(`[{"a":1},{"a":"x\/y"}]`))
+	env.StdoutTTY = true
+	// Each line is Aikido's own bytes, as off a terminal: re-encoding would lose key order.
+	if out := mustRun(t, env, "issue", "export", "--ndjson"); out != "{\"a\":1}\n{\"a\":\"x\\/y\"}\n" {
+		t.Errorf("stdout = %q, want one compact line per item, even on a terminal", out)
+	}
+}
+
+func TestNDJSONOnOurArrays(t *testing.T) {
+	env, _ := testEnv(t)
+	out := mustRun(t, env, "search", "list repositories", "--ndjson")
+	if lines := strings.Split(strings.TrimSuffix(out, "\n"), "\n"); len(lines) != 10 || !strings.HasPrefix(lines[0], `{"command":`) {
+		t.Errorf("stdout = %q, want 10 lines of hits", out)
+	}
+}
+
+func TestNDJSONWithJQ(t *testing.T) {
+	_, env, _ := newFake(t, pages(`[{"name":"a"},{"name":"b"}]`, `[]`))
+	if out := mustRun(t, env, "repo", "list", "--ndjson", "--jq", ".name"); out != "a\nb\n" {
+		t.Errorf("stdout = %q, want one name per line", out)
+	}
+}
+
+func TestNDJSONNeedsAnArray(t *testing.T) {
+	for _, args := range [][]string{
+		{"workspace", "get", "--ndjson"},
+		{"version", "--ndjson"},
+	} {
+		f, env, _ := newFake(t, respond(`{}`))
+		_, stderr, code := run(t, env, args...)
+		if e := errorOf(t, stderr); code != 2 || e.Hint == "" || len(f.seen())+len(f.seenLogins()) != 0 {
+			t.Errorf("%q: exit %d, error %+v; want a usage error before any call", args, code, e)
+		}
+	}
+}

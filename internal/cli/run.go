@@ -132,8 +132,24 @@ func (a *app) clientFor(r config.Resolved) (*api.Client, error) {
 
 // list reads every page, or up to limit items, and prints them as one JSON
 // array. It prints only after the last page, so a failure never leaves a
-// truncated array on stdout.
+// truncated array on stdout. With --ndjson it prints each item as it arrives
+// instead, and a failure leaves the lines already printed.
 func (a *app) list(ctx context.Context, c *api.Client, req api.Request, p api.Paging, limit int64) error {
+	if a.out.ndjson {
+		var n int64
+		for item, err := range c.Items(ctx, req, p) {
+			if err != nil {
+				return err
+			}
+			if err := a.out.item(ctx, item); err != nil {
+				return err
+			}
+			if n++; n == limit {
+				break
+			}
+		}
+		return nil
+	}
 	items := []json.RawMessage{}
 	for item, err := range c.Items(ctx, req, p) {
 		if err != nil {

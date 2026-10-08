@@ -32,6 +32,7 @@ type app struct {
 	env     Env
 	out     *output
 	jq      string
+	ndjson  bool
 	config  string
 	profile string
 	debug   bool
@@ -80,6 +81,7 @@ See what a command takes:      aikido-dojo schema <resource> <verb>
 	pf.StringVar(&a.profile, "profile", "", "the profile to run as (also AIKIDO_DOJO_PROFILE)")
 	pf.BoolVar(&a.debug, "debug", false, "log each request's method, URL, status and timing to stderr")
 	pf.StringVar(&a.jq, "jq", "", "filter the JSON output with a jq expression; strings print without quotes")
+	pf.BoolVar(&a.ndjson, "ndjson", false, "print a list one item per line as it arrives, instead of one array")
 	root.PersistentPreRunE = func(*cobra.Command, []string) error { return a.prepare() }
 	return root, a
 }
@@ -87,6 +89,7 @@ See what a command takes:      aikido-dojo schema <resource> <verb>
 // prepare checks the global output and safety flags once, before any command
 // runs, so a mistake in them costs no call.
 func (a *app) prepare() error {
+	a.out.ndjson = a.ndjson
 	if a.jq != "" {
 		q, err := gojq.Parse(a.jq)
 		if err == nil {
