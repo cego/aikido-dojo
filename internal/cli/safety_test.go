@@ -62,3 +62,51 @@ func TestReadOnlyFlagMakesTheBodyFieldBodyOnly(t *testing.T) {
 		t.Errorf("help = %s, want read_only listed as body-only", out)
 	}
 }
+
+func TestDryRunPrintsTheRequest(t *testing.T) {
+	f, env, vars := newFake(t, respond(`{}`))
+	vars[config.EnvRegion] = "us"
+	want := `{"dry_run":true,"method":"POST","url":"https://app.us.aikido.dev/api/public/v1/teams",` +
+		`"headers":{"Authorization":"Bearer [redacted]","Content-Type":"application/json"},"body":{"name":"x"}}` + "\n"
+	if out := mustRun(t, env, "team", "create", "--name", "x", "--dry-run"); out != want {
+		t.Errorf("stdout = %s, want %s", out, want)
+	}
+	if n := len(f.seen()) + len(f.seenLogins()); n != 0 {
+		t.Errorf("%d requests, want none", n)
+	}
+}
+
+func TestDryRunRedactsCredentials(t *testing.T) {
+	for _, args := range [][]string{
+		{"code-scanning-token", "update", "--body-file", "-", "--dry-run"},
+		{"api", "POST", "/access-tokens/code-scanning", "--input", "-", "--dry-run"},
+	} {
+		_, env, _ := newFake(t, respond(`{}`))
+		env.Stdin = strings.NewReader(`{"access_token":"s3cr3t"}`)
+		out := mustRun(t, env, args...)
+		if strings.Contains(out, "s3cr3t") || !strings.Contains(out, `"access_token":"[redacted]"`) {
+			t.Errorf("%q: stdout = %s, want the credential redacted", args, out)
+		}
+	}
+}
+
+// Nothing is sent, so a dry run is how an agent in read-only mode shows a
+// person the write it would make.
+func TestDryRunWorksInReadOnlyMode(t *testing.T) {
+	_, env, _ := newFake(t, respond(`{}`))
+	if out := mustRun(t, env, "--read-only", "team", "delete", "1", "--dry-run"); !strings.Contains(out, `"method":"DELETE"`) {
+		t.Errorf("stdout = %s, want the DELETE request", out)
+	}
+}
+
+func TestDryRunIsOnlyOnWrites(t *testing.T) {
+	env, _ := testEnv(t)
+	if _, stderr, code := run(t, env, "repo", "list", "--dry-run"); code != clierr.ExitUsage || !strings.Contains(stderr, "unknown flag: --dry-run") {
+		t.Errorf("repo list --dry-run: exit %d, %s; want an unknown flag", code, stderr)
+	}
+	_, env2, _ := newFake(t, respond(`{}`))
+	out := mustRun(t, env2, "api", "GET", "/workspace", "--dry-run")
+	if !strings.Contains(out, `"method":"GET"`) || strings.Contains(out, "Content-Type") || strings.Contains(out, `"body"`) {
+		t.Errorf("api GET --dry-run = %s, want a GET with no body", out)
+	}
+}

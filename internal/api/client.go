@@ -23,7 +23,7 @@ import (
 
 type Client struct {
 	http    *http.Client
-	base    string
+	host    string
 	tokens  *auth.Source
 	limiter *ratelimit.Limiter
 	now     func() time.Time
@@ -37,7 +37,7 @@ type Client struct {
 func New(c *http.Client, host string, tokens *auth.Source, limiter *ratelimit.Limiter) *Client {
 	return &Client{
 		http:    c,
-		base:    "https://" + host + "/api/public/v1",
+		host:    host,
 		tokens:  tokens,
 		limiter: limiter,
 		now:     time.Now,
@@ -54,6 +54,15 @@ type Request struct {
 	Query  url.Values
 	Body   []byte
 	Scope  string
+}
+
+// URL is where req goes on host; a dry run prints the same URL a call sends to.
+func URL(host string, req Request) string {
+	u := "https://" + host + "/api/public/v1" + req.Path
+	if len(req.Query) > 0 {
+		u += "?" + req.Query.Encode()
+	}
+	return u
 }
 
 // Do sends req and returns the response when it is 2xx; the caller closes its
@@ -108,10 +117,7 @@ func (c *Client) send(ctx context.Context, req Request) (*http.Response, error) 
 	if err != nil {
 		return nil, err
 	}
-	u := c.base + req.Path
-	if len(req.Query) > 0 {
-		u += "?" + req.Query.Encode()
-	}
+	u := URL(c.host, req)
 	var body io.Reader
 	if req.Body != nil {
 		body = bytes.NewReader(req.Body)

@@ -23,9 +23,16 @@ import (
 // apiMethods are the methods the spec uses; anything else is a typo.
 var apiMethods = []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete}
 
+// apiFlags are api's own flags.
+type apiFlags struct {
+	fields   []string
+	input    string
+	hasInput bool
+	dryRun   bool
+}
+
 func (a *app) apiCmd() *cobra.Command {
-	var fields []string
-	var input string
+	var f apiFlags
 	cmd := &cobra.Command{
 		Use:   "api <method> <path>",
 		Short: "Call any public API path, with the same credentials, pacing, retries and errors",
@@ -38,16 +45,18 @@ func (a *app) apiCmd() *cobra.Command {
 			`  aikido-dojo api POST /issues/groups/12/notes -f note="false positive: a test fixture"`,
 		Args: exactArgs([]ops.Param{{Name: "method"}, {Name: "path"}}),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return a.callAPI(cmd.Context(), args[0], args[1], fields, input, cmd.Flags().Changed("input"))
+			f.hasInput = cmd.Flags().Changed("input")
+			return a.callAPI(cmd.Context(), args[0], args[1], f)
 		},
 	}
 	// StringArray, not StringSlice: a value may hold commas.
-	cmd.Flags().StringArrayVarP(&fields, "field", "f", nil, "key=value: a query parameter for GET or with --input, else a string field of the JSON body")
-	cmd.Flags().StringVar(&input, "input", "", "a file holding the JSON request body, or - for stdin")
+	cmd.Flags().StringArrayVarP(&f.fields, "field", "f", nil, "key=value: a query parameter for GET or with --input, else a string field of the JSON body")
+	cmd.Flags().StringVar(&f.input, "input", "", "a file holding the JSON request body, or - for stdin")
+	cmd.Flags().BoolVar(&f.dryRun, "dry-run", false, dryRunUsage)
 	return cmd
 }
 
-func (a *app) callAPI(ctx context.Context, method, target string, fields []string, input string, hasInput bool) error {
+func (a *app) callAPI(ctx context.Context, method, target string, f apiFlags) error {
 	method = strings.ToUpper(method)
 	if !slices.Contains(apiMethods, method) {
 		return apiUsage(fmt.Sprintf("method %q: use GET, POST, PUT or DELETE", method))
@@ -57,18 +66,18 @@ func (a *app) callAPI(ctx context.Context, method, target string, fields []strin
 		return err
 	}
 	var body []byte
-	if hasInput {
-		if body, err = jsonInput(input, a.env.Stdin); err != nil {
+	if f.hasInput {
+		if body, err = jsonInput(f.input, a.env.Stdin); err != nil {
 			return err
 		}
 	}
 	op, _ := catalog.Match(method, path)
-	toQuery := method == http.MethodGet || hasInput
+	toQuery := method == http.MethodGet || f.hasInput
 	obj := map[string]string{}
-	for _, f := range fields {
-		k, v, ok := strings.Cut(f, "=")
+	for _, field := range f.fields {
+		k, v, ok := strings.Cut(field, "=")
 		if !ok || k == "" {
-			return apiUsage(fmt.Sprintf("-f %q: want key=value", f))
+			return apiUsage(fmt.Sprintf("-f %q: want key=value", field))
 		}
 		// argv and shell history keep -f values, and a query also reaches logs, so
 		// credentials come in through --input, as with the generated command.
@@ -93,6 +102,10 @@ func (a *app) callAPI(ctx context.Context, method, target string, fields []strin
 		}
 		body = bytes.TrimSuffix(buf.Bytes(), []byte("\n"))
 	}
+	req := api.Request{Method: method, Path: path, Query: query, Body: body, Scope: op.Scope}
+	if f.dryRun {
+		return a.dryRun(ctx, req, secretFields(op))
+	}
 	if err := a.refuseWrite(method, "api "+method+" "+path); err != nil {
 		return err
 	}
@@ -100,7 +113,7 @@ func (a *app) callAPI(ctx context.Context, method, target string, fields []strin
 	if err != nil {
 		return err
 	}
-	resp, err := client.Do(ctx, api.Request{Method: method, Path: path, Query: query, Body: body, Scope: op.Scope})
+	resp, err := client.Do(ctx, req)
 	if err != nil {
 		return withHint(err, op)
 	}

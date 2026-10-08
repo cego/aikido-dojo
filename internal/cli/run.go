@@ -70,6 +70,11 @@ func (a *app) runOp(cmd *cobra.Command, c command, args []string) error {
 	for _, w := range slices.Concat(argWarnings, flagWarnings, bodyWarnings) {
 		clierr.Warn(a.env.Stderr, w)
 	}
+	req := api.Request{Method: c.op.Method, Path: path, Query: query, Body: body, Scope: c.op.Scope}
+	// Only writes have the flag; a dry run sends nothing, so read-only mode allows it.
+	if dry, _ := cmd.Flags().GetBool("dry-run"); dry {
+		return a.dryRun(cmd.Context(), req, secretFields(c.op))
+	}
 	if err := a.refuseWrite(c.op.Method, c.op.Command); err != nil {
 		return err
 	}
@@ -77,7 +82,6 @@ func (a *app) runOp(cmd *cobra.Command, c command, args []string) error {
 	if err != nil {
 		return err
 	}
-	req := api.Request{Method: c.op.Method, Path: path, Query: query, Body: body, Scope: c.op.Scope}
 	if c.op.Paging != nil {
 		return withHint(a.list(cmd.Context(), client, req, *c.op.Paging, limit), c.op)
 	}

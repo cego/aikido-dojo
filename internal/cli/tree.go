@@ -2,6 +2,7 @@ package cli
 
 import (
 	"fmt"
+	"net/http"
 	"slices"
 	"strconv"
 	"strings"
@@ -69,6 +70,9 @@ func opCommand(root *cobra.Command, verb string, op ops.Op, run runFunc) (*cobra
 	if op.Body != nil {
 		fs.String("body", "", "the request body as JSON")
 		fs.String("body-file", "", "a file holding the request body as JSON, or - for stdin")
+	}
+	if op.Method != http.MethodGet {
+		fs.Bool("dry-run", false, dryRunUsage)
 	}
 	for _, p := range op.Flags {
 		if taken(ops.FlagName(p.Name)) {

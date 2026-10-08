@@ -232,3 +232,13 @@ func TestDoReportsAFailedTokenInvalidation(t *testing.T) {
 		t.Errorf("err = %v", err)
 	}
 }
+
+func TestURL(t *testing.T) {
+	got := URL("app.aikido.dev", Request{Path: "/teams", Query: map[string][]string{"a": {"1"}, "b": {"x y"}}})
+	if want := "https://app.aikido.dev/api/public/v1/teams?a=1&b=x+y"; got != want {
+		t.Errorf("URL = %q, want %q", got, want)
+	}
+	if got := URL("h", Request{Path: "/x"}); got != "https://h/api/public/v1/x" {
+		t.Errorf("URL without a query = %q", got)
+	}
+}
