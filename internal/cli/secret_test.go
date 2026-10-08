@@ -103,7 +103,7 @@ func TestTerminalConfirmRefusesAPipe(t *testing.T) {
 	}
 	defer r.Close()
 	defer w.Close()
-	_, err = TerminalConfirm(r, io.Discard)(t.Context(), "Continue? ")
+	_, err = TerminalConfirm(r, w)(t.Context(), "Continue? ")
 	var e *clierr.Error
 	if !errors.As(err, &e) || e.Code != "no_terminal" {
 		t.Errorf("err = %v, want no_terminal", err)

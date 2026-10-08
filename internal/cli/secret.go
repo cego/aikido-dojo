@@ -42,11 +42,11 @@ func TerminalSecret(in *os.File, w io.Writer) func(ctx context.Context, prompt s
 }
 
 // TerminalConfirm asks prompt on w and reads the answer typed at the
-// terminal on in. Off a terminal it fails with no_terminal, so the caller can
-// refuse instead of asking.
-func TerminalConfirm(in *os.File, w io.Writer) func(ctx context.Context, prompt string) (bool, error) {
+// terminal on in. Unless both are a terminal it fails with no_terminal, so
+// the caller refuses instead of waiting on a question nobody sees.
+func TerminalConfirm(in, w *os.File) func(ctx context.Context, prompt string) (bool, error) {
 	return func(ctx context.Context, prompt string) (bool, error) {
-		if !term.IsTerminal(int(in.Fd())) {
+		if !term.IsTerminal(int(in.Fd())) || !term.IsTerminal(int(w.Fd())) {
 			return false, &clierr.Error{Code: "no_terminal", Message: "no terminal to confirm on", Exit: clierr.ExitUsage}
 		}
 		read := func() ([]byte, error) {

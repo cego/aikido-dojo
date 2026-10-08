@@ -2,6 +2,7 @@ package cli
 
 import (
 	"context"
+	"fmt"
 	"strings"
 	"testing"
 
@@ -170,4 +171,16 @@ func TestDestructiveAsksOnATerminal(t *testing.T) {
 func TestDryRunNeedsNoConfirmation(t *testing.T) {
 	_, env, _ := newFake(t, respond(`{}`))
 	mustRun(t, env, "team", "delete", "1", "--dry-run")
+}
+
+// Ctrl-C at the question is a no, and a no says how to get a yes.
+func TestDestructiveCancelledIsNotConfirmed(t *testing.T) {
+	for _, answer := range []error{nil, fmt.Errorf("read the answer: %w", context.Canceled)} {
+		f, env, _ := newFake(t, respond(`{}`))
+		env.Confirm = func(context.Context, string) (bool, error) { return false, answer }
+		_, stderr, code := run(t, env, "team", "delete", "1")
+		if e := errorOf(t, stderr); code != clierr.ExitRefused || e.Code != "not_confirmed" || !strings.Contains(e.Hint, "--yes") || len(f.seen()) != 0 {
+			t.Errorf("answer error %v: exit %d, error %+v; want 7 not_confirmed with a hint", answer, code, e)
+		}
+	}
 }

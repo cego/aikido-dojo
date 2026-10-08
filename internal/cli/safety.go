@@ -40,11 +40,13 @@ func (a *app) confirm(ctx context.Context, yes bool, what string) error {
 		return &clierr.Error{Code: "confirmation_required", Message: what + " is destructive and needs confirmation",
 			Hint: "pass --yes to confirm it", Exit: clierr.ExitRefused}
 	}
-	if err != nil {
+	// Ctrl-C at the question is a no.
+	if err != nil && !errors.Is(err, context.Canceled) {
 		return err
 	}
 	if !ok {
-		return &clierr.Error{Code: "not_confirmed", Message: what + " was not confirmed", Exit: clierr.ExitRefused}
+		return &clierr.Error{Code: "not_confirmed", Message: what + " was not confirmed",
+			Hint: "answer y to go ahead, or pass --yes", Exit: clierr.ExitRefused}
 	}
 	return nil
 }
