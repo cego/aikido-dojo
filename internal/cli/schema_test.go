@@ -5,6 +5,7 @@ import (
 	"maps"
 	"net/http"
 	"slices"
+	"strings"
 	"testing"
 
 	"github.com/cego/aikido-dojo/internal/clierr"
@@ -59,6 +60,15 @@ func TestSchemaLeavesCredentialsToTheBody(t *testing.T) {
 	}
 }
 
+// A group's hint names a command that has a schema.
+func TestSchemaOfAGroupHintsAGeneratedVerb(t *testing.T) {
+	env, _ := testEnv(t)
+	_, stderr, _ := run(t, env, "schema", "repo")
+	if e := errorOf(t, stderr); !strings.Contains(e.Hint, "aikido-dojo schema repo activate") {
+		t.Errorf("hint = %q, want a generated repo verb", e.Hint)
+	}
+}
+
 func TestSchemaMistakes(t *testing.T) {
 	for _, tt := range []struct {
 		args []string
@@ -69,6 +79,7 @@ func TestSchemaMistakes(t *testing.T) {
 		{[]string{"repo", "nosuch"}, "unknown_command"},
 		{[]string{"repo"}, "usage"},
 		{[]string{"version"}, "no_schema"},
+		{[]string{"auth"}, "no_schema"},
 	} {
 		env, _ := testEnv(t)
 		_, stderr, code := run(t, env, append([]string{"schema"}, tt.args...)...)

@@ -50,10 +50,9 @@ func (a *app) schema(root *cobra.Command, words []string) error {
 	}
 	id := target.Annotations["operation"]
 	switch {
-	case id == "" && target.HasSubCommands():
-		names := subcommandNames(target)
-		return &clierr.Error{Code: "usage", Message: name + " groups commands: " + strings.Join(names, ", "),
-			Hint: "name one, for example: aikido-dojo schema " + name + " " + names[0], Exit: clierr.ExitUsage}
+	case id == "" && generatedChild(target) != "":
+		return &clierr.Error{Code: "usage", Message: name + " groups commands: " + strings.Join(subcommandNames(target), ", "),
+			Hint: "name one, for example: aikido-dojo schema " + name + " " + generatedChild(target), Exit: clierr.ExitUsage}
 	case id == "":
 		return &clierr.Error{Code: "no_schema", Message: name + " is built into aikido-dojo, not generated from the API spec, so it has no schema",
 			Hint: "run aikido-dojo " + name + " --help", Exit: clierr.ExitUsage}
@@ -110,6 +109,16 @@ func flagSchema(cmd *cobra.Command, op ops.Op, sc ops.SchemaSet) map[string]any 
 		s["required"] = required
 	}
 	return s
+}
+
+// generatedChild is the first subcommand of cmd that has a schema, or "".
+func generatedChild(cmd *cobra.Command) string {
+	for _, c := range cmd.Commands() {
+		if c.Annotations["operation"] != "" {
+			return c.Name()
+		}
+	}
+	return ""
 }
 
 func properties(s map[string]any) map[string]any {
