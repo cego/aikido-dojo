@@ -318,3 +318,29 @@ func TestSaveWritesThroughASymlink(t *testing.T) {
 		t.Errorf("target mode = %v, %v; want 0644 kept", info.Mode().Perm(), err)
 	}
 }
+
+// In a directory others can write, such as /tmp, a link may have been planted
+// to aim the write at another file, so the link itself is replaced.
+func TestSaveDoesNotFollowALinkInASharedDirectory(t *testing.T) {
+	target := filepath.Join(t.TempDir(), "victim")
+	if err := os.WriteFile(target, []byte("keep\n"), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	shared := t.TempDir()
+	if err := os.Chmod(shared, 0o777); err != nil { //nolint:gosec // a directory others can write is the case under test
+		t.Fatal(err)
+	}
+	link := filepath.Join(shared, "config.json")
+	if err := os.Symlink(target, link); err != nil {
+		t.Fatal(err)
+	}
+	if err := Save(link, File{}); err != nil {
+		t.Fatal(err)
+	}
+	if data, err := os.ReadFile(target); err != nil || string(data) != "keep\n" {
+		t.Errorf("target = %q, %v; want it untouched", data, err)
+	}
+	if info, err := os.Lstat(link); err != nil || info.Mode()&os.ModeSymlink != 0 {
+		t.Errorf("%s: %v; want the link replaced by the config", link, err)
+	}
+}

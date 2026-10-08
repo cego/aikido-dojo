@@ -154,16 +154,20 @@ func Resolve(f File, flags Flags, getenv func(string) string) (Resolved, error) 
 }
 
 // Save writes f to path through a temp file and a rename, so a failed write
-// keeps the old file. A symlinked config, as a dotfiles checkout keeps one, is
-// written through to its target; a new file is 0600 and an existing one keeps
-// its mode.
+// keeps the old file. A symlink to an existing config, as a dotfiles checkout
+// keeps one, is written through to its target when only its owner can write
+// its directory; elsewhere, as in /tmp, a planted link could aim the write at
+// any of the user's files, so the link itself is replaced. A new file is 0600
+// and an existing one keeps its mode.
 func Save(path string, f File) error {
 	data, err := json.MarshalIndent(f, "", "  ")
 	if err != nil {
 		return fmt.Errorf("encode the config: %w", err)
 	}
-	if target, err := filepath.EvalSymlinks(path); err == nil {
-		path = target
+	if dir, err := os.Stat(filepath.Dir(path)); err == nil && dir.Mode().Perm()&0o022 == 0 {
+		if target, err := filepath.EvalSymlinks(path); err == nil {
+			path = target
+		}
 	}
 	mode := os.FileMode(0o600)
 	if info, err := os.Stat(path); err == nil {
