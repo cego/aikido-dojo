@@ -25,6 +25,7 @@ const (
 	EnvClientID     = "AIKIDO_DOJO_CLIENT_ID"
 	EnvClientSecret = "AIKIDO_DOJO_CLIENT_SECRET" //nolint:gosec // the variable's name, not a credential
 	EnvRegion       = "AIKIDO_DOJO_REGION"
+	EnvReadOnly     = "AIKIDO_DOJO_READ_ONLY"
 )
 
 type File struct {

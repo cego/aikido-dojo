@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	"maps"
+	"net/http"
 	"slices"
 	"strconv"
 	"strings"
@@ -79,6 +80,9 @@ func (a *app) loginCmd() *cobra.Command {
 }
 
 func (a *app) login(ctx context.Context, flagID, flagRegion string) error {
+	if err := a.refuseWrite(http.MethodPost, "auth login"); err != nil {
+		return err
+	}
 	path, f, err := a.configFile()
 	if err != nil {
 		return err
@@ -210,6 +214,9 @@ func (a *app) logoutCmd() *cobra.Command {
 }
 
 func (a *app) logout() error {
+	if err := a.refuseWrite(http.MethodPost, "auth logout"); err != nil {
+		return err
+	}
 	_, f, err := a.configFile()
 	if err != nil {
 		return err

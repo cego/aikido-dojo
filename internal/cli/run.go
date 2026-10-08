@@ -70,6 +70,9 @@ func (a *app) runOp(cmd *cobra.Command, c command, args []string) error {
 	for _, w := range slices.Concat(argWarnings, flagWarnings, bodyWarnings) {
 		clierr.Warn(a.env.Stderr, w)
 	}
+	if err := a.refuseWrite(c.op.Method, c.op.Command); err != nil {
+		return err
+	}
 	client, err := a.client()
 	if err != nil {
 		return err

@@ -882,7 +882,6 @@ user-role update <user_id>
 	PUT /users/{user_id}/rights scope=users:write
 	--body string
 	--body-file string
-	--read-only int64 body
 	--role string required body
 virtual-machine list
 	GET /virtual-machines scope=virtual_machines:read

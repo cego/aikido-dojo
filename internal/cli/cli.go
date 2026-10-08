@@ -7,12 +7,14 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strconv"
 	"strings"
 
 	"github.com/itchyny/gojq"
 	"github.com/spf13/cobra"
 
 	"github.com/cego/aikido-dojo/internal/clierr"
+	"github.com/cego/aikido-dojo/internal/config"
 )
 
 // Env is everything a run touches outside the process, so tests can supply their own.
@@ -29,13 +31,16 @@ type Env struct {
 
 // app holds a run's environment and the global flags' values.
 type app struct {
-	env     Env
-	out     *output
-	jq      string
-	ndjson  bool
-	config  string
-	profile string
-	debug   bool
+	env    Env
+	out    *output
+	jq     string
+	ndjson bool
+	// readOnly is --read-only or AIKIDO_DOJO_READ_ONLY; prepare sets readOnly from both.
+	readOnlyFlag bool
+	readOnly     bool
+	config       string
+	profile      string
+	debug        bool
 }
 
 // Run executes one command line and returns the process exit code.
@@ -82,6 +87,7 @@ See what a command takes:      aikido-dojo schema <resource> <verb>
 	pf.BoolVar(&a.debug, "debug", false, "log each request's method, URL, status and timing to stderr")
 	pf.StringVar(&a.jq, "jq", "", "filter the JSON output with a jq expression; strings print without quotes")
 	pf.BoolVar(&a.ndjson, "ndjson", false, "print a list one item per line as it arrives, instead of one array")
+	pf.BoolVar(&a.readOnlyFlag, "read-only", false, "refuse every call that isn't a GET, and auth login and logout (also "+config.EnvReadOnly+"=1)")
 	root.PersistentPreRunE = func(*cobra.Command, []string) error { return a.prepare() }
 	return root, a
 }
@@ -90,6 +96,15 @@ See what a command takes:      aikido-dojo schema <resource> <verb>
 // runs, so a mistake in them costs no call.
 func (a *app) prepare() error {
 	a.out.ndjson = a.ndjson
+	a.readOnly = a.readOnlyFlag
+	if v := a.env.Getenv(config.EnvReadOnly); v != "" && !a.readOnly {
+		on, err := strconv.ParseBool(v)
+		if err != nil {
+			return &clierr.Error{Code: "invalid_input", Message: fmt.Sprintf("%s=%q is not a boolean", config.EnvReadOnly, v),
+				Hint: "set it to 1 or 0", Exit: clierr.ExitUsage}
+		}
+		a.readOnly = on
+	}
 	if a.jq != "" {
 		q, err := gojq.Parse(a.jq)
 		if err == nil {

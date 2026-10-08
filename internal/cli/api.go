@@ -93,6 +93,9 @@ func (a *app) callAPI(ctx context.Context, method, target string, fields []strin
 		}
 		body = bytes.TrimSuffix(buf.Bytes(), []byte("\n"))
 	}
+	if err := a.refuseWrite(method, "api "+method+" "+path); err != nil {
+		return err
+	}
 	client, err := a.client()
 	if err != nil {
 		return err
