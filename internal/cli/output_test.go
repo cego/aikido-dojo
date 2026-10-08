@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/cego/aikido-dojo/internal/catalog"
+	"github.com/cego/aikido-dojo/internal/clierr"
 )
 
 func TestOutputIndentsOurJSONOnATerminal(t *testing.T) {
@@ -162,5 +163,49 @@ func TestNDJSONNeedsAnArray(t *testing.T) {
 		if e := errorOf(t, stderr); code != 2 || e.Hint == "" || len(f.seen())+len(f.seenLogins()) != 0 {
 			t.Errorf("%q: exit %d, error %+v; want a usage error before any call", args, code, e)
 		}
+	}
+}
+
+// Once a write has gone through, an output mistake must not read as "nothing
+// happened": an agent would repeat the write to see its result.
+func TestOutputFailureAfterAWriteSaysItTookEffect(t *testing.T) {
+	f, env, _ := newFake(t, respond(`{"id":7}`))
+	stdout, stderr, code := run(t, env, "team", "create", "--name", "x", "--jq", ".[0]")
+	e := errorOf(t, stderr)
+	if code != clierr.ExitUnexpected || e.Code != "output_failed" || !strings.Contains(e.Message, "succeeded") || !strings.Contains(e.Hint, "don't repeat") {
+		t.Errorf("exit %d, error %+v; want output_failed saying the write took effect", code, e)
+	}
+	if len(f.seen()) != 1 || !strings.Contains(stdout, `{"id":7}`) {
+		t.Errorf("%d calls, stdout %q; want one call and its response kept on stdout", len(f.seen()), stdout)
+	}
+}
+
+// api checks the output flags against the command its path matches, before the call, as generated commands do.
+func TestAPIChecksOutputFlagsBeforeTheCall(t *testing.T) {
+	for _, args := range [][]string{
+		{"api", "GET", "/workspace", "--ndjson"},
+		{"api", "DELETE", "/teams/1", "--yes", "--jq", "."},
+	} {
+		f, env, _ := newFake(t, respond(`{}`))
+		_, stderr, code := run(t, env, args...)
+		if code != clierr.ExitUsage || len(f.seen())+len(f.seenLogins()) != 0 {
+			t.Errorf("%q: exit %d, %d calls, stderr %s; want a usage error before any call", args, code, len(f.seen()), stderr)
+		}
+	}
+}
+
+func TestOutputMistakeMessageNamesNoJSON(t *testing.T) {
+	env, _ := testEnv(t)
+	_, stderr, _ := run(t, env, "team", "delete", "1", "--yes", "--jq", ".")
+	if e := errorOf(t, stderr); !strings.HasSuffix(e.Message, "team delete prints no JSON") {
+		t.Errorf("message = %q", e.Message)
+	}
+}
+
+// A dry run prints JSON of its own, whatever the call would return.
+func TestDryRunTakesJQ(t *testing.T) {
+	_, env, _ := newFake(t, respond(`{}`))
+	if out := mustRun(t, env, "team", "delete", "1", "--dry-run", "--jq", ".method"); out != "DELETE\n" {
+		t.Errorf("stdout = %q", out)
 	}
 }

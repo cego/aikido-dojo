@@ -20,6 +20,14 @@ const (
 	yesUsage    = "make the destructive call without asking"
 )
 
+// tookEffect reports an output failure after a write went through. Exit 2
+// would read as "nothing was sent", and an agent would repeat the write to
+// see its result.
+func tookEffect(what string, err error, next string) error {
+	return &clierr.Error{Code: "output_failed", Message: what + " succeeded, but printing its result failed", Err: err,
+		Hint: "it took effect, so don't repeat it; " + next, Exit: clierr.ExitUnexpected}
+}
+
 // confirm guards a destructive call: on a terminal a person answers the
 // question; off one, as for an agent, --yes must be given.
 func (a *app) confirm(ctx context.Context, yes bool, what string) error {

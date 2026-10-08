@@ -120,6 +120,9 @@ func (o *output) check(op ops.Op, sc ops.SchemaSet) error {
 		return nil
 	}
 	if (o.jq != nil || o.ndjson) && !slices.Contains(sc.ResponseTypes, "application/json") {
+		if len(sc.ResponseTypes) == 0 {
+			return notJSON(op.Command + " prints no JSON")
+		}
 		return notJSON(op.Command + " prints " + strings.Join(sc.ResponseTypes, " or "))
 	}
 	if o.ndjson && sc.Response["type"] != "array" {

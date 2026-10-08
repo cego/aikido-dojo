@@ -330,3 +330,38 @@ func TestLogoutNeedsAProfile(t *testing.T) {
 		t.Errorf("exit %d, error %+v; want a usage error", code, e)
 	}
 }
+
+// The auth commands print one object; --ndjson is refused before they act.
+func TestAuthRefusesNDJSONBeforeActing(t *testing.T) {
+	for _, args := range [][]string{
+		{"auth", "login", "--client-id", "cid", "--ndjson"},
+		{"--profile", "cego", "auth", "logout", "--ndjson"},
+		{"auth", "status", "--ndjson"},
+	} {
+		f, env, vars := newFake(t, respond(`{}`))
+		if err := keyring.Set("aikido-dojo", "cego/client_secret", "kept"); err != nil {
+			t.Fatal(err)
+		}
+		_, stderr, code := run(t, env, args...)
+		if code != clierr.ExitUsage || len(f.seenLogins()) != 0 {
+			t.Errorf("%q: exit %d, %d token requests, stderr %s; want a usage error before acting", args, code, len(f.seenLogins()), stderr)
+		}
+		if s, err := keyring.Get("aikido-dojo", "cego/client_secret"); err != nil || s != "kept" {
+			t.Errorf("%q: secret %q, %v; want it untouched", args, s, err)
+		}
+		if _, err := os.Stat(vars[config.EnvConfig]); !errors.Is(err, fs.ErrNotExist) {
+			t.Errorf("%q: config written: %v", args, err)
+		}
+	}
+}
+
+func TestLogoutWithAFailingFilterSaysItTookEffect(t *testing.T) {
+	env, _ := testEnv(t)
+	if err := keyring.Set("aikido-dojo", "cego/client_secret", "x"); err != nil {
+		t.Fatal(err)
+	}
+	_, stderr, code := run(t, env, "--profile", "cego", "auth", "logout", "--jq", ".[0]")
+	if e := errorOf(t, stderr); code != clierr.ExitUnexpected || e.Code != "output_failed" || !strings.Contains(e.Message, "auth logout succeeded") {
+		t.Errorf("exit %d, error %+v; want output_failed saying logout took effect", code, e)
+	}
+}

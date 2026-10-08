@@ -73,7 +73,7 @@ func (a *app) callAPI(ctx context.Context, method, target string, f apiFlags) er
 			return err
 		}
 	}
-	op, _ := catalog.Match(method, path)
+	op, matched := catalog.Match(method, path)
 	toQuery := method == http.MethodGet || f.hasInput
 	obj := map[string]string{}
 	for _, field := range f.fields {
@@ -108,6 +108,15 @@ func (a *app) callAPI(ctx context.Context, method, target string, f apiFlags) er
 	if f.dryRun {
 		return a.dryRun(ctx, req)
 	}
+	if matched {
+		sc, err := catalog.Schemas(op.ID)
+		if err != nil {
+			return err
+		}
+		if err := a.out.check(op, sc); err != nil {
+			return err
+		}
+	}
 	if err := a.refuseWrite(method, "api "+method+" "+path); err != nil {
 		return err
 	}
@@ -125,6 +134,9 @@ func (a *app) callAPI(ctx context.Context, method, target string, f apiFlags) er
 		return withHint(err, op)
 	}
 	defer resp.Body.Close()
+	if method != http.MethodGet {
+		return a.writeResult(ctx, "api "+method+" "+path, resp)
+	}
 	if err := a.out.response(ctx, resp.Body, resp.Header.Get("Content-Type")); err != nil {
 		return fmt.Errorf("api %s %s: %w", method, path, err)
 	}

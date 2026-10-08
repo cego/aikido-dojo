@@ -64,15 +64,19 @@ func (a *app) runOp(cmd *cobra.Command, c command, args []string) error {
 	if err != nil {
 		return err
 	}
-	if err := a.out.check(c.op, sc); err != nil {
-		return err
+	// Only writes have the flag. A dry run prints JSON of its own, and sends
+	// nothing, so read-only mode allows it.
+	dry, _ := cmd.Flags().GetBool("dry-run")
+	if !dry {
+		if err := a.out.check(c.op, sc); err != nil {
+			return err
+		}
 	}
 	for _, w := range slices.Concat(argWarnings, flagWarnings, bodyWarnings) {
 		clierr.Warn(a.env.Stderr, w)
 	}
 	req := api.Request{Method: c.op.Method, Path: path, Query: query, Body: body, Scope: c.op.Scope}
-	// Only writes have the flag; a dry run sends nothing, so read-only mode allows it.
-	if dry, _ := cmd.Flags().GetBool("dry-run"); dry {
+	if dry {
 		return a.dryRun(cmd.Context(), req)
 	}
 	if err := a.refuseWrite(c.op.Method, c.op.Command); err != nil {
@@ -96,10 +100,34 @@ func (a *app) runOp(cmd *cobra.Command, c command, args []string) error {
 		return withHint(err, c.op)
 	}
 	defer resp.Body.Close()
+	if c.op.Method != http.MethodGet {
+		return a.writeResult(cmd.Context(), c.op.Command, resp)
+	}
 	if err := a.out.response(cmd.Context(), resp.Body, resp.Header.Get("Content-Type")); err != nil {
 		return fmt.Errorf("%s: %w", c.op.Command, err)
 	}
 	return nil
+}
+
+// writeResult prints a write's response. It reads it whole first, as a
+// write's answer is small, so that if printing fails the bytes still reach
+// stdout and the error says the write took effect.
+func (a *app) writeResult(ctx context.Context, what string, resp *http.Response) error {
+	data, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return tookEffect(what, fmt.Errorf("read the response: %w", err), "read the result with a GET")
+	}
+	err = a.out.response(ctx, bytes.NewReader(data), resp.Header.Get("Content-Type"))
+	if err == nil {
+		return nil
+	}
+	next := "read the result with a GET"
+	if len(data) > 0 {
+		if _, werr := a.env.Stdout.Write(append(data, '\n')); werr == nil {
+			next = "its response is on stdout as Aikido sent it"
+		}
+	}
+	return tookEffect(what, err, next)
 }
 
 func (a *app) flags() config.Flags { return config.Flags{Config: a.config, Profile: a.profile} }

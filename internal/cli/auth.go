@@ -83,6 +83,9 @@ func (a *app) login(ctx context.Context, flagID, flagRegion string) error {
 	if err := a.refuseWrite(http.MethodPost, "auth login"); err != nil {
 		return err
 	}
+	if a.out.ndjson {
+		return notAnArray("auth login prints one object")
+	}
 	path, f, err := a.configFile()
 	if err != nil {
 		return err
@@ -132,7 +135,10 @@ func (a *app) login(ctx context.Context, flagID, flagRegion string) error {
 	if err := auth.Login(ctx, newHTTPClient(a.env, host, a.debug), r, record); err != nil {
 		return err
 	}
-	return a.printJSON(ctx, loginResult{Profile: name, ClientID: p.ClientID, Region: region})
+	if err := a.printJSON(ctx, loginResult{Profile: name, ClientID: p.ClientID, Region: region}); err != nil {
+		return tookEffect("auth login", err, "check it with aikido-dojo auth status")
+	}
+	return nil
 }
 
 func (a *app) statusCmd() *cobra.Command {
@@ -150,6 +156,9 @@ func (a *app) statusCmd() *cobra.Command {
 }
 
 func (a *app) status(ctx context.Context) error {
+	if a.out.ndjson {
+		return notAnArray("auth status prints one object")
+	}
 	r, err := a.resolve()
 	if err != nil {
 		return err
@@ -217,6 +226,9 @@ func (a *app) logout(ctx context.Context) error {
 	if err := a.refuseWrite(http.MethodPost, "auth logout"); err != nil {
 		return err
 	}
+	if a.out.ndjson {
+		return notAnArray("auth logout prints one object")
+	}
 	_, f, err := a.configFile()
 	if err != nil {
 		return err
@@ -230,5 +242,8 @@ func (a *app) logout(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	return a.printJSON(ctx, logoutResult{Profile: name, Removed: removed})
+	if err := a.printJSON(ctx, logoutResult{Profile: name, Removed: removed}); err != nil {
+		return tookEffect("auth logout", err, "check it with aikido-dojo auth status")
+	}
+	return nil
 }
