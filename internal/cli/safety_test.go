@@ -15,6 +15,7 @@ var writes = [][]string{
 	{"team", "create", "--name", "x"},
 	{"team", "delete", "1"},
 	{"api", "POST", "/teams"},
+	{"api", "put", "/teams/1"},
 	{"api", "DELETE", "/teams/1"},
 	{"auth", "login", "--client-id", "x"},
 	{"--profile", "p", "auth", "logout"},
@@ -196,5 +197,15 @@ func TestDestructiveQuestionNamesTheTarget(t *testing.T) {
 	run(t, env, "repo", "deactivate", "--code-repo-id", "5")
 	if !strings.Contains(prompt, "repo deactivate --code-repo-id 5") {
 		t.Errorf("prompt = %q, want the target named", prompt)
+	}
+}
+
+// A dry run names the host, so it needs a profile that resolves; it still reads no secret.
+func TestDryRunNeedsAProfile(t *testing.T) {
+	f, env, vars := newFake(t, respond(`{}`))
+	noPair(vars)
+	_, stderr, code := run(t, env, "team", "delete", "1", "--dry-run")
+	if e := errorOf(t, stderr); code != clierr.ExitAuth || e.Code != "no_credentials" || len(f.seenLogins()) != 0 {
+		t.Errorf("exit %d, error %+v; want no_credentials and no token request", code, e)
 	}
 }

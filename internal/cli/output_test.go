@@ -235,3 +235,26 @@ func TestNDJSONReportsABrokenResponseAsARead(t *testing.T) {
 		t.Errorf("exit %d, error %+v; want exit 1 for a response that ended", code, e)
 	}
 }
+
+// A command that can print JSON or CSV is checked after the call too.
+func TestJQOnACSVResponse(t *testing.T) {
+	_, env, _ := newFake(t, func(w http.ResponseWriter, _ *http.Request) {
+		w.Header().Set("Content-Type", "text/csv;charset=UTF-8")
+		fmt.Fprint(w, "a,b\n")
+	})
+	_, stderr, code := run(t, env, "issue", "export", "--format", "csv", "--jq", ".")
+	if e := errorOf(t, stderr); code != clierr.ExitUsage || !strings.Contains(e.Message, "text/csv") {
+		t.Errorf("exit %d, error %+v; want a usage error naming text/csv", code, e)
+	}
+}
+
+// On a path no command matches, api applies --jq and --ndjson to whatever comes back.
+func TestAPIOutputFlagsOnAnUnknownPath(t *testing.T) {
+	_, env, _ := newFake(t, respond(`[{"a":1},{"a":2}]`))
+	if out := mustRun(t, env, "api", "GET", "/nosuch", "--jq", ".[1].a"); out != "2\n" {
+		t.Errorf("--jq: stdout = %q", out)
+	}
+	if out := mustRun(t, env, "api", "GET", "/nosuch", "--ndjson"); out != "{\"a\":1}\n{\"a\":2}\n" {
+		t.Errorf("--ndjson: stdout = %q", out)
+	}
+}
