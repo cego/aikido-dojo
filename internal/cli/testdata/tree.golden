@@ -12,6 +12,7 @@ aikido-image list
 	GET /autofix/aikido-images scope=autofix:read paged=per_page:50:empty
 	--filter-image-name string
 	--filter-image-tag string
+	--filter-public-image bool
 	--limit int64
 autofix-container-config get
 	GET /repositories/autofix/container/settings scope=autofix:read
@@ -132,6 +133,13 @@ cloud-kubernetes create
 cloud-rule list
 	GET /clouds/rules scope=clouds:read
 	--cloud-id int64
+code-coverage get <code_repo_id>
+	GET /code-coverage/repositories/{code_repo_id} scope=code_coverage:read
+	--branch-name string
+code-coverage list
+	GET /code-coverage/repositories scope=code_coverage:read paged=per_page:100:empty:items=code_coverage_repositories
+	--branch-name string
+	--limit int64
 code-quality-finding list
 	GET /code-quality/repo-findings scope=code_quality:read paged=per_page:100:header:items=findings
 	--code-repo-id int64 required
@@ -198,6 +206,7 @@ container delete <container_repo_id>
 	--yes bool
 container get <container_repo_id>
 	GET /containers/{container_repo_id} scope=containers:read
+	--include-teams bool
 container list
 	GET /containers scope=repositories:read paged=per_page:100:empty
 	--filter-name string
@@ -239,6 +248,7 @@ container-license export <container_repo_id>
 	GET /containers/{container_repo_id}/licenses/export scope=repositories:read
 	--format string
 	--include-risk-reason int64
+	--include-vex int64
 container-registry get <registry_id>
 	GET /containers/registries/{registry_id} scope=containers:read
 container-registry-acr create
@@ -311,6 +321,8 @@ container-tag-filter update
 	--tag-filter int64 body
 cve get <cve_id>
 	GET /cve/{cve_id} scope=research:read
+cwe list
+	GET /research/cwe scope=research:read
 domain create
 	POST /domains scope=domains:write
 	--body string
@@ -382,6 +394,10 @@ endpoint-package list
 	--limit int64
 endpoint-permission-group list
 	GET /endpoint-protection/permission-groups scope=endpoint_protection:read
+eol-runtime list
+	GET /research/eol/runtimes scope=research:read paged=per_page:100:empty
+	--limit int64
+	--package-name string
 firewall-app create
 	POST /firewall/apps scope=firewall:write
 	--body string
@@ -987,6 +1003,8 @@ user list
 	GET /users scope=users:read
 	--filter-team-id int64
 	--include-inactive int64
+user-invite list
+	GET /users/pending-invites scope=users:read
 user-login list
 	GET /users/login/history scope=users:read paged=per_page:100:empty
 	--filter-user-id int64

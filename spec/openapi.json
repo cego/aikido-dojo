@@ -41,6 +41,7 @@
               "bug_bounty:write": "Write access to bug bounty information",
               "clouds:read": "Read access to cloud resources",
               "clouds:write": "Write access to cloud resources",
+              "code_coverage:read": "Read access to code coverage results",
               "code_quality:read": "Read access to code quality findings",
               "containers:read": "Read access to container repositories",
               "containers:write": "Write access to container repositories",
@@ -246,6 +247,15 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "description": "Filter by whether the image is available on the public ECR gallery (gallery.ecr.aws/aikido-dev)",
+            "in": "query",
+            "name": "filter_public_image",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
@@ -255,7 +265,8 @@
                 "example": [
                   {
                     "base_image": "alpine:3.15",
-                    "path": "docker.aikido.io/1234567890/alpine:3.15"
+                    "path": "docker.aikido.io/1234567890/alpine:3.15",
+                    "public_image": true
                   }
                 ],
                 "schema": {
@@ -266,6 +277,9 @@
                       },
                       "path": {
                         "type": "string"
+                      },
+                      "public_image": {
+                        "type": "boolean"
                       }
                     },
                     "type": "object"
@@ -2259,6 +2273,291 @@
         "summary": "Remove cloud"
       }
     },
+    "/code-coverage/repositories": {
+      "get": {
+        "description": "Returns a paginated list of repositories that have code coverage results. Optionally filter by branch name. When no branch is provided, results for each repository's default branch are returned. Requires a paid plan.",
+        "operationId": "listAllCodeCoverageRepositories",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PageParam"
+          },
+          {
+            "$ref": "#/components/parameters/PageSizeParam"
+          },
+          {
+            "description": "Optional branch name to filter coverage by. When omitted, results for each repository's default branch are returned.",
+            "in": "query",
+            "name": "branch_name",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "code_coverage_repositories": [
+                    {
+                      "branch": "main",
+                      "code_repo_id": 123,
+                      "code_repo_name": "my-service",
+                      "coverage_percentage": 80,
+                      "covered_lines": 1000,
+                      "missed_lines": 200,
+                      "partial_lines": 50,
+                      "total_lines": 1250,
+                      "updated_at": 1720083163
+                    }
+                  ]
+                },
+                "schema": {
+                  "properties": {
+                    "code_coverage_repositories": {
+                      "description": "Repositories that have code coverage results",
+                      "items": {
+                        "description": "Latest code coverage summary for a repository",
+                        "properties": {
+                          "branch": {
+                            "description": "The branch the coverage results apply to",
+                            "type": "string"
+                          },
+                          "code_repo_id": {
+                            "description": "The Aikido ID of the repository",
+                            "type": "integer"
+                          },
+                          "code_repo_name": {
+                            "description": "The name of the repository",
+                            "type": "string"
+                          },
+                          "coverage_percentage": {
+                            "description": "The line coverage percentage (0-100)",
+                            "type": "number"
+                          },
+                          "covered_lines": {
+                            "description": "The number of lines that were executed at least once",
+                            "type": "integer"
+                          },
+                          "missed_lines": {
+                            "description": "The number of lines that were never executed",
+                            "type": "integer"
+                          },
+                          "partial_lines": {
+                            "description": "The number of lines that were executed but have uncovered branches",
+                            "type": "integer"
+                          },
+                          "total_lines": {
+                            "description": "The total number of instrumented lines",
+                            "type": "integer"
+                          },
+                          "updated_at": {
+                            "description": "Unix timestamp of when the coverage results were last updated",
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "code_repo_id",
+                          "code_repo_name",
+                          "total_lines",
+                          "covered_lines",
+                          "partial_lines",
+                          "missed_lines",
+                          "coverage_percentage",
+                          "branch",
+                          "updated_at"
+                        ],
+                        "title": "Code coverage repository",
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "required": [
+                    "code_coverage_repositories"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "A list of repositories with code coverage results"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "reason_phrase": {
+                      "description": "A human friendly reason why the request failed",
+                      "example": "You need be on a paid plan to use this feature.",
+                      "type": "string"
+                    },
+                    "status_code": {
+                      "example": 400,
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request parameters"
+          }
+        },
+        "security": [
+          {
+            "oauth": [
+              "code_coverage:read"
+            ]
+          }
+        ],
+        "summary": "List all code coverage repositories"
+      }
+    },
+    "/code-coverage/repositories/{code_repo_id}": {
+      "get": {
+        "description": "Returns the latest code coverage summary for a repository. Optionally filter by branch name. When no branch is provided, results for the default branch are returned. Requires a paid plan.",
+        "operationId": "getCodeCoverageForRepository",
+        "parameters": [
+          {
+            "description": "The Aikido ID of the repository",
+            "in": "path",
+            "name": "code_repo_id",
+            "required": true,
+            "schema": {
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Optional branch name to fetch coverage for. When omitted, results for the default branch are returned.",
+            "in": "query",
+            "name": "branch_name",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "code_coverage_results": {
+                    "code_repo_name": "my-service",
+                    "coverage_percentage": 80,
+                    "covered_lines": 1000,
+                    "missed_lines": 250,
+                    "partial_lines": 50,
+                    "total_lines": 1250
+                  }
+                },
+                "schema": {
+                  "properties": {
+                    "code_coverage_results": {
+                      "description": "Latest code coverage summary for the repository",
+                      "properties": {
+                        "code_repo_name": {
+                          "description": "The name of the repository",
+                          "type": "string"
+                        },
+                        "coverage_percentage": {
+                          "description": "The line coverage percentage (0-100)",
+                          "type": "number"
+                        },
+                        "covered_lines": {
+                          "description": "The number of lines that were executed at least once",
+                          "type": "integer"
+                        },
+                        "missed_lines": {
+                          "description": "The number of lines that were never executed",
+                          "type": "integer"
+                        },
+                        "partial_lines": {
+                          "description": "The number of lines that were executed but have uncovered branches",
+                          "type": "integer"
+                        },
+                        "total_lines": {
+                          "description": "The total number of instrumented lines",
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "code_repo_name",
+                        "total_lines",
+                        "covered_lines",
+                        "partial_lines",
+                        "missed_lines",
+                        "coverage_percentage"
+                      ],
+                      "title": "Code coverage result",
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "code_coverage_results"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Code coverage summary for the specified repository"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "reason_phrase": {
+                      "description": "A human friendly reason why the request failed",
+                      "example": "You need be on a paid plan to use this feature.",
+                      "type": "string"
+                    },
+                    "status_code": {
+                      "example": 400,
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "reason_phrase": {
+                      "description": "A human friendly reason why the request failed",
+                      "example": "No code coverage results found for repository \"123\"",
+                      "type": "string"
+                    },
+                    "status_code": {
+                      "example": 404,
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "No code coverage results found for the repository"
+          }
+        },
+        "security": [
+          {
+            "oauth": [
+              "code_coverage:read"
+            ]
+          }
+        ],
+        "summary": "Get code coverage for a repository"
+      }
+    },
     "/code-quality/findings": {
       "get": {
         "description": "Returns a list of code quality findings for a specific pull request. Only the findings from the latest scan are returned, excluding any suppressed findings.",
@@ -2297,6 +2596,7 @@
                         "file": "example.py",
                         "id": 8124,
                         "language": "PY",
+                        "reasoning": "The identifier 'x' carries no information about the value it holds, which makes the surrounding logic harder to follow.",
                         "rule_id": "AIK_AI_descriptive_names",
                         "scan_id": 28610,
                         "start_line": 16,
@@ -2340,6 +2640,13 @@
                           "language": {
                             "description": "The programming language of the file",
                             "type": "string"
+                          },
+                          "reasoning": {
+                            "description": "An AI-generated explanation of why this finding was raised",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
                           },
                           "rule_id": {
                             "description": "The rule that triggered this finding",
@@ -4101,6 +4408,16 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "description": "Whether to include the teams responsible for the container repository",
+            "in": "query",
+            "name": "include_teams",
+            "required": false,
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
@@ -4130,6 +4447,16 @@
                     "last_scanned_digest": "sha256:9b1c8c0e2e5f4a7d3b6e8f1a2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d",
                     "last_scanned_tag": "prod-20250623",
                     "linked_code_repo_id": 67,
+                    "linked_teams": [
+                      {
+                        "id": 1,
+                        "name": "production"
+                      },
+                      {
+                        "id": 2,
+                        "name": "core"
+                      }
+                    ],
                     "name": "pied-piper/compression",
                     "provider": "aws_ecr",
                     "registry_id": 3,
@@ -4200,6 +4527,23 @@
                     "linked_code_repo_id": {
                       "description": "The id of the code repo to which this container is linked. Value is 'null' when no code repo is linked.",
                       "type": "string"
+                    },
+                    "linked_teams": {
+                      "description": "List of teams linked to this container repository.",
+                      "items": {
+                        "properties": {
+                          "id": {
+                            "description": "The team's id.",
+                            "type": "integer"
+                          },
+                          "name": {
+                            "description": "The name of the team.",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
                     },
                     "name": {
                       "description": "The name of the code repository.",
@@ -4590,6 +4934,16 @@
             "description": "Flag to include risk reason in CSV export. 1 or 0 indicating true or false",
             "in": "query",
             "name": "include_risk_reason",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Flag to include VEX analysis in CycloneDX SBOM. 1 or 0 indicating true or false",
+            "in": "query",
+            "name": "include_vex",
             "required": false,
             "schema": {
               "default": 0,
@@ -19573,6 +19927,139 @@
         "summary": "Review a user request"
       }
     },
+    "/research/cwe": {
+      "get": {
+        "description": "Returns the CWE class and description for every CWE Aikido tracks.",
+        "operationId": "listCweDescriptions",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "cwe_class": "CWE-89",
+                    "description": "SQL injection attack possible"
+                  },
+                  {
+                    "cwe_class": "CWE-79",
+                    "description": "XSS attack possible"
+                  }
+                ],
+                "schema": {
+                  "format": "array",
+                  "items": {
+                    "format": "Object",
+                    "properties": {
+                      "cwe_class": {
+                        "description": "The CWE class, for example CWE-89",
+                        "type": "string"
+                      },
+                      "description": {
+                        "description": "A short description of the CWE class",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "cwe_class",
+                      "description"
+                    ],
+                    "title": "CWE description"
+                  }
+                }
+              }
+            },
+            "description": "A list of CWE descriptions"
+          }
+        },
+        "security": [
+          {
+            "oauth": [
+              "research:read"
+            ]
+          }
+        ],
+        "summary": "List CWE descriptions"
+      }
+    },
+    "/research/eol/runtimes": {
+      "get": {
+        "description": "Returns the global end-of-life catalog for runtimes, frameworks, and operating systems. This is reference data, not the runtimes detected in a workspace. Match an end-of-life finding's affected package to runtime_name. A date of 0000-00-00 means the version is end-of-life without a known date. A date of 9999-01-01 means no end-of-life date has been announced.",
+        "operationId": "listEolRuntimes",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PageParam"
+          },
+          {
+            "$ref": "#/components/parameters/PageSizeParam"
+          },
+          {
+            "description": "Filter to a single runtime. Accepts the catalog package name, such as apache, or the runtime name used on findings, such as apache http server.",
+            "in": "query",
+            "name": "package_name",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": [
+                    {
+                      "eol_date": "2025-04-30",
+                      "is_eol": true,
+                      "package_name": "nodejs",
+                      "package_version": "18",
+                      "runtime_name": "nodejs"
+                    }
+                  ],
+                  "items": {
+                    "properties": {
+                      "eol_date": {
+                        "description": "The end-of-life date in YYYY-MM-DD format. 0000-00-00 means already end-of-life with no known date. 9999-01-01 means no end-of-life date has been announced.",
+                        "type": "string"
+                      },
+                      "is_eol": {
+                        "description": "Whether the end-of-life date is today or in the past",
+                        "type": "boolean"
+                      },
+                      "package_name": {
+                        "description": "The catalog name of the runtime, for example nodejs or apache",
+                        "type": "string"
+                      },
+                      "package_version": {
+                        "description": "The version cycle this end-of-life date applies to",
+                        "type": "string"
+                      },
+                      "runtime_name": {
+                        "description": "The runtime name stored on end-of-life findings and in the issue export affected_package field",
+                        "nullable": true,
+                        "type": "string"
+                      }
+                    },
+                    "title": "End-of-life runtime",
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              }
+            },
+            "description": "A page of end-of-life catalog entries"
+          }
+        },
+        "security": [
+          {
+            "oauth": [
+              "research:read"
+            ]
+          }
+        ],
+        "summary": "List end-of-life runtimes"
+      }
+    },
     "/research/malware/packages": {
       "get": {
         "description": "Get malware packages",
@@ -21678,6 +22165,70 @@
           }
         ],
         "summary": "List user login history"
+      }
+    },
+    "/users/pending-invites": {
+      "get": {
+        "description": "Returns unused user invites that have not been accepted yet. Includes email invites and shareable link invites.",
+        "operationId": "listPendingInvites",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "format": "array",
+                  "items": {
+                    "example": {
+                      "email": "wendysnutz@gmail.com",
+                      "expires_at": 1721269259,
+                      "id": 12,
+                      "invited_at": 1720059659,
+                      "role": "default",
+                      "type": "email"
+                    },
+                    "format": "Object",
+                    "properties": {
+                      "email": {
+                        "description": "The invited email address. Empty for shareable link invites.",
+                        "type": "string"
+                      },
+                      "expires_at": {
+                        "description": "Unix timestamp indicating when the invite expires.",
+                        "type": "integer"
+                      },
+                      "id": {
+                        "description": "The invite ID.",
+                        "type": "integer"
+                      },
+                      "invited_at": {
+                        "description": "Unix timestamp indicating when the invite was created.",
+                        "type": "integer"
+                      },
+                      "role": {
+                        "description": "The role assigned when the invite is accepted. Can be 'admin' or 'default'.",
+                        "type": "string"
+                      },
+                      "type": {
+                        "description": "The invite type. Can be 'email' or 'link'.",
+                        "type": "string"
+                      }
+                    },
+                    "title": "PendingInvite"
+                  }
+                }
+              }
+            },
+            "description": "A list of pending invites"
+          }
+        },
+        "security": [
+          {
+            "oauth": [
+              "users:read"
+            ]
+          }
+        ],
+        "summary": "List pending invites"
       }
     },
     "/users/{user_id}": {

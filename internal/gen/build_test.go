@@ -248,8 +248,8 @@ func TestBuildVendoredSpec(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(m.Ops) != 201 || len(m.Schemas) != 201 {
-		t.Fatalf("ops = %d, schemas = %d, want 201 each", len(m.Ops), len(m.Schemas))
+	if len(m.Ops) != 206 || len(m.Schemas) != 206 {
+		t.Fatalf("ops = %d, schemas = %d, want 206 each", len(m.Ops), len(m.Schemas))
 	}
 	byCmd := map[string]ops.Op{}
 	for _, op := range m.Ops {

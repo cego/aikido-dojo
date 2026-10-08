@@ -9,8 +9,8 @@ import (
 
 // SpecUpdatedAt and SpecSHA256 identify the spec snapshot this catalog was generated from.
 const (
-	SpecUpdatedAt = "2026-09-28T13:47:27Z"
-	SpecSHA256    = "184c6c71d1cd9e96882198a958f53d8fcbbcd32f4ac2895486fba290a57c41f1"
+	SpecUpdatedAt = "2026-10-07T16:34:44Z"
+	SpecSHA256    = "00fce93c2b796b928952fc2a137862ea4b92e3140e474918611aa79f4fc158ce"
 )
 
 // All is every generated command, sorted by command.
@@ -45,6 +45,7 @@ var All = []ops.Op{
 		Flags: []ops.Param{
 			{Name: "filter_image_name", Kind: ops.String, Required: false, Usage: "Filter by image name"},
 			{Name: "filter_image_tag", Kind: ops.String, Required: false, Usage: "Filter by image tag"},
+			{Name: "filter_public_image", Kind: ops.Boolean, Required: false, Usage: "Filter by whether the image is available on the public ECR gallery (gallery.ecr.aws/aikido-dev)"},
 		},
 		Paging: &api.Paging{End: api.EndEmpty, SizeParam: "per_page", Size: 50, Items: "", More: ""},
 	},
@@ -358,6 +359,34 @@ var All = []ops.Op{
 		},
 	},
 	{
+		ID:          "getCodeCoverageForRepository",
+		Command:     "code-coverage get",
+		Method:      "GET",
+		Path:        "/code-coverage/repositories/{code_repo_id}",
+		Summary:     "Get code coverage for a repository",
+		Description: "Returns the latest code coverage summary for a repository. Optionally filter by branch name. When no branch is provided, results for the default branch are returned. Requires a paid plan.",
+		Scope:       "code_coverage:read",
+		Args: []ops.Param{
+			{Name: "code_repo_id", Kind: ops.Integer, Required: true, Usage: "The Aikido ID of the repository"},
+		},
+		Flags: []ops.Param{
+			{Name: "branch_name", Kind: ops.String, Required: false, Usage: "Optional branch name to fetch coverage for. When omitted, results for the default branch are returned."},
+		},
+	},
+	{
+		ID:          "listAllCodeCoverageRepositories",
+		Command:     "code-coverage list",
+		Method:      "GET",
+		Path:        "/code-coverage/repositories",
+		Summary:     "List all code coverage repositories",
+		Description: "Returns a paginated list of repositories that have code coverage results. Optionally filter by branch name. When no branch is provided, results for each repository's default branch are returned. Requires a paid plan.",
+		Scope:       "code_coverage:read",
+		Flags: []ops.Param{
+			{Name: "branch_name", Kind: ops.String, Required: false, Usage: "Optional branch name to filter coverage by. When omitted, results for each repository's default branch are returned."},
+		},
+		Paging: &api.Paging{End: api.EndEmpty, SizeParam: "per_page", Size: 100, Items: "code_coverage_repositories", More: ""},
+	},
+	{
 		ID:          "listCodeQualityFullRepoFindings",
 		Command:     "code-quality-finding list",
 		Method:      "GET",
@@ -561,6 +590,9 @@ var All = []ops.Op{
 		Args: []ops.Param{
 			{Name: "container_repo_id", Kind: ops.Integer, Required: true, Usage: "Container repo ID"},
 		},
+		Flags: []ops.Param{
+			{Name: "include_teams", Kind: ops.Boolean, Required: false, Usage: "Whether to include the teams responsible for the container repository"},
+		},
 	},
 	{
 		ID:          "listContainerRepos",
@@ -675,6 +707,7 @@ var All = []ops.Op{
 		Flags: []ops.Param{
 			{Name: "format", Kind: ops.String, Required: false, Usage: "The format of the export (one of: csv, sbom, sbom_spdx)"},
 			{Name: "include_risk_reason", Kind: ops.Integer, Required: false, Usage: "Flag to include risk reason in CSV export. 1 or 0 indicating true or false"},
+			{Name: "include_vex", Kind: ops.Integer, Required: false, Usage: "Flag to include VEX analysis in CycloneDX SBOM. 1 or 0 indicating true or false"},
 		},
 	},
 	{
@@ -866,6 +899,15 @@ var All = []ops.Op{
 		Args: []ops.Param{
 			{Name: "cve_id", Kind: ops.String, Required: true, Usage: "Full CVE id to get the details. Aikido Intel ids start with AIKIDO- instead of CVE-"},
 		},
+	},
+	{
+		ID:          "listCweDescriptions",
+		Command:     "cwe list",
+		Method:      "GET",
+		Path:        "/research/cwe",
+		Summary:     "List CWE descriptions",
+		Description: "Returns the CWE class and description for every CWE Aikido tracks.",
+		Scope:       "research:read",
 	},
 	{
 		ID:          "createDomain",
@@ -1071,6 +1113,19 @@ var All = []ops.Op{
 		Summary:     "List endpoint permission groups",
 		Description: "Returns a list of all the endpoint protection permission groups",
 		Scope:       "endpoint_protection:read",
+	},
+	{
+		ID:          "listEolRuntimes",
+		Command:     "eol-runtime list",
+		Method:      "GET",
+		Path:        "/research/eol/runtimes",
+		Summary:     "List end-of-life runtimes",
+		Description: "Returns the global end-of-life catalog for runtimes, frameworks, and operating systems. This is reference data, not the runtimes detected in a workspace. Match an end-of-life finding's affected package to runtime_name. A date of 0000-00-00 means the version is end-of-life without a known date. A date of 9999-01-01 means no end-of-life date has been announced.",
+		Scope:       "research:read",
+		Flags: []ops.Param{
+			{Name: "package_name", Kind: ops.String, Required: false, Usage: "Filter to a single runtime. Accepts the catalog package name, such as apache, or the runtime name used on findings, such as apache http server."},
+		},
+		Paging: &api.Paging{End: api.EndEmpty, SizeParam: "per_page", Size: 100, Items: "", More: ""},
 	},
 	{
 		ID:          "createApp",
@@ -2727,6 +2782,15 @@ var All = []ops.Op{
 			{Name: "filter_team_id", Kind: ops.Integer, Required: false, Usage: "Will apply a filter to the results so they only return users in that team."},
 			{Name: "include_inactive", Kind: ops.Integer, Required: false, Usage: "Includes inactive users."},
 		},
+	},
+	{
+		ID:          "listPendingInvites",
+		Command:     "user-invite list",
+		Method:      "GET",
+		Path:        "/users/pending-invites",
+		Summary:     "List pending invites",
+		Description: "Returns unused user invites that have not been accepted yet. Includes email invites and shareable link invites.",
+		Scope:       "users:read",
 	},
 	{
 		ID:          "listUserLoginHistory",

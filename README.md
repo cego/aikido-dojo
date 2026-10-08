@@ -1,7 +1,7 @@
 # aikido-dojo
 
 A command-line client for the [Aikido Security](https://www.aikido.dev) public REST API, built
-for AI agents first and people second. Each of the API's 201 operations is a command, generated
+for AI agents first and people second. Each of the API's 206 operations is a command, generated
 from Aikido's published OpenAPI spec.
 
 aikido-dojo is unofficial and not affiliated with Aikido Security.
