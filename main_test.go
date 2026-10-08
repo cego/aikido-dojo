@@ -55,6 +55,7 @@ func TestTenantDataPatterns(t *testing.T) {
 		"AIK_CLIENT_cego and AIK_CLIENT_…",
 		"git@github.com:cego/aikido-dojo.git and git@gitlab.example.com:g/r.git",
 		"user@example.com, ops@example.org",
+		"41898282+github-actions[bot]@users.noreply.github.com",
 		"github.com/cego/aikido-dojo",
 	}
 	for _, s := range misses {

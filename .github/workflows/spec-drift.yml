@@ -1,0 +1,49 @@
+name: spec-drift
+
+on:
+  schedule:
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  spec-drift:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # push the branch
+      pull-requests: write # open the PR
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+      - run: go run ./internal/tools/specfetch
+      - id: generate
+        run: |
+          if go generate ./internal/catalog && go test ./internal/cli -run TestTreeGolden -update; then
+            echo "result=ok" >> "$GITHUB_OUTPUT"
+          else
+            echo "result=failed" >> "$GITHUB_OUTPUT"
+          fi
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          RESULT: ${{ steps.generate.outputs.result }}
+        run: |
+          if git diff --quiet; then
+            echo "The published spec is unchanged."
+            exit 0
+          fi
+          branch="spec-drift/$(date -u +%Y-%m-%d)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git add -A
+          git commit -m "chore(spec): update the vendored spec from Aikido's API reference"
+          git push origin "$branch"
+          body="specfetch found changes in Aikido's published API reference; review the golden diff."
+          if [ "$RESULT" = failed ]; then
+            body="$body Regenerating the catalog failed: the overlay needs entries for new or changed operations."
+          fi
+          gh pr create --title "chore(spec): update the vendored spec" --body "$body" --head "$branch" --assignee "$GITHUB_ACTOR"
