@@ -76,3 +76,18 @@ func TestDebugLogsRequestsToStderr(t *testing.T) {
 		t.Errorf("debug log = %q", log.String())
 	}
 }
+
+// A program that replaced http.DefaultTransport must not make aikido-dojo panic.
+func TestHTTPClientWithAReplacedDefaultTransport(t *testing.T) {
+	saved := http.DefaultTransport
+	http.DefaultTransport = roundTripFunc(func(*http.Request) (*http.Response, error) { return nil, errors.New("unused") })
+	defer func() { http.DefaultTransport = saved }()
+	c := newHTTPClient(Env{Stderr: io.Discard}, "app.aikido.dev", false)
+	if tr, ok := c.Transport.(*http.Transport); !ok || tr.ResponseHeaderTimeout != headerTimeout || tr.Proxy == nil {
+		t.Errorf("transport = %#v, want an *http.Transport with the header timeout and the proxy setting", c.Transport)
+	}
+}
+
+type roundTripFunc func(*http.Request) (*http.Response, error)
+
+func (f roundTripFunc) RoundTrip(r *http.Request) (*http.Response, error) { return f(r) }

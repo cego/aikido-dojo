@@ -69,7 +69,7 @@ func (a *app) callAPI(ctx context.Context, method, target string, f apiFlags) er
 	}
 	var body []byte
 	if f.hasInput {
-		if body, err = jsonInput(f.input, a.env.Stdin); err != nil {
+		if body, err = jsonInput(ctx, f.input, a.env.Stdin); err != nil {
 			return err
 		}
 	}
@@ -192,8 +192,8 @@ func apiTarget(s string) (string, url.Values, error) {
 
 // jsonInput reads --input and checks it holds one JSON value, so a typo
 // costs no call. The bytes are sent as they are.
-func jsonInput(path string, stdin io.Reader) ([]byte, error) {
-	data, err := readBodyFile(path, stdin)
+func jsonInput(ctx context.Context, path string, stdin io.Reader) ([]byte, error) {
+	data, err := readBodyFile(ctx, path, stdin)
 	if err != nil {
 		return nil, apiUsage("--input: " + err.Error())
 	}

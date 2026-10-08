@@ -17,14 +17,24 @@ const headerTimeout = 5 * time.Minute
 func newHTTPClient(env Env, host string, debug bool) *http.Client {
 	rt := env.Transport
 	if rt == nil {
-		t := http.DefaultTransport.(*http.Transport).Clone()
-		t.ResponseHeaderTimeout = headerTimeout
-		rt = t
+		rt = baseTransport()
 	}
 	if debug {
 		rt = api.Debug(rt, env.Stderr)
 	}
 	return &http.Client{Transport: rt, CheckRedirect: sameHost(host)}
+}
+
+// baseTransport is the stdlib's default transport with the header timeout,
+// or, if a program replaced that default, a transport with its proxy setting.
+func baseTransport() *http.Transport {
+	t, ok := http.DefaultTransport.(*http.Transport)
+	if !ok {
+		return &http.Transport{Proxy: http.ProxyFromEnvironment, ForceAttemptHTTP2: true, ResponseHeaderTimeout: headerTimeout}
+	}
+	t = t.Clone()
+	t.ResponseHeaderTimeout = headerTimeout
+	return t
 }
 
 // sameHost refuses a redirect off the API host: aikido-dojo talks to no other

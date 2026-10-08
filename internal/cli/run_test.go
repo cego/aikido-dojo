@@ -1,6 +1,8 @@
 package cli
 
 import (
+	"context"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -13,6 +15,7 @@ import (
 	"strings"
 	"sync"
 	"testing"
+	"time"
 
 	"github.com/cego/aikido-dojo/internal/catalog"
 	"github.com/cego/aikido-dojo/internal/clierr"
@@ -387,5 +390,25 @@ func TestIntegersAreBase10(t *testing.T) {
 	_, env2, _ := newFake(t, pages(`[1,2,3,4,5,6,7,8,9,10,11,12]`, `[]`))
 	if out := mustRun(t, env2, "repo", "list", "--limit", "010"); out != "[1,2,3,4,5,6,7,8,9,10]\n" {
 		t.Errorf("stdout = %q, want ten items", out)
+	}
+}
+
+// An empty argument would drop its path segment and call another endpoint.
+func TestEmptyArgumentIsRefused(t *testing.T) {
+	f, env, _ := newFake(t, respond(`{}`))
+	_, stderr, code := run(t, env, "cve", "get", "")
+	if e := errorOf(t, stderr); code != clierr.ExitUsage || e.Code != "invalid_input" || len(f.seen()) != 0 {
+		t.Errorf("exit %d, error %+v; want invalid_input before any call", code, e)
+	}
+}
+
+// Ctrl-C must end a wait on stdin that never closes, as a terminal or a stuck pipe is.
+func TestReadBodyFileStopsOnCancel(t *testing.T) {
+	r, w := io.Pipe()
+	defer w.Close()
+	ctx, cancel := context.WithCancel(t.Context())
+	time.AfterFunc(20*time.Millisecond, cancel)
+	if _, err := readBodyFile(ctx, "-", r); !errors.Is(err, context.Canceled) {
+		t.Errorf("err = %v, want context.Canceled", err)
 	}
 }

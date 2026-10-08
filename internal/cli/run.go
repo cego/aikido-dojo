@@ -56,7 +56,7 @@ func (a *app) runOp(cmd *cobra.Command, c command, args []string) error {
 	if err != nil {
 		return err
 	}
-	body, bodyWarnings, err := buildBody(cmd.Flags(), c, sc.Body, a.env.Stdin)
+	body, bodyWarnings, err := buildBody(cmd.Context(), cmd.Flags(), c, sc.Body, a.env.Stdin)
 	if err != nil {
 		return err
 	}
@@ -253,7 +253,8 @@ func buildPath(op ops.Op, args []string, schema map[string]any) (string, []strin
 	values := map[string]any{}
 	texts := make([]string, len(args))
 	for i, p := range op.Args {
-		if args[i] == "." || args[i] == ".." {
+		// An empty value would drop its path segment and reach another endpoint.
+		if args[i] == "" || args[i] == "." || args[i] == ".." {
 			return "", nil, invalid(fmt.Sprintf("<%s>: %q is not an ID", p.Name, args[i]), op)
 		}
 		v, text, err := scalar(p.Kind, args[i])
@@ -297,12 +298,12 @@ func buildQuery(fs *pflag.FlagSet, op ops.Op, schema map[string]any) (url.Values
 
 // buildBody merges --body or --body-file with the field flags, which win, and
 // validates the result. An optional body nobody set is left out.
-func buildBody(fs *pflag.FlagSet, c command, schema map[string]any, stdin io.Reader) ([]byte, []string, error) {
+func buildBody(ctx context.Context, fs *pflag.FlagSet, c command, schema map[string]any, stdin io.Reader) ([]byte, []string, error) {
 	b := c.op.Body
 	if b == nil {
 		return nil, nil, nil
 	}
-	body, given, err := bodyInput(fs, stdin, c.op)
+	body, given, err := bodyInput(ctx, fs, stdin, c.op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -359,7 +360,7 @@ func buildBody(fs *pflag.FlagSet, c command, schema map[string]any, stdin io.Rea
 
 // bodyInput decodes --body, or --body-file (a path, or - for stdin). given is
 // false when neither is set.
-func bodyInput(fs *pflag.FlagSet, stdin io.Reader, op ops.Op) (v any, given bool, err error) {
+func bodyInput(ctx context.Context, fs *pflag.FlagSet, stdin io.Reader, op ops.Op) (v any, given bool, err error) {
 	inline, file := fs.Changed("body"), fs.Changed("body-file")
 	var raw []byte
 	switch {
@@ -376,7 +377,7 @@ func bodyInput(fs *pflag.FlagSet, stdin io.Reader, op ops.Op) (v any, given bool
 		if err != nil {
 			return nil, false, fmt.Errorf("read --body-file: %w", err)
 		}
-		if raw, err = readBodyFile(path, stdin); err != nil {
+		if raw, err = readBodyFile(ctx, path, stdin); err != nil {
 			return nil, false, invalid("--body-file: "+err.Error(), op)
 		}
 	default:
@@ -393,13 +394,28 @@ func bodyInput(fs *pflag.FlagSet, stdin io.Reader, op ops.Op) (v any, given bool
 	return v, true, nil
 }
 
-func readBodyFile(path string, stdin io.Reader) ([]byte, error) {
+// readBodyFile reads path, or stdin for -. Stdin is read aside, so that
+// Ctrl-C ends a wait on a terminal or on a pipe that never closes.
+func readBodyFile(ctx context.Context, path string, stdin io.Reader) ([]byte, error) {
 	if path == "-" {
-		data, err := io.ReadAll(stdin)
-		if err != nil {
-			return nil, fmt.Errorf("read stdin: %w", err)
+		type result struct {
+			data []byte
+			err  error
 		}
-		return data, nil
+		done := make(chan result, 1)
+		go func() {
+			data, err := io.ReadAll(stdin)
+			done <- result{data, err}
+		}()
+		select {
+		case r := <-done:
+			if r.err != nil {
+				return nil, fmt.Errorf("read stdin: %w", r.err)
+			}
+			return r.data, nil
+		case <-ctx.Done():
+			return nil, fmt.Errorf("read stdin: %w", ctx.Err())
+		}
 	}
 	data, err := os.ReadFile(path) //nolint:gosec // the user names the file to send
 	if err != nil {
