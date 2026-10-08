@@ -62,6 +62,7 @@ func (a *app) callAPI(ctx context.Context, method, target string, fields []strin
 			return err
 		}
 	}
+	op, _ := catalog.Match(method, path)
 	toQuery := method == http.MethodGet || hasInput
 	obj := map[string]string{}
 	for _, f := range fields {
@@ -76,6 +77,10 @@ func (a *app) callAPI(ctx context.Context, method, target string, fields []strin
 		if _, dup := obj[k]; dup {
 			return apiUsage(fmt.Sprintf("-f %s is given twice", k))
 		}
+		// argv and shell history keep -f values, so credentials come in as --input, as with the generated command.
+		if op.Body != nil && slices.Contains(op.Body.Secret, k) {
+			return apiUsage(fmt.Sprintf("-f %s: a credential; pass the body with --input <file> or --input - (stdin)", k))
+		}
 		obj[k] = v
 	}
 	if len(obj) > 0 {
@@ -87,7 +92,6 @@ func (a *app) callAPI(ctx context.Context, method, target string, fields []strin
 		}
 		body = bytes.TrimSuffix(buf.Bytes(), []byte("\n"))
 	}
-	op, _ := catalog.Match(method, path)
 	client, err := a.client()
 	if err != nil {
 		return err
