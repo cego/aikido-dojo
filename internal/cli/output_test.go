@@ -226,3 +226,12 @@ func TestJQStringsCarryNoControlCharactersToATerminal(t *testing.T) {
 		}
 	}
 }
+
+// A response that breaks off is a failed read, not a usage mistake.
+func TestNDJSONReportsABrokenResponseAsARead(t *testing.T) {
+	_, env, _ := newFake(t, respond(``))
+	_, stderr, code := run(t, env, "issue", "export", "--ndjson")
+	if e := errorOf(t, stderr); code != clierr.ExitUnexpected || e.Code == "invalid_input" {
+		t.Errorf("exit %d, error %+v; want exit 1 for a response that ended", code, e)
+	}
+}

@@ -206,7 +206,11 @@ func (o *output) response(ctx context.Context, r io.Reader, contentType string) 
 // export streams instead of being held in memory.
 func (o *output) items(ctx context.Context, r io.Reader) error {
 	dec := json.NewDecoder(r)
-	if tok, err := dec.Token(); err != nil || tok != json.Delim('[') {
+	tok, err := dec.Token()
+	if err != nil {
+		return fmt.Errorf("read the response: %w", err)
+	}
+	if tok != json.Delim('[') {
 		return notAnArray("the response is not an array")
 	}
 	for dec.More() {
