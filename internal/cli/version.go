@@ -28,7 +28,9 @@ func (a *app) versionCmd() *cobra.Command {
 		Long: "version prints aikido-dojo's version, the commit it was built from when known, the Go version, " +
 			"and the date and SHA-256 of the vendored API spec its commands were generated from.",
 		Args: exactArgs(nil),
-		RunE: func(*cobra.Command, []string) error { return a.printJSON(versionOf(debug.ReadBuildInfo())) },
+		RunE: func(cmd *cobra.Command, _ []string) error {
+			return a.printJSON(cmd.Context(), versionOf(debug.ReadBuildInfo()))
+		},
 	}
 }
 

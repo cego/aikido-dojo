@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"context"
 	"fmt"
 	"strings"
 
@@ -24,11 +25,11 @@ func (a *app) searchCmd() *cobra.Command {
 			"aikido-dojo schema <resource> <verb> then shows what a command takes and prints.",
 		Example: `  aikido-dojo search "ignore a finding"`,
 		Args:    someArgs("words describing the task"),
-		RunE:    func(_ *cobra.Command, args []string) error { return a.search(strings.Join(args, " ")) },
+		RunE:    func(cmd *cobra.Command, args []string) error { return a.search(cmd.Context(), strings.Join(args, " ")) },
 	}
 }
 
-func (a *app) search(query string) error {
+func (a *app) search(ctx context.Context, query string) error {
 	if len(search.Tokens(query)) == 0 {
 		return &clierr.Error{Code: "invalid_input", Message: fmt.Sprintf("%q has no words to search for", query),
 			Hint: `describe the task, for example: aikido-dojo search "list repositories"`, Exit: clierr.ExitUsage}
@@ -37,5 +38,5 @@ func (a *app) search(query string) error {
 	if err != nil {
 		return err
 	}
-	return a.printJSON(idx.Rank(query, searchHits))
+	return a.printJSON(ctx, idx.Rank(query, searchHits))
 }

@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"context"
 	"fmt"
 	"strings"
 
@@ -36,12 +37,12 @@ func (a *app) schemaCmd() *cobra.Command {
 		Example: "  aikido-dojo schema issue-group ignore",
 		Args:    someArgs("a command, such as: repo list"),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return a.schema(cmd.Root(), strings.Fields(strings.Join(args, " ")))
+			return a.schema(cmd.Context(), cmd.Root(), strings.Fields(strings.Join(args, " ")))
 		},
 	}
 }
 
-func (a *app) schema(root *cobra.Command, words []string) error {
+func (a *app) schema(ctx context.Context, root *cobra.Command, words []string) error {
 	name := strings.Join(words, " ")
 	target, rest, err := root.Find(words)
 	if err != nil || target == root || len(rest) > 0 {
@@ -65,7 +66,7 @@ func (a *app) schema(root *cobra.Command, words []string) error {
 	if !ok {
 		return fmt.Errorf("the catalog has no command %s", sc.Command)
 	}
-	return a.printJSON(schemaDoc{
+	return a.printJSON(ctx, schemaDoc{
 		Command: sc.Command, Usage: target.UseLine(), Method: sc.Method, Path: sc.Path, Scope: sc.Scope,
 		Args: sc.Args, Flags: flagSchema(target, op, sc), Body: sc.Body, Response: sc.Response, ResponseTypes: sc.ResponseTypes,
 	})

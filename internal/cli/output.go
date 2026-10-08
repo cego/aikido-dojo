@@ -205,4 +205,4 @@ func (o *output) items(ctx context.Context, r io.Reader) error {
 
 func isJSON(contentType string) bool { return strings.HasPrefix(contentType, "application/json") }
 
-func (a *app) printJSON(v any) error { return a.out.value(context.Background(), v) }
+func (a *app) printJSON(ctx context.Context, v any) error { return a.out.value(ctx, v) }

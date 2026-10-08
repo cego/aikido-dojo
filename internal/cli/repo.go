@@ -127,7 +127,7 @@ func (a *app) repoCurrent(ctx context.Context, list ops.Op) error {
 		return &clierr.Error{Code: "not_found", Message: "no Aikido code repo has the URL " + want.key,
 			Hint: "check that the repo is connected in Aikido, and that a profile here sees its workspace: aikido-dojo auth status", Exit: clierr.ExitNotFound}
 	}
-	return a.printJSON(matches)
+	return a.printJSON(ctx, matches)
 }
 
 // everyProfile is who repo current asks: the profile --profile or

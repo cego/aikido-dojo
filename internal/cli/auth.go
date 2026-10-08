@@ -132,7 +132,7 @@ func (a *app) login(ctx context.Context, flagID, flagRegion string) error {
 	if err := auth.Login(ctx, newHTTPClient(a.env, host, a.debug), r, record); err != nil {
 		return err
 	}
-	return a.printJSON(loginResult{Profile: name, ClientID: p.ClientID, Region: region})
+	return a.printJSON(ctx, loginResult{Profile: name, ClientID: p.ClientID, Region: region})
 }
 
 func (a *app) statusCmd() *cobra.Command {
@@ -171,7 +171,7 @@ func (a *app) status(ctx context.Context) error {
 	if r.Profile == "" {
 		out.Source = "environment"
 	}
-	return a.printJSON(out)
+	return a.printJSON(ctx, out)
 }
 
 // scopesOf sorts every scope some command needs into granted and denied by
@@ -209,11 +209,11 @@ func (a *app) logoutCmd() *cobra.Command {
 			"A token Aikido already issued stays valid until it expires, within an hour. To revoke the API client " +
 			"itself, delete or rotate it in Aikido's workspace settings.",
 		Args: exactArgs(nil),
-		RunE: func(*cobra.Command, []string) error { return a.logout() },
+		RunE: func(cmd *cobra.Command, _ []string) error { return a.logout(cmd.Context()) },
 	}
 }
 
-func (a *app) logout() error {
+func (a *app) logout(ctx context.Context) error {
 	if err := a.refuseWrite(http.MethodPost, "auth logout"); err != nil {
 		return err
 	}
@@ -230,5 +230,5 @@ func (a *app) logout() error {
 	if err != nil {
 		return err
 	}
-	return a.printJSON(logoutResult{Profile: name, Removed: removed})
+	return a.printJSON(ctx, logoutResult{Profile: name, Removed: removed})
 }
