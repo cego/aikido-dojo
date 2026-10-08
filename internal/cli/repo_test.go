@@ -204,6 +204,10 @@ func TestRepoCurrentReportsTheErrorWhenEveryProfileFails(t *testing.T) {
 	if e := errorOf(t, stderr); code != clierr.ExitForbidden || e.Code != "missing_scope" {
 		t.Errorf("exit %d, error %+v; want 4 missing_scope", code, e)
 	}
+	// With one profile, the error says it all; a warning would repeat it.
+	if strings.Contains(stderr, `"warning"`) {
+		t.Errorf("stderr = %s, want the error alone", stderr)
+	}
 }
 
 func TestRepoCurrentNeedsAnOrigin(t *testing.T) {

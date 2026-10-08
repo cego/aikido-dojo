@@ -97,7 +97,10 @@ func (a *app) repoCurrent(ctx context.Context, list ops.Op) error {
 			return fmt.Errorf("repo current: %w", ctx.Err())
 		}
 		if err != nil {
-			clierr.Warn(a.env.Stderr, c.label+" skipped: "+explain(err))
+			// With one profile, the error is the whole answer; a warning would only repeat it.
+			if len(candidates) > 1 {
+				clierr.Warn(a.env.Stderr, c.label+" skipped: "+explain(err))
+			}
 			if firstErr == nil {
 				firstErr = err
 			}
