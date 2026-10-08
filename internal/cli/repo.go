@@ -39,7 +39,7 @@ type candidate struct {
 // remote is a repo URL reduced to what its SSH and HTTPS forms share.
 type remote struct {
 	key  string // lowercased host/path
-	name string // the last path segment as written, which Aikido stores as the repo's name
+	name string // the last path segment as written: Aikido's name for 744 of 751 repos (live, 2026-10-02)
 }
 
 // addRepoCurrent puts the hand-written repo current beside the generated repo verbs.
