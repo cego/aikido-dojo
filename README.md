@@ -18,8 +18,8 @@ Or, with Go 1.26 or later:
 go install github.com/cego/aikido-dojo@latest
 ```
 
-The macOS binaries are not signed or notarized yet. Gatekeeper may refuse the first run of a
-Homebrew install with "cannot be opened". To allow it, run
+The macOS binaries are not signed or notarized yet. Gatekeeper may refuse the first run after
+each Homebrew install or upgrade with "cannot be opened". To allow it, run
 `xattr -d com.apple.quarantine "$(readlink -f "$(command -v aikido-dojo)")"`, or install with
 `go install`, which builds the binary on your machine.
 
@@ -38,7 +38,7 @@ client ID and the region go in `~/.config/aikido-dojo/config.json`. A workspace 
 adds `--region us`, `au` or `me`.
 
 In CI, set `AIKIDO_DOJO_CLIENT_ID` and `AIKIDO_DOJO_CLIENT_SECRET` instead, and nothing is
-stored.
+stored. A workspace outside the EU also sets `AIKIDO_DOJO_REGION`.
 
 ## Examples
 

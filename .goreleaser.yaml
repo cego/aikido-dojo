@@ -52,7 +52,7 @@ homebrew_casks:
     homepage: https://github.com/cego/aikido-dojo
     description: Unofficial command-line client for the Aikido Security public API
     caveats: |
-      aikido-dojo is not signed or notarized yet. If macOS refuses to open it, run:
+      aikido-dojo is not signed or notarized yet. If macOS refuses to open it after an install or upgrade, run:
         xattr -d com.apple.quarantine "$(readlink -f "$(command -v aikido-dojo)")"
 
 release:

@@ -41,8 +41,8 @@ When no command fits, `aikido-dojo api GET <path>` calls any path under `/api/pu
 - `--read-only`, or `AIKIDO_DOJO_READ_ONLY=1`, refuses every call that isn't a GET.
 - `--dry-run` on a write prints the request it would send, with secrets redacted, and sends
   nothing.
-- A destructive command (delete, deactivate, rotate) asks first on a terminal. Off one, it
-  refuses unless `--yes` is passed.
+- A destructive command, such as a delete, deactivate or rotate, asks first on a terminal. Off
+  one, it refuses unless `--yes` is passed.
 - Exit 1 with code `output_failed` after a write means the write succeeded. Don't repeat it.
 
 ## Exit codes
