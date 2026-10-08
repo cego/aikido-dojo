@@ -60,12 +60,16 @@ func TestSchemaLeavesCredentialsToTheBody(t *testing.T) {
 	}
 }
 
-// A group's hint names a command that has a schema.
-func TestSchemaOfAGroupHintsAGeneratedVerb(t *testing.T) {
+// A group's hint is a schema command that works.
+func TestSchemaOfAGroupHintsACommandThatHasOne(t *testing.T) {
 	env, _ := testEnv(t)
 	_, stderr, _ := run(t, env, "schema", "repo")
-	if e := errorOf(t, stderr); !strings.Contains(e.Hint, "aikido-dojo schema repo activate") {
-		t.Errorf("hint = %q, want a generated repo verb", e.Hint)
+	hinted, ok := strings.CutPrefix(errorOf(t, stderr).Hint, "name one, for example: aikido-dojo ")
+	if !ok {
+		t.Fatalf("hint = %s, want an example command", stderr)
+	}
+	if _, stderr, code := run(t, env, strings.Fields(hinted)...); code != clierr.ExitOK {
+		t.Errorf("the hinted %q fails: %s", hinted, stderr)
 	}
 }
 
