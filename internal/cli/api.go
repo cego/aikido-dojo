@@ -108,12 +108,17 @@ func (a *app) callAPI(ctx context.Context, method, target string, fields []strin
 // URL of its own, or a . or .. segment, escaped or not, including one that an
 // escaped / or a \ splits off inside a segment, as a server may do.
 func apiTarget(s string) (string, url.Values, error) {
-	if strings.Contains(s, "://") {
+	path, rawQuery, _ := strings.Cut(s, "?")
+	if strings.Contains(path, "://") {
 		return "", nil, apiUsage(fmt.Sprintf("%q: give the path under /api/public/v1, such as /repositories/code", s))
 	}
-	path, rawQuery, _ := strings.Cut(s, "?")
 	if !strings.HasPrefix(path, "/") {
 		path = "/" + path
+	}
+	// Checked here, so a path no URL can hold, such as one with a control
+	// character, costs no token request.
+	if _, err := url.Parse("https://host" + path); err != nil {
+		return "", nil, apiUsage(fmt.Sprintf("path %q: %v", path, err))
 	}
 	for _, seg := range strings.Split(path, "/") {
 		dec, err := url.PathUnescape(seg)

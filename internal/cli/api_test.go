@@ -69,6 +69,7 @@ func TestAPIMistakesCostNoCall(t *testing.T) {
 		{"api", "GET", "/%2e%2e%2f%2e%2e%2foauth"},
 		{"api", "GET", "/..%5c..%5coauth"},
 		{"api", "GET", `/x\..\oauth`},
+		{"api", "GET", "/x\ny"},
 		{"api", "GET", "/issues/%zz"},
 		{"api", "GET", "/x?a=%zz"},
 		{"api", "POST", "/x", "-f", "novalue"},
@@ -81,7 +82,16 @@ func TestAPIMistakesCostNoCall(t *testing.T) {
 			t.Errorf("%q: exit %d, stderr %s; want a usage error with a hint", args, code, stderr)
 		}
 	}
-	if n := len(f.seen()); n != 0 {
-		t.Errorf("API calls = %d, want none", n)
+	if n, logins := len(f.seen()), len(f.seenLogins()); n != 0 || logins != 0 {
+		t.Errorf("API calls = %d and token requests = %d, want none", n, logins)
+	}
+}
+
+// Only the path is checked for a URL of its own; a query value may hold one.
+func TestAPIAllowsAURLInTheQuery(t *testing.T) {
+	f, env, _ := newFake(t, respond(`{}`))
+	mustRun(t, env, "api", "GET", "/repositories/code?next=https://example.com/a")
+	if got := f.first(t).Query.Get("next"); got != "https://example.com/a" {
+		t.Errorf("next = %q", got)
 	}
 }
