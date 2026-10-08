@@ -107,8 +107,12 @@ func (f *fakeAPI) first(t *testing.T) seen {
 	return s[0]
 }
 
+// respond answers with body as JSON, with the Content-Type Aikido sends (live, 2026-10-08).
 func respond(body string) http.HandlerFunc {
-	return func(w http.ResponseWriter, _ *http.Request) { fmt.Fprint(w, body) }
+	return func(w http.ResponseWriter, _ *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		fmt.Fprint(w, body)
+	}
 }
 
 // pages serves pages[n] for ?page=n and a 404 past the end.

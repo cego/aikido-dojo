@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/itchyny/gojq"
 	"github.com/spf13/cobra"
 
 	"github.com/cego/aikido-dojo/internal/clierr"
@@ -30,6 +31,7 @@ type Env struct {
 type app struct {
 	env     Env
 	out     *output
+	jq      string
 	config  string
 	profile string
 	debug   bool
@@ -77,7 +79,24 @@ See what a command takes:      aikido-dojo schema <resource> <verb>
 	pf.StringVar(&a.config, "config", "", "the config file (default ~/.config/aikido-dojo/config.json; also AIKIDO_DOJO_CONFIG)")
 	pf.StringVar(&a.profile, "profile", "", "the profile to run as (also AIKIDO_DOJO_PROFILE)")
 	pf.BoolVar(&a.debug, "debug", false, "log each request's method, URL, status and timing to stderr")
+	pf.StringVar(&a.jq, "jq", "", "filter the JSON output with a jq expression; strings print without quotes")
+	root.PersistentPreRunE = func(*cobra.Command, []string) error { return a.prepare() }
 	return root, a
+}
+
+// prepare checks the global output and safety flags once, before any command
+// runs, so a mistake in them costs no call.
+func (a *app) prepare() error {
+	if a.jq != "" {
+		q, err := gojq.Parse(a.jq)
+		if err == nil {
+			a.out.jq, err = gojq.Compile(q)
+		}
+		if err != nil {
+			return &clierr.Error{Code: "invalid_jq", Message: "--jq: " + err.Error(), Hint: "see https://jqlang.org/manual for the syntax", Exit: clierr.ExitUsage}
+		}
+	}
+	return nil
 }
 
 // unknownCommand checks the arguments of every command that only groups

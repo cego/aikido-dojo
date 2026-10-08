@@ -64,6 +64,9 @@ func (a *app) runOp(cmd *cobra.Command, c command, args []string) error {
 	if err != nil {
 		return err
 	}
+	if err := a.out.check(c.op, sc); err != nil {
+		return err
+	}
 	for _, w := range slices.Concat(argWarnings, flagWarnings, bodyWarnings) {
 		clierr.Warn(a.env.Stderr, w)
 	}

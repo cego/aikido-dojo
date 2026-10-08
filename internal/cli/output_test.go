@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"strings"
 	"testing"
+
+	"github.com/cego/aikido-dojo/internal/catalog"
 )
 
 func TestOutputIndentsOurJSONOnATerminal(t *testing.T) {
@@ -49,5 +51,66 @@ func TestListIndentsOnATerminal(t *testing.T) {
 	env.StdoutTTY = true
 	if out := mustRun(t, env, "repo", "list"); out != "[\n  {\n    \"id\": 1\n  }\n]\n" {
 		t.Errorf("stdout = %q, want an indented array", out)
+	}
+}
+
+func TestJQFiltersTheOutput(t *testing.T) {
+	two := pages(`[{"name":"a","id":1},{"name":"b","id":2}]`, `[]`)
+	for _, tt := range []struct {
+		filter string
+		tty    bool
+		want   string
+	}{
+		{".[0].name", false, "a\n"},
+		{".[] | .name", false, "a\nb\n"},
+		{"length", false, "2\n"},
+		{".[0]", false, `{"id":1,"name":"a"}` + "\n"},
+		{".[0]", true, "{\n  \"id\": 1,\n  \"name\": \"a\"\n}\n"},
+	} {
+		_, env, _ := newFake(t, two)
+		env.StdoutTTY = tt.tty
+		if out := mustRun(t, env, "repo", "list", "--jq", tt.filter); out != tt.want {
+			t.Errorf("--jq %q (tty %v) = %q, want %q", tt.filter, tt.tty, out, tt.want)
+		}
+	}
+}
+
+func TestJQOnOurJSONAndOnAPIResponses(t *testing.T) {
+	env, _ := testEnv(t)
+	if out := mustRun(t, env, "version", "--jq", ".spec.updated_at"); out != catalog.SpecUpdatedAt+"\n" {
+		t.Errorf("version --jq = %q", out)
+	}
+	_, env2, _ := newFake(t, func(w http.ResponseWriter, _ *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		fmt.Fprint(w, `{"name":"ws","id":12345678901234567890}`)
+	})
+	if out := mustRun(t, env2, "workspace", "get", "--jq", ".id"); out != "12345678901234567890\n" {
+		t.Errorf("workspace get --jq .id = %q, want the integer exactly", out)
+	}
+}
+
+func TestJQMistakes(t *testing.T) {
+	f, env, _ := newFake(t, respond(`[1]`))
+	_, stderr, code := run(t, env, "repo", "list", "--jq", ".[")
+	if e := errorOf(t, stderr); code != 2 || e.Code != "invalid_jq" || len(f.seen())+len(f.seenLogins()) != 0 {
+		t.Errorf("exit %d, error %+v; want invalid_jq before any call", code, e)
+	}
+	_, stderr, code = run(t, env, "workspace", "get", "--jq", ".a")
+	if e := errorOf(t, stderr); code != 2 || e.Code != "jq_failed" {
+		t.Errorf("exit %d, error %+v; want jq_failed for indexing an array", code, e)
+	}
+}
+
+// --jq and --ndjson need JSON; a command whose schema says it prints
+// something else is refused before the call.
+func TestOutputMistakesCostNoCall(t *testing.T) {
+	for _, args := range [][]string{
+		{"report", "export", "--jq", "."},
+	} {
+		f, env, _ := newFake(t, respond(`{}`))
+		_, stderr, code := run(t, env, args...)
+		if e := errorOf(t, stderr); code != 2 || e.Hint == "" || len(f.seen())+len(f.seenLogins()) != 0 {
+			t.Errorf("%q: exit %d, error %+v; want a usage error before any call", args, code, e)
+		}
 	}
 }
