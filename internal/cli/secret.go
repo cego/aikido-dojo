@@ -28,29 +28,39 @@ func TerminalSecret(in *os.File, w io.Writer) func(ctx context.Context, prompt s
 		if err != nil {
 			return "", fmt.Errorf("read the terminal state: %w", err)
 		}
-		fmt.Fprint(w, prompt)
-		type result struct {
-			secret []byte
-			err    error
+		return readHidden(ctx, w, prompt, func() ([]byte, error) { return term.ReadPassword(fd) },
+			func() error { return term.Restore(fd, state) })
+	}
+}
+
+// readHidden writes prompt and returns what read gets, trimmed. read runs
+// aside so that a cancelled ctx ends the wait at once: read has turned echo
+// off and waits for Enter until the process exits, so restore gives the
+// terminal its echo back first. After an earlier cancel no read starts.
+func readHidden(ctx context.Context, w io.Writer, prompt string, read func() ([]byte, error), restore func() error) (string, error) {
+	if err := ctx.Err(); err != nil {
+		return "", fmt.Errorf("read the client secret: %w", err)
+	}
+	fmt.Fprint(w, prompt)
+	type result struct {
+		secret []byte
+		err    error
+	}
+	done := make(chan result, 1)
+	go func() {
+		b, err := read()
+		done <- result{b, err}
+	}()
+	select {
+	case r := <-done:
+		fmt.Fprintln(w)
+		if r.err != nil {
+			return "", fmt.Errorf("read the client secret: %w", r.err)
 		}
-		done := make(chan result, 1)
-		go func() {
-			b, err := term.ReadPassword(fd)
-			done <- result{b, err}
-		}()
-		select {
-		case r := <-done:
-			fmt.Fprintln(w)
-			if r.err != nil {
-				return "", fmt.Errorf("read the client secret: %w", r.err)
-			}
-			return strings.TrimSpace(string(r.secret)), nil
-		case <-ctx.Done():
-			// ReadPassword turned echo off and waits for Enter until the process
-			// exits, which follows; give the terminal its echo back first.
-			restoreErr := term.Restore(fd, state)
-			fmt.Fprintln(w)
-			return "", errors.Join(fmt.Errorf("read the client secret: %w", ctx.Err()), restoreErr)
-		}
+		return strings.TrimSpace(string(r.secret)), nil
+	case <-ctx.Done():
+		restoreErr := restore()
+		fmt.Fprintln(w)
+		return "", errors.Join(fmt.Errorf("read the client secret: %w", ctx.Err()), restoreErr)
 	}
 }
