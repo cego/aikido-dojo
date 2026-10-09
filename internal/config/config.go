@@ -36,7 +36,10 @@ type File struct {
 type Profile struct {
 	ClientID string `json:"client_id"`
 	Region   string `json:"region,omitempty"`
+	Storage  string `json:"storage,omitempty"`
 }
+
+const StorageFile = "file"
 
 // Flags holds the global flags that take part in resolution; "" means unset.
 type Flags struct {
@@ -46,13 +49,16 @@ type Flags struct {
 
 // Resolved is who a call runs as. Profile is "" for the environment profile,
 // the only one that carries its Secret: stored profiles keep theirs in the
-// keychain.
+// keychain, or with Storage StorageFile in the Credentials file. The
+// environment profile has neither.
 type Resolved struct {
-	Profile  string
-	ClientID string
-	Secret   string `json:"-"` // never encoded, so no output built from a Resolved can carry it
-	Region   string
-	Host     string
+	Profile     string
+	ClientID    string
+	Secret      string `json:"-"` // never encoded, so no output built from a Resolved can carry it
+	Region      string
+	Host        string
+	Storage     string
+	Credentials string
 }
 
 func Path(flags Flags, getenv func(string) string) (string, error) {
@@ -64,6 +70,10 @@ func Path(flags Flags, getenv func(string) string) (string, error) {
 		return "", fmt.Errorf("find the home directory for the config file: %w", err)
 	}
 	return filepath.Join(home, ".config", "aikido-dojo", "config.json"), nil
+}
+
+func CredentialsPath(configPath string) string {
+	return filepath.Join(filepath.Dir(configPath), "credentials.json")
 }
 
 // Load reads the config file. A missing file is an empty config, so a CI run
@@ -94,7 +104,13 @@ func Load(path string) (File, error) {
 	}
 	if err != nil {
 		return File{}, &clierr.Error{Code: "bad_config", Message: "parse config " + path, Err: err,
-			Hint: "fix the file; it holds default_profile and profiles with client_id and region", Exit: clierr.ExitUsage}
+			Hint: "fix the file; it holds default_profile and profiles with client_id, region and storage", Exit: clierr.ExitUsage}
+	}
+	for _, name := range slices.Sorted(maps.Keys(f.Profiles)) {
+		if s := f.Profiles[name].Storage; s != "" && s != StorageFile {
+			return File{}, usage("bad_config", fmt.Sprintf("profile %q in config %s has storage %q", name, path, s),
+				`set it to "file" to keep the secret in credentials.json beside the config, or remove it to keep it in the OS keychain`)
+		}
 	}
 	return f, nil
 }
@@ -151,6 +167,13 @@ func Resolve(f File, flags Flags, getenv func(string) string) (Resolved, error) 
 		return Resolved{}, err
 	}
 	r.Host = host
+	if r.Profile != "" {
+		path, err := Path(flags, getenv)
+		if err != nil {
+			return Resolved{}, err
+		}
+		r.Credentials = CredentialsPath(path)
+	}
 	return r, nil
 }
 
@@ -231,7 +254,7 @@ func stored(f File, name string) (Resolved, error) {
 		return Resolved{}, usage("bad_config", fmt.Sprintf("profile %q has no client_id", name),
 			"set its client_id, or recreate it with aikido-dojo auth login --profile "+name)
 	}
-	return Resolved{Profile: name, ClientID: p.ClientID, Region: p.Region}, nil
+	return Resolved{Profile: name, ClientID: p.ClientID, Region: p.Region, Storage: p.Storage}, nil
 }
 
 func usage(code, msg, hint string) *clierr.Error {
