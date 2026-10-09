@@ -222,6 +222,24 @@ func TestRepoCurrentAsksTheSameClientInAnotherRegion(t *testing.T) {
 	}
 }
 
+func TestRepoCurrentAsksAFileProfileWithNoKeychain(t *testing.T) {
+	inRepo(t, "git@gitlab.example.com:g/r.git")
+	_, env, vars := newFake(t, repos(`{"id":1,"name":"r","url":"https://gitlab.example.com/g/r.git"}`))
+	noPair(vars)
+	writeConfig(t, vars, `{"profiles":{"a":{"client_id":"a","storage":"file"},"b":{"client_id":"b"}}}`)
+	if err := os.WriteFile(config.CredentialsPath(vars[config.EnvConfig]), []byte(`{"profiles":{"a":{"client_secret":"s"}}}`), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	keyring.MockInitWithError(errNoKeychain)
+	stdout, stderr, code := run(t, env, "repo", "current")
+	if code != clierr.ExitOK || !strings.HasPrefix(stdout, `[{"profile":"a",`) {
+		t.Errorf("exit %d, stdout %s, stderr %s; want profile a's match", code, stdout, stderr)
+	}
+	if !strings.Contains(stderr, `profile \"b\" skipped`) || !strings.Contains(stderr, "--insecure-storage") {
+		t.Errorf("stderr = %s, want b skipped with a hint naming --insecure-storage", stderr)
+	}
+}
+
 func TestRepoCurrentAsksOnlyTheSelectedProfile(t *testing.T) {
 	inRepo(t, "git@gitlab.example.com:g/r.git")
 	f, env, vars := newFake(t, repos(`{"id":1,"name":"r","url":"https://gitlab.example.com/g/r.git"}`))
