@@ -24,8 +24,9 @@ type loginResult struct {
 	Region   string `json:"region"`
 }
 
-// authStatus is who calls run as. Source is "keychain" for a stored profile
-// and "environment" for the AIKIDO_DOJO_CLIENT_ID pair, which has no profile.
+// authStatus is who calls run as. Source is "keychain" or "file" for a stored
+// profile, as its storage says, and "environment" for the
+// AIKIDO_DOJO_CLIENT_ID pair, which has no profile.
 type authStatus struct {
 	Profile  string      `json:"profile,omitempty"`
 	Source   string      `json:"source"`
@@ -60,6 +61,7 @@ func (a *app) authCmd() *cobra.Command {
 
 func (a *app) loginCmd() *cobra.Command {
 	var clientID, region string
+	var insecure bool
 	cmd := &cobra.Command{
 		Use:   "login",
 		Short: "Store an API client's credentials as a profile, once Aikido accepts them",
@@ -70,16 +72,28 @@ func (a *app) loginCmd() *cobra.Command {
 			"from --region, then AIKIDO_DOJO_REGION, then the profile's entry, then eu. The secret comes from " +
 			"AIKIDO_DOJO_CLIENT_SECRET, else a hidden prompt. No flag takes it: argv and shell history would keep it.\n\n" +
 			"The profile is --profile, then AIKIDO_DOJO_PROFILE, then the default profile, then default; the first " +
-			"profile becomes the default. Create the API client in Aikido's workspace settings with only the scopes you need.",
+			"profile becomes the default. Create the API client in Aikido's workspace settings with only the scopes you need.\n\n" +
+			"On a machine with no keychain, such as a headless Linux server, --insecure-storage keeps the secret and the " +
+			"cached token in credentials.json beside the config file instead, readable only by you. The profile keeps " +
+			"that choice at its next login; --insecure-storage=false moves it back to the keychain.",
 		Args: exactArgs(nil),
-		RunE: func(cmd *cobra.Command, _ []string) error { return a.login(cmd.Context(), clientID, region) },
+		RunE: func(cmd *cobra.Command, _ []string) error {
+			var flagInsecure *bool
+			if cmd.Flags().Changed("insecure-storage") {
+				flagInsecure = &insecure
+			}
+			return a.login(cmd.Context(), clientID, region, flagInsecure)
+		},
 	}
 	cmd.Flags().StringVar(&clientID, "client-id", "", "the API client's ID, from Aikido's workspace settings")
 	cmd.Flags().StringVar(&region, "region", "", "the workspace's region: eu, us, au or me")
+	cmd.Flags().BoolVar(&insecure, "insecure-storage", false, "keep the secret in a file only you can read, for machines with no keychain")
 	return cmd
 }
 
-func (a *app) login(ctx context.Context, flagID, flagRegion string) error {
+// login stores the profile. flagInsecure is nil when --insecure-storage isn't
+// given, which keeps the profile's storage as it is.
+func (a *app) login(ctx context.Context, flagID, flagRegion string, flagInsecure *bool) error {
 	if err := a.refuseWrite(http.MethodPost, "auth login"); err != nil {
 		return err
 	}
@@ -93,10 +107,16 @@ func (a *app) login(ctx context.Context, flagID, flagRegion string) error {
 	name := cmp.Or(a.profile, a.env.Getenv(config.EnvProfile), f.DefaultProfile, "default")
 	old, exists := f.Profiles[name]
 	region := cmp.Or(flagRegion, a.env.Getenv(config.EnvRegion), old.Region, config.DefaultRegion)
-	p := config.Profile{ClientID: cmp.Or(flagID, a.env.Getenv(config.EnvClientID), old.ClientID), Region: region}
+	p := config.Profile{ClientID: cmp.Or(flagID, a.env.Getenv(config.EnvClientID), old.ClientID), Region: region, Storage: old.Storage}
 	// An entry that omits its region keeps omitting it while the region is the default.
 	if exists && old.Region == "" && region == config.DefaultRegion {
 		p.Region = ""
+	}
+	if flagInsecure != nil {
+		p.Storage = ""
+		if *flagInsecure {
+			p.Storage = config.StorageFile
+		}
 	}
 	if p.ClientID == "" {
 		return &clierr.Error{Code: "no_client_id", Message: "no client ID for profile " + strconv.Quote(name),
@@ -116,7 +136,8 @@ func (a *app) login(ctx context.Context, flagID, flagRegion string) error {
 		return &clierr.Error{Code: "empty_secret", Message: "the client secret is empty",
 			Hint: "enter the API client's secret from Aikido's workspace settings", Exit: clierr.ExitUsage}
 	}
-	r := config.Resolved{Profile: name, ClientID: p.ClientID, Secret: secret, Region: region, Host: host}
+	r := config.Resolved{Profile: name, ClientID: p.ClientID, Secret: secret, Region: region, Host: host,
+		Storage: p.Storage, Credentials: config.CredentialsPath(path)}
 	record := func() error {
 		if p == old {
 			return nil
@@ -132,7 +153,7 @@ func (a *app) login(ctx context.Context, flagID, flagRegion string) error {
 		}
 		return nil
 	}
-	if err := auth.Login(ctx, newHTTPClient(a.env, host, a.debug), r, record); err != nil {
+	if err := auth.Login(ctx, newHTTPClient(a.env, host, a.debug), r, exists && old.Storage != p.Storage, record); err != nil {
 		return err
 	}
 	if err := a.printJSON(ctx, loginResult{Profile: name, ClientID: p.ClientID, Region: region}); err != nil {
@@ -146,7 +167,8 @@ func (a *app) statusCmd() *cobra.Command {
 		Use:   "status",
 		Short: "Show who calls run as and which scopes their token holds",
 		Long: "status shows the profile calls run as, or that the AIKIDO_DOJO_CLIENT_ID pair is used; where its secret " +
-			"is kept; its client ID and region; and the scopes its access token holds. It requests a token only when " +
+			"is kept, as source: keychain, file (auth login --insecure-storage) or environment; its client ID and " +
+			"region; and the scopes its access token holds. It requests a token only when " +
 			"none is cached, which also checks the credentials, and calls nothing else.\n\n" +
 			"scopes.granted is what the token holds and scopes.denied what some command needs that it lacks. " +
 			"Scopes are granted on the API client in Aikido's workspace settings.",
@@ -177,8 +199,11 @@ func (a *app) status(ctx context.Context) error {
 			"a command whose scope is missing fails with exit 4 and names it")
 	}
 	out := authStatus{Profile: r.Profile, Source: "keychain", Method: "client_credentials", ClientID: r.ClientID, Region: r.Region, Scopes: scopesOf(claim, ok)}
-	if r.Profile == "" {
+	switch {
+	case r.Profile == "":
 		out.Source = "environment"
+	case r.Storage == config.StorageFile:
+		out.Source = "file"
 	}
 	return a.printJSON(ctx, out)
 }
@@ -211,9 +236,10 @@ func scopesOf(claim []string, ok bool) scopeReport {
 func (a *app) logoutCmd() *cobra.Command {
 	return &cobra.Command{
 		Use:   "logout",
-		Short: "Delete a profile's secret and cached token from the keychain",
-		Long: "logout deletes the client secret and the cached access token that auth login stored for the profile: " +
-			"--profile, then AIKIDO_DOJO_PROFILE, then the default profile. The profile's entry in the config file " +
+		Short: "Delete a profile's stored secret and cached token",
+		Long: "logout deletes the client secret and the cached access token that auth login stored for the profile, " +
+			"from the keychain and from the credentials file: --profile, then AIKIDO_DOJO_PROFILE, then the default " +
+			"profile. The profile's entry in the config file " +
 			"stays, so auth login restores it with the secret alone.\n\n" +
 			"A token Aikido already issued stays valid until it expires, within an hour. To revoke the API client " +
 			"itself, delete or rotate it in Aikido's workspace settings.",
@@ -229,7 +255,7 @@ func (a *app) logout(ctx context.Context) error {
 	if a.out.ndjson {
 		return notAnArray("auth logout prints one object")
 	}
-	_, f, err := a.configFile()
+	path, f, err := a.configFile()
 	if err != nil {
 		return err
 	}
@@ -238,7 +264,7 @@ func (a *app) logout(ctx context.Context) error {
 		return &clierr.Error{Code: "usage", Message: "no profile to log out of",
 			Hint: "pass --profile <name>; the AIKIDO_DOJO_CLIENT_ID pair is never stored, so it has nothing to delete", Exit: clierr.ExitUsage}
 	}
-	removed, err := auth.Forget(name)
+	removed, err := auth.Forget(config.Resolved{Profile: name, Storage: f.Profiles[name].Storage, Credentials: config.CredentialsPath(path)})
 	if err != nil {
 		return err
 	}

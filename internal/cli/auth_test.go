@@ -377,3 +377,167 @@ func TestLoginWithAFailingFilterSaysItTookEffect(t *testing.T) {
 		t.Errorf("secret %q, %v; want the login stored", s, err)
 	}
 }
+
+var errNoKeychain = errors.New("the name org.freedesktop.secrets was not provided by any .service files")
+
+// credentials reads the credentials file beside the config, or fails if it is missing.
+func credentials(t *testing.T, vars map[string]string) map[string]map[string]string {
+	t.Helper()
+	data, err := os.ReadFile(config.CredentialsPath(vars[config.EnvConfig]))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var f struct {
+		Profiles map[string]map[string]string `json:"profiles"`
+	}
+	if err := json.Unmarshal(data, &f); err != nil {
+		t.Fatal(err)
+	}
+	return f.Profiles
+}
+
+func TestLoginWithInsecureStorageNeedsNoKeychain(t *testing.T) {
+	f, env, vars := newFake(t, respond(`{}`))
+	noPair(vars)
+	vars[config.EnvConfig] = filepath.Join(t.TempDir(), "new", "config.json")
+	keyring.MockInitWithError(errNoKeychain)
+	env.ReadSecret = answer("typed-secret")
+	if out := mustRun(t, env, "--profile", "cego", "auth", "login", "--client-id", "id-1", "--insecure-storage"); out != `{"profile":"cego","client_id":"id-1","region":"eu"}`+"\n" {
+		t.Errorf("stdout = %q", out)
+	}
+	want := config.File{DefaultProfile: "cego", Profiles: map[string]config.Profile{"cego": {ClientID: "id-1", Region: "eu", Storage: config.StorageFile}}}
+	if got := readConfig(t, vars); !reflect.DeepEqual(got, want) {
+		t.Errorf("config = %+v, want %+v", got, want)
+	}
+	path := config.CredentialsPath(vars[config.EnvConfig])
+	for p, mode := range map[string]os.FileMode{path: 0o600, filepath.Dir(path): 0o700} {
+		if info, err := os.Stat(p); err != nil || info.Mode().Perm() != mode {
+			t.Errorf("%s: %v; want mode %v", p, err, mode)
+		}
+	}
+	if s := credentials(t, vars)["cego"]["client_secret"]; s != "typed-secret" {
+		t.Errorf("stored secret = %q", s)
+	}
+	// The next process reads the secret and the token login cached from the file.
+	mustRun(t, env, "workspace", "get")
+	if n := len(f.seenLogins()); n != 1 {
+		t.Errorf("token requests = %d, want still 1", n)
+	}
+}
+
+// Like the region, the storage is the profile's until a flag changes it.
+func TestLoginKeepsAProfilesStorage(t *testing.T) {
+	_, env, vars := newFake(t, respond(`{}`))
+	noPair(vars)
+	env.ReadSecret = answer("s")
+	for _, p := range []string{"cego", "ci"} {
+		mustRun(t, env, "--profile", p, "auth", "login", "--client-id", "id-"+p, "--insecure-storage")
+	}
+	mustRun(t, env, "--profile", "cego", "auth", "login")
+	if got := readConfig(t, vars).Profiles["cego"].Storage; got != config.StorageFile {
+		t.Errorf("storage after a login without the flag = %q, want file", got)
+	}
+	if _, err := keyring.Get("aikido-dojo", "cego/client_secret"); !errors.Is(err, keyring.ErrNotFound) {
+		t.Errorf("keychain secret: %v, want none", err)
+	}
+
+	mustRun(t, env, "--profile", "cego", "auth", "login", "--insecure-storage=false")
+	if got := readConfig(t, vars).Profiles["cego"].Storage; got != "" {
+		t.Errorf("storage = %q, want the keychain's", got)
+	}
+	if s, err := keyring.Get("aikido-dojo", "cego/client_secret"); err != nil || s != "s" {
+		t.Errorf("keychain secret = %q, %v", s, err)
+	}
+	if profiles := credentials(t, vars); len(profiles) != 1 || profiles["ci"] == nil {
+		t.Errorf("credentials file holds %v, want only ci", profiles)
+	}
+	mustRun(t, env, "--profile", "ci", "auth", "login", "--insecure-storage=false")
+	if _, err := os.Lstat(config.CredentialsPath(vars[config.EnvConfig])); !errors.Is(err, fs.ErrNotExist) {
+		t.Errorf("credentials file: %v, want it removed with its last profile", err)
+	}
+}
+
+func TestLoginReportsAMissingKeychain(t *testing.T) {
+	_, env, vars := newFake(t, respond(`{}`))
+	noPair(vars)
+	keyring.MockInitWithError(errNoKeychain)
+	env.ReadSecret = answer("s")
+	_, stderr, code := run(t, env, "--profile", "cego", "auth", "login", "--client-id", "id-1")
+	e := errorOf(t, stderr)
+	if code != clierr.ExitUnexpected || e.Code != "keychain_unavailable" || !strings.Contains(e.Message, "org.freedesktop.secrets") {
+		t.Errorf("exit %d, error %+v; want 1 keychain_unavailable with the keychain's error", code, e)
+	}
+	for _, want := range []string{"auth login --profile cego --insecure-storage", config.EnvClientID, config.EnvClientSecret} {
+		if !strings.Contains(e.Hint, want) {
+			t.Errorf("hint = %q, want it to name %s", e.Hint, want)
+		}
+	}
+}
+
+// A config linked in from a dotfiles checkout keeps its secrets out of the checkout.
+func TestInsecureStorageStaysBesideALinkedConfig(t *testing.T) {
+	_, env, vars := newFake(t, respond(`{}`))
+	noPair(vars)
+	dotfiles := t.TempDir()
+	if err := os.WriteFile(filepath.Join(dotfiles, "config.json"), []byte("{}\n"), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Symlink(filepath.Join(dotfiles, "config.json"), vars[config.EnvConfig]); err != nil {
+		t.Fatal(err)
+	}
+	env.ReadSecret = answer("s")
+	mustRun(t, env, "--profile", "cego", "auth", "login", "--client-id", "id-1", "--insecure-storage")
+	if _, err := os.Stat(filepath.Join(dotfiles, "credentials.json")); !errors.Is(err, fs.ErrNotExist) {
+		t.Errorf("dotfiles credentials: %v, want none", err)
+	}
+	if s := credentials(t, vars)["cego"]["client_secret"]; s != "s" {
+		t.Errorf("secret beside the link = %q", s)
+	}
+}
+
+func TestStatusOfAFileProfile(t *testing.T) {
+	_, env, vars := newFake(t, respond(`{}`))
+	noPair(vars)
+	env.ReadSecret = answer("s")
+	mustRun(t, env, "--profile", "cego", "auth", "login", "--client-id", "id-1", "--insecure-storage")
+	keyring.MockInitWithError(errNoKeychain)
+	var got authStatus
+	if err := json.Unmarshal([]byte(mustRun(t, env, "auth", "status")), &got); err != nil {
+		t.Fatal(err)
+	}
+	if got.Profile != "cego" || got.Source != "file" {
+		t.Errorf("status = %+v, want profile cego from the file", got)
+	}
+}
+
+func TestAnInsecureCredentialsFileIsAUsageError(t *testing.T) {
+	_, env, vars := newFake(t, respond(`{}`))
+	noPair(vars)
+	env.ReadSecret = answer("s")
+	mustRun(t, env, "--profile", "cego", "auth", "login", "--client-id", "id-1", "--insecure-storage")
+	path := config.CredentialsPath(vars[config.EnvConfig])
+	if err := os.Chmod(path, 0o644); err != nil { //nolint:gosec // the mode under test
+		t.Fatal(err)
+	}
+	_, stderr, code := run(t, env, "workspace", "get")
+	if e := errorOf(t, stderr); code != clierr.ExitUsage || e.Code != "insecure_credentials_file" || !strings.Contains(e.Hint, "chmod 600 "+path) {
+		t.Errorf("exit %d, error %+v; want 2 insecure_credentials_file with chmod 600 in the hint", code, e)
+	}
+}
+
+func TestLogoutOfAFileProfileNeedsNoKeychain(t *testing.T) {
+	_, env, vars := newFake(t, respond(`{}`))
+	noPair(vars)
+	env.ReadSecret = answer("s")
+	mustRun(t, env, "--profile", "cego", "auth", "login", "--client-id", "id-1", "--insecure-storage")
+	keyring.MockInitWithError(errNoKeychain)
+	if out := mustRun(t, env, "auth", "logout"); out != `{"profile":"cego","removed":true}`+"\n" {
+		t.Errorf("stdout = %q", out)
+	}
+	if _, err := os.Lstat(config.CredentialsPath(vars[config.EnvConfig])); !errors.Is(err, fs.ErrNotExist) {
+		t.Errorf("credentials file: %v, want it removed", err)
+	}
+	if _, ok := readConfig(t, vars).Profiles["cego"]; !ok {
+		t.Error("logout removed the profile from the config file")
+	}
+}

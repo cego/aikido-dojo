@@ -1,13 +1,12 @@
 // Package auth gets access tokens with the client_credentials grant and
-// caches them in the OS keychain, so each short-lived CLI process doesn't
-// spend a call on the token endpoint.
+// caches them in the OS keychain or the credentials file, so each
+// short-lived CLI process doesn't spend a call on the token endpoint.
 package auth
 
 import (
 	"cmp"
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -15,13 +14,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/zalando/go-keyring"
-
 	"github.com/cego/aikido-dojo/internal/clierr"
 	"github.com/cego/aikido-dojo/internal/config"
 )
-
-const keychainService = "aikido-dojo"
 
 // A token this close to expiry is treated as expired, so it can't lapse mid-request.
 const expiryMargin = time.Minute
@@ -32,6 +27,7 @@ type Source struct {
 	clientID string
 	secret   string
 	profile  string
+	store    store // nil for the environment profile
 	now      func() time.Time
 	token    cachedToken
 	login    bool // set by Login, whose failure can't send the user back to auth login
@@ -47,7 +43,8 @@ type cachedToken struct {
 }
 
 // NewSource builds the token source for r. A stored profile's secret comes
-// from the keychain; the environment profile carries its own.
+// from the keychain or the credentials file, as r.Storage says; the
+// environment profile carries its own.
 func NewSource(c *http.Client, r config.Resolved) (*Source, error) {
 	s := &Source{
 		http:     c,
@@ -60,29 +57,28 @@ func NewSource(c *http.Client, r config.Resolved) (*Source, error) {
 	if r.Profile == "" {
 		return s, nil
 	}
-	secret, err := keyring.Get(keychainService, account(r.Profile, "client_secret"))
-	if errors.Is(err, keyring.ErrNotFound) {
+	s.store = storeFor(r)
+	secret, ok, err := s.store.get(clientSecret)
+	if err != nil {
+		return nil, s.store.failed("read the client secret", err)
+	}
+	if !ok {
 		return nil, &clierr.Error{Code: "no_secret", Message: fmt.Sprintf("no client secret stored for profile %q", r.Profile),
 			Hint: "run aikido-dojo auth login --profile " + r.Profile, Exit: clierr.ExitAuth}
-	}
-	if err != nil {
-		return nil, fmt.Errorf("read the client secret from the keychain: %w", err)
 	}
 	s.secret = secret
 	return s, nil
 }
 
-func account(profile, item string) string { return profile + "/" + item }
-
 func tokenURL(host string) string { return "https://" + host + "/api/oauth/token" }
 
-// Token returns a valid access token from memory, then the keychain cache,
-// then the token endpoint.
+// Token returns a valid access token from memory, then the stored profile's
+// cache in the keychain or the credentials file, then the token endpoint.
 func (s *Source) Token(ctx context.Context) (string, error) {
 	if s.valid(s.token) {
 		return s.token.Token, nil
 	}
-	if s.profile != "" {
+	if s.store != nil {
 		cached, err := s.readCache()
 		if err != nil {
 			return "", err
@@ -97,7 +93,7 @@ func (s *Source) Token(ctx context.Context) (string, error) {
 		return "", err
 	}
 	s.token = tok
-	if s.profile != "" {
+	if s.store != nil {
 		if err := s.writeCache(tok); err != nil {
 			return "", err
 		}
@@ -108,12 +104,11 @@ func (s *Source) Token(ctx context.Context) (string, error) {
 // Invalidate drops the cached token after the API rejected it.
 func (s *Source) Invalidate() error {
 	s.token = cachedToken{}
-	if s.profile == "" {
+	if s.store == nil {
 		return nil
 	}
-	err := keyring.Delete(keychainService, account(s.profile, "access_token"))
-	if err != nil && !errors.Is(err, keyring.ErrNotFound) {
-		return fmt.Errorf("drop the cached access token: %w", err)
+	if _, err := s.store.remove(accessToken); err != nil {
+		return s.store.failed("drop the cached access token", err)
 	}
 	return nil
 }
@@ -124,12 +119,12 @@ func (s *Source) valid(t cachedToken) bool {
 }
 
 func (s *Source) readCache() (cachedToken, error) {
-	raw, err := keyring.Get(keychainService, account(s.profile, "access_token"))
-	if errors.Is(err, keyring.ErrNotFound) {
-		return cachedToken{}, nil
-	}
+	raw, ok, err := s.store.get(accessToken)
 	if err != nil {
-		return cachedToken{}, fmt.Errorf("read the cached access token: %w", err)
+		return cachedToken{}, s.store.failed("read the cached access token", err)
+	}
+	if !ok {
+		return cachedToken{}, nil
 	}
 	var t cachedToken
 	if err := json.Unmarshal([]byte(raw), &t); err != nil {
@@ -144,8 +139,8 @@ func (s *Source) writeCache(t cachedToken) error {
 	if err != nil {
 		return fmt.Errorf("encode the access token cache: %w", err)
 	}
-	if err := keyring.Set(keychainService, account(s.profile, "access_token"), string(raw)); err != nil {
-		return fmt.Errorf("cache the access token in the keychain: %w", err)
+	if err := s.store.set(accessToken, string(raw)); err != nil {
+		return s.store.failed("cache the access token", err)
 	}
 	return nil
 }

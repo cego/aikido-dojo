@@ -37,6 +37,10 @@ aikido-dojo auth status
 client ID and the region go in `~/.config/aikido-dojo/config.json`. A workspace outside the EU
 adds `--region us`, `au` or `me`.
 
+On a machine with no keychain, such as a headless Linux server, `auth login --insecure-storage`
+keeps the secret in `credentials.json` next to the config file instead, readable only by you. Or
+set the environment pair below.
+
 In CI, set `AIKIDO_DOJO_CLIENT_ID` and `AIKIDO_DOJO_CLIENT_SECRET` instead, and nothing is
 stored. A workspace outside the EU also sets `AIKIDO_DOJO_REGION`.
 

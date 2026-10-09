@@ -100,6 +100,24 @@ func TestLoad(t *testing.T) {
 		})
 	}
 
+	t.Run("reads a profile's storage", func(t *testing.T) {
+		f, err := Load(write(t, `{"profiles":{"cego":{"client_id":"a","storage":"file"}}}`))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if f.Profiles["cego"].Storage != StorageFile {
+			t.Errorf("got %+v", f)
+		}
+	})
+
+	t.Run("rejects an unknown storage", func(t *testing.T) {
+		_, err := Load(write(t, `{"profiles":{"cego":{"client_id":"a","storage":"plaintext"}}}`))
+		e := wantCode(t, err, "bad_config", clierr.ExitUsage)
+		if !strings.Contains(e.Message, `"cego"`) || !strings.Contains(e.Message, `"plaintext"`) || !strings.Contains(e.Hint, `"file"`) {
+			t.Errorf("message %q, hint %q; want the profile and storage named, and the one there is", e.Message, e.Hint)
+		}
+	})
+
 	t.Run("accepts profile names that sound secret", func(t *testing.T) {
 		f, err := Load(write(t, `{"profiles":{"github-token":{"client_id":"a"},"secrets-team":{"client_id":"b"}}}`))
 		if err != nil {
@@ -144,12 +162,16 @@ func TestLoad(t *testing.T) {
 }
 
 func TestResolve(t *testing.T) {
+	home := t.TempDir()
+	t.Setenv("HOME", home)
+	creds := filepath.Join(home, ".config", "aikido-dojo", "credentials.json")
 	file := File{
 		DefaultProfile: "cego",
 		Profiles: map[string]Profile{
-			"cego": {ClientID: "AIK_CLIENT_cego", Region: "us"},
-			"ci":   {ClientID: "AIK_CLIENT_ci"},
-			"bare": {},
+			"cego":   {ClientID: "AIK_CLIENT_cego", Region: "us"},
+			"ci":     {ClientID: "AIK_CLIENT_ci"},
+			"server": {ClientID: "AIK_CLIENT_server", Storage: StorageFile},
+			"bare":   {},
 		},
 	}
 	pair := map[string]string{EnvClientID: "AIK_CLIENT_env", EnvClientSecret: "s"}
@@ -163,12 +185,20 @@ func TestResolve(t *testing.T) {
 		{
 			name: "--profile beats the environment pair and the default", file: file,
 			flags: Flags{Profile: "ci"}, vars: pair,
-			want: Resolved{Profile: "ci", ClientID: "AIK_CLIENT_ci", Region: "eu", Host: "app.aikido.dev"},
+			want: Resolved{Profile: "ci", ClientID: "AIK_CLIENT_ci", Region: "eu", Host: "app.aikido.dev", Credentials: creds},
 		},
 		{
 			name: "AIKIDO_DOJO_PROFILE beats the environment pair", file: file,
 			vars: map[string]string{EnvProfile: "ci", EnvClientID: "AIK_CLIENT_env", EnvClientSecret: "s"},
-			want: Resolved{Profile: "ci", ClientID: "AIK_CLIENT_ci", Region: "eu", Host: "app.aikido.dev"},
+			want: Resolved{Profile: "ci", ClientID: "AIK_CLIENT_ci", Region: "eu", Host: "app.aikido.dev", Credentials: creds},
+		},
+		{
+			name: "a profile's storage", file: file, flags: Flags{Profile: "server"},
+			want: Resolved{Profile: "server", ClientID: "AIK_CLIENT_server", Region: "eu", Host: "app.aikido.dev", Storage: StorageFile, Credentials: creds},
+		},
+		{
+			name: "the credentials file is beside --config", file: file, flags: Flags{Config: "/etc/dojo/config.json", Profile: "server"},
+			want: Resolved{Profile: "server", ClientID: "AIK_CLIENT_server", Region: "eu", Host: "app.aikido.dev", Storage: StorageFile, Credentials: "/etc/dojo/credentials.json"}, //nolint:gosec // a path, not a credential
 		},
 		{
 			name: "the environment pair beats default_profile and stores nothing", file: file, vars: pair,
@@ -176,12 +206,12 @@ func TestResolve(t *testing.T) {
 		},
 		{
 			name: "default_profile when nothing else is set", file: file,
-			want: Resolved{Profile: "cego", ClientID: "AIK_CLIENT_cego", Region: "us", Host: "app.us.aikido.dev"},
+			want: Resolved{Profile: "cego", ClientID: "AIK_CLIENT_cego", Region: "us", Host: "app.us.aikido.dev", Credentials: creds},
 		},
 		{
 			name: "AIKIDO_DOJO_REGION beats the profile", file: file,
 			vars: map[string]string{EnvRegion: "me"},
-			want: Resolved{Profile: "cego", ClientID: "AIK_CLIENT_cego", Region: "me", Host: "app.me.aikido.dev"},
+			want: Resolved{Profile: "cego", ClientID: "AIK_CLIENT_cego", Region: "me", Host: "app.me.aikido.dev", Credentials: creds},
 		},
 	}
 	for _, tt := range tests {
@@ -236,6 +266,31 @@ func TestResolveFailures(t *testing.T) {
 				t.Errorf("message/hint %q / %q should mention %q", e.Message, e.Hint, tt.wantText)
 			}
 		})
+	}
+}
+
+// A config linked in from a dotfiles checkout keeps the credentials file
+// beside the link, so the secrets never land in the checkout.
+func TestCredentialsPathFollowsTheConfigPathAsGiven(t *testing.T) {
+	target := filepath.Join(t.TempDir(), "config.json")
+	if err := os.WriteFile(target, []byte(`{"profiles":{"cego":{"client_id":"a","storage":"file"}}}`), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	dir := t.TempDir()
+	link := filepath.Join(dir, "config.json")
+	if err := os.Symlink(target, link); err != nil {
+		t.Fatal(err)
+	}
+	f, err := Load(link)
+	if err != nil {
+		t.Fatal(err)
+	}
+	r, err := Resolve(f, Flags{Config: link, Profile: "cego"}, env(nil))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if want := filepath.Join(dir, "credentials.json"); r.Credentials != want || CredentialsPath(link) != want {
+		t.Errorf("Credentials = %s, CredentialsPath = %s; want both %s, beside the link", r.Credentials, CredentialsPath(link), want)
 	}
 }
 
