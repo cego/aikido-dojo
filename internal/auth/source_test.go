@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"path/filepath"
 	"strings"
 	"sync/atomic"
 	"testing"
@@ -21,12 +22,13 @@ const testSecret = "s3cr3t-value"
 type tokenServer struct {
 	*httptest.Server
 	calls atomic.Int32
+	dir   string
 }
 
 // newTokenServer issues tok-1, tok-2, … to client "id" with testSecret, or answers every call with status and body when status is non-zero.
 func newTokenServer(t *testing.T, status int, body string) *tokenServer {
 	t.Helper()
-	ts := &tokenServer{}
+	ts := &tokenServer{dir: t.TempDir()}
 	ts.Server = httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path != "/api/oauth/token" || r.Method != http.MethodPost {
 			http.NotFound(w, r)
@@ -56,8 +58,16 @@ func (ts *tokenServer) resolved(profile string) config.Resolved {
 	r := config.Resolved{Profile: profile, ClientID: "id", Region: "eu", Host: strings.TrimPrefix(ts.URL, "https://")}
 	if profile == "" {
 		r.Secret = testSecret
+	} else {
+		r.Credentials = filepath.Join(ts.dir, "credentials.json")
 	}
 	return r
+}
+
+// storedProfile is a keychain profile as auth logout resolves it, with no client.
+func storedProfile(t *testing.T, profile string) config.Resolved {
+	t.Helper()
+	return config.Resolved{Profile: profile, Credentials: filepath.Join(t.TempDir(), "credentials.json")}
 }
 
 func storeSecret(t *testing.T, profile string) {
@@ -90,8 +100,9 @@ func TestNewSourceReportsAKeychainFailure(t *testing.T) {
 	keyring.MockInitWithError(errors.New("keychain locked"))
 	ts := newTokenServer(t, 0, "")
 	_, err := NewSource(ts.Client(), ts.resolved("cego"))
-	if err == nil || !strings.Contains(err.Error(), "keychain locked") {
-		t.Fatalf("err = %v, want the keychain failure", err)
+	e := wantCode(t, err, "keychain_unavailable", clierr.ExitUnexpected)
+	if !strings.Contains(err.Error(), "keychain locked") || !strings.Contains(e.Hint, "--insecure-storage") {
+		t.Fatalf("err = %v, hint %q; want the keychain failure and --insecure-storage", err, e.Hint)
 	}
 }
 

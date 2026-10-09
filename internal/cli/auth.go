@@ -132,7 +132,7 @@ func (a *app) login(ctx context.Context, flagID, flagRegion string) error {
 		}
 		return nil
 	}
-	if err := auth.Login(ctx, newHTTPClient(a.env, host, a.debug), r, record); err != nil {
+	if err := auth.Login(ctx, newHTTPClient(a.env, host, a.debug), r, false, record); err != nil {
 		return err
 	}
 	if err := a.printJSON(ctx, loginResult{Profile: name, ClientID: p.ClientID, Region: region}); err != nil {
@@ -229,7 +229,7 @@ func (a *app) logout(ctx context.Context) error {
 	if a.out.ndjson {
 		return notAnArray("auth logout prints one object")
 	}
-	_, f, err := a.configFile()
+	path, f, err := a.configFile()
 	if err != nil {
 		return err
 	}
@@ -238,7 +238,7 @@ func (a *app) logout(ctx context.Context) error {
 		return &clierr.Error{Code: "usage", Message: "no profile to log out of",
 			Hint: "pass --profile <name>; the AIKIDO_DOJO_CLIENT_ID pair is never stored, so it has nothing to delete", Exit: clierr.ExitUsage}
 	}
-	removed, err := auth.Forget(name)
+	removed, err := auth.Forget(config.Resolved{Profile: name, Storage: f.Profiles[name].Storage, Credentials: config.CredentialsPath(path)})
 	if err != nil {
 		return err
 	}
