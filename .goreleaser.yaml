@@ -2,6 +2,13 @@ version: 2
 
 project_name: aikido-dojo
 
+before:
+  hooks:
+    - mkdir -p completions
+    - sh -c "go run . completion bash > completions/aikido-dojo.bash"
+    - sh -c "go run . completion zsh > completions/aikido-dojo.zsh"
+    - sh -c "go run . completion fish > completions/aikido-dojo.fish"
+
 builds:
   - id: aikido-dojo
     main: .
@@ -23,6 +30,9 @@ archives:
     files:
       - LICENSE
       - README.md
+      - completions/aikido-dojo.bash
+      - completions/aikido-dojo.zsh
+      - completions/aikido-dojo.fish
     builds_info:
       mtime: "{{ .CommitDate }}"
 
@@ -54,6 +64,10 @@ homebrew_casks:
     homepage: https://github.com/cego/aikido-dojo
     skip_upload: auto
     description: Unofficial command-line client for the Aikido Security public API
+    completions:
+      bash: completions/aikido-dojo.bash
+      zsh: completions/aikido-dojo.zsh
+      fish: completions/aikido-dojo.fish
     caveats: |
       aikido-dojo is not signed or notarized yet. If macOS refuses to open it after an install or upgrade, run:
         xattr -d com.apple.quarantine "$(readlink -f "$(command -v aikido-dojo)")"
