@@ -312,7 +312,7 @@ func TestRepoCurrentWithoutGit(t *testing.T) {
 
 func TestRepoCurrentIsAmongTheRepoVerbs(t *testing.T) {
 	env, _ := testEnv(t)
-	root, err := buildRoot(env)
+	root, err := buildRoot(env, nil)
 	if err != nil {
 		t.Fatal(err)
 	}

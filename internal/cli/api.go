@@ -44,7 +44,8 @@ func (a *app) apiCmd() *cobra.Command {
 			"match a generated command, a 403 names the scope that command needs.",
 		Example: "  aikido-dojo api GET /repositories/code -f per_page=5\n" +
 			`  aikido-dojo api POST /issues/groups/12/notes -f note="false positive: a test fixture"`,
-		Args: exactArgs([]ops.Param{{Name: "method"}, {Name: "path"}}),
+		Args:              exactArgs([]ops.Param{{Name: "method"}, {Name: "path"}}),
+		ValidArgsFunction: apiWords,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			f.hasInput = cmd.Flags().Changed("input")
 			return a.callAPI(cmd.Context(), args[0], args[1], f)
@@ -56,6 +57,20 @@ func (a *app) apiCmd() *cobra.Command {
 	cmd.Flags().BoolVar(&f.dryRun, "dry-run", false, dryRunUsage)
 	cmd.Flags().BoolVar(&f.yes, "yes", false, yesUsage+": a DELETE, or a path a destructive command calls")
 	return cmd
+}
+
+func apiWords(_ *cobra.Command, args []string, _ string) ([]cobra.Completion, cobra.ShellCompDirective) {
+	var words []string
+	for _, op := range catalog.All {
+		switch {
+		case len(args) == 0:
+			words = append(words, op.Method)
+		case len(args) == 1 && strings.EqualFold(args[0], op.Method):
+			words = append(words, op.Path)
+		}
+	}
+	slices.Sort(words)
+	return slices.Compact(words), cobra.ShellCompDirectiveNoFileComp
 }
 
 func (a *app) callAPI(ctx context.Context, method, target string, f apiFlags) error {

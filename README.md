@@ -23,6 +23,11 @@ each Homebrew install or upgrade with "cannot be opened". To allow it, run
 `xattr -d com.apple.quarantine "$(readlink -f "$(command -v aikido-dojo)")"`, or install with
 `go install`, which builds the binary on your machine.
 
+Homebrew also installs shell completion for bash, zsh and fish; bash needs the `bash-completion`
+package. After `go install`, add `source <(aikido-dojo completion bash)` to `~/.bashrc`,
+`source <(aikido-dojo completion zsh)` to `~/.zshrc`, or `aikido-dojo completion fish | source` to
+`~/.config/fish/config.fish`.
+
 ## Authenticate
 
 Create an API client in Aikido's workspace settings, with only the scopes you need: read scopes

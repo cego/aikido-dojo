@@ -29,7 +29,7 @@ import (
 	"github.com/cego/aikido-dojo/internal/validate"
 )
 
-func buildRoot(env Env) (*cobra.Command, error) {
+func buildRoot(env Env, args []string) (*cobra.Command, error) {
 	root, a := newRoot(env)
 	if err := addGenerated(root, catalog.All, a.runOp); err != nil {
 		return nil, err
@@ -37,6 +37,11 @@ func buildRoot(env Env) (*cobra.Command, error) {
 	root.AddCommand(a.versionCmd(), a.searchCmd(), a.schemaCmd(), a.apiCmd(), a.authCmd())
 	if err := a.addRepoCurrent(root); err != nil {
 		return nil, err
+	}
+	if completing(args) {
+		if err := a.addCompletion(root); err != nil {
+			return nil, err
+		}
 	}
 	return root, nil
 }
