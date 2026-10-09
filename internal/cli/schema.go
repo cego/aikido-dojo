@@ -3,6 +3,7 @@ package cli
 import (
 	"context"
 	"fmt"
+	"slices"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -34,12 +35,28 @@ func (a *app) schemaCmd() *cobra.Command {
 			"flags (keyed by flag name), body (what --body and --body-file take) and response (what the command prints). " +
 			"A list command prints one array of every item, so its response is that array, not one page.\n\n" +
 			"It reads only what is built into aikido-dojo and calls nothing.",
-		Example: "  aikido-dojo schema issue-group ignore",
-		Args:    someArgs("a command, such as: repo list"),
+		Example:           "  aikido-dojo schema issue-group ignore",
+		Args:              someArgs("a command, such as: repo list"),
+		ValidArgsFunction: schemaWords,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return a.schema(cmd.Context(), cmd.Root(), strings.Fields(strings.Join(args, " ")))
 		},
 	}
+}
+
+func schemaWords(_ *cobra.Command, args []string, _ string) ([]cobra.Completion, cobra.ShellCompDirective) {
+	var words []string
+	for _, op := range catalog.All {
+		resource, verb, _ := strings.Cut(op.Command, " ")
+		switch {
+		case len(args) == 0:
+			words = append(words, resource)
+		case len(args) == 1 && args[0] == resource:
+			words = append(words, verb)
+		}
+	}
+	slices.Sort(words)
+	return slices.Compact(words), cobra.ShellCompDirectiveNoFileComp
 }
 
 func (a *app) schema(ctx context.Context, root *cobra.Command, words []string) error {
