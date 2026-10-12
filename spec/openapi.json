@@ -43,6 +43,7 @@
               "clouds:write": "Write access to cloud resources",
               "code_coverage:read": "Read access to code coverage results",
               "code_quality:read": "Read access to code quality findings",
+              "code_quality:write": "Write access to code quality findings",
               "containers:read": "Read access to container repositories",
               "containers:write": "Write access to container repositories",
               "custom_sast_rules:read": "Read access to custom sast rules",
@@ -2905,6 +2906,82 @@
           }
         ],
         "summary": "List code quality findings for a repository"
+      }
+    },
+    "/code-quality/repo-findings/{finding_id}/ignore": {
+      "put": {
+        "description": "Ignores an open code quality finding. Use the finding id returned by the repo-findings list endpoint.",
+        "operationId": "ignoreCodeQualityRepoFinding",
+        "parameters": [
+          {
+            "description": "The ID of the finding",
+            "in": "path",
+            "name": "finding_id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "reason": "Finding is not relevant here"
+                },
+                "properties": {
+                  "reason": {
+                    "description": "A reason for ignoring the finding",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "status": "ok"
+                  },
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "The finding has been ignored"
+          },
+          "400": {
+            "description": "The provided finding ID is invalid"
+          },
+          "404": {
+            "description": "The provided finding ID does not exist"
+          },
+          "422": {
+            "description": "The finding is not open, or the reason is invalid"
+          }
+        },
+        "security": [
+          {
+            "oauth": [
+              "code_quality:write"
+            ]
+          }
+        ],
+        "summary": "Ignore a code quality finding"
       }
     },
     "/containers": {
@@ -10007,6 +10084,17 @@
             }
           },
           {
+            "description": "A filter to only export issues found by a given pentest or AI Code Analysis assessment",
+            "in": "query",
+            "name": "filter_assessment_id",
+            "required": false,
+            "schema": {
+              "description": "The unique UUID of the assessment",
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
             "description": "A filter to only export issues with the specified severities. Multiple values should be comma separated.",
             "in": "query",
             "name": "filter_severities",
@@ -10103,6 +10191,7 @@
                       "actionable_at": 1700490012,
                       "affected_file": "index.php",
                       "affected_package": "minimist",
+                      "assessment_id": null,
                       "attack_surface": "backend",
                       "closed_at": null,
                       "code_repo_branch_name": "main",
@@ -10156,6 +10245,12 @@
                       },
                       "affected_package": {
                         "description": "The name of affected open-source package, if any",
+                        "type": "string"
+                      },
+                      "assessment_id": {
+                        "description": "The UUID of the pentest or AI Code Analysis assessment that found this issue. Only set for ai_pentest and agentic_review issues.",
+                        "format": "uuid",
+                        "nullable": true,
                         "type": "string"
                       },
                       "attack_surface": {
@@ -13406,6 +13501,77 @@
           }
         ],
         "summary": "Get OpenAPI spec"
+      }
+    },
+    "/pentests/assessments": {
+      "get": {
+        "description": "Returns all pentest assessments in your account, newest first. Draft assessments are not included.",
+        "operationId": "listPentestAssessments",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PageParam"
+          },
+          {
+            "$ref": "#/components/parameters/PageSizeParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "format": "array",
+                  "items": {
+                    "example": {
+                      "created_at": 1760000000,
+                      "id": "f19e449d-2bf0-8d37-ab9a-3bcbc748157d",
+                      "name": "Production web app pentest",
+                      "status": "completed"
+                    },
+                    "format": "object",
+                    "properties": {
+                      "created_at": {
+                        "description": "A unix timestamp (in seconds) indicating when the assessment was created",
+                        "type": "integer"
+                      },
+                      "id": {
+                        "description": "The unique UUID of the assessment. Can be used with the assessment detail endpoint and as filter_assessment_id when exporting issues.",
+                        "format": "uuid",
+                        "type": "string"
+                      },
+                      "name": {
+                        "description": "The name of the assessment",
+                        "type": "string"
+                      },
+                      "status": {
+                        "description": "The current status of the assessment",
+                        "enum": [
+                          "pending",
+                          "running",
+                          "paused",
+                          "completed",
+                          "cancelled",
+                          "failed"
+                        ],
+                        "type": "string"
+                      }
+                    },
+                    "title": "pentest assessment"
+                  }
+                }
+              }
+            },
+            "description": "A list of assessments"
+          }
+        },
+        "security": [
+          {
+            "oauth": [
+              "pentests:read"
+            ]
+          }
+        ],
+        "summary": "List pentest assessments"
       }
     },
     "/pentests/assessments/createDraft": {
@@ -20231,6 +20397,7 @@
                 "golang",
                 "hex",
                 "homebrew",
+                "huggingface",
                 "jetbrains",
                 "maven",
                 "npm",
@@ -20244,6 +20411,7 @@
                 "skills_sh",
                 "snyk",
                 "swift",
+                "terraform",
                 "vscode",
                 "visual_studio",
                 "webpage",
