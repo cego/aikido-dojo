@@ -68,29 +68,50 @@ const (
 	b  = 0.75
 )
 
+// Corpus holds what BM25 needs to know of all the documents it ranks.
+type Corpus struct {
+	Docs   int
+	AvgLen float64
+	DF     map[string]int
+}
+
+// QueryTerms are a query's tokens, each once.
+func QueryTerms(query string) []string {
+	return slices.Compact(slices.Sorted(slices.Values(Tokens(query))))
+}
+
+// Score is the BM25 score of a document of length n with term frequencies tf.
+func (c Corpus) Score(terms []string, tf map[string]int, n int) float64 {
+	if c.AvgLen == 0 {
+		return 0
+	}
+	docs := float64(c.Docs)
+	var s float64
+	for _, t := range terms {
+		f := float64(tf[t])
+		if f == 0 {
+			continue
+		}
+		df := float64(c.DF[t])
+		idf := math.Log(1 + (docs-df+0.5)/(df+0.5))
+		s += idf * f * (k1 + 1) / (f + k1*(1-b+b*float64(n)/c.AvgLen))
+	}
+	return s
+}
+
 // Rank scores every command against query with BM25 and returns the best n,
 // best first. A command sharing no word with the query is left out.
 func (idx *Index) Rank(query string, n int) []Hit {
-	terms := slices.Compact(slices.Sorted(slices.Values(Tokens(query))))
+	terms := QueryTerms(query)
+	c := Corpus{Docs: len(idx.Docs), AvgLen: idx.AvgLen, DF: idx.DF}
 	type scored struct {
 		doc   *Doc
 		score float64
 	}
 	var all []scored
-	docs := float64(len(idx.Docs))
 	for i := range idx.Docs {
 		d := &idx.Docs[i]
-		var s float64
-		for _, t := range terms {
-			tf := float64(d.TF[t])
-			if tf == 0 {
-				continue
-			}
-			df := float64(idx.DF[t])
-			idf := math.Log(1 + (docs-df+0.5)/(df+0.5))
-			s += idf * tf * (k1 + 1) / (tf + k1*(1-b+b*float64(d.Len)/idx.AvgLen))
-		}
-		if s > 0 {
+		if s := c.Score(terms, d.TF, d.Len); s > 0 {
 			all = append(all, scored{d, s})
 		}
 	}
