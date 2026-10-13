@@ -105,6 +105,10 @@ func TestNormalize(t *testing.T) {
 	if got := string(Normalize([]byte(page))); got != want {
 		t.Errorf("Normalize =\n%q\nwant\n%q", got, want)
 	}
+	md := "# Shots\n\n![Ignore dialog](https://files.test/e.png?alt=media)\n\n![](https://files.test/f.png)\n\nSee ![logo](https://files.test/g.png \"Logo\") and [a link](https://help.test/x).\n"
+	if got, want := string(Normalize([]byte(md))), "# Shots\n\n[image: Ignore dialog]\n\nSee [image: logo] and [a link](https://help.test/x).\n"; got != want {
+		t.Errorf("markdown images: Normalize =\n%q\nwant\n%q", got, want)
+	}
 	if got := string(Normalize([]byte("# Plain\n\nText.\n"))); got != "# Plain\n\nText.\n" {
 		t.Errorf("a page without GitBook's header and footer changed: %q", got)
 	}

@@ -29,6 +29,7 @@ var (
 	pathRE    = regexp.MustCompile(`^[a-z0-9][a-z0-9._+-]*(/[a-z0-9][a-z0-9._+-]*)*$`)
 	figureRE  = regexp.MustCompile(`(?s)<figure>.*?</figure>`)
 	imgRE     = regexp.MustCompile(`<img\b[^>]*>`)
+	mdImageRE = regexp.MustCompile(`!\[([^\]]*)\]\([^)\s]+(?:\s+"[^"]*")?\)`)
 	altRE     = regexp.MustCompile(`\balt="([^"]*)"`)
 	captionRE = regexp.MustCompile(`(?s)<figcaption>(.*?)</figcaption>`)
 	tagRE     = regexp.MustCompile(`<[^>]+>`)
@@ -135,6 +136,7 @@ func Normalize(page []byte) []byte {
 		return image(desc)
 	})
 	s = imgRE.ReplaceAllStringFunc(s, func(img string) string { return image(text(altRE, img)) })
+	s = mdImageRE.ReplaceAllStringFunc(s, func(img string) string { return image(text(mdImageRE, img)) })
 	s = blanksRE.ReplaceAllString(s, "\n\n")
 	return []byte(strings.TrimSpace(s) + "\n")
 }
