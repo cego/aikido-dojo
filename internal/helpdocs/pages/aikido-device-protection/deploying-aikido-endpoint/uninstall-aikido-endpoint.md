@@ -17,10 +17,12 @@ sudo "/Applications/Aikido Endpoint Protection.app/Contents/Resources/scripts/un
 {% code overflow="wrap" %}
 
 ```powershell
-msiexec /x (Get-WmiObject -Class Win32_Product | Where-Object { $_.Name -like "Aikido Endpoint Protection*" }).IdentifyingNumber /qn /norestart
+& powershell.exe -NoProfile -ExecutionPolicy Bypass -File "C:\Program Files\AikidoSecurity\EndpointProtection\scripts\Uninstall.ps1"
 ```
 
 {% endcode %}
+
+Alternatively, open **Control Panel** > **Uninstall a program**, select **Aikido Endpoint Protection**, and click **Uninstall**.
 {% endtab %}
 
 {% tab title="Linux" %}

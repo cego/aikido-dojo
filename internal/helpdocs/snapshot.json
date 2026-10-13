@@ -1,5 +1,5 @@
 {
-  "full_sha256": "fcb1949512850d62f70045b29dfbbda1ef7264774691a38ee2ab4cc98a0a060d",
+  "full_sha256": "7c0f0aeae40abfb362b4dbd915672eeccb758dd17af768c66213edcf4c17f9e7",
   "lastmod": {
     "ai-and-dev-tools/agi-readiness": "2026-08-30T15:50:50.425Z",
     "ai-and-dev-tools/aikido-mcp": "2026-09-25T13:15:27.614Z",
@@ -128,7 +128,7 @@
     "aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/windows/deploy-aikido-endpoint-with-scalefusion": "2026-09-01T11:16:38.672Z",
     "aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/windows/deploy-aikido-endpoint-with-sccm": "2026-10-09T12:43:32.477Z",
     "aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/windows/deploy-aikido-endpoint-with-workspace-one": "2026-09-20T13:11:10.938Z",
-    "aikido-device-protection/deploying-aikido-endpoint/uninstall-aikido-endpoint": "2026-09-20T13:11:10.938Z",
+    "aikido-device-protection/deploying-aikido-endpoint/uninstall-aikido-endpoint": "2026-10-13T10:07:39.535Z",
     "aikido-device-protection/deploying-aikido-endpoint/user-groups-for-aikido-endpoint": "2026-09-16T08:12:45.444Z",
     "aikido-device-protection/endpoint-protection": "2026-09-20T13:11:10.938Z",
     "aikido-device-protection/miscellaneous-aikido-endpoint": "2026-09-20T13:11:10.938Z",
