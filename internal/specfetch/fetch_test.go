@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"strings"
+	"sync/atomic"
 	"testing"
 	"time"
 )
@@ -156,4 +157,32 @@ func TestAssembleNamesAnEmptyIndex(t *testing.T) {
 	srv := docsServer(t, nil, nil)
 	_, _, err := Assemble(t.Context(), srv.Client(), srv.URL+"/llms.txt")
 	wantErr(t, err, "/llms.txt: index lists no API reference pages")
+}
+
+func TestGetAllKeepsToItsConcurrency(t *testing.T) {
+	var inFlight, peak atomic.Int32
+	srv := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		n := inFlight.Add(1)
+		defer inFlight.Add(-1)
+		for {
+			p := peak.Load()
+			if n <= p || peak.CompareAndSwap(p, n) {
+				break
+			}
+		}
+		time.Sleep(10 * time.Millisecond)
+		fmt.Fprint(w, "ok")
+	}))
+	t.Cleanup(srv.Close)
+	urls := []string{srv.URL + "/a", srv.URL + "/b", srv.URL + "/c", srv.URL + "/d", srv.URL + "/e"}
+	pages, err := GetAll(t.Context(), srv.Client(), urls, 2)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(pages) != len(urls) {
+		t.Errorf("got %d pages, want %d", len(pages), len(urls))
+	}
+	if p := peak.Load(); p > 2 {
+		t.Errorf("%d requests were in flight at once, want at most 2", p)
+	}
 }
