@@ -81,6 +81,7 @@ func newRoot(env Env) (*cobra.Command, *app) {
 	root.SetUsageTemplate(root.UsageTemplate() + `{{if not .HasParent}}
 Find the commands for a task:  aikido-dojo search "<what you want to do>"
 See what a command takes:      aikido-dojo schema <resource> <verb>
+Search Aikido's help centre:   aikido-dojo docs search "<question>"
 {{end}}`)
 	pf := root.PersistentFlags()
 	pf.StringVar(&a.config, "config", "", "the config file (default ~/.config/aikido-dojo/config.json; also AIKIDO_DOJO_CONFIG)")
