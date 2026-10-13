@@ -1,0 +1,5 @@
+# Version difference in UI vs PR
+
+It is exepected that there can be slights differences in version between the AutoFix UI and AutoFix Pull Request. If the minimal version bump results in new CVEs, AutoFix will iterate on the pull request and adjust the version to resolve the new CVE as well. Resulting in a better pull request containing less CVEs.
+
+In the AutoFix UI, we show the minimal version bump required to address the given CVE in the library. However that particular version might introduce other CVEs. For example version 1.2.0 of a library contains a critical vulnerability, that vulnerability is resolved in version 1.2.1 but a new high vulernability is introduce in that fix. After that a version 1.2.2 was released fixing both issues. The Aikido UI will show version 1.2.1 as the fix version for the critical vulnerability but once AutoFix performs the upgrade it will notice the high severity vulnerability and choose to upgrade to version 1.2.2. This makes sure you don't introduce a new high severity vulnerability that requires another AutoFix to resolve.

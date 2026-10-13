@@ -1,0 +1,16 @@
+# All Supported Task Trackers
+
+- [Jira Cloud](https://help.aikido.dev/getting-started/task-management-systems/all-supported-task-trackers/jira-cloud.md)
+- [ServiceNow](https://help.aikido.dev/getting-started/task-management-systems/all-supported-task-trackers/servicenow.md)
+- [Jira Data Center](https://help.aikido.dev/getting-started/task-management-systems/all-supported-task-trackers/jira-data-center.md)
+- [Linear](https://help.aikido.dev/getting-started/task-management-systems/all-supported-task-trackers/linear.md)
+- [ClickUp](https://help.aikido.dev/getting-started/task-management-systems/all-supported-task-trackers/clickup.md)
+- [Azure DevOps Boards](https://help.aikido.dev/getting-started/task-management-systems/all-supported-task-trackers/azure-devops-boards.md)
+- [GitHub Issues](https://help.aikido.dev/getting-started/task-management-systems/all-supported-task-trackers/github-issues.md)
+- [GitHub Enterprise Cloud Issues](https://help.aikido.dev/getting-started/task-management-systems/all-supported-task-trackers/github-enterprise-cloud-issues.md)
+- [GitLab Issues](https://help.aikido.dev/getting-started/task-management-systems/all-supported-task-trackers/gitlab-issues.md)
+- [GitLab Issues Self-Managed](https://help.aikido.dev/getting-started/task-management-systems/all-supported-task-trackers/gitlab-issues-self-managed.md)
+- [JetBrains YouTrack](https://help.aikido.dev/getting-started/task-management-systems/all-supported-task-trackers/jetbrains-youtrack.md)
+- [Asana](https://help.aikido.dev/getting-started/task-management-systems/all-supported-task-trackers/asana.md)
+- [Monday.com](https://help.aikido.dev/getting-started/task-management-systems/all-supported-task-trackers/mondaycom.md)
+- [Shortcut](https://help.aikido.dev/getting-started/task-management-systems/all-supported-task-trackers/shortcut.md)
