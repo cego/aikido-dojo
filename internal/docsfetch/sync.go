@@ -110,16 +110,6 @@ func Sync(ctx context.Context, c *http.Client, o Options) (Report, error) {
 		return Report{}, err
 	}
 	r.Fetched = len(want)
-	// The digest moved but no lastmod did, so one lagged: check every page.
-	if !r.Full && len(changed) == 0 && len(gone) == 0 && !moved(paths, mods, old.LastMod) {
-		rest := slices.DeleteFunc(slices.Clone(paths), func(p string) bool { return slices.Contains(want, p) })
-		more, err := update(ctx, c, o.Origin, root, rest)
-		if err != nil {
-			return Report{}, err
-		}
-		changed = append(changed, more...)
-		r.Full, r.Fetched = true, r.Fetched+len(rest)
-	}
 	if err := remove(root, gone); err != nil {
 		return Report{}, err
 	}
@@ -148,17 +138,7 @@ func stale(paths []string, mods, old map[string]string, held map[string]bool) []
 	return out
 }
 
-// moved reports whether the sitemap dates any page differently from the last run.
-func moved(paths []string, mods, old map[string]string) bool {
-	for _, p := range paths {
-		if mods[p] != "" && mods[p] != old[p] {
-			return true
-		}
-	}
-	return false
-}
-
-// update fetches paths and writes those whose text changed; it writes nothing unless every page is markdown.
+// update fetches paths and writes those whose text changed; it writes nothing unless every page is clean markdown.
 func update(ctx context.Context, c *http.Client, origin string, root *os.Root, paths []string) ([]string, error) {
 	urls := make([]string, len(paths))
 	for i, p := range paths {
@@ -173,6 +153,9 @@ func update(ctx context.Context, c *http.Client, origin string, root *os.Root, p
 		texts[i] = Normalize(bodies[urls[i]])
 		if !bytes.HasPrefix(texts[i], []byte("# ")) {
 			return nil, fmt.Errorf("%s: not a markdown page", p)
+		}
+		if HasAgentInstructions(texts[i]) {
+			return nil, fmt.Errorf("%s: GitBook's instructions for agents survived normalising", p)
 		}
 	}
 	var changed []string

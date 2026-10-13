@@ -3,6 +3,7 @@ package docsfetch
 
 import (
 	"bufio"
+	"bytes"
 	"encoding/xml"
 	"errors"
 	"fmt"
@@ -127,7 +128,9 @@ func Normalize(page []byte) []byte {
 	if strings.HasPrefix(s, indexNote) {
 		_, s, _ = strings.Cut(s, "\n")
 	}
-	s, _, _ = strings.Cut(s, agentFooter)
+	if i := strings.LastIndex(s, agentFooter); i >= 0 {
+		s = s[:i]
+	}
 	s = figureRE.ReplaceAllStringFunc(s, func(fig string) string {
 		desc := text(altRE, fig)
 		if desc == "" {
@@ -139,6 +142,19 @@ func Normalize(page []byte) []byte {
 	s = mdImageRE.ReplaceAllStringFunc(s, func(img string) string { return image(text(mdImageRE, img)) })
 	s = blanksRE.ReplaceAllString(s, "\n\n")
 	return []byte(strings.TrimSpace(s) + "\n")
+}
+
+// agentSigns mark GitBook's text for agents, which must never reach the copy.
+var agentSigns = []string{"\n# Agent Instructions\n", "index.md?ask="}
+
+// HasAgentInstructions reports whether text still carries GitBook's instructions for agents.
+func HasAgentInstructions(text []byte) bool {
+	for _, sign := range agentSigns {
+		if bytes.Contains(text, []byte(sign)) {
+			return true
+		}
+	}
+	return false
 }
 
 func text(re *regexp.Regexp, s string) string {

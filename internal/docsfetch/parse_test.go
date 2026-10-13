@@ -109,6 +109,10 @@ func TestNormalize(t *testing.T) {
 	if got, want := string(Normalize([]byte(md))), "# Shots\n\n[image: Ignore dialog]\n\nSee [image: logo] and [a link](https://help.test/x).\n"; got != want {
 		t.Errorf("markdown images: Normalize =\n%q\nwant\n%q", got, want)
 	}
+	quoted := "# Footers\n\nGitBook ends pages with:\n\n---\n\n# Agent Instructions\nquoted\n\n---\n\n# Agent Instructions\nthe real footer\n"
+	if got, want := string(Normalize([]byte(quoted))), "# Footers\n\nGitBook ends pages with:\n\n---\n\n# Agent Instructions\nquoted\n"; got != want {
+		t.Errorf("a quoted footer: Normalize =\n%q\nwant\n%q", got, want)
+	}
 	if got := string(Normalize([]byte("# Plain\n\nText.\n"))); got != "# Plain\n\nText.\n" {
 		t.Errorf("a page without GitBook's header and footer changed: %q", got)
 	}

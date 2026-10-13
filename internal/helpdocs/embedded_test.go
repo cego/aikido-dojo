@@ -32,6 +32,15 @@ func TestEmbeddedCopy(t *testing.T) {
 	if len(pages) < 500 {
 		t.Errorf("the copy has %d pages, want the whole help centre", len(pages))
 	}
+	for p := range pages {
+		md, err := fs.ReadFile(l.fsys, p+".md")
+		if err != nil {
+			t.Fatal(err)
+		}
+		if docsfetch.HasAgentInstructions(md) {
+			t.Errorf("%s carries GitBook's instructions for agents", p)
+		}
+	}
 }
 
 func BenchmarkSearchFromCold(b *testing.B) {

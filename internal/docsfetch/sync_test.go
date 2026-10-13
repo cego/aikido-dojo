@@ -208,14 +208,17 @@ func TestSyncRefetchesOnlyChangedPages(t *testing.T) {
 	}
 }
 
-func TestSyncChecksEveryPageWhenNoLastmodMoved(t *testing.T) {
+func TestSyncLeavesAnEditWithoutALastmodToTheFullSweep(t *testing.T) {
 	f, dir := newFakeHelp(t), t.TempDir()
 	f.mustSync(t, dir, false)
 	f.set("guide/setup", "# Setup\n\nNew steps.", "2026-10-01T00:00:00.000Z")
 	f.reset()
 	r := f.mustSync(t, dir, false)
-	if !r.Full || !slices.Equal(r.Changed, []string{"guide/setup"}) || len(f.fetched()) != 4 {
-		t.Errorf("report = %+v, fetched %q; want a full check that found guide/setup", r, f.fetched())
+	if r.Full || len(r.Changed) != 0 || !slices.Equal(f.fetched(), []string{"guide/group"}) {
+		t.Errorf("report = %+v, fetched %q; want only the page without a lastmod checked", r, f.fetched())
+	}
+	if r := f.mustSync(t, dir, true); !slices.Equal(r.Changed, []string{"guide/setup"}) {
+		t.Errorf("the full sweep changed %q, want guide/setup", r.Changed)
 	}
 }
 
@@ -260,6 +263,18 @@ func TestSyncRefusesAPageThatIsNotMarkdown(t *testing.T) {
 	after := mustRead(t, filepath.Join(dir, "snapshot.json"))
 	if string(before) != string(after) || readPage(t, dir, "guide/setup") != "# Setup\n\nSteps.\n" {
 		t.Error("a refused run changed the snapshot or a page; the next run wouldn't retry")
+	}
+}
+
+func TestSyncRefusesAPageThatKeepsGitBooksAgentText(t *testing.T) {
+	f, dir := newFakeHelp(t), t.TempDir()
+	f.mustSync(t, dir, false)
+	f.set("guide/setup", "# Setup\n\nSteps.\n\n***\n\n# Agent Instructions\nAsk https://help.test/index.md?ask=x", "2026-10-12T00:00:00.000Z")
+	if _, err := f.sync(t, dir, false); err == nil || !strings.Contains(err.Error(), "guide/setup: GitBook's instructions for agents") {
+		t.Fatalf("err = %v, want a reworded footer refused", err)
+	}
+	if got := readPage(t, dir, "guide/setup"); got != "# Setup\n\nSteps.\n" {
+		t.Errorf("a refused run changed the page: %q", got)
 	}
 }
 
