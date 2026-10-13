@@ -56,9 +56,24 @@ func TestRedirectsStayOnTheAPIHost(t *testing.T) {
 	}
 }
 
+// Aikido sees aikido-dojo on every request, not Go's default User-Agent.
+func TestRequestsNameAikidoDojo(t *testing.T) {
+	srv := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { fmt.Fprint(w, r.UserAgent()) }))
+	t.Cleanup(srv.Close)
+	c := newHTTPClient(Env{Transport: &rewrite{to: strings.TrimPrefix(srv.URL, "https://"), next: srv.Client().Transport}}, "app.aikido.dev", false)
+	got, err := get(t, c, "https://app.aikido.dev/x")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got != userAgent || !strings.HasPrefix(got, "aikido-dojo") {
+		t.Errorf("User-Agent = %q, want %q", got, userAgent)
+	}
+}
+
 func TestHTTPClientBoundsOnlyTheWaitForHeaders(t *testing.T) {
 	c := newHTTPClient(Env{}, "app.aikido.dev", false)
-	tr, ok := c.Transport.(*http.Transport)
+	at, _ := c.Transport.(agentTransport)
+	tr, ok := at.next.(*http.Transport)
 	if c.Timeout != 0 || !ok || tr.ResponseHeaderTimeout != headerTimeout {
 		t.Errorf("timeout %v, transport %T; want no overall timeout and a %v header timeout", c.Timeout, c.Transport, headerTimeout)
 	}
@@ -83,7 +98,8 @@ func TestHTTPClientWithAReplacedDefaultTransport(t *testing.T) {
 	http.DefaultTransport = roundTripFunc(func(*http.Request) (*http.Response, error) { return nil, errors.New("unused") })
 	defer func() { http.DefaultTransport = saved }()
 	c := newHTTPClient(Env{Stderr: io.Discard}, "app.aikido.dev", false)
-	if tr, ok := c.Transport.(*http.Transport); !ok || tr.ResponseHeaderTimeout != headerTimeout || tr.Proxy == nil {
+	at, _ := c.Transport.(agentTransport)
+	if tr, ok := at.next.(*http.Transport); !ok || tr.ResponseHeaderTimeout != headerTimeout || tr.Proxy == nil {
 		t.Errorf("transport = %#v, want an *http.Transport with the header timeout and the proxy setting", c.Transport)
 	}
 }

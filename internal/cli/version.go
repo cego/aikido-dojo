@@ -3,11 +3,15 @@ package cli
 import (
 	"cmp"
 	"runtime/debug"
+	"strings"
 
 	"github.com/spf13/cobra"
 
 	"github.com/cego/aikido-dojo/internal/catalog"
 )
+
+// userAgent is what every request to Aikido carries, so Aikido can tell aikido-dojo from other Go programs.
+var userAgent = userAgentOf(debug.ReadBuildInfo())
 
 type versionInfo struct {
 	Version string      `json:"version"`
@@ -49,4 +53,12 @@ func versionOf(bi *debug.BuildInfo, ok bool) versionInfo {
 		}
 	}
 	return v
+}
+
+// userAgentOf names aikido-dojo, with its version when Go stamped a module version into the binary.
+func userAgentOf(bi *debug.BuildInfo, ok bool) string {
+	if v := versionOf(bi, ok).Version; strings.HasPrefix(v, "v") {
+		return "aikido-dojo/" + v + " (+https://github.com/cego/aikido-dojo)"
+	}
+	return "aikido-dojo (+https://github.com/cego/aikido-dojo)"
 }

@@ -21,6 +21,21 @@ func TestVersionOf(t *testing.T) {
 	}
 }
 
+func TestUserAgentOf(t *testing.T) {
+	for _, c := range []struct {
+		bi   *debug.BuildInfo
+		want string
+	}{
+		{&debug.BuildInfo{Main: debug.Module{Version: "v0.1.0"}}, "aikido-dojo/v0.1.0 (+https://github.com/cego/aikido-dojo)"},
+		{&debug.BuildInfo{Main: debug.Module{Version: "(devel)"}}, "aikido-dojo (+https://github.com/cego/aikido-dojo)"},
+		{nil, "aikido-dojo (+https://github.com/cego/aikido-dojo)"},
+	} {
+		if got := userAgentOf(c.bi, c.bi != nil); got != c.want {
+			t.Errorf("userAgentOf(%+v) = %q, want %q", c.bi, got, c.want)
+		}
+	}
+}
+
 func TestVersionNamesTheVendoredSpec(t *testing.T) {
 	spec, err := os.ReadFile("../../spec/openapi.json")
 	if err != nil {
