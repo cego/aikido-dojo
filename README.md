@@ -69,11 +69,12 @@ and sends nothing. `api` calls any path under `/api/public/v1`.
 ## For agents
 
 [AGENTS.md](AGENTS.md) is a primer for an agent to load. An agent finds commands with `search`,
-learns one with `schema`, and runs in read-only mode:
+learns one with `schema`, reads Aikido's help centre with `docs`, and runs in read-only mode:
 
 ```sh
 aikido-dojo search 'ignore a finding'
 aikido-dojo schema issue-group ignore
+aikido-dojo docs search 'limit access to specific IPs'
 aikido-dojo --read-only team delete 7
 ```
 

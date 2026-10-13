@@ -31,6 +31,19 @@ aikido-dojo repo current --jq '.[0].repo.id'
 
 When no command fits, `aikido-dojo api GET <path>` calls any path under `/api/public/v1`.
 
+## Aikido's documentation
+
+aikido-dojo carries a copy of Aikido's help centre (help.aikido.dev). Search it, and read a page as
+markdown, without calling the API or the network:
+
+```sh
+aikido-dojo docs search 'limit access to specific IPs'
+aikido-dojo docs get getting-started/setting-up-your-account/change-language --jq .markdown
+```
+
+`docs search` prints pages at the section that matched best. Each page has a `url` on
+help.aikido.dev, and `docs get` prints the `snapshot` date of the copy.
+
 ## Output
 
 - `--jq '<expr>'` filters any command's JSON. Strings print without quotes.
