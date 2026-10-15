@@ -6661,6 +6661,7 @@
                         "enum": [
                           "offline",
                           "not_protected",
+                          "upgrade_needed",
                           "protected"
                         ],
                         "type": "string"
@@ -6833,6 +6834,15 @@
               "format": "int32",
               "minimum": 1,
               "type": "integer"
+            }
+          },
+          {
+            "description": "Only return packages whose name matches this search term",
+            "in": "query",
+            "name": "filter_package_name",
+            "required": false,
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -13762,6 +13772,79 @@
           }
         ],
         "summary": "Get pentest assessment"
+      }
+    },
+    "/pentests/code-audits": {
+      "get": {
+        "description": "Returns all AI Code Analysis (code audit) assessments in your account, newest first.",
+        "operationId": "listCodeAudits",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PageParam"
+          },
+          {
+            "$ref": "#/components/parameters/PageSizeParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "format": "array",
+                  "items": {
+                    "example": {
+                      "created_at": 1760000000,
+                      "id": "f19e449d-2bf0-8d37-ab9a-3bcbc748157d",
+                      "name": "Main repository audit",
+                      "status": "completed"
+                    },
+                    "format": "object",
+                    "properties": {
+                      "created_at": {
+                        "description": "A unix timestamp (in seconds) indicating when the assessment was created",
+                        "type": "integer"
+                      },
+                      "id": {
+                        "description": "The unique UUID of the assessment. Can be used with the assessment detail endpoint and as filter_assessment_id when exporting issues.",
+                        "format": "uuid",
+                        "type": "string"
+                      },
+                      "name": {
+                        "description": "The name of the assessment",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "status": {
+                        "description": "The current status of the assessment",
+                        "enum": [
+                          "pending",
+                          "running",
+                          "completed",
+                          "cancelled",
+                          "failed"
+                        ],
+                        "type": "string"
+                      }
+                    },
+                    "title": "AI Code Analysis assessment"
+                  }
+                }
+              }
+            },
+            "description": "A list of AI Code Analysis assessments"
+          }
+        },
+        "security": [
+          {
+            "oauth": [
+              "pentests:read"
+            ]
+          }
+        ],
+        "summary": "List AI Code Analysis assessments"
       }
     },
     "/pentests/issues/{issue_id}/attackAnalysis": {

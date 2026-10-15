@@ -2982,6 +2982,11 @@
     },
     "flags": {
       "properties": {
+        "filter_assessment_id": {
+          "description": "The unique UUID of the assessment",
+          "format": "uuid",
+          "type": "string"
+        },
         "filter_code_repo_id": {
           "description": "Unique ID of the code repository",
           "type": "integer"
@@ -3125,6 +3130,7 @@
           "actionable_at": 1700490012,
           "affected_file": "index.php",
           "affected_package": "minimist",
+          "assessment_id": null,
           "attack_surface": "backend",
           "closed_at": null,
           "code_repo_branch_name": "main",
@@ -3177,6 +3183,12 @@
           },
           "affected_package": {
             "description": "The name of affected open-source package, if any",
+            "type": "string"
+          },
+          "assessment_id": {
+            "description": "The UUID of the pentest or AI Code Analysis assessment that found this issue. Only set for ai_pentest and agentic_review issues.",
+            "format": "uuid",
+            "nullable": true,
             "type": "string"
           },
           "attack_surface": {
@@ -7907,6 +7919,7 @@
             "golang",
             "hex",
             "homebrew",
+            "huggingface",
             "jetbrains",
             "maven",
             "npm",
@@ -7920,6 +7933,7 @@
             "skills_sh",
             "snyk",
             "swift",
+            "terraform",
             "vscode",
             "visual_studio",
             "webpage",
@@ -9065,6 +9079,57 @@
       "required": [
         "id",
         "name"
+      ],
+      "type": "object"
+    },
+    "response_types": [
+      "application/json"
+    ]
+  },
+  "ignoreCodeQualityRepoFinding": {
+    "command": "code-quality-finding ignore",
+    "method": "PUT",
+    "path": "/code-quality/repo-findings/{finding_id}/ignore",
+    "scope": "code_quality:write",
+    "args": {
+      "properties": {
+        "finding_id": {
+          "description": "The ID of the finding",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "finding_id"
+      ],
+      "type": "object"
+    },
+    "flags": {
+      "properties": {},
+      "type": "object"
+    },
+    "body": {
+      "example": {
+        "reason": "Finding is not relevant here"
+      },
+      "properties": {
+        "reason": {
+          "description": "A reason for ignoring the finding",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "response": {
+      "example": {
+        "status": "ok"
+      },
+      "properties": {
+        "status": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "status"
       ],
       "type": "object"
     },
@@ -10535,6 +10600,65 @@
       "application/json"
     ]
   },
+  "listCodeAudits": {
+    "command": "pentest-code-audit list",
+    "method": "GET",
+    "path": "/pentests/code-audits",
+    "scope": "pentests:read",
+    "args": {
+      "properties": {},
+      "type": "object"
+    },
+    "flags": {
+      "properties": {},
+      "type": "object"
+    },
+    "response": {
+      "items": {
+        "example": {
+          "created_at": 1760000000,
+          "id": "f19e449d-2bf0-8d37-ab9a-3bcbc748157d",
+          "name": "Main repository audit",
+          "status": "completed"
+        },
+        "properties": {
+          "created_at": {
+            "description": "A unix timestamp (in seconds) indicating when the assessment was created",
+            "type": "integer"
+          },
+          "id": {
+            "description": "The unique UUID of the assessment. Can be used with the assessment detail endpoint and as filter_assessment_id when exporting issues.",
+            "format": "uuid",
+            "type": "string"
+          },
+          "name": {
+            "description": "The name of the assessment",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "status": {
+            "description": "The current status of the assessment",
+            "enum": [
+              "pending",
+              "running",
+              "completed",
+              "cancelled",
+              "failed"
+            ],
+            "type": "string"
+          }
+        },
+        "title": "AI Code Analysis assessment",
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "response_types": [
+      "application/json"
+    ]
+  },
   "listCodeQualityFindingsForPullRequest": {
     "command": "code-quality-pr-finding list",
     "method": "GET",
@@ -11695,6 +11819,7 @@
             "enum": [
               "offline",
               "not_protected",
+              "upgrade_needed",
               "protected"
             ],
             "type": "string"
@@ -11846,6 +11971,10 @@
             "wordpress",
             "skills_sh"
           ],
+          "type": "string"
+        },
+        "filter_package_name": {
+          "description": "Only return packages whose name matches this search term",
           "type": "string"
         }
       },
@@ -12878,6 +13007,63 @@
           }
         },
         "title": "PendingInvite",
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "response_types": [
+      "application/json"
+    ]
+  },
+  "listPentestAssessments": {
+    "command": "pentest-assessment list",
+    "method": "GET",
+    "path": "/pentests/assessments",
+    "scope": "pentests:read",
+    "args": {
+      "properties": {},
+      "type": "object"
+    },
+    "flags": {
+      "properties": {},
+      "type": "object"
+    },
+    "response": {
+      "items": {
+        "example": {
+          "created_at": 1760000000,
+          "id": "f19e449d-2bf0-8d37-ab9a-3bcbc748157d",
+          "name": "Production web app pentest",
+          "status": "completed"
+        },
+        "properties": {
+          "created_at": {
+            "description": "A unix timestamp (in seconds) indicating when the assessment was created",
+            "type": "integer"
+          },
+          "id": {
+            "description": "The unique UUID of the assessment. Can be used with the assessment detail endpoint and as filter_assessment_id when exporting issues.",
+            "format": "uuid",
+            "type": "string"
+          },
+          "name": {
+            "description": "The name of the assessment",
+            "type": "string"
+          },
+          "status": {
+            "description": "The current status of the assessment",
+            "enum": [
+              "pending",
+              "running",
+              "paused",
+              "completed",
+              "cancelled",
+              "failed"
+            ],
+            "type": "string"
+          }
+        },
+        "title": "pentest assessment",
         "type": "object"
       },
       "type": "array"

@@ -140,6 +140,12 @@ code-coverage list
 	GET /code-coverage/repositories scope=code_coverage:read paged=per_page:100:empty:items=code_coverage_repositories
 	--branch-name string
 	--limit int64
+code-quality-finding ignore <finding_id>
+	PUT /code-quality/repo-findings/{finding_id}/ignore scope=code_quality:write
+	--body string
+	--body-file string
+	--dry-run bool
+	--reason string body
 code-quality-finding list
 	GET /code-quality/repo-findings scope=code_quality:read paged=per_page:100:header:items=findings
 	--code-repo-id int64 required
@@ -391,6 +397,7 @@ endpoint-package list
 	GET /endpoint-protection/installed-packages scope=endpoint_protection:read paged=per_page:100:empty
 	--filter-device int64
 	--filter-ecosystem string
+	--filter-package-name string
 	--limit int64
 endpoint-permission-group list
 	GET /endpoint-protection/permission-groups scope=endpoint_protection:read
@@ -496,6 +503,7 @@ internal-package create
 	--package-name string required body
 issue export
 	GET /issues/export scope=issues:read
+	--filter-assessment-id string
 	--filter-code-repo-id int64
 	--filter-code-repo-name string
 	--filter-container-repo-id int64
@@ -681,8 +689,14 @@ pentest-assessment create
 	--repository-name string body
 pentest-assessment get <assessment_id>
 	GET /pentests/assessments/{assessment_id}/detail scope=pentests:read
+pentest-assessment list
+	GET /pentests/assessments scope=pentests:read paged=per_page:100:empty
+	--limit int64
 pentest-attack-analysis get <issue_id>
 	GET /pentests/issues/{issue_id}/attackAnalysis scope=pentests:read
+pentest-code-audit list
+	GET /pentests/code-audits scope=pentests:read paged=per_page:100:empty
+	--limit int64
 pr-check get <scan_id>
 	GET /report/ciScans/{scan_id}/detail scope=reports:read
 pr-check list

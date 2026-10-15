@@ -9,8 +9,8 @@ import (
 
 // SpecUpdatedAt and SpecSHA256 identify the spec snapshot this catalog was generated from.
 const (
-	SpecUpdatedAt = "2026-10-07T16:34:44Z"
-	SpecSHA256    = "00fce93c2b796b928952fc2a137862ea4b92e3140e474918611aa79f4fc158ce"
+	SpecUpdatedAt = "2026-10-12T14:15:40Z"
+	SpecSHA256    = "5dc3aa686f5494a67eecbffb23f74d91e2e3e71104cb71af6fd26f1aeeb199e8"
 )
 
 // All is every generated command, sorted by command.
@@ -385,6 +385,23 @@ var All = []ops.Op{
 			{Name: "branch_name", Kind: ops.String, Required: false, Usage: "Optional branch name to filter coverage by. When omitted, results for each repository's default branch are returned."},
 		},
 		Paging: &api.Paging{End: api.EndEmpty, SizeParam: "per_page", Size: 100, Items: "code_coverage_repositories", More: ""},
+	},
+	{
+		ID:          "ignoreCodeQualityRepoFinding",
+		Command:     "code-quality-finding ignore",
+		Method:      "PUT",
+		Path:        "/code-quality/repo-findings/{finding_id}/ignore",
+		Summary:     "Ignore a code quality finding",
+		Description: "Ignores an open code quality finding. Use the finding id returned by the repo-findings list endpoint.",
+		Scope:       "code_quality:write",
+		Args: []ops.Param{
+			{Name: "finding_id", Kind: ops.Integer, Required: true, Usage: "The ID of the finding"},
+		},
+		Body: &ops.Body{Required: false, Object: true,
+			Fields: []ops.Param{
+				{Name: "reason", Kind: ops.String, Required: false, Usage: "A reason for ignoring the finding"},
+			},
+		},
 	},
 	{
 		ID:          "listCodeQualityFullRepoFindings",
@@ -1102,6 +1119,7 @@ var All = []ops.Op{
 		Flags: []ops.Param{
 			{Name: "filter_device", Kind: ops.Integer, Required: false, Usage: "The ID of the device to filter the installed packages by"},
 			{Name: "filter_ecosystem", Kind: ops.String, Required: false, Usage: "The ecosystem of the installed packages (one of: npm, cargo, pypi, packagist, golang, maven, nuget, ruby, open_vsx, github_act, vscode, chrome, wordpress, skills_sh)"},
+			{Name: "filter_package_name", Kind: ops.String, Required: false, Usage: "Only return packages whose name matches this search term"},
 		},
 		Paging: &api.Paging{End: api.EndEmpty, SizeParam: "per_page", Size: 100, Items: "", More: ""},
 	},
@@ -1437,6 +1455,7 @@ var All = []ops.Op{
 		Help:        "Aikido ignores --filter-issue-group-id, and --filter-status all without --filter-code-repo-id fails with 400 \"Request too big\".",
 		Scope:       "issues:read",
 		Flags: []ops.Param{
+			{Name: "filter_assessment_id", Kind: ops.String, Required: false, Usage: "A filter to only export issues found by a given pentest or AI Code Analysis assessment"},
 			{Name: "filter_code_repo_id", Kind: ops.Integer, Required: false, Usage: "A filter to only export issues that belong to a given code repo"},
 			{Name: "filter_code_repo_name", Kind: ops.String, Required: false, Usage: "A filter to only export issues that belong to a code repo which matches this name exactly"},
 			{Name: "filter_container_repo_id", Kind: ops.Integer, Required: false, Usage: "A filter to only export issues that belong to a given container repo"},
@@ -1890,7 +1909,7 @@ var All = []ops.Op{
 		Description: "Returns a health score and summary for each requested package version that has been scored. Packages must use the name@version format. Maven package names must include the group and artifact IDs, for example org.springframework:spring-core@6.2.3. Packages without a score are not included. A missing result does not mean that the package or version does not exist.",
 		Scope:       "research:read",
 		Flags: []ops.Param{
-			{Name: "ecosystem", Kind: ops.String, Required: true, Usage: "The ecosystem of the packages to look up. All packages in the request must belong to this ecosystem. (one of: cargo, clawhub, cpan, chrome, cocoapods, drupal_packagist, eclipse, edge, firefox, github, github_actions, golang, hex, homebrew, jetbrains, maven, npm, nuget, open_vsx, packagist, powershell_gallery, pub, pypi, ruby, skills_sh, snyk, swift, vscode, visual_studio, webpage, wordpress; required)"},
+			{Name: "ecosystem", Kind: ops.String, Required: true, Usage: "The ecosystem of the packages to look up. All packages in the request must belong to this ecosystem. (one of: cargo, clawhub, cpan, chrome, cocoapods, drupal_packagist, eclipse, edge, firefox, github, github_actions, golang, hex, homebrew, huggingface, jetbrains, maven, npm, nuget, open_vsx, packagist, powershell_gallery, pub, pypi, ruby, skills_sh, snyk, swift, terraform, vscode, visual_studio, webpage, wordpress; required)"},
 			{Name: "packages", Kind: ops.String, Required: true, Usage: "Comma-separated list of package versions in name@version format. For Maven packages, use group:artifact@version. You can request up to 100 package versions at a time. If the request URL becomes too long, split the list across multiple requests. (required)"},
 		},
 	},
@@ -1943,6 +1962,16 @@ var All = []ops.Op{
 		},
 	},
 	{
+		ID:          "listPentestAssessments",
+		Command:     "pentest-assessment list",
+		Method:      "GET",
+		Path:        "/pentests/assessments",
+		Summary:     "List pentest assessments",
+		Description: "Returns all pentest assessments in your account, newest first. Draft assessments are not included.",
+		Scope:       "pentests:read",
+		Paging:      &api.Paging{End: api.EndEmpty, SizeParam: "per_page", Size: 100, Items: "", More: ""},
+	},
+	{
 		ID:          "getAttackAnalysis",
 		Command:     "pentest-attack-analysis get",
 		Method:      "GET",
@@ -1953,6 +1982,16 @@ var All = []ops.Op{
 		Args: []ops.Param{
 			{Name: "issue_id", Kind: ops.Integer, Required: true, Usage: "The unique ID of the individual pentest issue"},
 		},
+	},
+	{
+		ID:          "listCodeAudits",
+		Command:     "pentest-code-audit list",
+		Method:      "GET",
+		Path:        "/pentests/code-audits",
+		Summary:     "List AI Code Analysis assessments",
+		Description: "Returns all AI Code Analysis (code audit) assessments in your account, newest first.",
+		Scope:       "pentests:read",
+		Paging:      &api.Paging{End: api.EndEmpty, SizeParam: "per_page", Size: 100, Items: "", More: ""},
 	},
 	{
 		ID:          "getCiScanDetail",

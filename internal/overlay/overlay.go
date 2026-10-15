@@ -71,6 +71,7 @@ var Ops = map[string]Op{
 	"getCodeCoverageForRepository": {Cmd: "code-coverage get"},
 	// Spec: {code_coverage_repositories} with page/per_page; not checked live, the READ clients lack code_coverage:read (2026-10-08).
 	"listAllCodeCoverageRepositories":       {Cmd: "code-coverage list", Page: Page{End: api.EndEmpty, Items: "code_coverage_repositories"}},
+	"ignoreCodeQualityRepoFinding":          {Cmd: "code-quality-finding ignore"},
 	"listCodeQualityFullRepoFindings":       {Cmd: "code-quality-finding list", Page: Page{End: api.EndHeader, Items: "findings"}},
 	"listCodeQualityFindingsForPullRequest": {Cmd: "code-quality-pr-finding list"},
 	// Spec: access_token is the access token used for code scanning.
@@ -201,10 +202,14 @@ var Ops = map[string]Op{
 	// Spec: custom_headers maps header names to the values a pentest sends, which hold its credentials.
 	"createPentestDraftAssessment": {Cmd: "pentest-assessment create", Secret: []string{"custom_headers"}},
 	"getPentestAssessmentDetail":   {Cmd: "pentest-assessment get"},
-	"getAttackAnalysis":            {Cmd: "pentest-attack-analysis get"},
-	"getCiScanDetail":              {Cmd: "pr-check get"},
-	"listCiScans":                  {Cmd: "pr-check list", Page: UntilEmpty},
-	"listCiScanIssueActions":       {Cmd: "pr-check-action list", Page: UntilEmpty},
+	// Live 2026-10-15: an array; neither workspace has an assessment, so paging past the end is unchecked.
+	"listPentestAssessments": {Cmd: "pentest-assessment list", Page: UntilEmpty},
+	"getAttackAnalysis":      {Cmd: "pentest-attack-analysis get"},
+	// Live 2026-10-15: an array, empty past the last page.
+	"listCodeAudits":         {Cmd: "pentest-code-audit list", Page: UntilEmpty},
+	"getCiScanDetail":        {Cmd: "pr-check get"},
+	"listCiScans":            {Cmd: "pr-check list", Page: UntilEmpty},
+	"listCiScanIssueActions": {Cmd: "pr-check-action list", Page: UntilEmpty},
 	// Spec types the 200 as one object; a live call on 2026-09-30 returned a JSON array.
 	"listPRChecksConfigurations": {Cmd: "pr-check-config list", Page: UntilEmpty, ResponseArray: true},
 	"savePRChecksConfiguration":  {Cmd: "pr-check-config update"},
