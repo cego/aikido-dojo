@@ -6373,6 +6373,82 @@
         "summary": "Add Subdomain"
       }
     },
+    "/domains/{domain_id}/subdomains/{subdomain_id}": {
+      "delete": {
+        "description": "Removes a subdomain from a attack surface domain",
+        "operationId": "removeSubdomain",
+        "parameters": [
+          {
+            "description": "The ID of the domain to remove the subdomain from",
+            "in": "path",
+            "name": "domain_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "The id of the subdomain to remove",
+            "in": "path",
+            "name": "subdomain_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": 1
+                  },
+                  "format": "object",
+                  "properties": {
+                    "success": {
+                      "description": "The integer 1 indicating success",
+                      "title": "success",
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "The subdomain has been removed successfully"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "format": "object",
+                  "properties": {
+                    "error": {
+                      "description": "A human friendly reason why the request failed",
+                      "title": "error",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Subdomain could not be removed"
+          }
+        },
+        "security": [
+          {
+            "oauth": [
+              "domains:write"
+            ]
+          }
+        ],
+        "summary": "Remove Subdomain"
+      }
+    },
     "/domains/{domain_id}/update/openapi-spec": {
       "put": {
         "description": "Updates the OpenAPI spec of a domain with a specified id",
@@ -6537,6 +6613,13 @@
                       "device_id": 7,
                       "device_name": "dev-laptop-01",
                       "timestamp": 1713586140
+                    },
+                    {
+                      "action": "domain_blocked",
+                      "device_id": 7,
+                      "device_name": "dev-laptop-01",
+                      "domain": "malicious-example.com",
+                      "timestamp": 1713586140
                     }
                   ],
                   "format": "array",
@@ -6553,6 +6636,10 @@
                       },
                       "device_name": {
                         "title": "name of the device that triggered the log",
+                        "type": "string"
+                      },
+                      "domain": {
+                        "title": "the domain involved (for domain-related actions, e.g. domain_blocked, domain_monitored). Omitted when not applicable to the action.",
                         "type": "string"
                       },
                       "ecosystem": {
@@ -13594,6 +13681,7 @@
               "schema": {
                 "description": "",
                 "example": {
+                  "additional_notes": "To test payment features the following card number can be used and will be accepted: 4242 4242 4242 4242, exp date: 12/34, CVC: 123",
                   "domains": [
                     "https://example.com",
                     "https://api.example.com"
@@ -13607,6 +13695,11 @@
                 },
                 "format": "object",
                 "properties": {
+                  "additional_notes": {
+                    "description": "Optional notes for the assessment, such as test accounts or behavior the code and documentation do not cover. Shown as additional notes in the draft.",
+                    "maxLength": 2000,
+                    "type": "string"
+                  },
                   "custom_headers": {
                     "description": "A map of custom headers to include in the assessment. Must be of format {header_name: header_value, ...}",
                     "type": "object"
@@ -17721,6 +17814,87 @@
           }
         ],
         "summary": "Deactivate code repo"
+      }
+    },
+    "/repositories/code/environment-variables": {
+      "post": {
+        "description": "Add or update environment variables, including Gradle private registry variables such as ORG_GRADLE_PROJECT_*. An environment variable that already exists is overwritten. Keys omitted from the request are left unchanged. This endpoint does not delete environment variables.",
+        "operationId": "setEnvironmentVariables",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "env_vars": [
+                    {
+                      "key": "ORG_GRADLE_PROJECT_mavenRepoPassword",
+                      "value": "secret"
+                    }
+                  ]
+                },
+                "properties": {
+                  "env_vars": {
+                    "description": "Environment variables stored to store. Existing keys are overwritten. Keys omitted from this list are left unchanged.",
+                    "items": {
+                      "properties": {
+                        "key": {
+                          "description": "Environment variable name",
+                          "type": "string"
+                        },
+                        "value": {
+                          "description": "Environment variable value",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "key",
+                        "value"
+                      ],
+                      "type": "object"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "env_vars"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "description": "Environment variables to store",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": 1
+                  },
+                  "properties": {
+                    "success": {
+                      "description": "The integer 1 indicating success",
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "The environment variables have been stored."
+          }
+        },
+        "security": [
+          {
+            "oauth": [
+              "repositories:write"
+            ]
+          }
+        ],
+        "summary": "Set environment variables"
       }
     },
     "/repositories/code/iac/rules": {
@@ -22634,6 +22808,70 @@
           }
         ],
         "summary": "Get user"
+      }
+    },
+    "/users/{user_id}/disable": {
+      "put": {
+        "description": "Disable (remove from the workspace) the specified user",
+        "operationId": "disableUser",
+        "parameters": [
+          {
+            "description": "The ID of the user",
+            "in": "path",
+            "name": "user_id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": 1
+                  },
+                  "format": "object",
+                  "properties": {
+                    "success": {
+                      "description": "The integer 1 indicating success",
+                      "title": "success",
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "The user has successfully been disabled"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "format": "object",
+                  "properties": {
+                    "reason_phrase": {
+                      "description": "A human friendly reason why the request failed",
+                      "title": "reason_phrase",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "The user has not been found"
+          }
+        },
+        "security": [
+          {
+            "oauth": [
+              "users:write"
+            ]
+          }
+        ],
+        "summary": "Disable user"
       }
     },
     "/users/{user_id}/rights": {
