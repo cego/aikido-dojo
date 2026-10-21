@@ -199,8 +199,8 @@ var Ops = map[string]Op{
 	"getOpenApiSpec":             {Cmd: "openapi-spec get"},
 	"getPackageHealthBulk":       {Cmd: "package-health list"},
 	"overwriteLicenseForPackage": {Cmd: "package-license update"},
-	// Spec: custom_headers maps header names to the values a pentest sends, which hold its credentials.
-	"createPentestDraftAssessment": {Cmd: "pentest-assessment create", Secret: []string{"custom_headers"}},
+	// Spec: custom_headers maps header names to the values a pentest sends, which hold its credentials; additional_notes is for test accounts.
+	"createPentestDraftAssessment": {Cmd: "pentest-assessment create", Secret: []string{"additional_notes", "custom_headers"}},
 	"getPentestAssessmentDetail":   {Cmd: "pentest-assessment get"},
 	// Live 2026-10-15: an array; neither workspace has an assessment, so paging past the end is unchecked.
 	"listPentestAssessments": {Cmd: "pentest-assessment list", Page: UntilEmpty},
@@ -226,10 +226,12 @@ var Ops = map[string]Op{
 	"detailCodeRepo":            {Cmd: "repo get"},
 	"importNewCodeRepositories": {Cmd: "repo import"},
 	// Spec types the 200 as one object; a live call on 2026-09-29 returned a JSON array.
-	"listCodeRepos":                 {Cmd: "repo list", Page: UntilEmpty, ResponseArray: true},
-	"scanCodeRepo":                  {Cmd: "repo scan"},
-	"updateCodeRepoConnectivity":    {Cmd: "repo-connectivity update"},
-	"updateCodeRepoDevDepScan":      {Cmd: "repo-dev-dep-scan update"},
+	"listCodeRepos":              {Cmd: "repo list", Page: UntilEmpty, ResponseArray: true},
+	"scanCodeRepo":               {Cmd: "repo scan"},
+	"updateCodeRepoConnectivity": {Cmd: "repo-connectivity update"},
+	"updateCodeRepoDevDepScan":   {Cmd: "repo-dev-dep-scan update"},
+	// Spec: env_vars holds values such as private registry passwords.
+	"setEnvironmentVariables":       {Cmd: "repo-env-var update", Secret: []string{"env_vars"}},
 	"addCodeRepoExcludePath":        {Cmd: "repo-exclude-path create"},
 	"removeCodeRepoExcludePath":     {Cmd: "repo-exclude-path delete"},
 	"addCodeRepoLabel":              {Cmd: "repo-label create"},
@@ -246,6 +248,7 @@ var Ops = map[string]Op{
 	"listSastRules":                 {Cmd: "sast-rule list"},
 	"getSlaSettings":                {Cmd: "sla-config get"},
 	"addSubdomain":                  {Cmd: "subdomain create"},
+	"removeSubdomain":               {Cmd: "subdomain delete"},
 	"listSubdomains":                {Cmd: "subdomain list", Page: UntilEmpty},
 	"getTasks":                      {Cmd: "task list"},
 	"listTaskTrackingIntegrations":  {Cmd: "task-integration list"},
@@ -263,6 +266,7 @@ var Ops = map[string]Op{
 	"updateTeamRepoPathLimitation":  {Cmd: "team-repo-path-limitation update"},
 	"linkResourceToTeam":            {Cmd: "team-resource create"},
 	"unlinkResourceFromTeam":        {Cmd: "team-resource delete"},
+	"disableUser":                   {Cmd: "user deactivate"},
 	// Spec bounds user_id to 0..1, copied from listUsers.include_inactive; live on 2026-10-02, GET /users/{id} with an id above 1 answered 200.
 	"getUser":              {Cmd: "user get", Unbounded: []string{"user_id"}},
 	"listUsers":            {Cmd: "user list"},

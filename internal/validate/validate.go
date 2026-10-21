@@ -1,7 +1,7 @@
 // Package validate checks a decoded JSON value against the part of JSON
 // Schema the spec's inputs use: type, properties, required, enum, const,
-// minimum, maximum, items, minItems and oneOf. A value outside an enum only
-// warns, because the spec's enums are known to be incomplete.
+// minimum, maximum, maxLength, items, minItems and oneOf. A value outside an
+// enum only warns, because the spec's enums are known to be incomplete.
 package validate
 
 import (
@@ -11,6 +11,7 @@ import (
 	"reflect"
 	"slices"
 	"strings"
+	"unicode/utf8"
 )
 
 type Issue struct {
@@ -73,6 +74,8 @@ func check(s map[string]any, v any, path []string, r *Result) {
 	switch x := v.(type) {
 	case json.Number:
 		checkRange(s, x, path, r)
+	case string:
+		checkLength(s, x, path, r)
 	case map[string]any:
 		checkObject(s, x, path, r)
 	case []any:
@@ -93,6 +96,13 @@ func checkRange(s map[string]any, n json.Number, path []string, r *Result) {
 	}
 	if hi, ok := number(s["maximum"]); ok && f > hi {
 		r.fail(path, "want at most "+show(s["maximum"])+", got "+n.String())
+	}
+}
+
+// checkLength counts characters, as JSON Schema does, not bytes.
+func checkLength(s map[string]any, str string, path []string, r *Result) {
+	if hi, ok := number(s["maxLength"]); ok && float64(utf8.RuneCountInString(str)) > hi {
+		r.fail(path, fmt.Sprintf("want at most %s characters, got %d", show(s["maxLength"]), utf8.RuneCountInString(str)))
 	}
 }
 

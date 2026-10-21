@@ -53,6 +53,8 @@ func TestCheck(t *testing.T) {
 		{name: "a const", schema: `{"const": true}`, value: `false`, errs: []string{"body: want true, got false"}},
 		{name: "below the minimum", schema: `{"type": "integer", "minimum": 10, "maximum": 20}`, value: `5`, errs: []string{"body: want at least 10, got 5"}},
 		{name: "above the maximum", schema: `{"type": "integer", "minimum": 10, "maximum": 20}`, value: `25`, errs: []string{"body: want at most 20, got 25"}},
+		{name: "too long", schema: `{"type": "string", "maxLength": 3}`, value: `"abcd"`, errs: []string{"body: want at most 3 characters, got 4"}},
+		{name: "length counts characters, not bytes", schema: `{"type": "string", "maxLength": 3}`, value: `"æøå"`},
 		{name: "unknown properties pass", schema: `{"type": "object", "properties": {}}`, value: `{"x": 1}`},
 		{name: "one shape matches", schema: shapes, value: `{"enabled": true, "ids": []}`},
 		{name: "no shape matches", schema: shapes, value: `{"enabled": "yes"}`,

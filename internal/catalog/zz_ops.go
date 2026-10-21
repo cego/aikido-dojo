@@ -9,8 +9,8 @@ import (
 
 // SpecUpdatedAt and SpecSHA256 identify the spec snapshot this catalog was generated from.
 const (
-	SpecUpdatedAt = "2026-10-12T14:15:40Z"
-	SpecSHA256    = "5dc3aa686f5494a67eecbffb23f74d91e2e3e71104cb71af6fd26f1aeeb199e8"
+	SpecUpdatedAt = "2026-10-16T14:18:39Z"
+	SpecSHA256    = "2d7c496c388b26d58809ea21ce194b61afa7fd05e2b643397e3d0b50bd49cd46"
 )
 
 // All is every generated command, sorted by command.
@@ -1946,7 +1946,7 @@ var All = []ops.Op{
 				{Name: "repository_download_url", Kind: ops.String, Required: false, Usage: "URL to download a custom code repository. Must be provided together with 'repository_name'. If provided, 'repository_ids' should not be provided."},
 				{Name: "repository_name", Kind: ops.String, Required: false, Usage: "Name for the custom code repository. Must be provided together with 'repository_download_url'. If provided, 'repository_ids' should not be provided."},
 			},
-			Secret: []string{"custom_headers"},
+			Secret: []string{"additional_notes", "custom_headers"},
 		},
 	},
 	{
@@ -2291,6 +2291,18 @@ var All = []ops.Op{
 		},
 	},
 	{
+		ID:          "setEnvironmentVariables",
+		Command:     "repo-env-var update",
+		Method:      "POST",
+		Path:        "/repositories/code/environment-variables",
+		Summary:     "Set environment variables",
+		Description: "Add or update environment variables, including Gradle private registry variables such as ORG_GRADLE_PROJECT_*. An environment variable that already exists is overwritten. Keys omitted from the request are left unchanged. This endpoint does not delete environment variables.",
+		Scope:       "repositories:write",
+		Body: &ops.Body{Required: true, Object: true,
+			Secret: []string{"env_vars"},
+		},
+	},
+	{
 		ID:          "addCodeRepoExcludePath",
 		Command:     "repo-exclude-path create",
 		Method:      "POST",
@@ -2538,6 +2550,20 @@ var All = []ops.Op{
 				{Name: "subdomain_name", Kind: ops.String, Required: true, Usage: "Subdomain part of the domain name. This should not include the domain name. eg. 'apidocs' for 'apidocs.aikido.dev' (required)"},
 			},
 		},
+	},
+	{
+		ID:          "removeSubdomain",
+		Command:     "subdomain delete",
+		Method:      "DELETE",
+		Path:        "/domains/{domain_id}/subdomains/{subdomain_id}",
+		Summary:     "Remove Subdomain",
+		Description: "Removes a subdomain from a attack surface domain",
+		Scope:       "domains:write",
+		Args: []ops.Param{
+			{Name: "domain_id", Kind: ops.Integer, Required: true, Usage: "The ID of the domain to remove the subdomain from"},
+			{Name: "subdomain_id", Kind: ops.String, Required: true, Usage: "The id of the subdomain to remove"},
+		},
+		Destructive: true,
 	},
 	{
 		ID:          "listSubdomains",
@@ -2794,6 +2820,19 @@ var All = []ops.Op{
 				{Name: "repo_id", Kind: ops.Integer, Required: false, Usage: "The id of a repo to unlink."},
 				{Name: "zen_app_id", Kind: ops.Integer, Required: false, Usage: "The id of a zen app to unlink."},
 			},
+		},
+		Destructive: true,
+	},
+	{
+		ID:          "disableUser",
+		Command:     "user deactivate",
+		Method:      "PUT",
+		Path:        "/users/{user_id}/disable",
+		Summary:     "Disable user",
+		Description: "Disable (remove from the workspace) the specified user",
+		Scope:       "users:write",
+		Args: []ops.Param{
+			{Name: "user_id", Kind: ops.Integer, Required: true, Usage: "The ID of the user"},
 		},
 		Destructive: true,
 	},
