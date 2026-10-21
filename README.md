@@ -101,3 +101,7 @@ An error is one JSON object on stderr: `{"error":{"code":…,"message":…,"hint
 
 Apache License 2.0; see [LICENSE](LICENSE). To report a vulnerability, see
 [SECURITY.md](SECURITY.md).
+
+`internal/helpdocs/pages` is a copy of Aikido Security's help centre (https://help.aikido.dev),
+included with Aikido's permission. It is Aikido's documentation and is not covered by the Apache
+License.
