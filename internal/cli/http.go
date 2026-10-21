@@ -22,7 +22,19 @@ func newHTTPClient(env Env, host string, debug bool) *http.Client {
 	if debug {
 		rt = api.Debug(rt, env.Stderr)
 	}
-	return &http.Client{Transport: rt, CheckRedirect: sameHost(host)}
+	return &http.Client{Transport: agentTransport{next: rt, agent: userAgent}, CheckRedirect: sameHost(host)}
+}
+
+// agentTransport sets the User-Agent on a copy of each request, as a RoundTripper must not change the caller's.
+type agentTransport struct {
+	next  http.RoundTripper
+	agent string
+}
+
+func (t agentTransport) RoundTrip(r *http.Request) (*http.Response, error) {
+	r = r.Clone(r.Context())
+	r.Header.Set("User-Agent", t.agent)
+	return t.next.RoundTrip(r) //nolint:wrapcheck // http.Client wraps transport errors itself
 }
 
 // baseTransport is the stdlib's default transport with the header timeout,

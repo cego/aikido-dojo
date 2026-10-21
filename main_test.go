@@ -95,8 +95,8 @@ func TestTenantDataPatterns(t *testing.T) {
 // Tests use hand-written fakes, not recordings, so nothing is scrubbed on
 // the way in; this fails if tenant data reaches a tracked file anyway. It
 // names the file, line and kind, never the text, which CI logs would keep.
-// Skipped: the vendored spec and the catalog generated from it, which are
-// Aikido's own document.
+// Skipped: the vendored spec, the catalog generated from it and the vendored
+// help centre, which are Aikido's own documents.
 func TestRepositoryHoldsNoTenantData(t *testing.T) {
 	if _, err := exec.LookPath("git"); err != nil {
 		t.Skip("git is not installed")
@@ -107,7 +107,7 @@ func TestRepositoryHoldsNoTenantData(t *testing.T) {
 	}
 	generated := []string{"internal/catalog/schemas.json", "internal/catalog/search.json", "internal/catalog/zz_ops.go"}
 	for _, path := range strings.Split(strings.TrimSuffix(string(out), "\x00"), "\x00") {
-		if strings.HasPrefix(path, "spec/") || slices.Contains(generated, path) {
+		if strings.HasPrefix(path, "spec/") || strings.HasPrefix(path, "internal/helpdocs/pages/") || slices.Contains(generated, path) {
 			continue
 		}
 		data, err := os.ReadFile(path) //nolint:gosec // a file git tracks here

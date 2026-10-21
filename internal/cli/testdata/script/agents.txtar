@@ -12,3 +12,8 @@ exec git init -q
 exec git remote add origin git@gitlab.example.com:acme/api.git
 exec aikido-dojo repo current --jq '.[0].repo.id'
 stdout '^1$'
+
+exec aikido-dojo docs search 'limit access to specific IPs'
+stdout '"path":"getting-started/setting-up-your-account/limit-aikido-access-to-specific-ips"'
+exec aikido-dojo docs get getting-started/setting-up-your-account/change-language --jq .markdown
+stdout '^# Change Language'

@@ -32,7 +32,7 @@ func Assemble(ctx context.Context, c *http.Client, indexURL string) (map[string]
 		return fmt.Errorf("refusing redirect to %s", req.URL)
 	}
 	c = &noRedirects
-	index, err := get(ctx, c, indexURL)
+	index, err := Get(ctx, c, indexURL)
 	if err != nil {
 		return nil, time.Time{}, err
 	}
@@ -40,7 +40,7 @@ func Assemble(ctx context.Context, c *http.Client, indexURL string) (map[string]
 	if err != nil {
 		return nil, time.Time{}, fmt.Errorf("%s: %w", indexURL, err)
 	}
-	pages, err := getAll(ctx, c, urls)
+	pages, err := GetAll(ctx, c, urls, fetchConcurrency)
 	if err != nil {
 		return nil, time.Time{}, err
 	}
@@ -67,15 +67,15 @@ func Assemble(ctx context.Context, c *http.Client, indexURL string) (map[string]
 	return spec, newest, nil
 }
 
-// getAll fetches with bounded concurrency and cancels the rest at the first failure.
-func getAll(ctx context.Context, c *http.Client, urls []string) (map[string][]byte, error) {
+// GetAll fetches urls, at most concurrency at a time, and cancels the rest at the first failure.
+func GetAll(ctx context.Context, c *http.Client, urls []string, concurrency int) (map[string][]byte, error) {
 	ctx, cancel := context.WithCancelCause(ctx)
 	defer cancel(nil)
 	var (
 		mu    sync.Mutex
 		wg    sync.WaitGroup
 		pages = make(map[string][]byte, len(urls))
-		sem   = make(chan struct{}, fetchConcurrency)
+		sem   = make(chan struct{}, concurrency)
 	)
 	for _, u := range urls {
 		wg.Go(func() {
@@ -85,7 +85,7 @@ func getAll(ctx context.Context, c *http.Client, urls []string) (map[string][]by
 				return
 			}
 			defer func() { <-sem }()
-			body, err := get(ctx, c, u)
+			body, err := Get(ctx, c, u)
 			if err != nil {
 				cancel(err)
 				return
@@ -102,7 +102,8 @@ func getAll(ctx context.Context, c *http.Client, urls []string) (map[string][]by
 	return pages, nil
 }
 
-func get(ctx context.Context, c *http.Client, u string) ([]byte, error) {
+// Get fetches u and returns its body, refusing a non-200 answer or a body over the cap.
+func Get(ctx context.Context, c *http.Client, u string) ([]byte, error) {
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, u, nil)
 	if err != nil {
 		return nil, fmt.Errorf("get %s: %w", u, err)

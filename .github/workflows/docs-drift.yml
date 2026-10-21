@@ -1,0 +1,99 @@
+name: docs-drift
+
+on:
+  schedule:
+    - cron: "41 5 * * *"
+  workflow_dispatch:
+    inputs:
+      full:
+        description: Refetch every page, not only those the sitemap says changed
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docs-drift
+
+jobs:
+  docs-drift:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # push the docs-drift branch
+      pull-requests: write # open or update its PR
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+      - name: start from the open PR's copy
+        id: pr
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # --head matches a fork's branch of the same name too, so keep only this repository's PR.
+          number=$(gh pr list --head docs-drift --state open --json number,isCrossRepository --jq 'map(select(.isCrossRepository | not)) | .[0].number // ""')
+          echo "number=$number" >> "$GITHUB_OUTPUT"
+          if [ -n "$number" ]; then
+            git fetch --quiet origin docs-drift
+            rm -rf internal/helpdocs/pages
+            git checkout FETCH_HEAD -- internal/helpdocs/pages internal/helpdocs/snapshot.json
+          fi
+      - id: fetch
+        env:
+          FULL: ${{ inputs.full }}
+        run: |
+          args=""
+          if [ "$FULL" = true ] || [ "$(date -u +%d)" = 01 ]; then args=-full; fi
+          go run ./internal/tools/docsfetch $args > "$RUNNER_TEMP/report.json"
+          cat "$RUNNER_TEMP/report.json"
+          echo "pages=$(jq -r '(.changed + .removed | length) > 0' "$RUNNER_TEMP/report.json")" >> "$GITHUB_OUTPUT"
+      # Only page changes make a PR; a moved digest or lastmod alone waits for the next one.
+      - id: check
+        if: steps.fetch.outputs.pages == 'true'
+        run: |
+          git add -A internal/helpdocs
+          {
+            if go vet ./... >"$RUNNER_TEMP/test.log" 2>&1 && go test ./... >>"$RUNNER_TEMP/test.log" 2>&1; then
+              echo "tests=ok"
+            else
+              echo "tests=failed"
+            fi
+          } >> "$GITHUB_OUTPUT"
+      - if: steps.fetch.outputs.pages == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ steps.pr.outputs.number }}
+          TESTS: ${{ steps.check.outputs.tests }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c docs-drift
+          git commit -m "chore(docs): update the help centre copy from help.aikido.dev"
+          git push --force "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:refs/heads/docs-drift
+          body="docsfetch found changes in Aikido's help centre.
+
+          \`\`\`json
+          $(jq . "$RUNNER_TEMP/report.json" | head -c 3000)
+          \`\`\`
+
+          - go vet and go test: ${TESTS}
+
+          A PR opened by this workflow runs no other workflow, so the result above is its check. Logs: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          if [ "$TESTS" = failed ]; then
+            body="${body}
+
+          Test output:
+
+          \`\`\`
+          $(tail -c 3000 "$RUNNER_TEMP/test.log")
+          \`\`\`"
+          fi
+          if [ -n "$PR" ]; then
+            gh pr edit "$PR" --body "$body"
+          else
+            gh pr create --head docs-drift --title "chore(docs): update the help centre copy" --body "$body" --assignee "$GITHUB_ACTOR"
+          fi

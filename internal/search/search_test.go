@@ -83,3 +83,24 @@ func TestRank(t *testing.T) {
 		t.Errorf("repeating a word changed the score: %v vs %v", a[0].Score, b[0].Score)
 	}
 }
+
+func TestCorpusScore(t *testing.T) {
+	c := Corpus{Docs: 3, AvgLen: 4, DF: map[string]int{"token": 1, "repo": 3}}
+	rare := c.Score([]string{"token"}, map[string]int{"token": 1}, 4)
+	common := c.Score([]string{"repo"}, map[string]int{"repo": 1}, 4)
+	if !(rare > common && common > 0) {
+		t.Errorf("rare term scored %v, common %v; want rare > common > 0", rare, common)
+	}
+	if got := c.Score([]string{"absent"}, map[string]int{"token": 1}, 4); got != 0 {
+		t.Errorf("a document without the term scored %v, want 0", got)
+	}
+	if got := (Corpus{}).Score([]string{"token"}, map[string]int{"token": 1}, 0); got != 0 {
+		t.Errorf("an empty corpus scored %v, want 0", got)
+	}
+}
+
+func TestQueryTerms(t *testing.T) {
+	if got, want := QueryTerms("list the repositories, list repos"), []string{"list", "repo", "repository"}; !slices.Equal(got, want) {
+		t.Errorf("QueryTerms = %q, want %q", got, want)
+	}
+}

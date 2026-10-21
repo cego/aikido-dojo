@@ -1,0 +1,20 @@
+# Zen Features
+
+- [Identifying Users and Groups](https://help.aikido.dev/zen-firewall/zen-features/identifying-users-and-groups.md)
+- [Blocking Bot traffic with Zen Firewall](https://help.aikido.dev/zen-firewall/zen-features/blocking-bot-traffic-with-zen-firewall.md)
+- [Blocking or Monitoring Tor traffic with Zen Firewall](https://help.aikido.dev/zen-firewall/zen-features/blocking-tor-traffic-with-zen-firewall.md)
+- [Tracking Users with Zen Firewall](https://help.aikido.dev/zen-firewall/zen-features/blocking-users-with-zen-firewall.md)
+- [Blocking Known Threat Actors with Zen Firewall](https://help.aikido.dev/zen-firewall/zen-features/blocking-known-threat-actors-with-zen-firewall.md)
+- [Blocking Traffic by Country with Zen Firewall](https://help.aikido.dev/zen-firewall/zen-features/blocking-traffic-by-country-with-zen-firewall.md)
+- [Blocking vs Detection Mode in Zen Firewall](https://help.aikido.dev/zen-firewall/zen-features/blocking-vs-detection-mode-in-zen-firewall.md)
+- [Monitor Outbound Domains](https://help.aikido.dev/zen-firewall/zen-features/monitor-outbound-domains.md)
+- [Setting Up Rate Limiting for Routes](https://help.aikido.dev/zen-firewall/zen-features/setting-up-rate-limiting-for-routes.md)
+- [Understanding Your Zen Statistics](https://help.aikido.dev/zen-firewall/zen-features/understanding-your-zen-statistics.md)
+- [Tracking AI / LLM usage with Zen Firewall](https://help.aikido.dev/zen-firewall/zen-features/tracking-ai-llm-usage-with-zen-firewall.md)
+- [Attack Wave Protection](https://help.aikido.dev/zen-firewall/zen-features/attack-wave-protection.md)
+- [Playbooks](https://help.aikido.dev/zen-firewall/zen-features/playbooks.md): Automatically block IPs when Zen sees suspicious behavior in your app.
+- [Webhooks](https://help.aikido.dev/zen-firewall/zen-features/webhooks.md)
+- [Bypassed IPs](https://help.aikido.dev/zen-firewall/zen-features/bypassed-ips.md)
+- [IDOR Protection with Zen Firewall](https://help.aikido.dev/zen-firewall/zen-features/idor-protection-with-zen-firewall.md)
+- [Why is this IP blocked?](https://help.aikido.dev/zen-firewall/zen-features/why-is-this-ip-blocked.md)
+- [Disable Attack Protection for Specific Path or URL](https://help.aikido.dev/zen-firewall/zen-features/disable-attack-protection-for-specific-path-or-url.md)

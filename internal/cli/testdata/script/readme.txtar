@@ -38,3 +38,5 @@ exec aikido-dojo schema issue-group ignore
 stdout '"command":"issue-group ignore"'
 ! exec aikido-dojo --read-only team delete 7
 stderr '"code":"read_only"'
+exec aikido-dojo docs search 'limit access to specific IPs'
+stdout '"title":"Limit Aikido Access to Specific IPs"'
