@@ -200,11 +200,11 @@ func response(ro rawOp) SpecResponse {
 	return SpecResponse{}
 }
 
-// inputKeywords are what an input schema may use: the ten keywords the
+// inputKeywords are what an input schema may use: the eleven keywords the
 // validator enforces, plus annotations it can safely ignore.
 var inputKeywords = map[string]bool{
 	"type": true, "properties": true, "required": true, "enum": true, "const": true,
-	"minimum": true, "maximum": true, "items": true, "minItems": true, "oneOf": true,
+	"minimum": true, "maximum": true, "maxLength": true, "items": true, "minItems": true, "oneOf": true,
 	"description": true, "title": true, "default": true, "example": true, "format": true,
 }
 

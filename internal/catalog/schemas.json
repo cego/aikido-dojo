@@ -1962,6 +1962,7 @@
     "body": {
       "description": "",
       "example": {
+        "additional_notes": "To test payment features the following card number can be used and will be accepted: 4242 4242 4242 4242, exp date: 12/34, CVC: 123",
         "domains": [
           "https://example.com",
           "https://api.example.com"
@@ -1974,6 +1975,11 @@
         ]
       },
       "properties": {
+        "additional_notes": {
+          "description": "Optional notes for the assessment, such as test accounts or behavior the code and documentation do not cover. Shown as additional notes in the draft.",
+          "maxLength": 2000,
+          "type": "string"
+        },
         "custom_headers": {
           "description": "A map of custom headers to include in the assessment. Must be of format {header_name: header_value, ...}",
           "type": "object"
@@ -2567,6 +2573,44 @@
         "branch"
       ],
       "title": "Code repository",
+      "type": "object"
+    },
+    "response_types": [
+      "application/json"
+    ]
+  },
+  "disableUser": {
+    "command": "user deactivate",
+    "method": "PUT",
+    "path": "/users/{user_id}/disable",
+    "scope": "users:write",
+    "args": {
+      "properties": {
+        "user_id": {
+          "description": "The ID of the user",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "user_id"
+      ],
+      "type": "object"
+    },
+    "flags": {
+      "properties": {},
+      "type": "object"
+    },
+    "response": {
+      "example": {
+        "success": 1
+      },
+      "properties": {
+        "success": {
+          "description": "The integer 1 indicating success",
+          "title": "success",
+          "type": "integer"
+        }
+      },
       "type": "object"
     },
     "response_types": [
@@ -11701,6 +11745,13 @@
           "device_id": 7,
           "device_name": "dev-laptop-01",
           "timestamp": 1713586140
+        },
+        {
+          "action": "domain_blocked",
+          "device_id": 7,
+          "device_name": "dev-laptop-01",
+          "domain": "malicious-example.com",
+          "timestamp": 1713586140
         }
       ],
       "items": {
@@ -11715,6 +11766,10 @@
           },
           "device_name": {
             "title": "name of the device that triggered the log",
+            "type": "string"
+          },
+          "domain": {
+            "title": "the domain involved (for domain-related actions, e.g. domain_blocked, domain_monitored). Omitted when not applicable to the action.",
             "type": "string"
           },
           "ecosystem": {
@@ -14707,6 +14762,52 @@
       "application/json"
     ]
   },
+  "removeSubdomain": {
+    "command": "subdomain delete",
+    "method": "DELETE",
+    "path": "/domains/{domain_id}/subdomains/{subdomain_id}",
+    "scope": "domains:write",
+    "args": {
+      "properties": {
+        "domain_id": {
+          "description": "The ID of the domain to remove the subdomain from",
+          "format": "int32",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "subdomain_id": {
+          "description": "The id of the subdomain to remove",
+          "format": "uuid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "domain_id",
+        "subdomain_id"
+      ],
+      "type": "object"
+    },
+    "flags": {
+      "properties": {},
+      "type": "object"
+    },
+    "response": {
+      "example": {
+        "success": 1
+      },
+      "properties": {
+        "success": {
+          "description": "The integer 1 indicating success",
+          "title": "success",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "response_types": [
+      "application/json"
+    ]
+  },
   "removeUserFromTeam": {
     "command": "team-member delete",
     "method": "POST",
@@ -15498,6 +15599,73 @@
           "description": "Whether the code scanning access token has been updated",
           "title": "success",
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "response_types": [
+      "application/json"
+    ]
+  },
+  "setEnvironmentVariables": {
+    "command": "repo-env-var update",
+    "method": "POST",
+    "path": "/repositories/code/environment-variables",
+    "scope": "repositories:write",
+    "args": {
+      "properties": {},
+      "type": "object"
+    },
+    "flags": {
+      "properties": {},
+      "type": "object"
+    },
+    "body": {
+      "example": {
+        "env_vars": [
+          {
+            "key": "ORG_GRADLE_PROJECT_mavenRepoPassword",
+            "value": "secret"
+          }
+        ]
+      },
+      "properties": {
+        "env_vars": {
+          "description": "Environment variables stored to store. Existing keys are overwritten. Keys omitted from this list are left unchanged.",
+          "items": {
+            "properties": {
+              "key": {
+                "description": "Environment variable name",
+                "type": "string"
+              },
+              "value": {
+                "description": "Environment variable value",
+                "type": "string"
+              }
+            },
+            "required": [
+              "key",
+              "value"
+            ],
+            "type": "object"
+          },
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "env_vars"
+      ],
+      "type": "object"
+    },
+    "response": {
+      "example": {
+        "success": 1
+      },
+      "properties": {
+        "success": {
+          "description": "The integer 1 indicating success",
+          "type": "integer"
         }
       },
       "type": "object"

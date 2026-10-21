@@ -828,6 +828,11 @@ repo-dev-dep-scan update <code_repo_id>
 	--body-file string
 	--dev-dep-scanning-enabled bool required body
 	--dry-run bool
+repo-env-var update
+	POST /repositories/code/environment-variables scope=repositories:write
+	--body string
+	--body-file string
+	--dry-run bool
 repo-exclude-path create <code_repo_id>
 	POST /repositories/code/{code_repo_id}/exclude-path scope=repositories:write
 	--body string
@@ -918,6 +923,10 @@ subdomain create <domain_id>
 	--body-file string
 	--dry-run bool
 	--subdomain-name string required body
+subdomain delete <domain_id> <subdomain_id>
+	DELETE /domains/{domain_id}/subdomains/{subdomain_id} scope=domains:write destructive
+	--dry-run bool
+	--yes bool
 subdomain list <domain_id>
 	GET /domains/{domain_id}/subdomains scope=domains:read paged=per_page:100:empty
 	--limit int64
@@ -1011,6 +1020,10 @@ team-resource delete <team_id>
 	--repo-id int64 body
 	--yes bool
 	--zen-app-id int64 body
+user deactivate <user_id>
+	PUT /users/{user_id}/disable scope=users:write destructive
+	--dry-run bool
+	--yes bool
 user get <user_id>
 	GET /users/{user_id} scope=users:read
 user list
