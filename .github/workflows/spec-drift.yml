@@ -73,8 +73,10 @@ jobs:
           $(head -c 3000 "$RUNNER_TEMP/generate.log")
           \`\`\`"
           fi
-          if gh pr view spec-drift --json number >/dev/null 2>&1; then
-            gh pr edit spec-drift --body "$body"
+          # gh pr view also finds a merged PR, and --head matches a fork's branch too, so keep only this repository's open PR.
+          pr=$(gh pr list --head spec-drift --state open --json number,isCrossRepository --jq 'map(select(.isCrossRepository | not)) | .[0].number // ""')
+          if [ -n "$pr" ]; then
+            gh pr edit "$pr" --body "$body"
           else
             gh pr create --head spec-drift --title "chore(spec): update the vendored spec" --body "$body" --assignee "$GITHUB_ACTOR"
           fi
