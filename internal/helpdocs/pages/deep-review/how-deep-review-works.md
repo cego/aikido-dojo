@@ -22,6 +22,12 @@ For the full map, see [Which Aikido product should I use?](/getting-started/whic
 
 A diff shows what changed, but not always how that change interacts with the rest of your application. Deep Review pulls in relevant context from outside the changed lines before deciding whether to comment, so it can review changes that depend on existing behavior elsewhere in the codebase.
 
+## Repository instructions
+
+Deep Review checks `AGENTS.md`, `CLAUDE.md`, `.claude/`, and `.cursor/` for accepted risk. A risk those files already accept stays unreported, unless the pull request widens that risk.
+
+Put standing guidance in `AGENTS.md` at the repository root: trust boundaries, intentional behavior, and accepted risks. See [Guide Agents with Repository Files](/ai-and-dev-tools/guide-an-audit-with-repository-files.md).
+
 ## Cross-repository context
 
 If your application spans multiple repositories, you can [link related repositories](/deep-review/link-repositories.md) to the repository under review. Deep Review can then use those repositories as additional context when reasoning about shared libraries, APIs, and services.

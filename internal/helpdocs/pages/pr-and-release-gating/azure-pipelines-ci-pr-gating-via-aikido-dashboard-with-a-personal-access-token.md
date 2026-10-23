@@ -14,6 +14,8 @@ Please note that for the integration to work properly, you must be able to manag
 Azure DevOps PR gating via Aikido supports Azure Repos Git repositories only. Team Foundation Version Control (TFVC) repositories aren't supported for PR gating or Code Quality gates.
 {% endhint %}
 
+If your organization is connected to Microsoft Entra, you can use a service principal that never expires and stores no secret instead of a PAT. See [Azure DevOps PR Gating with an Entra Service Principal](/pr-and-release-gating/azure-devops-pr-gating-with-an-entra-service-principal.md).
+
 **First**, go to the PAT management page in Aikido, which can be [found here](https://app.aikido.dev/settings/integrations/azure-devops/checks/personal-access-token).
 
 **Next**, follow the instructions below to generate a PAT in Azure DevOps.

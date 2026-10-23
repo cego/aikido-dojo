@@ -7,6 +7,7 @@ AutoFix is available for the following use cases
 * [Open-source dependencies](/autofix-and-remediation/scope/autofix-for-open-source-dependencies.md) (including [Aikido Libraries](/autofix-and-remediation/aikido-libraries-overview.md) drop-in replacements)
 * [SAST and IaC issues](/autofix-and-remediation/scope/ai-autofix-for-sast-and-iac-issues.md)
 * [Containers](/autofix-and-remediation/scope/ai-autofix-for-containers.md) (including [Aikido Images](/autofix-and-remediation/aikido-images/autofix-for-containers-using-aikido-images.md) zero-CVE base images)
+* [Code Quality](/code-quality/code-quality-overview.md)
 * Pentest Issues
 * AI Code Audit issues
 
@@ -36,7 +37,7 @@ Under the hood, AutoFix analyzes the dependency tree to find the optimal point t
 
 Vulnerable dependencies can be hard to remediate when the upstream fix requires a breaking major version change, or when the maintainer hasn't shipped a fix yet. Aikido addresses this with **Aikido Libraries**: drop-in replacements for vulnerable open-source packages that keep the same package name and base version while backporting security patches.
 
-Aikido Libraries variants are designed to be 100% compatible with the original version while removing CVEs, and can serve either as a long-term solution or as a temporary stop-gap until a full major upgrade is feasible. AutoFix surfaces Aikido Libraries upgrades directly in the dependency AutoFix overview when available. Aikido Libraries variants are available for JavaScript, Java, Python, PHP, and .NET.
+Aikido Libraries variants are designed to be 100% compatible with the original version while removing CVEs, and can serve either as a long-term solution or as a temporary stop-gap until a full major upgrade is feasible. AutoFix surfaces Aikido Libraries upgrades directly in the dependency AutoFix overview when available. Aikido Libraries variants are available for JavaScript, Java, Python, PHP, .NET, Go, Ruby, and Rust.
 
 #### SAST and IaC issues
 
@@ -45,6 +46,12 @@ For application code, AutoFix generates rule-specific patches across a broad set
 AutoFix uses an agentic approach for these patches: it gathers the relevant code context, formulates a remediation plan, and then applies a minimal fix that is designed to be easy to read and review. For every SAST AutoFix, Aikido assigns a confidence level (High, Medium, Low) that reflects how strongly benchmarking suggests the generated change both fixes the vulnerability and preserves correct behavior.
 
 Infrastructure as Code (IaC) AutoFixes follow the same pattern but operate on configuration rather than application logic. They target insecure infrastructure definitions, such as publicly exposed resources, weak TLS termination, or missing encryption, across AWS, GCP, Azure, and Kubernetes.
+
+#### Code Quality
+
+AutoFix can fix [Code Quality](/code-quality/code-quality-overview.md) findings, including default checks and [custom rules](/code-quality/add-custom-code-rules.md). For a custom rule, add an AutoFix prompt when you create or edit the rule and validate it against a non-compliant example. Aikido suggests a fix on pull request comments and can open a pull request from a repository scan finding.
+
+Turn on [automatic pull request creation](/autofix-and-remediation/automation-and-merging/automatic-creation-of-pull-requests.md) to open a pull request each day for critical and high severity findings on default checks.
 
 #### Containers and base images
 

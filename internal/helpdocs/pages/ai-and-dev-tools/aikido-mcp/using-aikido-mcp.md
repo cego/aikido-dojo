@@ -10,6 +10,8 @@ Once the MCP server is installed, you don't call these tools yourself. You ask i
 
 Scans files that are saved on disk for vulnerabilities (SAST), hardcoded secrets and IaC misconfigurations. This is the preferred scan tool.
 
+* Provide the files to scan in `paths`, absolute or relative to `root`. Directories are rejected, so list each file
+* Set `root` to the workspace or repository root so findings are reported relative to it. Paths that are missing or outside `root` are skipped and listed in `skipped_paths`
 * Optionally pass `repository_name` when the files come from a repository, so they are linked to that repository in Aikido
 
 ### aikido\_full\_scan
@@ -20,9 +22,11 @@ Scans code that is passed in as file content, for the cases where the code is no
 
 ### aikido\_oss\_dependency\_scan
 
-Scans dependency manifests and lockfiles that are saved on disk for vulnerabilities.
+Scans dependency manifests and lockfiles that are saved on disk for vulnerable, outdated or malicious packages.
 
-* Provide each file in `files_to_scan` as a `relativeFilePath` and its `content`
+* Provide the manifests and lockfiles to scan in `paths`, for example `package.json` and `package-lock.json`, `requirements.txt`, `go.mod` and `go.sum`, or `pom.xml`. Directories are rejected
+* Set `root` to the workspace or repository root so findings are reported relative to it
+* Optionally pass `repository_name` when the files come from a repository
 
 ### aikido\_issues\_list
 
@@ -45,9 +49,29 @@ Pass `issue_id` to fetch one issue in detail. It comes back with more than the l
 * `pentest`: for AI pentest findings, the attack analysis with its summary, risk, reproduction steps, root cause and remediation
 * `licenses`: for license issues, the detected license with its legal risk and why
 
+### aikido\_workspaces\_list
+
+Lists the Aikido workspaces you have access to. Your agent uses it to find the exact workspace name before filtering issues by `workspace_name`.
+
 ### aikido\_ignore\_issue
 
 Ignores a security issue in the feed. Requires `issue_id` and a `reason`.
+
+### aikido\_unignore\_issue
+
+Unignores a previously ignored issue. Requires `issue_id` and a `reason`.
+
+### aikido\_snooze\_issue
+
+Temporarily hides a security issue in the feed. Requires `issue_id`, a `reason` and a `duration`: `1_day`, `1_week`, `1_month`, `3_months`, `6_months` or `1_year`.
+
+### aikido\_unsnooze\_issue
+
+Unsnoozes a previously snoozed issue. Requires `issue_id`.
+
+### aikido\_adjust\_issue\_severity
+
+Raises or lowers the severity of a security issue. Requires `issue_id`, the new `adjusted_severity` (`critical`, `high`, `medium` or `low`) and a `reason`.
 
 ### aikido\_login
 
@@ -87,6 +111,13 @@ Not all MCP tools are enabled by default. Admins can enable them on the [permiss
 * "Give me the full details of Aikido issue `12345`"
 * "Why is Aikido issue `12345` rated critical? Is there a known exploit?"
 * "Walk me through the reproduction steps for the Aikido pentest finding `12345`"
+
+### Managing issues
+
+* "Snooze Aikido issue `12345` for a month, we're fixing it in the next release"
+* "Lower the severity of Aikido issue `12345` to low, the endpoint is internal only"
+* "Unignore Aikido issue `12345`, the mitigation was removed"
+* "Which Aikido workspaces do I have access to?"
 
 ### Combined workflows
 

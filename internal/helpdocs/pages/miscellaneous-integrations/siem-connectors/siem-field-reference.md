@@ -1,12 +1,14 @@
 # SIEM Field Reference
 
-This page describes the fields included in each Aikido issue when it's sent to your connected SIEM.
+This page describes the fields included in each Aikido issue and each activity log entry when they're sent to your connected SIEM.
 
 For how to connect a specific SIEM, see [SIEM Connectors](/miscellaneous-integrations/siem-connectors.md).
 
 ### Payload format
 
-Each sync sends a JSON array, with one object per issue that matches your [issue input settings](/miscellaneous-integrations/siem-connectors.md). The fields are the same across every SIEM connector.
+Each sync sends a JSON array, with one object per issue that matches your [issue input settings](/miscellaneous-integrations/siem-connectors.md). If you enable activity logs, each sync also sends one object per new activity log entry. The fields are the same across every SIEM connector.
+
+Activity log entries have `data_type` set to `activity_log`. Issue objects don't have a `data_type` field, so use it to tell the two apart in your SIEM. For the activity log fields, see [Activity log fields](#activity-log-fields).
 
 ### Core fields
 
@@ -111,6 +113,58 @@ Only the field group matching where the issue was found is populated; the rest a
     },
     "how_to_fix": "Upgrade package minimist to 4.2.6 or later.",
     "programming_language": "JS"
+  }
+]
+```
+
+## Activity log fields
+
+Each activity log entry records an action taken on an issue or setting in Aikido, such as ignoring an issue or changing a setting. Aikido sends new entries in the order they happened and doesn't resend entries it already pushed.
+
+| Field              | Type            | Description                                                                                                |
+| ------------------ | --------------- | ---------------------------------------------------------------------------------------------------------- |
+| `data_type`        | string          | Always `activity_log`.                                                                                     |
+| `id`               | integer         | The activity log entry's ID.                                                                               |
+| `timestamp`        | unix timestamp  | When the action happened.                                                                                  |
+| `comment`          | string          | A human-readable description of the action.                                                                |
+| `source`           | string          | What triggered the action. One of `manual`, `checklist`, `rule`, `auto`, `api`.                            |
+| `action`           | string          | The action that was taken, for example `ignored`, `snoozed`, `closed`, `re_open`, or `autofix_pr_created`. |
+| `user_id`          | integer or null | The ID of the user who took the action. Null when `source` is `auto` or `api`.                             |
+| `user_name`        | string or null  | The name of the user who took the action. Null when `source` is `auto` or `api`.                           |
+| `issue_id`         | integer         | The ID of the individual issue the action applies to.                                                      |
+| `grouped_issue_id` | integer         | The ID of the issue group the action applies to.                                                           |
+
+### Activity log actions
+
+`action` is one of the following:
+
+| Category                    | Values                                                                                                                                                      |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Issue status                | `snoozed`, `unsnoozed`, `ignored`, `auto_ignored`, `closed`, `re_open`, `adjust_severity`, `sla_dates_reset`                                                |
+| Issue remediation           | `autofix_pr_created`, `overwrite_license_type`, `license_score_contested`                                                                                   |
+| Compliance pushes           | `drata_push`, `sprinto_push`, `thoropass_push`                                                                                                              |
+| Exports                     | `issues_exported`, `subdomains_exported`                                                                                                                    |
+| Repositories and containers | `repo_activated`, `repo_deactivated`, `container_activated`, `container_deactivated`, `container_registry_activated`, `container_registry_deactivated`      |
+| Settings                    | `autofix_settings_changed`, `autoship_settings_changed`, `autodeploy_repo_settings_changed`, `autodeploy_global_settings_changed`, `spending_limit_changed` |
+| AI pentest                  | `pentest_paused`, `pentest_resumed`                                                                                                                         |
+| Code quality                | `code_quality_finding_ignored`, `code_quality_finding_unignored`                                                                                            |
+| Endpoint protection         | `protection_paused`, `protection_paused_all_devices`, `protection_resumed_all_devices`                                                                      |
+
+### Activity log example
+
+```json
+[
+  {
+    "data_type": "activity_log",
+    "id": 42,
+    "timestamp": 1713586140,
+    "comment": "Rick Astley manually ignored this issue",
+    "source": "manual",
+    "action": "ignored",
+    "user_id": 1,
+    "user_name": "Rick Astley",
+    "issue_id": 10,
+    "grouped_issue_id": 3
   }
 ]
 ```

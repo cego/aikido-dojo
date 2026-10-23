@@ -28,6 +28,18 @@ ORMs that use their own query engine, such as Prisma, are not supported unless c
 If you use ESM, review the [ESM caveats](https://github.com/AikidoSec/firewall-node/blob/main/docs/esm.md). Queries inside uninstrumented ESM sub dependencies cannot be checked by Zen.
 {% endhint %}
 {% endtab %}
+
+{% tab title="Ruby" %}
+Currently supported gems:
+
+* MySQL via `mysql2` and `trilogy`
+* PostgreSQL via `pg`
+* SQLite via `sqlite3`
+
+Any ORM or query builder that uses these gems under the hood is supported, for example ActiveRecord.
+
+ORMs that use their own database engine are not supported unless configured to use a supported driver adapter.
+{% endtab %}
 {% endtabs %}
 
 ## Limitations
@@ -92,6 +104,24 @@ Configuration options:
 
   Tables that should not be checked because they are not scoped to a single tenant. For example, a shared users table that contains users across all tenants.
   {% endtab %}
+
+{% tab title="Ruby" %}
+
+```ruby
+Aikido::Zen.config.idor_protection_enabled = true
+Aikido::Zen.config.idor_tenant_column_name = "tenant_id"
+Aikido::Zen.config.idor_excluded_table_names = ["users"]
+```
+
+Configuration options:
+
+* `idor_tenant_column_name`
+
+  The column that identifies the tenant in your tables, for example tenant\_id, account\_id, or organization\_id.
+* `idor_excluded_table_names`
+
+  Tables that should not be checked because they are not scoped to a single tenant. For example, a shared users table that contains users across all tenants.
+  {% endtab %}
   {% endtabs %}
   {% endstep %}
 
@@ -120,6 +150,18 @@ app.use((req, res, next) => {
 If setTenantId is not called for a request, Zen will throw an Error when a SQL query is executed.
 {% endhint %}
 {% endtab %}
+
+{% tab title="Ruby" %}
+Call `Aikido::Zen.set_tenant_id`, for example in middleware after authentication:
+
+```ruby
+Aikido::Zen.set_tenant_id(1)
+```
+
+{% hint style="warning" %}
+If `Aikido::Zen.set_tenant_id` is not called for a request, Zen will raise an `Aikido::Zen::IDOR::Error` when a SQL query is executed.
+{% endhint %}
+{% endtab %}
 {% endtabs %}
 {% endstep %}
 
@@ -128,7 +170,11 @@ If setTenantId is not called for a request, Zen will throw an Error when a SQL q
 
 Some queries are intentionally global, for example cross tenant analytics or internal admin reports.
 
-To skip IDOR checks for a specific block of code, use withoutIdorProtection:
+To skip IDOR checks for a specific block of code:
+
+{% tabs %}
+{% tab title="NodeJS" %}
+Use withoutIdorProtection:
 
 ```js
 import Zen from "@aikidosec/firewall";
@@ -141,6 +187,20 @@ const result = await Zen.withoutIdorProtection(async () => {
 ```
 
 Only queries executed inside the callback are excluded from IDOR validation.
+{% endtab %}
+
+{% tab title="Ruby" %}
+Use `Aikido::Zen.without_idor_protection`:
+
+```ruby
+result = Aikido::Zen.without_idor_protection do
+  db.execute("SELECT count(*) FROM agents WHERE status = 'running'")
+end
+```
+
+Only queries executed inside the block are excluded from IDOR validation.
+{% endtab %}
+{% endtabs %}
 
 Use this carefully and only where cross tenant access is explicitly required.
 {% endstep %}
@@ -170,7 +230,7 @@ Add a condition that filters on tenant\_id.
 Zen IDOR protection: query on table 'orders' filters 'tenant_id' with value '456' but tenant ID is '123'
 ```
 
-The query filters on the tenant column, but the value does not match the tenant ID set via `setTenantId`.<br>
+The query filters on the tenant column, but the value does not match the tenant ID set via `setTenantId` (Node.js) or `Aikido::Zen.set_tenant_id` (Ruby).<br>
 
 Ensure that all queries use the tenant ID from the current request context.
 

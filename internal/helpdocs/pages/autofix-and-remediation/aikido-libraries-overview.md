@@ -4,7 +4,7 @@ Secured, drop-in replacements for vulnerable packages. No upgrades. No breaking 
 
 Upgrading a vulnerable dependency means using a version you haven't tested, risking breaking changes, and coordinating deploying that upgrade across your team. Transitioning to Aikido Libraries removes that tradeoff. It patches the exact version already in use - same package, same version, same API, same behavior - so you get the security fix without touching your application code.
 
-Aikido has more than **9,500** secured libraries across JavaScript, Java, Python, PHP, Go, .NET and Ruby. Aikido Libraries is most useful when:
+Aikido has **11,500+** secured libraries across JavaScript, Java, Python, PHP, Go, .NET, Ruby, and Rust. Aikido Libraries is most useful when:
 
 * A CVE has no safe upstream fix yet
 * The upstream fix requires a major version bump you cannot take

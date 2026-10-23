@@ -32,11 +32,11 @@ The Windows agent watches the WSL2 distros of the user signed in at the device, 
 
 These distros are skipped:
 
-| Distro                                                      | Why                                                                                              |
-| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| WSL1 distros                                                | Not supported                                                                                    |
-| `docker-desktop`, `rancher-desktop`, and `podman-machine-*` | Vendor images, not your workspace. To protect containers, turn on **Protect Containers** instead |
-| Distros that are being installed, converted, or exported    | Aikido waits until they are in a normal state                                                    |
+| Distro                                                      | Why                                                                                                                                                                                                                                           |
+| ----------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| WSL1 distros                                                | Not supported                                                                                                                                                                                                                                 |
+| `docker-desktop`, `rancher-desktop`, and `podman-machine-*` | Vendor images, not your workspace. To protect containers, turn on **Protect Containers** instead. See [Device Protection in Docker Containers](/aikido-device-protection/deploying-aikido-endpoint/device-protection-in-docker-containers.md) |
+| Distros that are being installed, converted, or exported    | Aikido waits until they are in a normal state                                                                                                                                                                                                 |
 
 Turning **Protect WSL2** off stops new installs. It doesn't remove the agent from distros that already have it. To remove it, follow the Linux steps in [Uninstall Device Protection](/aikido-device-protection/deploying-aikido-endpoint/uninstall-aikido-endpoint.md) inside the distro.
 

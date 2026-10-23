@@ -8,14 +8,12 @@ If you're publicly exposing your server without a load balancer in front of it, 
 
 If you need to use a different header to determine the client's IP address, you can set the `AIKIDO_CLIENT_IP_HEADER` environment variable to the name of that header. This will override the default `x-forwarded-for` header:
 
-{% hint style="warning" %}
-`AIKIDO_CLIENT_IP_HEADER` is currently only supported in the Node.js, Java and Python
-{% endhint %}
-
 ```bash
 # Example for DigitalOcean App Platform
 AIKIDO_CLIENT_IP_HEADER=do-connecting-ip node app.js
 ```
+
+In Ruby, use the Rack environment key instead of the header name. For example, use `HTTP_FLY_CLIENT_IP` for the `Fly-Client-IP` header.
 
 ## Rate limiting & Load balancers <a href="#rate-limiting--load-balancers" id="rate-limiting--load-balancers"></a>
 

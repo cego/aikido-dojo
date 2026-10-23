@@ -52,3 +52,14 @@ For any other AI platform or custom MCP setup, refer to the [npm package page fo
 ## Using the MCP server
 
 For the tools the server exposes, see [Available tools](/ai-and-dev-tools/aikido-mcp/using-aikido-mcp.md#available-tools). For prompts that put them to work, see [Example prompts](/ai-and-dev-tools/aikido-mcp/using-aikido-mcp.md#example-prompts).
+
+## Pull request comments
+
+Use the MCP of your source control system to fetch pull request comments and to react to them. Aikido recommends this for every provider. Have the agent reply and interact on those comments the same way a person would. Aikido MCP scans code and works with issues in the Feed. It does not read comments on a pull request or react to them.
+
+The [aikido-mcp-comments skill](https://github.com/noon-security/aikido-skills/blob/main/skills/aikido-mcp-comments/SKILL.md) shows an agent how to fetch comments already posted on a pull request.
+
+* **GitHub:** [GitHub MCP Server](https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp/set-up-the-github-mcp-server) (`gh`)
+* **GitLab:** [GitLab MCP server](https://docs.gitlab.com/user/model_context_protocol/mcp_server/) (`glab`, merge request comments)
+* **Bitbucket:** [Atlassian Rovo MCP Server](https://developer.atlassian.com/cloud/rovo-mcp/)
+* **Azure DevOps:** [Azure DevOps MCP Server](https://learn.microsoft.com/en-us/azure/devops/mcp-server/mcp-server-overview)

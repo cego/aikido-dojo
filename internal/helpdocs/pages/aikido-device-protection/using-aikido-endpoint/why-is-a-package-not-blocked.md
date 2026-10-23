@@ -42,11 +42,11 @@ If the agent is stopped or has not synced recently, it cannot enforce policy.
 
 ### The policy has not synced yet
 
-New rules and exceptions reach the device on the next sync. If you just changed a policy, wait for the next heartbeat (every 10 minutes) or trigger a manual sync.
+New rules and exceptions reach the device on the next sync, which runs every 10 minutes. If you just changed a policy, wait up to 10 minutes and try the install again. There is no way to trigger a sync manually.
 
-### Docker or Podman on macOS
+### The install ran inside a container
 
-Device Protection does not currently support Docker or Podman on macOS. Installs inside those containers are not inspected.
+Enable **Protect Containers** to protect Docker. Containers with the opt-out label are skipped. See [Device Protection in Docker Containers](/aikido-device-protection/deploying-aikido-endpoint/device-protection-in-docker-containers.md).
 
 ### Still stuck?
 

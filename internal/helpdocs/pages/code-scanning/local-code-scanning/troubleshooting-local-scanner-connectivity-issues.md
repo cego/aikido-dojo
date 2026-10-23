@@ -2,7 +2,24 @@
 
 This guide helps customers run the Aikido Local Scanner behind corporate proxies, custom SSL inspection, or locked-down networks. It covers when and how to use `--enable-proxy` and `--ca-bundle`, which domains to whitelist, and how to fix common certificate errors.
 
-To function correctly, the Local Scanner must be able to access the following domains over HTTPS (port 443): `*.aikido.dev`
+To function correctly, the Local Scanner must be able to access the following domains over HTTPS (port 443):
+
+* `*.aikido.dev`
+* `*.aikido.io`
+
+Optional
+
+* `o1405212.ingest.sentry.io` for error reporting (can be disabled with `--disable-telemetry`)
+* `mirror.gcr.io` / `ghcr.io` for dependency scanning vulnerability database
+  * Not neccessary when using `--enable-aikido-hosted-dependencies-db` and `--enable-aikido-maven-cache`
+* `api.nuget.org` for csproj dependency resolution
+* `raw.githubusercontent.com` for vcpkg dependency resolution
+
+**If you cannot use wildcards:**
+
+Where `*.aikido.dev` and `*.aikido.io` are not accepted, each wildcard expands to a small, fixed set of hosts:
+
+<table><thead><tr><th width="264.83984375">Host</th><th>When</th></tr></thead><tbody><tr><td><code>app.aikido.dev</code></td><td>EU region (default)</td></tr><tr><td><code>app.us.aikido.dev</code></td><td>US region</td></tr><tr><td><code>app.au.aikido.dev</code></td><td>Australia</td></tr><tr><td><code>app.me.aikido.dev</code></td><td>Middle East</td></tr><tr><td><code>static-cve.aikido.dev</code></td><td>With <code>--enable-aikido-hosted-dependencies-db</code></td></tr><tr><td><code>static-maven.aikido.io</code></td><td>With <code>--enable-aikido-maven-cache</code></td></tr></tbody></table>
 
 #### Using `--enable-proxy`
 

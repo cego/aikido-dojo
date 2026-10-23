@@ -7,7 +7,7 @@ A Smart Contract Audit reasons about on-chain contract source inside [AI Code An
 ## Prerequisites
 
 * You need the **Manage Pentests and AI Code Analysis** [permission](/getting-started/automated-user-management/setting-roles-and-permissions.md) to create an audit. You can still open AI Code Analysis and existing assessments without it.
-* At least one repository is connected. [Self-scanned repositories](/code-scanning/local-code-scanning.md) are excluded from the picker. You can pick up to 20 repositories.
+* At least one repository is connected. [Self-scanned repositories](/code-scanning/local-code-scanning.md) are excluded from the picker. There is a limit on how many repositories you can pick. [Contact support](/miscellaneous-info/contact-support.md) if you need more.
 * Your wallet has enough credits for the quoted cost. See [Wallet & Credits](/miscellaneous-info/wallet-and-credits.md).
 
 See [Aikido Never Stores Your Code](/getting-started/setting-up-your-account/aikido-never-stores-your-code.md) for how source is handled during an analysis.
@@ -30,15 +30,15 @@ On **Select Audit Type**, select **Smart Contract Audit**, then click **Continue
 
 ### Select repositories
 
-1. Open **Repositories** and select up to 20 connected repositories. **Continue** stays disabled until at least one repository is selected.
+1. Open **Repositories** and select the connected repositories for this audit. **Continue** stays disabled until at least one repository is selected.
 2. To keep a monorepo focused, click **Exclude Paths** next to a selected repository and add directories that are not part of this audit, such as an off-chain service in the same repository.
 3. Under **Scope**, leave **Audit all selected repositories** selected, or choose **Audit specific parts only** and describe the contracts to review. For example: "Audit the new staking contract and the contracts it calls."
 
 {% hint style="info" %}
-Exclude unrelated applications or services, not documentation, READMEs, or other non-code assets. Aikido can use those files as context for how the contracts are meant to work.
+Leave documentation and READMEs in the repository. Agents can read that markdown for how the contracts are meant to work. Exclude unrelated applications or services.
 {% endhint %}
 
-**Additional Notes** are optional. Add them when context is missing from the source. Useful notes include:
+**Additional Notes** are optional and apply to this audit only. Add them when context is missing from the source. Put standing guidance, such as the trust model, in a markdown file in the repository. See [Guide Agents with Repository Files](/ai-and-dev-tools/guide-an-audit-with-repository-files.md). Useful notes include:
 
 * Target chains
 * Trusted admin or oracle roles
@@ -70,9 +70,9 @@ Aikido opens the assessment detail page so you can follow progress and read find
 
 ## FAQ
 
-### Why is there a 20 repository cap?
+### Why is there a repository limit?
 
-The picker allows 20 repositories so the audit stays focused. If you need more in one audit, [contact support](/miscellaneous-info/contact-support.md).
+The picker limits how many repositories you can include so the audit stays focused. If you need more in one audit, [contact support](/miscellaneous-info/contact-support.md).
 
 ## Related
 

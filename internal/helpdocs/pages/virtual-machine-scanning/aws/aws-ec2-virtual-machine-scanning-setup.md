@@ -50,7 +50,11 @@ Aikido reads the snapshot's data directly through the EBS direct APIs, without a
 {% endstep %}
 
 {% step %}
-Once the scan is done, Aikido deletes the snapshot.
+Once the scan is done, Aikido keeps the most recent snapshot, one per VM group (for example, one per Auto Scaling Group), and deletes older ones.
+
+{% hint style="info" %}
+EBS snapshots are incremental, so keeping the last snapshot makes the next scan's snapshot much faster to create, since AWS only copies the blocks that changed.
+{% endhint %}
 {% endstep %}
 {% endstepper %}
 

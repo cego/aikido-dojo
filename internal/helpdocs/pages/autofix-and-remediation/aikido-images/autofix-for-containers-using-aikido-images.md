@@ -28,7 +28,7 @@ Aikido Images are also available when you scan images with the [Aikido Local Sca
 
 ## Aikido Images availability
 
-In Aikido, you can view the available base images on **AutoFix** > **Containers** > **Aikido Images**.
+In Aikido, you can view the available base images on [**AutoFix** > **Cloud** > **Containers** > **Aikido Images**](https://app.aikido.dev/issues/aikido-images).
 
 All images are available for both `amd64` and `arm64` architectures.
 

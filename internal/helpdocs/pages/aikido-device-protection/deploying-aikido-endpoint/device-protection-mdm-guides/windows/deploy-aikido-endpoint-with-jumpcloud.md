@@ -42,13 +42,14 @@ JumpCloud doesn't offer a single built-in policy that both locks a Windows servi
 **Block uninstallation of the Aikido Device Protection app**
 
 1. In the JumpCloud Admin Portal, go to **Device Management** → **Policy Management**.
-2. Click the **(+)** icon, select the **Windows** tab, choose **Application Restriction policy**, and click **configure**.
-3. Give the policy a name (e.g. "Aikido Device Protection lockdown").
-4. Under **File Path Rules**, add the full path to the Aikido Device Protection uninstaller executable to block its execution: `%ProgramFiles%\Aikido Device Protection\unins000.exe`.
-5. Select the **Device Groups** tab and assign the policy to the same Windows device group.
-6. Click **save**.
-
-This policy uses AppLocker rules to block execution of the uninstaller. Application Restriction policies block execution of the specified binary. They do not remove the app or prevent downloads, which is the intended behaviour here.
+2. Click **+ Add New**, select **Device Policy**, then select the **Windows** tab.
+3. Search for and select **Custom MDM (OMA URI) Policy**, then click **Configure**.
+4. Give the policy a name (e.g. "Aikido Device Protection uninstall block").
+5. In the **Settings** section, enter the following values:
+   * **OMA URI**: `./Vendor/MSFT/AppLocker/ApplicationLaunchRestrictions/Aikido/MSI/Policy`
+   * **Format**: **string**
+   * **Value**: paste the contents of [aikido-applocker-deny-mdm.xml](https://raw.githubusercontent.com/AikidoSec/safechain-internals/refs/heads/main/docs/aikido-applocker-deny-mdm.xml) (open the link, copy the full XML text, and paste it here)
+6. Select the **Device Groups** tab, select the same Windows device group, and click **Create Policy**.
 
 **Prevent users from stopping or disabling the Aikido service**
 

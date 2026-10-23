@@ -1,6 +1,6 @@
 # Google Artifact Registry - Private Packages
 
-Private packages stored in a Google Artifact Registry can be retrieved by AutoFix for **Poetry, UV, NPM, PNPM, Yarn & Bun AutoFixes**. Authentication to Google Artifact Registry can be done through [Workload Identity Federation](#using-workload-identity-federation) or a [Service Account](#using-a-service-account).
+Private packages stored in a Google Artifact Registry can be retrieved by AutoFix for **Poetry, UV, NPM, PNPM, Yarn, Bun & Go AutoFixes**. Authentication to Google Artifact Registry can be done through [Workload Identity Federation](#using-workload-identity-federation) or a [Service Account](#using-a-service-account).
 
 ## Using Workload Identity Federation
 
@@ -46,7 +46,7 @@ principalSet://iam.googleapis.com/projects/<project-id>/locations/global/workloa
 
 ### **Setup in the Aikido UI**
 
-Google Artifact Registry is currently only supported for Poetry, UV, NPM, PNPM, Yarn and Bun AutoFixes. You can configure the GCP credentials in the Google Artifact Registry section under private package configuration.
+Google Artifact Registry is currently only supported for Poetry, UV, NPM, PNPM, Yarn, Bun and Go AutoFixes. You can configure the GCP credentials in the Google Artifact Registry section under private package configuration.
 
 Once the steps in the GCP console are done, you can configure AutoFix to authenticate with your private registry by following the steps below:
 
@@ -84,7 +84,7 @@ First, create a service account in your Google Cloud project:
 
 ### **Setup in the Aikido UI**
 
-Google Artifact Registry is currently only supported for Poetry, UV, NPM, PNPM, Yarn and Bun AutoFixes. You can configure the GCP credentials in the Google Artifact Registry section under private package configuration.
+Google Artifact Registry is currently only supported for Poetry, UV, NPM, PNPM, Yarn, Bun and Go AutoFixes. You can configure the GCP credentials in the Google Artifact Registry section under private package configuration.
 
 Once the steps in the GCP console are done, you can configure AutoFix to authenticate with your private registry by following the steps below:
 
@@ -96,3 +96,14 @@ Once the steps in the GCP console are done, you can configure AutoFix to authent
    
 4. Paste your saved **Service Acount Key** content from Step 2 above in the **GCP credentials** field
 5. Click **Save** to save the configuration.
+
+### Extra setup for Go
+
+A Go module path doesn't say which registry hosts the module, so Go needs **2 environment variables**.
+
+Set them in AutoFix → Settings → Connect Registry → [Set Environment Variables](/autofix-and-remediation/connect-private-packages/custom-config-private-packages.md):
+
+* `GOPROXY`: your Artifact Registry Go repository first, then the public Go proxy, e.g. `https://<location>-go.pkg.dev/<project-id>/<repository>,https://proxy.golang.org,direct`
+* `GONOSUMDB`: the module paths of your private modules, so Go doesn't check them against the public checksum database, e.g. `github.com/<your-org>/*`
+
+AutoFix uses your GCP credentials to authenticate to every `go.pkg.dev` host in `GOPROXY`.

@@ -16,7 +16,7 @@ You pick the repositories in the create flow. Code Security Audit only needs sou
 
 ### Agents reason about your code
 
-Multiple security agents work through the connected codebases together, chaining context across files to surface architectural and logic flaws that traditional static scanners can't see.
+Multiple security agents work through the connected codebases together, chaining context across files to surface architectural and logic flaws that traditional static scanners can't see. Commit `AGENTS.md` in the repository when you want that reasoning to follow your architecture and accepted risks. See [Guide Agents with Repository Files](/ai-and-dev-tools/guide-an-audit-with-repository-files.md).
 
 ### Read the findings
 
@@ -83,6 +83,10 @@ Yes. Once you've pushed a fix, use **Re-test** on the finding to have Aikido re-
 
 {% content-ref url="/pages/X4yc23Inhvx1gPKx2AwE" %}
 [Create a Code Security Audit](/ai-code-analysis/ai-code-audit-overview/create-an-ai-code-audit.md)
+{% endcontent-ref %}
+
+{% content-ref url="/pages/X3BH6OfadNRDh0qSJiwm" %}
+[Guide Agents with Repository Files](/ai-and-dev-tools/guide-an-audit-with-repository-files.md)
 {% endcontent-ref %}
 
 {% content-ref url="/pages/64GGpVtiCGGThzz1y8B7" %}

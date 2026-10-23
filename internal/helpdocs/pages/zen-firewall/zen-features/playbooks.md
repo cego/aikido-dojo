@@ -46,6 +46,17 @@ Zen.track("your.event_name");
 
 {% endtab %}
 
+{% tab title="Python" %}
+
+```python
+from aikido_zen import track
+
+# Inside any request handler
+track("your.event_name")
+```
+
+{% endtab %}
+
 {% tab title="Go" %}
 
 ```go
@@ -60,6 +71,29 @@ zen.Track(r.Context(), "your.event_name")
 ```ruby
 # Inside any request, for example a Rails controller action
 Aikido::Zen.track("your.event_name")
+```
+
+{% endtab %}
+
+{% tab title="PHP" %}
+
+```php
+// Inside any request handler
+if (extension_loaded('aikido')) {
+    \aikido\track('your.event_name');
+}
+```
+
+{% endtab %}
+
+{% tab title=".NET" %}
+
+```csharp
+// ASP.NET Core: using Aikido.Zen.DotNetCore;
+// ASP.NET Framework: using Aikido.Zen.DotNetFramework;
+
+// Inside any controller action or middleware
+Zen.Track("your.event_name");
 ```
 
 {% endtab %}

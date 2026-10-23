@@ -70,4 +70,40 @@ You can configure all of these settings in the autocreation modal:
 
 4. Aikido will then autonomously generate ClickUp tickets based on these settings 🚀
 
+## Map Aikido data to custom fields
+
+Aikido can fill ClickUp custom fields on every task it creates. Use it to send severity, SLA dates, links, and other Aikido data straight into your ClickUp fields.
+
+### Supported field types
+
+| ClickUp field type    | Example value         |
+| --------------------- | --------------------- |
+| Text                  | `Severity: $SEVERITY` |
+| Text area (long text) | `$TLDR`               |
+| Website               | `$AIKIDO_LINK`        |
+| Number                | `$SEVERITY_SCORE`     |
+| Dropdown              | `$SEVERITY`           |
+| Labels                | `label 2, label 3`    |
+| Date                  | `$SLA_DATE`           |
+| Checkbox              | `true`                |
+
+For **Dropdown** and **Labels** fields, enter the option names exactly as they appear in ClickUp. You don't need option IDs.
+
+### Configure field mappings
+
+1. Go to [**Integrations** → **ClickUp** → **Field Mapping**](https://app.aikido.dev/settings/integrations/tasktracker/fields/custom) and click **Add Field**.
+2. Enter the ClickUp custom field name in **Custom Field**, exactly as it appears in ClickUp.
+3. Enter an Aikido shortcode (e.g. `$SEVERITY`) or a fixed text value in **Aikido Value**.
+4. Click **Save Changes**.
+
+The **Preview** column shows the value Aikido will send to ClickUp.
+
+### Fixed values and shortcodes
+
+**Fixed values:** Enter plain text to set the same value on every task. For example, `Security` fills that field with "Security" on every task Aikido creates.
+
+**Shortcodes:** Aikido replaces shortcodes with data from the issue when it creates the task. You can combine them with fixed text, such as `Issue: $TLDR` or `Detected on $FIRST_DETECTED_DATE`. For the full list of shortcodes, see [Map Aikido Data to Jira Custom Fields](/getting-started/task-management-systems/map-aikido-data-to-jira-custom-fields.md). The same shortcodes work for ClickUp.
+
+For ClickUp **Date** fields, use the `YYYY-MM-DD` format (e.g. `2024-10-23`) or the `_DATE` shortcodes, such as `$SLA_DATE`.
+
 ***

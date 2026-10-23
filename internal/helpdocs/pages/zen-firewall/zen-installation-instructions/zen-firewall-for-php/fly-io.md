@@ -80,6 +80,9 @@ Use `set_user` and `should_block_request` in your request pipeline:
         http_response_code(429);
   ```
 * ```
+        header('Retry-After: ' . $decision->retry_after);
+  ```
+* ```
         exit('You are rate limited by Zen.');
   ```
 * ```

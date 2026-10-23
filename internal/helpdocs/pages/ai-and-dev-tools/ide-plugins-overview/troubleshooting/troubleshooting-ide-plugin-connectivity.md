@@ -14,13 +14,23 @@ This applies to SAST, secrets, SCA, and IaC scans. The same data-handling polici
 
 ## Required Domains
 
-To function correctly, the plugin must be able to access the following domains over HTTPS (port 443):
+To function correctly, the plugin must be able to access at least the following domains over HTTPS (port 443):
 
 ```
 *.aikido.dev
 or
 ide.aikido.dev
 ```
+
+More details on domains per IDE:
+
+{% content-ref url="/spaces/yKbzcQGrx7UtrG0nPZZ7/pages/RovfGwV8By5yZpZWD9rB" %}
+[JetBrains - domains](/ai-and-dev-tools/ide-plugins-overview/troubleshooting/troubleshooting-ide-plugin-connectivity/jetbrains-domains.md)
+{% endcontent-ref %}
+
+{% content-ref url="/spaces/yKbzcQGrx7UtrG0nPZZ7/pages/8naZI06ZynRXUwbAlc7B" %}
+[VS Code - domains](/ai-and-dev-tools/ide-plugins-overview/troubleshooting/troubleshooting-ide-plugin-connectivity/vs-code-domains.md)
+{% endcontent-ref %}
 
 ## Troubleshooting
 

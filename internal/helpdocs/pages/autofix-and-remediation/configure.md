@@ -30,3 +30,4 @@ Pick the setup that matches your provider and authentication method.
 * [Linking Tasks and PRs](/autofix-and-remediation/configure/linking-tasks-and-prs.md)
 * [Signed Commits](/autofix-and-remediation/configure/signed-commits.md)
 * [Pull request templates](/autofix-and-remediation/configure/pull-request-templates.md)
+* [Setting up Container AutoFix](/autofix-and-remediation/configure/setting-up-container-autofix.md)

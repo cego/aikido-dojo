@@ -2,14 +2,14 @@
 
 Upload test coverage from CI and track it per repository, file, and line in Aikido.
 
-Code Coverage shows how much of your code your tests actually exercise. Run your test suite in CI, upload the report, and review coverage per repository, file, and line in Aikido. To fail a GitHub pull request when coverage is below a percentage you choose, see [PR Gating on Code Coverage](/code-quality/code-coverage/pr-gating-on-code-coverage.md).
+Code Coverage shows how much of your code your tests actually exercise. Run your test suite in CI, upload the report, and review coverage per repository, file, and line in Aikido. To fail a GitHub pull request when coverage is below a percentage you choose, see [PR Gating on Code Coverage](/code-quality/code-coverage/pr-gating-on-code-coverage.md). In a monorepo, run and upload coverage for every app. To skip unchanged apps, see [Monorepos That Test Only Changed Paths](/code-quality/code-coverage/monorepos-that-test-only-changed-paths.md).
 
 ## How it works
 
 1. Your CI job runs tests with coverage enabled and writes one or more coverage reports.
 2. Your CI uploads that report to Aikido. The step depends on your platform. See [Upload a coverage report](#upload-a-coverage-report).
 3. Aikido stores the report against the repository, commit SHA, and branch.
-4. The **Code Coverage** tab shows the latest upload for each repository, using only the files in that report.
+4. The **Code Coverage** tab shows the latest upload for that repository and branch. A new upload replaces the previous one. Files that are not in the new report are removed.
 
 ## What Aikido measures
 
@@ -27,7 +27,7 @@ Aikido uses the connected repository to attach the upload to the right repo and 
 
 The code tree and the coverage percentage follow the report. Test runners usually instrument only part of the repository. Jest `collectCoverageFrom`, pytest `--cov=src`, and Istanbul `include` often collect `src/` and leave out tests, generated files, and other folders. Upload that report and Aikido shows `src/`. The percentage is covered lines divided by the lines in the report.
 
-To show more of the repository, widen those collect or include paths and upload again. When packages or jobs each write a report, pass every path in one upload. Aikido merges LCOV and Cobertura reports into one result.
+To show more of the repository, widen those collect or include paths and upload again. When packages or jobs each write a report, pass every path in one upload. Aikido merges LCOV and Cobertura reports in that upload into one result. A later upload does not keep files from an earlier one. Run every app on each commit. To skip apps that did not change, see [Monorepos That Test Only Changed Paths](/code-quality/code-coverage/monorepos-that-test-only-changed-paths.md).
 
 ## Use cases
 
@@ -78,6 +78,7 @@ Source preview depends on Aikido having imported the file. If the source isn't a
 * **Nothing appears in Aikido**: confirm the repository is connected to Aikido, the coverage report contains at least one parseable source file, and the upload step ran.
 * **You only see `/src` (or another folder)**: the uploaded report only contains those paths. See [You see the files your tests collected](#you-see-the-files-your-tests-collected).
 * **Coverage looks incomplete**: if you shard tests or use a matrix, send every report in one upload per commit. Pass every report path, or collect the artifacts first and upload them together.
+* **Apps that did not run disappeared**: the latest upload replaced the previous one. Run every app and upload every report. To skip unchanged apps, keep each app's latest report and upload them together. See [Monorepos That Test Only Changed Paths](/code-quality/code-coverage/monorepos-that-test-only-changed-paths.md).
 * **The report is rejected as too large**: Aikido accepts coverage payloads up to 10 MB. Narrow the coverage output or exclude generated files before upload.
 * **The upload step fails**: follow the guide for your platform in [Upload a coverage report](#upload-a-coverage-report).
 

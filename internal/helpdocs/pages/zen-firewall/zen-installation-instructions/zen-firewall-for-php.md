@@ -48,6 +48,10 @@
 [PHP on Caddy with PHP-FPM](/zen-firewall/zen-installation-instructions/zen-firewall-for-php/caddy-php-fpm.md)
 {% endcontent-ref %}
 
+{% content-ref url="/pages/AXl7l68Xt34WI6z2oKLG" %}
+[PHP on nginx or Apache with PHP-FPM](/zen-firewall/zen-installation-instructions/zen-firewall-for-php/nginx-apache-php-fpm.md)
+{% endcontent-ref %}
+
 {% content-ref url="/pages/Bf19rZLEGK4vBH77vpXE" %}
 [PHP on Apache (mod\_php)](/zen-firewall/zen-installation-instructions/zen-firewall-for-php/apache-mod-php.md)
 {% endcontent-ref %}

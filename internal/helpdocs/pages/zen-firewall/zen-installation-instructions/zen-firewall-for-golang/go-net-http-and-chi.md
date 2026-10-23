@@ -139,7 +139,7 @@ Adapt the example to fit how your application identifies users and handles reque
 Start your app with detection mode enabled:
 
 ```bash
-AIKIDO_BLOCK=false AIKIDO_TOKEN=AIK_RUNTIME_ go run -toolexec="zen-go toolexec" .
+AIKIDO_BLOCK=false AIKIDO_TOKEN=AIK_RUNTIME_ go tool zen-go go run .
 ```
 
 Set the token as an environment variable so the Aikido Zen agent can pick it up. If you don't have a token yet, follow [instructions here](/zen-firewall/zen-installation-instructions/creating-an-aikido-zen-firewall-token.md).

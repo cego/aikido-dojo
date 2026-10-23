@@ -291,4 +291,4 @@ Every agent release is cryptographically signed in Aikido's build pipeline. Befo
 ### Limitations
 
 * **Aikido Device Protection is not a virus scanner.** Apart from Secret Scanning, it does not inspect files, processes, or your system for existing threats. Instead, it works by blocking malware before it can reach your device. This means that if malware is already present on a device, Aikido Device Protection will not detect or remove it, and the device should be considered compromised.
-* **Aikido Device Protection currently does not support Docker or Podman on macOS.** On Linux, the agent can run inside a container image. See [Device Protection in Containers](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/device-protection-in-containers.md).
+* **Docker containers:** enable **Protect Containers** to protect Docker. See [Device Protection in Docker Containers](/aikido-device-protection/deploying-aikido-endpoint/device-protection-in-docker-containers.md).

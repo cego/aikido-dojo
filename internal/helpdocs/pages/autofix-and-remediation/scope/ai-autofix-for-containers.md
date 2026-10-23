@@ -25,11 +25,10 @@ Good to Know
 
 ### How to use the AI Autofix functionality <a href="#how-to-use-the-ai-autofix-functionality" id="how-to-use-the-ai-autofix-functionality"></a>
 
-* **Step 1**. **Go to the** [**Container Autofix Page**](https://app.aikido.dev/issues/fix/container)[.](https://app.aikido.dev/issues/fix/sast)
+* **Step 1**. **Go to the** [**AutoFix > Cloud > Containers Page**](https://app.aikido.dev/issues/fix/container)[.](https://app.aikido.dev/issues/fix/sast)
 
   See a list of containers with the option to **View Fix**. If a container isn’t linked to a repo, or if the Dockerfile path is unclear, you’ll be prompted to configure it manually.
 
-  
 * **Step 2.** **Review and Select a Patch Option**
 
   Each option shows what it fixes and if it introduces new issues. Pick the one that fits your setup.

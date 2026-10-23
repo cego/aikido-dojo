@@ -83,7 +83,10 @@ Available for:
 * [Node.js](https://github.com/AikidoSec/firewall-node/blob/main/docs/user.md#rate-limiting-groups)
 * [Python](https://github.com/AikidoSec/firewall-python/blob/main/docs/user.md#rate-limiting-groups)
 * [Java](https://github.com/AikidoSec/firewall-java/blob/main/docs/user.md#rate-limiting-groups)
-* Other agents will follow soon
+* [PHP](https://github.com/AikidoSec/firewall-php/blob/main/docs/user.md#rate-limiting-groups)
+* [Go](https://pkg.go.dev/github.com/AikidoSec/firewall-go/zen#SetRateLimitGroup)
+* [.NET](https://github.com/AikidoSec/firewall-dotnet/blob/main/docs/user.md#rate-limiting-groups)
+* [Ruby](https://github.com/AikidoSec/firewall-ruby/blob/main/docs/rails.md#rate-limiting-groups)
 
 ## Exceptions
 

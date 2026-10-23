@@ -7,7 +7,7 @@ A Data Exposure Audit is Aikido's code-based data security posture management (D
 ## Prerequisites
 
 * You need the **Manage Pentests and AI Code Analysis** [permission](/getting-started/automated-user-management/setting-roles-and-permissions.md) to create an audit. You can still open AI Code Analysis and existing assessments without it.
-* At least one repository is connected. [Self-scanned repositories](/code-scanning/local-code-scanning.md) are excluded from the picker. You can pick up to 20 repositories.
+* At least one repository is connected. [Self-scanned repositories](/code-scanning/local-code-scanning.md) are excluded from the picker. There is a limit on how many repositories you can pick. [Contact support](/miscellaneous-info/contact-support.md) if you need more.
 * Your wallet has enough credits for the quoted cost. See [Wallet & Credits](/miscellaneous-info/wallet-and-credits.md).
 
 ## Set up the audit
@@ -29,15 +29,15 @@ On **Select Audit Type**, select **Data Exposure Audit**, then click **Continue*
 
 ### Select repositories
 
-1. Open **Repositories** and select up to 20 connected repositories. **Continue** stays disabled until at least one repository is selected.
+1. Open **Repositories** and select the connected repositories for this audit. **Continue** stays disabled until at least one repository is selected.
 2. To keep a monorepo focused, click **Exclude Paths** next to a selected repository and add directories that are not part of this audit.
 3. Under **Scope**, leave **Audit all selected repositories** selected, or choose **Audit specific parts only** and describe the data handling to review.
-4. **Additional Notes** are optional. Add them when context is missing from the source, such as intentionally exposed private data, known issues to ignore, or proxy-level protection.
+4. **Additional Notes** are optional and apply to this audit only. Add them when context is missing from the source, such as intentionally exposed private data, known issues to ignore, or proxy-level protection. Put guidance that should apply to every audit in a markdown file in the repository. See [Guide Agents with Repository Files](/ai-and-dev-tools/guide-an-audit-with-repository-files.md).
 
 [image: Exclude Paths button next to a selected repository]
 
 {% hint style="info" %}
-Exclude unrelated applications or services, not documentation, READMEs, or other non-code assets. Those files can provide context about data flows and how sensitive data is handled.
+Leave documentation and READMEs in the repository. Agents can read that markdown for data flows and how sensitive data is handled. Exclude unrelated applications or services.
 {% endhint %}
 
 **Cancel** returns to **Audit Type**.
@@ -73,9 +73,9 @@ For the data-handling classes in scope, see [What Data Exposure Audit Finds](/ai
 
 ## FAQ
 
-### Why is there a 20 repository cap?
+### Why is there a repository limit?
 
-The picker allows 20 repositories so the audit stays focused. If you need more in one audit, [contact support](/miscellaneous-info/contact-support.md).
+The picker limits how many repositories you can include so the audit stays focused. If you need more in one audit, [contact support](/miscellaneous-info/contact-support.md).
 
 ## Related
 

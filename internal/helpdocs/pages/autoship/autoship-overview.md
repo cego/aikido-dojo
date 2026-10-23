@@ -19,57 +19,66 @@ Go to [AutoShip](https://app.aikido.dev/autoship) in the Aikido UI and first con
 
 ### Global Configuration
 
-On the [AutoShip > Settings page](https://app.aikido.dev/autoship/settings) you can setup AutoShip:
+On the [AutoShip > Integrations page](https://app.aikido.dev/autoship/settings) you can setup the integrations used by AutoShip:
 
 #### Write Access for AutoShip
 
-Currently we only support **GitHub**. Write access is provided through the `Aikido AutoShip` GitHub app. This app is separate from the `Aikdio AutoFix` GitHub app. You can configure independently on which repos AutoFix is enabled and on which repos AutoShip is enabled.
+Supports **GitHub**, **GitLab**, **BitBucket** and **Azure Devops**.
+
+For GitHub, write access is provided through the `Aikido AutoShip` GitHub app. This app is separate from the `Aikdio AutoFix` GitHub app. You can configure independently on which repos AutoFix is enabled and on which repos AutoShip is enabled.
+
+For GitLab, BitBucket and Azure Devops, AutoShip requires a personal access token, service account token or equivalent to access the repositories.
 
 #### Trigger label
 
-AutoShip triggers on pull requests that have a designated label. This label can be configured and will be used as the trigger across all repos on which AutoShip is enabled.
+AutoShip triggers on pull requests that have a designated label, the default label is `autoship`.
 
-#### Environments
-
-Specify the different environments AutoShip can deploy to. Typically the first environment is a staging environment, a safe space to test the changes. Once the changes are tested and verified on the first environment, it will move on to the next environment. Typicaly the second environment is the production environment, AutoShip will monitor the deploy and perform a smoke test to verify the changes.
-
-Environments can be reused across multiple repositories. Specify the name of the environment and the branch in the global configuration to easily reuse them across your repositories.
-
-The name of the branch is used by AutoShip as a safe-guard, AutoShip can only merge to this branch. For example if you deploy to a staging environment by merging to the `staging` branch, ou need to specify that branch name, otherwise AutoShip will not be able to merge. This prevents AutoShip from merging to sensitive branches (eg. main or production) in your repository.
+Since BitBucket does not support labels, by default AutoShip will pick up pull requests that have `@autoship` in the PR description. If the label is changed, AutoShip will trigger on `@<label>` .
 
 #### CI/CD
 
 AutoShip connects to your CI/CD system to check whether the build is passing. When build problems arise, AutoShip will fix them and push the fix on the pull request branch.
 
-In the global configuration you connect your CI/CD system. In most cases this requires an API key, see the [CI/CD](/autoship/ci-cd.md) page for details per system. We currently support Github Actions and CircleCI.
+In the global configuration you connect your CI/CD system. In most cases this requires an API key, see the [CI/CD](/autoship/ci-cd.md) page for details per system. We current support:
 
-Additional configuration per repository (eg. project) can be provided when configuring the repository.
+* GitHub Actions
+* GitLab CI
+* BitBucket Pipelines
+* Azure Pipelines
+* CircleCI
+
+Additional configuration per repository can be provided when configuring the repository.
 
 #### Monitoring
 
 Once the deploy to an environment succeeded, AutoShip will look at the data from your monitoring system to verify there are no new errors. If a regression is detected, AutoShip will roll back the changes.
 
-In the global configuration you connect your monitoring systems. In most case this requires an API key, see the [Monitoring](/autoship/monitoring.md) page for details per system. We currently support Sentry and CloudWatch.
+In the global configuration you connect your monitoring systems. In most case this requires an API key, see the [Monitoring](/autoship/monitoring.md) page for details per system. We currently support:
 
-Additional configuration per repository (eg. project) can be provided when configuring the repository.
+* Sentry
+* CloudWatch
+
+Additional configuration per repository can be provided when configuring the repository.
 
 #### Alerting
 
 AutoShip keeps you informed about its progress. This can be done through Slack. AutoShip creates a thread per deployment and posts progress messages:
 
-### Per repository configuration
+### Repository Settings
 
-Once the global configuration is finished and the integrations are connected, it's only a matter of enabling them for your repositories.
+Once the integrations are configured, you need to enable them for your repositories.
 
 #### CI/CD
 
-Choose the CI/CD system that is used for this particular repository. For GitHub Action and CircleCI it's just a matter for selecting them, no further configuration required.
+Choose the CI/CD system that is used for this particular repository. No further configuration required.
 
 #### Environments
 
-Select the environments you want to enable for this repository. You can choose to deploy some repositories to a testing environment without shipping all the way to production to perform a final manual verification.
+Define the environments for AutoShip to deploy. You can deploy to multiple environments in sequence, for example first deploying and testing to a staging environment before deploying and testing to a production environment.
 
-In the environment configuration you will specify:
+This can be configured per repository, for critical repositories you probably want to deploy to a staging enviroment and perform a manual verifcation before deploying to production.
+
+In the environment configuration you can specify:
 
 * **How AutoShip should deploy to this environment.** These are a free-text instructions, eg. `merge the PR branch into the staging branch`.
 * **How AutoShip should test the functionality.** Here you configure which domain should be tested, how to authenticate to the domain and provide free-text instructions on how to test, eg. `add a product to the basket and check it is present on the checkout page`. [More information about smoke testing.](/autoship/smoke-testing.md)
@@ -78,6 +87,15 @@ In the environment configuration you will specify:
 #### Alerting
 
 Specify on which Slack channel you want to be notified about the AutoShip progress.
+
+### IP addresses for AutoShip
+
+Make sure your CI/CD and monitoring tools allow access from these IP addresses:
+
+* `18.200.42.253`
+* `52.51.229.214`&#x20;
+
+The IP addresses for Smoke Testing can be found [here](/autoship/smoke-testing.md).
 
 ### Try it!
 

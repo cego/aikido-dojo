@@ -7,7 +7,7 @@ The create flow is three steps: choose **Code Security Audit**, pick the reposit
 ## Prerequisites
 
 * You need the **Manage Pentests and AI Code Analysis** [permission](/getting-started/automated-user-management/setting-roles-and-permissions.md) to create an audit. You can still open AI Code Analysis and existing assessments without it.
-* At least one repository is connected. [Self-scanned repositories](/code-scanning/local-code-scanning.md) are excluded from the picker. You can pick up to 20 repositories.
+* At least one repository is connected. [Self-scanned repositories](/code-scanning/local-code-scanning.md) are excluded from the picker. There is a limit on how many repositories you can pick. [Contact support](/miscellaneous-info/contact-support.md) if you need more.
 * Your wallet has enough credits for the quoted cost. You can top up from inside the create flow. See [Wallet & Credits](/miscellaneous-info/wallet-and-credits.md).
 
 ## Set up the audit
@@ -28,15 +28,15 @@ On **Select Audit Type**, select **Code Security Audit**, then click **Continue*
 
 ### Select repositories
 
-1. Open **Repositories** and select up to 20 connected repositories. **Continue** stays disabled until at least one repository is selected.
+1. Open **Repositories** and select the connected repositories for this audit. **Continue** stays disabled until at least one repository is selected.
 2. To keep a monorepo focused, click **Exclude Paths** next to a selected repository and add directories that are not part of this audit.
 3. Under **Scope**, leave **Audit all selected repositories** selected, or choose **Audit specific parts only** and describe what to review. For example: "Audit the new billing flow and the services it calls."
-4. **Additional Notes** are optional. Add them when context is missing from the source, such as runtime configuration, known architecture quirks, or firewall and proxy settings.
+4. **Additional Notes** are optional and apply to this audit only. Add them when context is missing from the source, such as runtime configuration, known architecture quirks, or firewall and proxy settings. Put guidance that should apply to every audit in a markdown file in the repository. See [Guide Agents with Repository Files](/ai-and-dev-tools/guide-an-audit-with-repository-files.md).
 
 [image: Exclude Paths button next to a selected repository]
 
 {% hint style="info" %}
-Exclude unrelated applications or services, not documentation, READMEs, or other non-code assets. Aikido can use those files as architectural context.
+Leave documentation and READMEs in the repository. Agents can read that markdown as context. Exclude unrelated applications or services.
 {% endhint %}
 
 **Cancel** returns to **Audit Type**.
@@ -69,9 +69,9 @@ Aikido opens the assessment detail page. See [Track Progress and Findings](/ai-c
 
 ## FAQ
 
-### Why is there a 20 repository cap?
+### Why is there a repository limit?
 
-The picker allows 20 repositories so the audit stays focused. If you need more in one audit, [contact support](/miscellaneous-info/contact-support.md).
+The picker limits how many repositories you can include so the audit stays focused. If you need more in one audit, [contact support](/miscellaneous-info/contact-support.md).
 
 ### The credit estimate looks wrong, or a repository is missing
 

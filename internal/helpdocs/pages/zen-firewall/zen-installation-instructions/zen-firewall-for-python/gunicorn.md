@@ -12,7 +12,7 @@ Gevent workers are not supported.
 
 ## Requirements
 
-* Python 3.8+ (supported through 3.13).
+* Python 3.8+ (supported through 3.14).
 * Gunicorn WSGI server (gevent workers not supported).
 * [Aikido account](/getting-started/setting-up-your-account.md) & [Zen Firewall token](/zen-firewall/zen-installation-instructions/creating-an-aikido-zen-firewall-token.md)
 

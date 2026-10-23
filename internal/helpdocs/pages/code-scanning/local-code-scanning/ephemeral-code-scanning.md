@@ -30,6 +30,7 @@ Options:
   --scan-timeout <timeout>           Timeout in milliseconds for each scan (defaults to 900000ms).
   --enable-proxy                     Uses HTTPS_PROXY environment variable to proxy requests
   --ca-bundle <path>                 Path to a PEM file containing custom root CA(s) to trust when using --enable-proxy. (env: AIKIDO_CA_BUNDLE)
+  --disable-telemetry                Disable all error reporting (telemetry) to Aikido. (env: AIKIDO_DISABLE_TELEMETRY)
   --include-dev-deps                 Enable scanning of development dependencies (e.g., devDependencies in package.json, etc.)
   -h, --help                         display help for command
 

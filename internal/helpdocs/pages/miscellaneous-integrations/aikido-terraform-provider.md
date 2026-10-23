@@ -2,7 +2,7 @@
 
 Use the official Aikido Terraform provider to manage Aikido resources as code through the [management API](https://apidocs.aikido.dev/). This is useful if you already provision infrastructure with Terraform and want repository activation, AutoFix settings, and PR checks to follow the same workflow.
 
-Full resource schemas, arguments, and import syntax live in the [Terraform Registry documentation](https://registry.terraform.io/providers/AikidoTerraform/aikido/latest/docs).
+The provider is published on both the [Terraform Registry](https://registry.terraform.io/providers/AikidoTerraform/aikido/latest/docs) and the [OpenTofu Registry](https://search.opentofu.org/provider/aikidoterraform/aikido/latest), so it works with Terraform and OpenTofu. Full resource schemas, arguments, and import syntax live in the Terraform Registry documentation.
 
 ## What you can manage
 
@@ -21,7 +21,7 @@ The provider manages configuration for repositories that already exist in Aikido
 
 ## Requirements
 
-* Terraform 1.0 or later
+* Terraform 1.0 or later, or OpenTofu
 * An Aikido workspace with API access
 * OAuth2 client credentials from the [Aikido REST API integration page](https://app.aikido.dev/settings/integrations/api/aikido/rest)
 
@@ -143,7 +143,7 @@ resource "aikido_repo_pr_checks_settings" "app" {
 
 For every argument, import ID, and resource-specific behavior, use the official docs:
 
-<a href="https://registry.terraform.io/providers/AikidoTerraform/aikido/latest/docs" class="button primary" data-icon="book">Terraform Registry docs</a>
+<a href="https://registry.terraform.io/providers/AikidoTerraform/aikido/latest/docs" class="button primary" data-icon="book">Terraform Registry docs</a> <a href="https://search.opentofu.org/provider/aikidoterraform/aikido/latest" class="button secondary" data-icon="book">OpenTofu Registry</a>
 
 ## Related docs
 

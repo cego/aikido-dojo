@@ -63,7 +63,9 @@ Click a row to open the detail sidebar. From there you can:
 
 ### Fix findings with AutoFix
 
-Instead of fixing a finding by hand, you can let Aikido generate the change for you. [AutoFix](/autofix-and-remediation/overview-aikido-autofix.md) produces a fix for the finding and can open a pull request with the change, so you review and merge rather than write it yourself.
+Aikido can generate the change for you. [AutoFix](/autofix-and-remediation/overview-aikido-autofix.md) produces a fix for the finding and can open a pull request with the change, so you review and merge it.
+
+To have Aikido open those pull requests on a daily schedule, turn on automatic creation for **Code Quality Issues**. It covers critical and high severity findings on default checks. See [Automatic Creation of Pull Requests](/autofix-and-remediation/automation-and-merging/automatic-creation-of-pull-requests.md).
 
 ## File scatter plot
 
