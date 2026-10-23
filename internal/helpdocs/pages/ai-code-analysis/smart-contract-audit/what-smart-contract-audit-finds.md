@@ -20,7 +20,7 @@ Smart Contract Audit focuses on these classes:
 
 Agents follow contract calls across files, libraries, and other protocols, so a finding can span more than one function or contract.
 
-**Configure** on the **Pricing** step changes how much of the selection gets investigated. It does not change which classes are in scope. **Audit specific parts only** and **Additional Notes** are set in the create flow. Notes are where you record target chains, trusted admin or oracle roles, deployed contract addresses, and known accepted risks when that context is not in the repository.
+**Configure** on the **Pricing** step changes how much of the selection gets investigated. It does not change which classes are in scope. **Audit specific parts only** and **Additional Notes** are set in the create flow. Notes are where you record target chains, trusted admin or oracle roles, deployed contract addresses, and known accepted risks when that context is not in the repository. Commit standing guidance as markdown in the repository. See [Guide Agents with Repository Files](/ai-and-dev-tools/guide-an-audit-with-repository-files.md).
 
 ## Limits
 

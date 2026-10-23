@@ -96,7 +96,7 @@ Add middleware:
          if ($decision->type == 'ratelimited') {
   ```
 * ```
-             return new \Symfony\Component\HttpFoundation\Response('You are rate limited by Zen.', 429);
+             return new \Symfony\Component\HttpFoundation\Response('You are rate limited by Zen.', 429, ['Retry-After' => (string) $decision->retry_after]);
   ```
 * ```
          }

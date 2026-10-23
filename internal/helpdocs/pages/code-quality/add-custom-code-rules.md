@@ -1,6 +1,6 @@
 # Add Custom Code Rules
 
-Custom Code Rules allow you to enforce team-specific coding standards and patterns unique to your organization. Create rules that detect specific code patterns, enforce naming conventions, or flag architectural violations that aren't covered by default checks.
+Custom Code Rules allow you to enforce team-specific coding standards and patterns unique to your organization, and to have Aikido fix the violations they find. Create rules that detect specific code patterns, enforce naming conventions, or flag architectural violations that aren't covered by default checks.
 
 ### What are Custom Code Rules?
 
@@ -71,6 +71,19 @@ RUN apt-get update && apt-get install nodejs
    {% endstep %}
 
 {% step %}
+**Add an AutoFix prompt**
+
+This step is optional. [AutoFix](/autofix-and-remediation/overview-aikido-autofix.md) must be enabled for the workspace.
+
+1. Write a prompt that tells AutoFix how to correct a violation. For the Alpine example: `Replace the base image with alpine`.
+2. Click **Validate Prompt**. Aikido applies the prompt to your non-compliant example, then checks the result against the rule.
+3. When validation passes, the fixed example no longer triggers the rule. Click **Continue**.
+4. When validation fails, the fixed example still triggers the rule. Adjust the prompt and validate again.
+
+Click **Skip** to save the rule without AutoFix. Aikido offers AutoFix for a custom rule after you save a prompt that passes validation. Edit the rule later to add or change the prompt. Changing the prompt requires validation again before you can save.
+{% endstep %}
+
+{% step %}
 **Configure rule details**
 
 Once validated, provide additional information about your rule:
@@ -85,7 +98,7 @@ Once validated, provide additional information about your rule:
    ```
    Non-Alpine base images increase container size and attack surface
    ```
-3. **How to fix:** Provide actionable guidance for developers
+3. **How to fix:** Provide actionable guidance for developers. This text is what people see on the finding. The AutoFix prompt from the previous step is what Aikido uses to generate the change.
 
    <pre data-overflow="wrap"><code>Replace your base image with an Alpine Linux variant. For example, change 'FROM node:18' to 'FROM node:18-alpine'. You may need to adjust package installation commands from apt-get to apk.
    </code></pre>

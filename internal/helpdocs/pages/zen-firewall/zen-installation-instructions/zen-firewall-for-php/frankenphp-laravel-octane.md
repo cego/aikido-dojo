@@ -217,6 +217,7 @@ Use `set_user` and `should_block_request` in your request pipeline:
 +   if ($decision->block) {
 +       if ($decision->type === 'ratelimited') {
 +           http_response_code(429);
++           header('Retry-After: ' . $decision->retry_after);
 +           exit('You are rate limited by Zen.');
 +       }
 +       http_response_code(403);

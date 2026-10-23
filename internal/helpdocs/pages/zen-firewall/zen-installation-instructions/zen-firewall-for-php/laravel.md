@@ -103,7 +103,7 @@ Create `app/Http/Middleware/AikidoMiddleware.php`:
          if ($decision->type == 'ratelimited') {
   ```
 * ```
-             abort(429, 'You are rate limited by Zen.');
+             abort(429, 'You are rate limited by Zen.', ['Retry-After' => (string) $decision->retry_after]);
   ```
 * ```
          }

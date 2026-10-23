@@ -8,7 +8,7 @@ If you encounter any issues or problems, don't hesitate reach out on support cha
 
 ## Requirements
 
-* Python 3.8+ (supported through 3.13).
+* Python 3.8+ (supported through 3.14).
 * Flask 2.2.4+.
 * [Aikido account](/getting-started/setting-up-your-account.md) & [Zen Firewall token](/zen-firewall/zen-installation-instructions/creating-an-aikido-zen-firewall-token.md)
 

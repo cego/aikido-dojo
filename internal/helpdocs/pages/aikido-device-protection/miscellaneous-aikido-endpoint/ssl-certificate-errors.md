@@ -18,6 +18,10 @@ Don't see your tool? [Contact support](mailto:support@aikido.dev), we'll look in
 
 If you need to fix it yourself in the meantime, use the information below.
 
+{% hint style="warning" %}
+Builds that run inside a container, such as `docker build` or a CI job in a container image, don't see the CA certificate installed on the host. Install Device Protection inside the image instead. See [Device Protection in Containers](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/device-protection-in-containers.md).
+{% endhint %}
+
 ## Unsupported tools
 
 The CA certificate is stored at:
@@ -35,6 +39,14 @@ The CA certificate is stored at:
 
 ```
 C:\ProgramData\AikidoSecurity\EndpointProtection\run\endpoint-protection-proxy-ca-crt.pem
+```
+
+{% endtab %}
+
+{% tab title="Linux" %}
+
+```
+/var/lib/aikidosecurity/endpoint-protection/run/endpoint-protection-proxy-ca-crt.pem
 ```
 
 {% endtab %}

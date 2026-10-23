@@ -29,7 +29,7 @@ Copy and save the workflow URL using the copy button. You need this URL later.
 {% step %}
 **Finish setup**
 
-Open the Microsoft Teams integration page in the Aikido dashboard and click on "New alert". Inside the channel select input, click on "Link a different private channel". After that the following dialog is opened. Select the Microsoft Team and enter the channel name and the workflow URL. Click on "Add Channel" to finish the setup.
+Open the Microsoft Teams integration page in the Aikido dashboard and click on "Create alert". Inside the channel select input, click on "Link a different private channel". After that the following dialog is opened. Select the Microsoft Team and enter the channel name and the workflow URL. Click on "Add Channel" to finish the setup.
 
 [image: Finish the connection]
 {% endstep %}

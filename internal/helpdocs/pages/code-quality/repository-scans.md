@@ -13,7 +13,7 @@ After Aikido scans a repository, you can:
 * See open findings grouped into **maintainability**, **readability**, **performance**, and **reliability**
 * Prioritize the categories and files that need attention first
 * Track how open findings change over time
-* Use [AutoFix](/autofix-and-remediation/overview-aikido-autofix.md) or fix findings yourself
+* Fix findings yourself, open an [AutoFix](/autofix-and-remediation/overview-aikido-autofix.md) pull request, or [create pull requests automatically](/autofix-and-remediation/automation-and-merging/automatic-creation-of-pull-requests.md) each day for critical and high findings
 
 [image: Code Quality Repositories tab showing category ratings and PR checks for each repository]
 

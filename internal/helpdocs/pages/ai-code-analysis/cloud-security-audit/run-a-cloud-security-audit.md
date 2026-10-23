@@ -10,7 +10,7 @@ A Cloud Security Audit reasons about connected cloud accounts inside [AI Code An
 * At least one cloud account is [connected](/cloud-scanning/connect-your-cloud.md). Supabase projects do not appear in the picker.
 * Your wallet has enough credits for the quoted cost. See [Wallet & Credits](/miscellaneous-info/wallet-and-credits.md).
 
-IaC repositories are optional. [Self-scanned repositories](/code-scanning/local-code-scanning.md) are excluded from the picker. You can add up to 20 repositories.
+IaC repositories are optional. [Self-scanned repositories](/code-scanning/local-code-scanning.md) are excluded from the picker. There is a limit on how many repositories you can add. [Contact support](/miscellaneous-info/contact-support.md) if you need more.
 
 ## Set up the audit
 
@@ -35,10 +35,10 @@ On **Select Audit Type**, select **Cloud Security Audit**, then click **Continue
 3. To keep a repository focused, click **Exclude Paths** next to a selected repository and add directories that are not part of this audit.
 
 {% hint style="info" %}
-Exclude unrelated applications or services, not documentation or READMEs. Aikido can use those files as context for how the account is defined.
+Leave documentation and READMEs in the repository. Agents can read that markdown for how the account is defined. Exclude unrelated applications or services.
 {% endhint %}
 
-**Additional Notes** are optional. Add them when context is missing from the inventory and the IaC, such as runtime configuration, known architecture quirks, or firewall and proxy settings.
+**Additional Notes** are optional and apply to this audit only. Add them when context is missing from the inventory and the IaC, such as runtime configuration, known architecture quirks, or firewall and proxy settings. Put guidance that should apply to every audit in a markdown file in the repository. See [Guide Agents with Repository Files](/ai-and-dev-tools/guide-an-audit-with-repository-files.md).
 
 **Cancel** returns to **Audit Type**.
 {% endstep %}

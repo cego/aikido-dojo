@@ -47,6 +47,8 @@ On each pull request, Aikido opens **Aikido Security: code coverage** and waits 
 
 Aikido reads the coverage percentage of the report CI uploaded for that commit. The percentage follows the files in the report. See [You see the files your tests collected](/code-quality/code-coverage.md#you-see-the-files-your-tests-collected).
 
+The check uses the percentage of that commit's upload. Run every app and upload every report. A report that contains only the app that ran makes the threshold apply to that app. To skip unchanged apps, carry their latest reports forward and upload every report together. See [Monorepos That Test Only Changed Paths](/code-quality/code-coverage/monorepos-that-test-only-changed-paths.md).
+
 ## Block the merge
 
 Aikido can fail the check. GitHub decides whether that failure blocks the merge. Add **Aikido Security: code coverage** as a required status check on the branch you want to protect.
@@ -56,7 +58,7 @@ See [Make failed PR checks block merges](/pr-and-release-gating/github-ci-pr-gat
 ## Troubleshooting
 
 * **The check stays pending, then finishes neutral:** the pull request workflow did not upload a report for that commit within 30 minutes. Confirm the upload step runs on the pull request, for the head commit, in the repository connected to Aikido.
-* **The check failed and the percentage looks lower than you expect:** the threshold applies to the uploaded report. If the report only includes part of the repo, that is the percentage Aikido uses. Widen the test runner's collect or include paths and upload again.
+* **The check failed and the percentage looks lower than you expect:** the threshold applies to the uploaded report. If the report only includes part of the repository, that is the percentage Aikido uses. Widen the test runner's collect or include paths, or upload every app's report together, and upload again. See [Monorepos That Test Only Changed Paths](/code-quality/code-coverage/monorepos-that-test-only-changed-paths.md).
 * **Saving the configuration fails:** enable at least one scan under **Vulnerability Scanning**, then save again.
 * **The setting shows Upgrade:** Code Coverage, including this check, is available on Basic, Pro, Advanced, and Enterprise plans.
 

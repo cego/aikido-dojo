@@ -1,6 +1,6 @@
 # JFrog Artifactory
 
-Route your registry traffic through Aikido's registry proxy by configuring JFrog Artifactory as an intermediary. Artifactory pulls packages from Aikido instead of the public registries, so every package your team installs is checked for malware, age restrictions, and known vulnerabilities.
+Use Aikido Registry Proxy as the default upstream for Artifactory, so every package your team installs is checked for malware, age restrictions, and known vulnerabilities. Additionally this allows you to install [Aikido Libraries](/autofix-and-remediation/aikido-libraries-overview.md) directly from your Artifactory.
 
 {% stepper %}
 {% step %}

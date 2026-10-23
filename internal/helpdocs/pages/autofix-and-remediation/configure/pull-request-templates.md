@@ -4,12 +4,19 @@ AutoFix uses a pull request template from your repository to generate each pull 
 
 AutoFix checks these template locations:
 
+* `pull_request_template.md`
+* `PULL_REQUEST_TEMPLATE.md`
+* `pull_request_template.txt`
+* `docs/pull_request_template.md`
+* `docs/PULL_REQUEST_TEMPLATE.md`
+* `docs/pull_request_template.txt`
 * `.github/PULL_REQUEST_TEMPLATE.md`
 * `.github/pull_request_template.md`
-* `PULL_REQUEST_TEMPLATE.md`
-* `docs/PULL_REQUEST_TEMPLATE.md`
 * `.gitlab/merge_request_templates/Default.md`
-* `pull_request_template.md`
+* `.azuredevops/pull_request_template.md`
+* `.azuredevops/pull_request_template.txt`
+* `.vsts/pull_request_template.md`
+* `.vsts/pull_request_template.txt`
 
 Example pull request template:
 

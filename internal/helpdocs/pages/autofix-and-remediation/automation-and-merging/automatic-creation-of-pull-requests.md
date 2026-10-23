@@ -1,6 +1,6 @@
 # Automatic Creation of Pull Requests
 
-Aikido allows for automatic Pull Request creation on a **daily basis**, handling mass dependency updates, fixing SAST issues, updating container base images & fixing pentest issues. You can fine tune the pull request title, description, labels and other settings with "PR Configuration".
+Aikido allows for automatic Pull Request creation on a **daily basis**, handling mass dependency updates, fixing SAST issues, updating container base images, fixing pentest issues, and fixing Code Quality issues. You can fine tune the pull request title, description, labels and other settings with "PR Configuration".
 
 ### Setup automatic creation <a href="#setup-automatic-creation" id="setup-automatic-creation"></a>
 
@@ -8,7 +8,7 @@ Aikido allows for automatic Pull Request creation on a **daily basis**, handling
 
 **Step 2:** Scroll down to Automated PRs. Enable the toggle for 'Autocreation of PRs'
 
-**Step 3:** The configuration modal opens. You can enable autocreation for dependencies in code repos, automated fixes for Docker containers or automatically fix SAST/IaC and pentest issues. Make sure to select code repositories and containers for which you want PRs created.
+**Step 3:** The configuration modal opens. You can enable autocreation for dependencies in code repos, automated fixes for Docker containers, or automatically fix SAST/IaC, pentest, and Code Quality issues. Make sure to select code repositories and containers for which you want PRs created.
 
 **Step 4:** Test whether new PRs are created correctly by clicking the **Test Autocreation** button.
 

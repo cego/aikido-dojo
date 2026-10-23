@@ -2,6 +2,8 @@
 
 Device Protection can run inside a Linux container image, so package installs in CI jobs, build containers, and containerized dev environments get inspected the same way they do on a workstation. You install the agent while the image is built and let the agent's container entrypoint start it when the container runs.
 
+To protect running containers on a developer machine without changing their images, turn on **Protect Containers** instead. See [Device Protection in Docker Containers](/aikido-device-protection/deploying-aikido-endpoint/device-protection-in-docker-containers.md).
+
 Read [Install Device Protection for Linux](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/install-device-protection-for-linux.md) first for the token and the packages that every method uses. The [Linux Rollout Reference](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/linux-rollout-reference.md) covers token handling and device identity across all of them.
 
 {% hint style="info" %}

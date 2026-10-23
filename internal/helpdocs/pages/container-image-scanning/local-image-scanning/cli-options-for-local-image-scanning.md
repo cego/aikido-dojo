@@ -32,6 +32,7 @@ Options:
   --scan-javascript-lockfiles.     Also detect JavaScript packages from lockfiles (e.g. package-lock.json, yarn.lock) found inside the image, in addition to installed packages.
   --enable-proxy                   Uses HTTPS_PROXY environment variable to proxy requests.
   --ca-bundle <path>               Path to a PEM file containing custom root CA(s) to trust when using --enable-proxy. (env: AIKIDO_CA_BUNDLE)
+  --disable-telemetry              Disable all error reporting (telemetry) to Aikido. (env: AIKIDO_DISABLE_TELEMETRY)
   --linked-repository-name <name>  Repository name to link the image to.
   -h, --help                       display help for command
 ```

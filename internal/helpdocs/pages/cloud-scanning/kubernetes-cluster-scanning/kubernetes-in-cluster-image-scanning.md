@@ -43,7 +43,16 @@ This is the simpler option. Choose it if you want Aikido to keep a single contai
 
 Choose this option if you want Aikido to track running images per Kubernetes workload. If the same image is deployed with different tags across multiple workloads, each tag will appear as a separate container in Aikido.
 
-You can configure the scan behavior during Kubernetes cluster onboarding, and update it later in the cluster settings.
+#### Where to set the scan behavior
+
+The scan behavior is a per-cluster setting. You can choose it during Kubernetes cluster onboarding, or change it later:
+
+1. Go to [Clouds](https://app.aikido.dev/clouds), or open **Settings** and select the **Clouds** tab.
+2. Click the three dots next to your Kubernetes cluster and select **Configure cloud**.
+3. Choose **Cluster settings** and click **"Continue"**.
+4. Make sure **In-Cluster Image Scanning** is turned on.
+5. Under **Image scan behavior**, select the option you want. **Scan one tag per image that is running** is shown in the dropdown as **Scan only the most recently deployed tag for each image**.
+6. Click **"Save"**.
 
 ### How Images Are Pulled
 

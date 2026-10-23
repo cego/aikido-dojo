@@ -78,7 +78,18 @@ Adapt the example to match how your application identifies users.
 public void Application\_Start()
 {
 
-* Zen.SetUser(context => new User(context.User.Identity.Name, context.User.Identity.Name));
+* Zen.SetUser(context =>
+* {
+* ```
+    var id = context.User?.Identity?.GetUserId();
+  ```
+* ```
+    var name = context.User?.Identity?.Name;
+  ```
+* ```
+    return !string.IsNullOrEmpty(id) ? new User(id, name) : null;
+  ```
+* });
   Zen.Start();
   }" %}
 
@@ -88,7 +99,18 @@ If you use OWIN:
 public void Configuration(IAppBuilder app)
 {
 
-* Zen.SetUser(context => new User(context.User.Identity.Name, context.User.Identity.Name));
+* Zen.SetUser(context =>
+* {
+* ```
+    var id = context.User?.Identity?.GetUserId();
+  ```
+* ```
+    var name = context.User?.Identity?.Name;
+  ```
+* ```
+    return !string.IsNullOrEmpty(id) ? new User(id, name) : null;
+  ```
+* });
   Zen.Start();
   }" %}
   {% endstep %}

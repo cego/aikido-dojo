@@ -9,7 +9,7 @@ In short: Aikido does not store your code after analysis has taken place. Some o
 * By default, our integrations require a very minimal read-only scope. Only if you enable special features such as Autofix Pull Requests, Aikido will request write accesses.
 * If you want to keep your code completely on-premise, without ever leaving your environment, you can use our [Local Scanner](https://help.aikido.dev/category/aikido-local-scan-setup/sg4xF4OsJciW). The results will seamlessly populate on the Aikido platform.
 * Aikido has SOC2 Type 2 & ISO27001:2022 certification. A report is available [upon request](http://trustcenter.aikido.dev/). That means we adhere to several organizational and technical policies by default.
-* Aikido's servers are located in AWS, with data stored in-region for EU, US, AU and ME. Meaning customer data is stored for [app.aikido.dev](http://app.aikido.dev) in the EU region, for [app.us.aikido.dev](http://app.us.aikido.dev) in the US region, for [app.me.aikido.dev](http://app.me.aikido.dev) in the ME region and for [app.au.aikido.dev](http://app.au.aikido.dev) in the AU region.
+* Aikido's servers are located in AWS, with data stored in-region for EU, US, AU and ME. Meaning customer data is stored for [app.aikido.dev](https://app.aikido.dev/) in the EU region, for [app.us.aikido.dev](https://app.us.aikido.dev/) in the US region, for [app.aikidogov.us](https://app.aikidogov.us) in the US Gov region, for [app.me.aikido.dev](https://app.me.aikido.dev/) in the ME region and for [app.au.aikido.dev](https://app.au.aikido.dev/) in the AU region.
 
 The process we use to ensure code security:
 

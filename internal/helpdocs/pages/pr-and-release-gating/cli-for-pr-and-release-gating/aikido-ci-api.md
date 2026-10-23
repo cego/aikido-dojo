@@ -276,3 +276,5 @@ $ aikido-api-client upload-coverage \
 ```
 
 `repository_id` is the Git provider repository id, the same id used by the other endpoints on this page. Pass more than one path to `--file-paths` to merge LCOV and Cobertura reports from separate packages or jobs.
+
+Each upload replaces coverage for that repository and branch. In a monorepo, pass every app's report on each run. If you skip unchanged apps, include their latest reports in that same command. See [Monorepos That Test Only Changed Paths](/code-quality/code-coverage/monorepos-that-test-only-changed-paths.md).

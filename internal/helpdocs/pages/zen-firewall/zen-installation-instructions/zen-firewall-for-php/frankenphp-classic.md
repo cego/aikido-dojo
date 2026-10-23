@@ -76,6 +76,9 @@ Adapt the example to fit how your application identifies users and handles reque
         http_response_code(429);
   ```
 * ```
+        header('Retry-After: ' . $decision->retry_after);
+  ```
+* ```
         exit('You are rate limited by Zen.');
   ```
 * ```

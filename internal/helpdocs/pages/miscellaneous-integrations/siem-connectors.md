@@ -52,6 +52,10 @@ SIEM connectors are currently available by request. [Reach out to support](https
 [Coralogix](/miscellaneous-integrations/siem-connectors/coralogix.md)
 {% endcontent-ref %}
 
+{% content-ref url="/pages/TsUO0jnxflEhvAaCiMZY" %}
+[Google SecOps](/miscellaneous-integrations/siem-connectors/google-secops.md)
+{% endcontent-ref %}
+
 ## Field Reference
 
 {% content-ref url="/pages/4xsxPSkDafLnrLuO7Yt1" %}

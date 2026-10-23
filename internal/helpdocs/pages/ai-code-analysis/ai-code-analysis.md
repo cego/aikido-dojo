@@ -17,6 +17,7 @@ Cloud Security Audit reads the inventory of clouds you already connected. You ca
 Findings include evidence and remediation guidance.
 
 * **Agentic analysis:** Aikido uses multiple agents to investigate the selected code or cloud inventory, follow relevant context, and validate potential findings.
+* **Repository instructions:** Commit `AGENTS.md` at the repository root for architecture, trust boundaries, and accepted risks. Aikido also reads `CLAUDE.md`, `.claude/`, and `.cursor/`. See [Guide Agents with Repository Files](/ai-and-dev-tools/guide-an-audit-with-repository-files.md).
 * **Models and harnesses matched to the task:** Aikido selects the models and analysis harness that best fit each stage of the analysis, balancing the depth of analysis with the resources it uses.
 * **Confirmed cost before you start:** The pricing step shows the credit total before you launch. **Configure** can change that total before you start. Once you click **Start Audit**, the total is fixed for the analysis.
 

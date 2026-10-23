@@ -10,6 +10,7 @@ Pick the package manager, registry, or auth method that matches your setup.
 * [Yarn - Private Packages](/autofix-and-remediation/connect-private-packages/yarn-private-packages.md)
 * [Bun - Private Packages](/autofix-and-remediation/connect-private-packages/bun-private-packages.md)
 * [Gradle - Private Packages](/autofix-and-remediation/connect-private-packages/gradle-private-packages.md)
+* [Maven - Private Packages](/code-scanning/scanning-practices/vulnerability-scanning-on-private-packages-maven.md)
 * [NuGet - Private Packages](/autofix-and-remediation/connect-private-packages/nuget-private-packages.md)
 * [PIP - Private Packages](/autofix-and-remediation/connect-private-packages/pip-private-packages.md)
 * [Poetry - Private Packages](/autofix-and-remediation/connect-private-packages/poetry-private-packages.md)

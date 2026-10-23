@@ -2,6 +2,8 @@
 
 Code Context helps Aikido understand your team’s unique coding practices and exceptions. By providing context about your codebase, you can fine-tune how Code Quality analyzes your pull requests, reducing noise and making reviews more relevant to your team’s standards.
 
+The same guidance can live in the repository. Commit `AGENTS.md` at the root when it should apply to every review. See [Guide Agents with Repository Files](/ai-and-dev-tools/guide-an-audit-with-repository-files.md).
+
 ### What is Code Context?
 
 Code Context allows you to teach Aikido about your team’s specific coding conventions, architectural decisions, and acceptable exceptions to general best practices. This ensures Code Quality comments are relevant and actionable rather than generic.

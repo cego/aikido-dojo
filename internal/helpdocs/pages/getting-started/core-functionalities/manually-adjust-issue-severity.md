@@ -4,7 +4,7 @@
 
 When Aikido finds vulnerabilities in your code repos, cloud environments or public facing domains, our scoring engine gives the vulnerability a severity from 'low' to 'critical'. Our scoring engine takes into account a whole set of rules to assign this severity, but the most important one would be the urgency to fix.
 
-If for some reason, you believe a vulnerability has been given a wrong severity, either to low or to high, Aikido gives you the opportunity to adjust the severity manually so it ends up higher or lower on your list of things to fix.
+If for some reason, you believe a vulnerability has been given a wrong severity, either too low or too high, Aikido gives you the opportunity to adjust the severity manually so it ends up higher or lower on your list of things to fix.
 
 You can either adjust a **single issue's severity**, or the **severity of a whole group** of issues, in which case they will all get the same severity, regardless of their previous severity.
 
