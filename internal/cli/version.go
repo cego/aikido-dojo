@@ -13,6 +13,9 @@ import (
 // userAgent is what every request to Aikido carries, so Aikido can tell aikido-dojo from other Go programs.
 var userAgent = userAgentOf(debug.ReadBuildInfo())
 
+// build names this binary, so the docs commands can ignore a copy another build synced.
+var build = buildOf(debug.ReadBuildInfo())
+
 type versionInfo struct {
 	Version string      `json:"version"`
 	Commit  string      `json:"commit,omitempty"`
@@ -61,4 +64,10 @@ func userAgentOf(bi *debug.BuildInfo, ok bool) string {
 		return "aikido-dojo/" + v + " (+https://github.com/cego/aikido-dojo)"
 	}
 	return "aikido-dojo (+https://github.com/cego/aikido-dojo)"
+}
+
+// buildOf is the version and, when Go stamped it, the commit.
+func buildOf(bi *debug.BuildInfo, ok bool) string {
+	v := versionOf(bi, ok)
+	return strings.TrimSpace(v.Version + " " + v.Commit)
 }
