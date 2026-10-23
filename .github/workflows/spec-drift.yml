@@ -15,6 +15,7 @@ jobs:
   spec-drift:
     runs-on: ubuntu-latest
     permissions:
+      actions: write # start ci on the spec-drift branch
       contents: write # push the spec-drift branch
       pull-requests: write # open or update its PR
     steps:
@@ -63,7 +64,7 @@ jobs:
           - Generating the catalog: ${GENERATE}
           - go vet and go test: ${TESTS}
 
-          A PR opened by this workflow runs no other workflow, so the results above are its checks. Logs: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          This workflow starts ci on the branch, as a PR it opens starts no workflow itself. Logs: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
           if [ "$GENERATE" = failed ]; then
             body="${body}
 
@@ -80,3 +81,5 @@ jobs:
           else
             gh pr create --head spec-drift --title "chore(spec): update the vendored spec" --body "$body" --assignee "$GITHUB_ACTOR"
           fi
+          # A push or PR made with github.token starts no workflow, so start ci for the PR's required checks.
+          gh workflow run ci.yml --ref spec-drift
