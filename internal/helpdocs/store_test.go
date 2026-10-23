@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 	"slices"
+	"sync/atomic"
 	"testing"
 
 	"github.com/cego/aikido-dojo/internal/helpdocs/helpdocstest"
@@ -18,11 +19,11 @@ const (
 // counted is a client for a fake help centre that counts the requests it sends.
 type counted struct {
 	next http.RoundTripper
-	n    int
+	n    atomic.Int64
 }
 
 func (c *counted) RoundTrip(r *http.Request) (*http.Response, error) {
-	c.n++
+	c.n.Add(1)
 	return c.next.RoundTrip(r) //nolint:wrapcheck // http.Client wraps transport errors itself
 }
 
@@ -83,9 +84,9 @@ func TestSyncWhenNothingChangedAsksOnlyForLlmsFull(t *testing.T) {
 	c, n := fakeHelp(t, map[string]string{language: edited})
 	s := Store{Dir: filepath.Join(t.TempDir(), "docs"), Build: "v1"}
 	mustSync(t, s, c)
-	n.n = 0
-	if r := mustSync(t, s, c); !r.Unchanged || r.Requests != 1 || n.n != 1 || r.Snapshot != "2099-01-01" {
-		t.Errorf("report = %+v after %d requests; want unchanged after the one part of llms-full.txt", r, n.n)
+	n.n.Store(0)
+	if r := mustSync(t, s, c); !r.Unchanged || r.Requests != 1 || n.n.Load() != 1 || r.Snapshot != "2099-01-01" {
+		t.Errorf("report = %+v after %d requests; want unchanged after the one part of llms-full.txt", r, n.n.Load())
 	}
 	if got := languageIn(t, s).Markdown; got != edited {
 		t.Errorf("markdown = %q, want the edit kept", got)
@@ -129,5 +130,33 @@ func TestAFailedSyncKeepsTheCopy(t *testing.T) {
 	}
 	if len(entries) != 1 {
 		t.Errorf("the cache holds %v, want only docs", entries)
+	}
+}
+
+// A synced copy that can't be read, say after a cache cleaner removed part of it, gives way to the built-in one, and the next sync rebuilds it.
+func TestABrokenSyncedCopyGivesWayToTheBuiltInOne(t *testing.T) {
+	for name, breakIt := range map[string]func(dir string) error{
+		"no snapshot":      func(dir string) error { return os.Remove(filepath.Join(dir, "snapshot.json")) },
+		"corrupt snapshot": func(dir string) error { return os.WriteFile(filepath.Join(dir, "snapshot.json"), []byte("{"), 0o600) },
+		"unreadable page":  func(dir string) error { return os.Chmod(filepath.Join(dir, "pages", language+".md"), 0) },
+	} {
+		t.Run(name, func(t *testing.T) {
+			dir := filepath.Join(t.TempDir(), "docs")
+			s := Store{Dir: dir, Build: "v1"}
+			c, _ := fakeHelp(t, map[string]string{language: "# Change Language\n\nSynced.\n"})
+			mustSync(t, s, c)
+			if err := breakIt(dir); err != nil {
+				t.Fatal(err)
+			}
+			if got := languageIn(t, s).Markdown; got != languageIn(t, Store{}).Markdown {
+				t.Errorf("markdown = %q, want the built-in page", got)
+			}
+			if r := mustSync(t, s, c); !slices.Equal(r.Changed, []string{language}) {
+				t.Errorf("changed = %q, want the sync to start again from the built-in copy", r.Changed)
+			}
+			if got := languageIn(t, s).Markdown; got != "# Change Language\n\nSynced.\n" {
+				t.Errorf("after the sync, markdown = %q, want the synced page", got)
+			}
+		})
 	}
 }

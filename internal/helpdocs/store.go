@@ -47,38 +47,35 @@ func (s Store) Get(ref string) (Page, error) {
 }
 
 func (s Store) library() (*library, error) {
-	pages, snap, err := s.synced()
-	if err != nil {
-		return nil, err
+	if pages, snap := s.synced(); pages != nil {
+		if l, err := load(pages, snap); err == nil {
+			return l, nil
+		}
 	}
-	if pages == nil {
-		return embedded()
-	}
-	return load(pages, snap)
+	return embedded()
 }
 
-// synced returns the copy this build synced, or a nil fs.FS when it synced none.
-func (s Store) synced() (fs.FS, []byte, error) {
+// synced returns the copy this build synced, or nil when there is none it can read; the built-in copy stands in.
+func (s Store) synced() (fs.FS, []byte) {
 	if s.Dir == "" {
-		return nil, nil, nil
+		return nil, nil
 	}
-	stamp, err := os.ReadFile(filepath.Join(s.Dir, buildFile))
-	if errors.Is(err, fs.ErrNotExist) || (err == nil && string(stamp) != s.Build) {
-		return nil, nil, nil
-	}
-	if err != nil {
-		return nil, nil, fmt.Errorf("read the synced docs: %w", err)
+	if stamp, err := os.ReadFile(filepath.Join(s.Dir, buildFile)); err != nil || string(stamp) != s.Build {
+		return nil, nil
 	}
 	snap, err := os.ReadFile(filepath.Join(s.Dir, "snapshot.json"))
 	if err != nil {
-		return nil, nil, fmt.Errorf("read the synced docs: %w", err)
+		return nil, nil
+	}
+	if _, err := dated(snap); err != nil {
+		return nil, nil
 	}
 	// The root stays open for the command's reads, and keeps them inside the copy.
 	root, err := os.OpenRoot(filepath.Join(s.Dir, "pages"))
 	if err != nil {
-		return nil, nil, fmt.Errorf("read the synced docs: %w", err)
+		return nil, nil
 	}
-	return root.FS(), snap, nil
+	return root.FS(), snap
 }
 
 // Sync brings the copy docs commands read up to date from the help centre, asking only for the pages that changed.
@@ -129,16 +126,22 @@ func (s Store) Sync(ctx context.Context, c *http.Client) (SyncReport, error) {
 
 // seed writes the copy docs commands read now into dir, for the sync to bring up to date.
 func (s Store) seed(dir string) error {
-	pages, snap, err := s.synced()
-	if err != nil {
-		return err
-	}
-	if pages == nil {
-		if pages, err = fs.Sub(pagesFS, "pages"); err != nil {
-			return fmt.Errorf("open the built-in docs: %w", err)
+	if pages, snap := s.synced(); pages != nil {
+		if copyDocs(dir, pages, snap) == nil {
+			return nil
 		}
-		snap = snapshotJSON
+		if err := os.RemoveAll(filepath.Join(dir, "pages")); err != nil {
+			return fmt.Errorf("clear the partial copy: %w", err)
+		}
 	}
+	pages, err := fs.Sub(pagesFS, "pages")
+	if err != nil {
+		return fmt.Errorf("open the built-in docs: %w", err)
+	}
+	return copyDocs(dir, pages, snapshotJSON)
+}
+
+func copyDocs(dir string, pages fs.FS, snap []byte) error {
 	if err := os.CopyFS(filepath.Join(dir, "pages"), pages); err != nil {
 		return fmt.Errorf("copy the docs: %w", err)
 	}
