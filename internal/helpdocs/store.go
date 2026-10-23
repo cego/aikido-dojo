@@ -60,22 +60,28 @@ func (s Store) synced() (fs.FS, []byte) {
 	if s.Dir == "" {
 		return nil, nil
 	}
-	if stamp, err := os.ReadFile(filepath.Join(s.Dir, buildFile)); err != nil || string(stamp) != s.Build {
+	// Reading through roots keeps every read inside the copy.
+	root, err := os.OpenRoot(s.Dir)
+	if err != nil {
 		return nil, nil
 	}
-	snap, err := os.ReadFile(filepath.Join(s.Dir, "snapshot.json"))
+	defer root.Close()
+	if stamp, err := root.ReadFile(buildFile); err != nil || string(stamp) != s.Build {
+		return nil, nil
+	}
+	snap, err := root.ReadFile("snapshot.json")
 	if err != nil {
 		return nil, nil
 	}
 	if _, err := dated(snap); err != nil {
 		return nil, nil
 	}
-	// The root stays open for the command's reads, and keeps them inside the copy.
-	root, err := os.OpenRoot(filepath.Join(s.Dir, "pages"))
+	// The pages' root stays open for the command's reads.
+	pages, err := root.OpenRoot("pages")
 	if err != nil {
 		return nil, nil
 	}
-	return root.FS(), snap
+	return pages.FS(), snap
 }
 
 // Sync brings the copy docs commands read up to date from the help centre, asking only for the pages that changed.
@@ -107,7 +113,7 @@ func (s Store) Sync(ctx context.Context, c *http.Client) (SyncReport, error) {
 		return SyncReport{}, err
 	}
 	r.Requests = n.n.Load()
-	snap, err := os.ReadFile(filepath.Join(tmp, "snapshot.json")) //nolint:gosec // the directory the sync created
+	snap, err := fs.ReadFile(os.DirFS(tmp), "snapshot.json")
 	if err != nil {
 		return SyncReport{}, fmt.Errorf("read the synced snapshot: %w", err)
 	}

@@ -1,6 +1,7 @@
 package helpdocs
 
 import (
+	"fmt"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -139,6 +140,13 @@ func TestABrokenSyncedCopyGivesWayToTheBuiltInOne(t *testing.T) {
 		"no snapshot":      func(dir string) error { return os.Remove(filepath.Join(dir, "snapshot.json")) },
 		"corrupt snapshot": func(dir string) error { return os.WriteFile(filepath.Join(dir, "snapshot.json"), []byte("{"), 0o600) },
 		"unreadable page":  func(dir string) error { return os.Chmod(filepath.Join(dir, "pages", language+".md"), 0) },
+		"snapshot outside the copy": func(dir string) error {
+			outside := filepath.Join(filepath.Dir(dir), "snapshot.json")
+			if err := os.Rename(filepath.Join(dir, "snapshot.json"), outside); err != nil {
+				return fmt.Errorf("move the snapshot out: %w", err)
+			}
+			return os.Symlink(outside, filepath.Join(dir, "snapshot.json"))
+		},
 	} {
 		t.Run(name, func(t *testing.T) {
 			dir := filepath.Join(t.TempDir(), "docs")

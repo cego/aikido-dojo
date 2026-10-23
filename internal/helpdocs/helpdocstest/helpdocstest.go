@@ -11,7 +11,6 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"os"
-	"path/filepath"
 	"slices"
 	"strings"
 	"sync"
@@ -68,7 +67,8 @@ type help struct {
 }
 
 func read(dir string, edits map[string]string) (*help, error) {
-	data, err := os.ReadFile(filepath.Join(dir, "snapshot.json")) //nolint:gosec // the test's own copy
+	site := os.DirFS(dir)
+	data, err := fs.ReadFile(site, "snapshot.json")
 	if err != nil {
 		return nil, fmt.Errorf("read the snapshot: %w", err)
 	}
@@ -79,7 +79,10 @@ func read(dir string, edits map[string]string) (*help, error) {
 		return nil, fmt.Errorf("decode the snapshot: %w", err)
 	}
 	h := &help{pages: map[string]string{}, mods: snap.LastMod}
-	pages := os.DirFS(filepath.Join(dir, "pages"))
+	pages, err := fs.Sub(site, "pages")
+	if err != nil {
+		return nil, fmt.Errorf("open the pages: %w", err)
+	}
 	err = fs.WalkDir(pages, ".", func(p string, d fs.DirEntry, err error) error {
 		if err != nil || d.IsDir() {
 			return err
