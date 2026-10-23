@@ -78,6 +78,9 @@ aikido-dojo docs search 'limit access to specific IPs'
 aikido-dojo --read-only team delete 7
 ```
 
+The help centre is a copy built into each release. `docs sync` fetches the pages Aikido changed
+since; updating aikido-dojo discards them for the copy in the new release.
+
 Give an agent an API client with read scopes only, and set `AIKIDO_DOJO_READ_ONLY=1` so every
 call that isn't a GET is refused. Destructive commands ask first on a terminal and, off one,
 refuse unless `--yes` is passed.

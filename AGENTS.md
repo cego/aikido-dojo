@@ -44,6 +44,14 @@ aikido-dojo docs get getting-started/setting-up-your-account/change-language --j
 `docs search` prints pages at the section that matched best. Each page has a `url` on
 help.aikido.dev, and `docs get` prints the `snapshot` date of the copy.
 
+`docs sync` fetches the pages Aikido changed since this release from help.aikido.dev. The docs
+commands read them until aikido-dojo is updated, which brings back the copy built into the new
+release:
+
+```sh
+aikido-dojo docs sync
+```
+
 ## Output
 
 - `--jq '<expr>'` filters any command's JSON. Strings print without quotes.

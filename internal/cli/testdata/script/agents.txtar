@@ -17,3 +17,8 @@ exec aikido-dojo docs search 'limit access to specific IPs'
 stdout '"path":"getting-started/setting-up-your-account/limit-aikido-access-to-specific-ips"'
 exec aikido-dojo docs get getting-started/setting-up-your-account/change-language --jq .markdown
 stdout '^# Change Language'
+
+exec aikido-dojo docs sync
+stdout '"changed":\["getting-started/setting-up-your-account/change-language"\]'
+exec aikido-dojo docs get getting-started/setting-up-your-account/change-language --jq .markdown
+stdout 'the fake help centre'

@@ -36,6 +36,22 @@ func TestUserAgentOf(t *testing.T) {
 	}
 }
 
+// A build is told apart by its version and commit, so updating aikido-dojo changes it.
+func TestBuildOf(t *testing.T) {
+	for _, c := range []struct {
+		bi   *debug.BuildInfo
+		want string
+	}{
+		{&debug.BuildInfo{Main: debug.Module{Version: "v0.1.5"}, Settings: []debug.BuildSetting{{Key: "vcs.revision", Value: "88656c6"}}}, "v0.1.5 88656c6"},
+		{&debug.BuildInfo{Main: debug.Module{Version: "v0.1.5"}}, "v0.1.5"},
+		{nil, "(unknown)"},
+	} {
+		if got := buildOf(c.bi, c.bi != nil); got != c.want {
+			t.Errorf("buildOf(%+v) = %q, want %q", c.bi, got, c.want)
+		}
+	}
+}
+
 func TestVersionNamesTheVendoredSpec(t *testing.T) {
 	spec, err := os.ReadFile("../../spec/openapi.json")
 	if err != nil {

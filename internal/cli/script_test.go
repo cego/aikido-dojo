@@ -20,6 +20,7 @@ import (
 	"github.com/zalando/go-keyring"
 
 	"github.com/cego/aikido-dojo/internal/catalog"
+	"github.com/cego/aikido-dojo/internal/helpdocs/helpdocstest"
 )
 
 // TestMain lets the scripts in testdata/script run aikido-dojo as a command.
@@ -89,7 +90,7 @@ func TestScripts(t *testing.T) {
 }
 
 // fakeAikido answers the calls the docs' examples make, with bodies shaped
-// like the spec's examples.
+// like the spec's examples, and serves the help centre docs sync fetches.
 func fakeAikido() http.Handler {
 	enc := base64.RawURLEncoding
 	token := enc.EncodeToString([]byte(`{"alg":"RS256"}`)) + "." +
@@ -116,6 +117,9 @@ func fakeAikido() http.Handler {
 		reply(`[{"id":12,"title":"Prototype pollution in lodash","severity":"high","group_status":"new"}]`)(w, r)
 	})
 	mux.HandleFunc("POST /api/public/v1/issues/groups/12/notes", reply(`{"note_id":1}`))
+	mux.Handle("help.aikido.dev/", helpdocstest.Handler("../helpdocs", map[string]string{
+		"getting-started/setting-up-your-account/change-language": "# Change Language\n\nAs edited on the fake help centre.\n",
+	}))
 	return mux
 }
 

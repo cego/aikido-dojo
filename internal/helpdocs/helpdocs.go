@@ -1,4 +1,4 @@
-// Package helpdocs searches and reads the copy of Aikido's help centre built into aikido-dojo; internal/tools/docsfetch refreshes it.
+// Package helpdocs searches and reads the copy of Aikido's help centre built into aikido-dojo, or a newer one docs sync fetched; internal/tools/docsfetch refreshes the built-in copy.
 package helpdocs
 
 import (
@@ -48,21 +48,3 @@ var embedded = sync.OnceValues(func() (*library, error) {
 	}
 	return load(pages, snapshotJSON)
 })
-
-// Search returns up to n pages for query, best first.
-func Search(query string, n int) ([]Hit, error) {
-	l, err := embedded()
-	if err != nil {
-		return nil, err
-	}
-	return l.search(query, n), nil
-}
-
-// Get returns the page ref names, or ErrNotFound.
-func Get(ref string) (Page, error) {
-	l, err := embedded()
-	if err != nil {
-		return Page{}, err
-	}
-	return l.get(ref)
-}

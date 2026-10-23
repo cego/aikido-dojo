@@ -41,15 +41,13 @@ type library struct {
 }
 
 func load(fsys fs.FS, snapshotJSON []byte) (*library, error) {
-	var snap struct {
-		LastMod map[string]string `json:"lastmod"`
+	date, err := dated(snapshotJSON)
+	if err != nil {
+		return nil, err
 	}
-	if err := json.Unmarshal(snapshotJSON, &snap); err != nil {
-		return nil, fmt.Errorf("decode the docs snapshot: %w", err)
-	}
-	l := &library{fsys: fsys, snapshot: newest(snap.LastMod), corpus: search.Corpus{DF: map[string]int{}}}
+	l := &library{fsys: fsys, snapshot: date, corpus: search.Corpus{DF: map[string]int{}}}
 	total := 0
-	err := fs.WalkDir(fsys, ".", func(p string, d fs.DirEntry, err error) error {
+	err = fs.WalkDir(fsys, ".", func(p string, d fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
@@ -77,6 +75,17 @@ func load(fsys fs.FS, snapshotJSON []byte) (*library, error) {
 		l.corpus.AvgLen = float64(total) / float64(len(l.secs))
 	}
 	return l, nil
+}
+
+// dated dates a copy by its snapshot's newest lastmod.
+func dated(snapshotJSON []byte) (string, error) {
+	var snap struct {
+		LastMod map[string]string `json:"lastmod"`
+	}
+	if err := json.Unmarshal(snapshotJSON, &snap); err != nil {
+		return "", fmt.Errorf("decode the docs snapshot: %w", err)
+	}
+	return newest(snap.LastMod), nil
 }
 
 // newest dates the copy by its newest lastmod; RFC 3339 UTC strings sort by time.
