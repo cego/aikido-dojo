@@ -7,13 +7,13 @@ Verify you can access `ide.aikido.dev` via proxy before continuing with next ste
 ### VS Code (and variants like Cursor, Windsurf)
 
 {% content-ref url="/pages/yS43oHZnXnEoeOXnQlN3" %}
-[VS Code Proxy Setup](/ai-and-dev-tools/ide-plugins-overview/troubleshooting/vs-code-proxy-setup.md)
+[VS Code Proxy Setup](/ai-and-dev-tools/ide-plugins-overview/troubleshooting/ide-plugin-proxy-and-ca-settings/vs-code-proxy-setup.md)
 {% endcontent-ref %}
 
 ### JetBrains (IntelliJ IDEA, WebStorm, PyCharm, etc.)
 
 {% content-ref url="/pages/95U6ZucURUXNVpoJvpYL" %}
-[Jetbrains Proxy Setup](/ai-and-dev-tools/ide-plugins-overview/troubleshooting/jetbrains-proxy-setup.md)
+[Jetbrains Proxy Setup](/ai-and-dev-tools/ide-plugins-overview/troubleshooting/ide-plugin-proxy-and-ca-settings/jetbrains-proxy-setup.md)
 {% endcontent-ref %}
 
 ### Visual Studio
