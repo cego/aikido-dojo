@@ -5614,7 +5614,8 @@
                           "front_end",
                           "rest_api",
                           "graphql_api",
-                          "hosted"
+                          "hosted",
+                          "attack_surface"
                         ],
                         "type": "string"
                       },
@@ -5686,7 +5687,8 @@
                     "enum": [
                       "front_end",
                       "rest_api",
-                      "graphql_api"
+                      "graphql_api",
+                      "attack_surface"
                     ],
                     "type": "string"
                   },
@@ -6018,6 +6020,109 @@
         "summary": "Update Custom Scan Headers"
       }
     },
+    "/domains/{domain_id}/dataleaks": {
+      "get": {
+        "description": "List leaked credentials (data leaks) found for an attack surface domain",
+        "operationId": "listDataleaks",
+        "parameters": [
+          {
+            "description": "The ID of the domain to list the data leaks for",
+            "in": "path",
+            "name": "domain_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "minimum": 0,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "format": "Object",
+                  "properties": {
+                    "dataleaks": {
+                      "example": [
+                        {
+                          "email": "jane.doe@example.com",
+                          "id": "123e4567-e89b-12d3-a456-426614174000",
+                          "last_breach_date": 1705276800,
+                          "password": "********123",
+                          "status": "OPEN"
+                        }
+                      ],
+                      "items": {
+                        "description": "A leaked credential found for the domain",
+                        "format": "Object",
+                        "properties": {
+                          "email": {
+                            "description": "The leaked email address",
+                            "title": "email",
+                            "type": "string"
+                          },
+                          "id": {
+                            "description": "The id of the data leak",
+                            "title": "id",
+                            "type": "string"
+                          },
+                          "last_breach_date": {
+                            "description": "The timestamp of the last breach for this data leak",
+                            "title": "last_breach_date",
+                            "type": [
+                              "integer",
+                              "null"
+                            ]
+                          },
+                          "password": {
+                            "description": "The leaked password, partially redacted",
+                            "title": "password",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "status": {
+                            "description": "The status of the data leak, either OPEN or SAFE",
+                            "title": "status",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "email",
+                          "password",
+                          "status",
+                          "last_breach_date"
+                        ],
+                        "title": "Data Leak"
+                      },
+                      "title": "dataleaks",
+                      "type": "array"
+                    }
+                  },
+                  "required": [
+                    "dataleaks"
+                  ],
+                  "title": "Data Leaks"
+                }
+              }
+            },
+            "description": "A list of data leaks for the domain"
+          }
+        },
+        "security": [
+          {
+            "oauth": [
+              "domains:read"
+            ]
+          }
+        ],
+        "summary": "List Data Leaks"
+      }
+    },
     "/domains/{domain_id}/headers": {
       "post": {
         "description": "Update Authentication Headers for a Domain",
@@ -6108,6 +6213,86 @@
           }
         ],
         "summary": "Update Auth Headers"
+      }
+    },
+    "/domains/{domain_id}/scanFrequency": {
+      "post": {
+        "description": "Sets how often Aikido scans a domain.",
+        "operationId": "updateDomainScanFrequency",
+        "parameters": [
+          {
+            "description": "The ID of the domain to update.",
+            "in": "path",
+            "name": "domain_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "minimum": 0,
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "scan_frequency": "weekly"
+                },
+                "format": "Object",
+                "properties": {
+                  "scan_frequency": {
+                    "description": "How often the domain should be scanned.",
+                    "enum": [
+                      "daily",
+                      "twice_a_week",
+                      "weekly",
+                      "monthly",
+                      "on_demand"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "scan_frequency"
+                ],
+                "title": "Update domain scan frequency request body"
+              }
+            }
+          },
+          "description": "The scan frequency to set for the domain.",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": 1
+                  },
+                  "format": "object",
+                  "properties": {
+                    "success": {
+                      "description": "The integer 1 indicating success.",
+                      "title": "success",
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "The scan frequency has been updated."
+          }
+        },
+        "security": [
+          {
+            "oauth": [
+              "domains:write"
+            ]
+          }
+        ],
+        "summary": "Update scan frequency"
       }
     },
     "/domains/{domain_id}/subdomains": {

@@ -357,12 +357,20 @@ domain-auth-header update <domain_id>
 	--body string
 	--body-file string
 	--dry-run bool
+domain-data-leak list <domain_id>
+	GET /domains/{domain_id}/dataleaks scope=domains:read
 domain-openapi-spec update <domain_id>
 	PUT /domains/{domain_id}/update/openapi-spec scope=domains:write
 	--body string
 	--body-file string
 	--dry-run bool
 	--openapi-spec string required body
+domain-scan-frequency update <domain_id>
+	POST /domains/{domain_id}/scanFrequency scope=domains:write
+	--body string
+	--body-file string
+	--dry-run bool
+	--scan-frequency string required body
 domain-scan-header update <domain_id>
 	POST /domains/{domain_id}/custom-headers scope=domains:write
 	--body string

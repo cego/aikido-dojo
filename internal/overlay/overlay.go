@@ -124,7 +124,9 @@ var Ops = map[string]Op{
 	"startDomainScan":            {Cmd: "domain scan"},
 	// Spec: http_headers is "The authentication headers", name/value pairs a scan sends.
 	"updateDomainAuthenticationHeaders": {Cmd: "domain-auth-header update", Secret: []string{"http_headers"}},
+	"listDataleaks":                     {Cmd: "domain-data-leak list"},
 	"updateDomainOpenAPISpec":           {Cmd: "domain-openapi-spec update"},
+	"updateDomainScanFrequency":         {Cmd: "domain-scan-frequency update"},
 	// Spec: custom_scan_headers is "The authentication headers", name/value pairs a scan sends.
 	"updateDomainCustomScanHeaders": {Cmd: "domain-scan-header update", Secret: []string{"custom_scan_headers"}},
 	// Spec gives per_page no maximum; its description says max 50.

@@ -9,8 +9,8 @@ import (
 
 // SpecUpdatedAt and SpecSHA256 identify the spec snapshot this catalog was generated from.
 const (
-	SpecUpdatedAt = "2026-10-16T14:18:39Z"
-	SpecSHA256    = "2d7c496c388b26d58809ea21ce194b61afa7fd05e2b643397e3d0b50bd49cd46"
+	SpecUpdatedAt = "2026-10-23T12:06:53Z"
+	SpecSHA256    = "287076ee25f4d19259bf897bafa0a570ecc7a644c17f1aab80f52e9a0db08a83"
 )
 
 // All is every generated command, sorted by command.
@@ -937,7 +937,7 @@ var All = []ops.Op{
 		Body: &ops.Body{Required: true, Object: true,
 			Fields: []ops.Param{
 				{Name: "domain", Kind: ops.String, Required: true, Usage: "The domain name. (required)"},
-				{Name: "kind", Kind: ops.String, Required: true, Usage: "The kind of domain you want to add. (one of: front_end, rest_api, graphql_api; required)"},
+				{Name: "kind", Kind: ops.String, Required: true, Usage: "The kind of domain you want to add. (one of: front_end, rest_api, graphql_api, attack_surface; required)"},
 				{Name: "openapi_spec_base64", Kind: ops.String, Required: false, Usage: "The base64 encoded JSON or YAML OpenAPI spec you want to use for this domain. This, 'zen_service_id' or 'openapi_spec_url' must be provided when using kind 'rest_api' or 'graphql_api'"},
 				{Name: "openapi_spec_url", Kind: ops.String, Required: false, Usage: "The URL to the JSON or YAML OpenAPI spec you want to use for this domain. This, 'zen_service_id' or 'openapi_spec_base64' must be provided when using kind 'rest_api' or 'graphql_api'"},
 				{Name: "zen_service_id", Kind: ops.Integer, Required: false, Usage: "The Zen service ID which shoud generate the OpenAPI spec. This, 'openapi_spec_base64' or 'openapi_spec_url' must be provided when using kind 'rest_api' or 'graphql_api'"},
@@ -997,6 +997,18 @@ var All = []ops.Op{
 		},
 	},
 	{
+		ID:          "listDataleaks",
+		Command:     "domain-data-leak list",
+		Method:      "GET",
+		Path:        "/domains/{domain_id}/dataleaks",
+		Summary:     "List Data Leaks",
+		Description: "List leaked credentials (data leaks) found for an attack surface domain",
+		Scope:       "domains:read",
+		Args: []ops.Param{
+			{Name: "domain_id", Kind: ops.Integer, Required: true, Usage: "The ID of the domain to list the data leaks for"},
+		},
+	},
+	{
 		ID:          "updateDomainOpenAPISpec",
 		Command:     "domain-openapi-spec update",
 		Method:      "PUT",
@@ -1010,6 +1022,23 @@ var All = []ops.Op{
 		Body: &ops.Body{Required: true, Object: true,
 			Fields: []ops.Param{
 				{Name: "openapi_spec", Kind: ops.String, Required: true, Usage: "The stringified OpenAPI Spec content. Format must be JSON or YAML. (required)"},
+			},
+		},
+	},
+	{
+		ID:          "updateDomainScanFrequency",
+		Command:     "domain-scan-frequency update",
+		Method:      "POST",
+		Path:        "/domains/{domain_id}/scanFrequency",
+		Summary:     "Update scan frequency",
+		Description: "Sets how often Aikido scans a domain.",
+		Scope:       "domains:write",
+		Args: []ops.Param{
+			{Name: "domain_id", Kind: ops.Integer, Required: true, Usage: "The ID of the domain to update."},
+		},
+		Body: &ops.Body{Required: true, Object: true,
+			Fields: []ops.Param{
+				{Name: "scan_frequency", Kind: ops.String, Required: true, Usage: "How often the domain should be scanned. (one of: daily, twice_a_week, weekly, monthly, on_demand; required)"},
 			},
 		},
 	},

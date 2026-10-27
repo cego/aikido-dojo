@@ -1805,7 +1805,8 @@
           "enum": [
             "front_end",
             "rest_api",
-            "graphql_api"
+            "graphql_api",
+            "attack_surface"
           ],
           "type": "string"
         },
@@ -11623,6 +11624,100 @@
       "application/json"
     ]
   },
+  "listDataleaks": {
+    "command": "domain-data-leak list",
+    "method": "GET",
+    "path": "/domains/{domain_id}/dataleaks",
+    "scope": "domains:read",
+    "args": {
+      "properties": {
+        "domain_id": {
+          "description": "The ID of the domain to list the data leaks for",
+          "format": "int32",
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "domain_id"
+      ],
+      "type": "object"
+    },
+    "flags": {
+      "properties": {},
+      "type": "object"
+    },
+    "response": {
+      "properties": {
+        "dataleaks": {
+          "example": [
+            {
+              "email": "jane.doe@example.com",
+              "id": "123e4567-e89b-12d3-a456-426614174000",
+              "last_breach_date": 1705276800,
+              "password": "********123",
+              "status": "OPEN"
+            }
+          ],
+          "items": {
+            "description": "A leaked credential found for the domain",
+            "properties": {
+              "email": {
+                "description": "The leaked email address",
+                "title": "email",
+                "type": "string"
+              },
+              "id": {
+                "description": "The id of the data leak",
+                "title": "id",
+                "type": "string"
+              },
+              "last_breach_date": {
+                "description": "The timestamp of the last breach for this data leak",
+                "title": "last_breach_date",
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "password": {
+                "description": "The leaked password, partially redacted",
+                "title": "password",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "status": {
+                "description": "The status of the data leak, either OPEN or SAFE",
+                "title": "status",
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "email",
+              "password",
+              "status",
+              "last_breach_date"
+            ],
+            "title": "Data Leak",
+            "type": "object"
+          },
+          "title": "dataleaks",
+          "type": "array"
+        }
+      },
+      "required": [
+        "dataleaks"
+      ],
+      "title": "Data Leaks",
+      "type": "object"
+    },
+    "response_types": [
+      "application/json"
+    ]
+  },
   "listDomains": {
     "command": "domain list",
     "method": "GET",
@@ -11670,7 +11765,8 @@
               "front_end",
               "rest_api",
               "graphql_api",
-              "hosted"
+              "hosted",
+              "attack_surface"
             ],
             "type": "string"
           },
@@ -17238,6 +17334,69 @@
       "properties": {
         "success": {
           "description": "An integer 1 indicating success",
+          "title": "success",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "response_types": [
+      "application/json"
+    ]
+  },
+  "updateDomainScanFrequency": {
+    "command": "domain-scan-frequency update",
+    "method": "POST",
+    "path": "/domains/{domain_id}/scanFrequency",
+    "scope": "domains:write",
+    "args": {
+      "properties": {
+        "domain_id": {
+          "description": "The ID of the domain to update.",
+          "format": "int32",
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "domain_id"
+      ],
+      "type": "object"
+    },
+    "flags": {
+      "properties": {},
+      "type": "object"
+    },
+    "body": {
+      "example": {
+        "scan_frequency": "weekly"
+      },
+      "properties": {
+        "scan_frequency": {
+          "description": "How often the domain should be scanned.",
+          "enum": [
+            "daily",
+            "twice_a_week",
+            "weekly",
+            "monthly",
+            "on_demand"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "scan_frequency"
+      ],
+      "title": "Update domain scan frequency request body",
+      "type": "object"
+    },
+    "response": {
+      "example": {
+        "success": 1
+      },
+      "properties": {
+        "success": {
+          "description": "The integer 1 indicating success.",
           "title": "success",
           "type": "integer"
         }
