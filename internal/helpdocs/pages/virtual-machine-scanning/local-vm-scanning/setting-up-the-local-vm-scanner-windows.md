@@ -20,11 +20,11 @@ Start PowerShell in admin mode, replace `AIKIDO_TOKEN` with [valid token from Lo
 
 ```
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-Invoke-WebRequest -Uri "https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/v1.4.12/AikidoVmScanner.msi" -OutFile "AikidoVmScanner.msi"
+Invoke-WebRequest -Uri "https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/v1.5.0/AikidoVmScanner.msi" -OutFile "AikidoVmScanner.msi"
 msiexec /i AikidoVmScanner.msi /qn /norestart AIKIDO_TOKEN=REPLACE_ME VM_TYPE=production OUTPUT=stdout INITIAL_SCAN=1
 ```
 
-<table><thead><tr><th width="99.64453125">Hash</th><th>AikidoVmScanner.msi</th></tr></thead><tbody><tr><td>MD5</td><td>4f57b9af4b8117a464e8252ae100804d</td></tr><tr><td>SHA256</td><td>5b00e28dadd50bc0269b88f17b3521efb906ba732648f0457c28787368e58985</td></tr></tbody></table>
+<table><thead><tr><th width="99.64453125">Hash</th><th>AikidoVmScanner.msi</th></tr></thead><tbody><tr><td>MD5</td><td>49ad0e0646b545385ca277e10cc6f753</td></tr><tr><td>SHA256</td><td>92ec7c8729ea0b7d81e34964de8963de4c020f3e8a156afd7c5d3ff4c8e0272f</td></tr></tbody></table>
 
 If you have an automated process for installation and you always want to be on the latest version, you can use the following link:
 

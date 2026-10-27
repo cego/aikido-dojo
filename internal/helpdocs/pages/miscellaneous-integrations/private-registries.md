@@ -24,7 +24,7 @@ flowchart LR
 Aikido inspects each package before it reaches your environment: blocking known malicious packages and rejecting packages that are too new to be trusted. You can find the proxy URL in the [Aikido UI](https://app.aikido.dev/issues/aikido-libraries/setup-instructions).
 
 {% hint style="info" %}
-Currently npm, PyPI, Maven, NuGet, Composer, Go, Cargo and Ruby packages are supported, as well as Ubuntu, Debian and Alpine OS packages
+Currently npm, PyPI, Maven, and NuGet packages are supported
 {% endhint %}
 
 ### Blocking malware

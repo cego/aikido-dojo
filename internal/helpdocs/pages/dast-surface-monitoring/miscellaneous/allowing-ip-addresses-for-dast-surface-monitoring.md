@@ -54,6 +54,7 @@ If you log in at `app.aikido.dev`, scanning uses **EU** IPs, even when your endp
 ### AU-based IP addresses (`app.au.aikido.dev`)
 
 * 54.66.103.236
+* 52.65.129.204
 
 ### Optional IP addresses
 

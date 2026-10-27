@@ -93,7 +93,13 @@ Specify on which Slack channel you want to be notified about the AutoShip progre
 Make sure your CI/CD and monitoring tools allow access from these IP addresses:
 
 * `18.200.42.253`
-* `52.51.229.214`&#x20;
+* `52.51.229.214`
+* `52.214.244.18`
+* `18.202.209.180`
+* `52.50.198.227`
+* `52.51.98.186`
+
+  &#x20;
 
 The IP addresses for Smoke Testing can be found [here](/autoship/smoke-testing.md).
 
