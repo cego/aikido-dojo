@@ -29,6 +29,20 @@ Repository protection is a credit-based 1-year subscription, renewed annually. T
 
 </details>
 
+<details>
+
+<summary>What gets sent to Aikido</summary>
+
+When a repository is protected, Aikido sends this information for each package so it can match and build the secured variants:
+
+* CVE identifier
+* Package name
+* Package version
+
+No source code from your repository is sent.
+
+</details>
+
 ### Fix a single dependency
 
 When an Aikido Libraries variant is available for a vulnerable dependency, Aikido surfaces it as a fix option in two places. No credits required for one-off fixes.

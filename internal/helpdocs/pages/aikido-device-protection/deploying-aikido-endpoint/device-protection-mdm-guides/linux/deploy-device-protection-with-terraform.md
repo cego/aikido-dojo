@@ -106,7 +106,7 @@ Provisioners come with real limits, which is why HashiCorp calls them a last res
 * Terraform needs SSH reachability from wherever you run it, including from CI.
 
 {% hint style="info" %}
-For a fleet that already exists, use [Ansible](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/deploy-device-protection-with-ansible.md), [Chef](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/deploy-device-protection-with-chef.md), or [Puppet](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/deploy-device-protection-with-puppet.md). On AWS, SSM Run Command and State Manager also fit better than Terraform, because they are built to act on running instances.
+For a fleet that already exists, use [Ansible](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/deploy-device-protection-with-ansible.md), [Chef](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/deploy-device-protection-with-chef.md), or [Puppet](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/deploy-device-protection-with-puppet.md). On AWS, [SSM Run Command and State Manager](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/deploy-device-protection-with-aws-systems-manager.md) also fit better than Terraform, because they are built to act on running instances.
 {% endhint %}
 
 ## Verify the rollout

@@ -14,6 +14,10 @@ For the full list of tools the MCP server exposes, see [Available tools](/ai-and
 
 ## Installation
 
+Add the Aikido MCP and rules via our [Aikido Plugin](https://chatgpt.com/plugins/plugins_6abf6f017e3481919e681ac223b8424e).\
+\
+Or install manually using the steps below:
+
 {% stepper %}
 {% step %}
 **Install the Aikido MCP server**

@@ -10,9 +10,13 @@ Aikido performs two types of scans in real time:
 * Secrets: Finds exposed credentials such as API keys, passwords, or tokens.
 * IAC: (Infrastructure as Code): Detects cloud and infrastructure misconfigurations in Terraform, CloudFormation, Dockerfiles, and similar files.
 
+{% hint style="info" %}
+IaC scanning is available in VS Code (and variants like Cursor and Windsurf) and JetBrains IDEs. It isn't available in Visual Studio or Eclipse.
+{% endhint %}
+
 #### How It Works
 
-When you open or save a file, Aikido scans the code using the same analysis engine as the Aikido platform.
+When you open or save a file, Aikido scans the code using the same analysis engine as the Aikido platform. Scans run locally, so your code doesn't leave your machine.
 
 Detected issues appear:
 

@@ -173,6 +173,24 @@ If you want to disable this feature, you can set the `INITIAL_SCAN` parameter to
 AIKIDO_TOKEN=REPLACE_ME INITIAL_SCAN=0 dnf install -y https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/v1.5.0/aikido-vm-scanner.x86_64.rpm
 ```
 
+#### Enable threat detection
+
+Threat detection requires systemd and kernel 5.8 or later.
+
+Set `RUNTIME_DETECTION_ENABLED=true` on the install command. Example for rpm on x86\_64:
+
+```shell
+AIKIDO_TOKEN=REPLACE_ME VM_TYPE=production RUNTIME_DETECTION_ENABLED=true dnf install -y https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/v1.5.0/aikido-vm-scanner.x86_64.rpm
+```
+
+When the scanner is already installed, run:
+
+```shell
+sudo systemctl enable --now aikido-runtime-agent
+```
+
+See [Enable Runtime Sensors](/runtime-sensors/runtime-sensors-overview/enable-runtime-sensors.md).
+
 #### CLI parameters
 
 If for any reason you need to start the scanning on demand via the command line, you can specify the following CLI parameters to be used for that scan:

@@ -126,17 +126,17 @@ This guide provides detailed instructions on how to configure and manage user ri
       <saml:AttributeValue xsi:type="xs:anyType">2511</saml:AttributeValue>
   </saml:Attribute>
   ```
-* **github\_samlidentity\_nameid:** (github specific) Team member sync based on SAML users currently only works if users also log into GitHub via SAML. By sending the `github_samlidentity_nameid` SAML claim containing the user’s email address, triggering team-sync will also sync the SAML team members.
+* **github\_samlidentity\_nameid:** (GitHub.com) The NameID GitHub stores for that user, usually their email. Aikido uses it in two places: GitHub team sync, and linking a SAML user to the GitHub account that comments on a pull request so **Can ignore issues** applies. Team sync and this match only work when the person also signs in to GitHub with SAML. They must sign in to Aikido with SAML once after you add the claim. See [Who can ignore a finding on a pull request](/pr-and-release-gating/aikido-ci-gating-functionality.md#who-can-ignore-a-finding-on-a-pull-request).
 
   ```xml
   <saml:Attribute Name="github_samlidentity_nameid">
       <saml:AttributeValue xsi:type="xs:anyType">example@email.com</saml:AttributeValue>
   </saml:Attribute>
   ```
-* **github\_user\_slug:** (github specific) Team member sync based on SAML users currently only works if users also log into GitHub via SAML. By sending the `github_user_slug` SAML claim containing the user’s github slug, triggering team-sync will also sync the SAML team members.
+* **github\_user\_slug:** (GitHub.com) The GitHub username, for example `johndoe`. Aikido matches it to the account that wrote a pull request comment, and uses it for GitHub team sync. When both this claim and `github_samlidentity_nameid` are stored, Aikido uses `github_user_slug` first. The person must sign in to Aikido with SAML once after you add the claim.
 
   ```xml
   <saml:Attribute Name="github_user_slug">
-      <saml:AttributeValue xsi:type="xs:anyType"johndoe</saml:AttributeValue>
+      <saml:AttributeValue xsi:type="xs:anyType">johndoe</saml:AttributeValue>
   </saml:Attribute>
   ```

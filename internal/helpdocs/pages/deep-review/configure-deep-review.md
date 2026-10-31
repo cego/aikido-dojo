@@ -1,6 +1,6 @@
 # Configure Deep Review
 
-Enable Deep Review for one or more repositories from PR Checks. After enabling it, use each repository's settings to choose the strictness level and [link related repositories](/deep-review/link-repositories.md).
+Enable Deep Review for one or more repositories from PR Checks. After enabling it, use each repository's settings to choose the strictness level and [link related repositories](/deep-review/link-repositories.md). The same card shows [Deep Review memory](/deep-review/memory.md).
 
 Deep Review uses the same gating settings as the security review. It does not have a separate failure threshold.
 
@@ -60,14 +60,14 @@ See [PR Gating Overview](/pr-and-release-gating/aikido-ci-gating-functionality.m
 
 ## Open the Deep Review settings for a repository
 
-Strictness and linked repositories are configured separately for each repository:
+Strictness, linked repositories, and memory are shown for each repository:
 
 1. Open [**Repositories**](https://app.aikido.dev/repositories) and select the repository you want to configure.
 2. Open its **Repository Settings**.
 3. Find the **Deep PR Review** card.
-4. Click **"Edit"** next to **Strictness** or **Linked Repositories**.
+4. Click **Edit** next to **Strictness** or **Linked Repositories**. To see what Aikido has learned from replies, click **View Memory**. See [Deep Review Memory](/deep-review/memory.md).
 
-<div data-with-frame="true">[image: Deep PR Review card in repository settings, with Edit buttons for strictness and linked repositories.]</div>
+<div data-with-frame="true">[image: Deep PR Review card in repository settings, with Edit buttons for strictness and linked repositories, and a View Memory button.]</div>
 
 ## Choose a strictness level
 

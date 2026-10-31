@@ -109,6 +109,8 @@ Zen picks up the IP address from the request, so you only pass the event name. I
 
 **Attack wave detected.** An IP is systematically probing your app, for example scanning for `.env` files or hidden directories. See [Attack Wave Protection](/zen-firewall/zen-features/attack-wave-protection.md) for how Zen detects this.
 
+**Injection attack detected.** User input tried to exploit your app through SQL injection, command injection, path traversal, or server-side request forgery (SSRF). See [How Does Zen Work?](/zen-firewall/how-does-zen-work.md) for how Zen detects this.
+
 ## Actions
 
 **Block IP.** The IP that caused the event is added to the blocklist for this app. You choose how long: 30 minutes, 1 hour, 24 hours, or permanently.
@@ -121,7 +123,7 @@ Playbooks never block IPs on your [bypass list](/zen-firewall/zen-features/bypas
 
 The **Activity** view on the Playbooks tab logs every action a playbook took: when it happened, which playbook fired, the IP it targeted, and how much of the block is left. Use the dropdown to filter by playbook.
 
-Blocks made by a playbook also show up as **Playbook rule** in [Why is this IP blocked?](/zen-firewall/zen-features/why-is-this-ip-blocked.md)
+Blocks made by a playbook also show up as **Playbook rule** in [Why is this IP blocked?](/zen-firewall/miscellaneous/why-is-this-ip-blocked.md)
 
 ## Turn a playbook off, edit, or delete it
 
