@@ -36,7 +36,7 @@ The reproduction block is titled **Evidence**. On a Code Security, Data Exposure
 
 After you push a fix, click **Re-test** on the finding. Aikido checks a Code Security, Data Exposure, or Smart Contract finding against your latest code.
 
-Cloud Security Audit findings still show **Re-test**. Retesting them is not supported. After you change the account or the infrastructure as code, run the audit again.
+On a Cloud Security Audit finding, **Re-test** checks that finding against your current cloud account state, so you don't need to run the whole audit again. After you change the account or the infrastructure as code, click **Re-test** on the finding.
 
 ## Related
 

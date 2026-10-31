@@ -16,4 +16,8 @@ Step-by-step guides are organized by operating system below.
 [Deploying on Linux](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux.md)
 {% endcontent-ref %}
 
+{% content-ref url="/pages/ye7nxfMQPktELmFShfSy" %}
+[Deploy Device Protection with AWS Systems Manager](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/deploy-device-protection-with-aws-systems-manager.md)
+{% endcontent-ref %}
+
 Don't see your preferred solution? Reach out to <support@aikido.dev> and we'll help you deploy with what you have.

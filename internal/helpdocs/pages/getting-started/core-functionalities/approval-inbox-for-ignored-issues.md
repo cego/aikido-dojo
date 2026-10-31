@@ -20,11 +20,11 @@ Whether you can ignore or snooze an issue directly depends on your **ignore** an
 * **Without it, with ignore requests enabled**: You submit a request with a reason. The issue stays in the feed until someone with that permission approves or rejects it.
 * **Without it, with ignore requests disabled**: You cannot ignore or snooze findings, or submit requests.
 
-The same flow applies when you reply `@AikidoSec ignore: [reason]` on an Aikido [PR or MR comment](/pr-and-release-gating/aikido-ci-gating-functionality/autofix-suggestions-and-inline-commenting-for-pr-checks.md). If you do not have ignore permissions, that request lands in the approval inbox rather than ignoring the finding immediately.
-
 {% hint style="info" %}
-Ignore requests apply to **individual subissues only**, including findings in pull requests. Broader ignore rules (by path, CVE, or rule) still require ignore permissions.
+Ignore requests apply to **individual subissues only**. You can submit the same kind of request for a single finding from a pull request scan in Aikido. Broader ignore rules (by path, CVE, or rule) still require ignore permissions.
 {% endhint %}
+
+Replying `@AikidoSec ignore: [reason]` on an Aikido [PR or MR comment](/pr-and-release-gating/aikido-ci-gating-functionality/autofix-suggestions-and-inline-commenting-for-pr-checks.md) ignores the finding only when you have ignore permission. Without that permission, Aikido replies that the ignore is not allowed, and the finding stays open.
 
 When a user submits a request, users with ignore permissions (except team-only users) are notified and can review it in the [Request Inbox](https://app.aikido.dev/inbox/issues/actions). The inbox lists the issue details, severity, location, requester, and their stated reason. Team-only users cannot review requests, even if they have ignore permissions.
 

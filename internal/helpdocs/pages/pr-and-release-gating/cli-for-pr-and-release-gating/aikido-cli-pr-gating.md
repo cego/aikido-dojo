@@ -8,7 +8,7 @@ The Aikido Security CLI client allows you to integrate Aikido Security scans int
 
 ### Step-by-Step Guide <a href="#step-by-step-guide" id="step-by-step-guide"></a>
 
-**Step 1**: Install the Aikido CI client globally. See our [CI API client](https://www.npmjs.com/package/@aikidosec/ci-api-client).
+**Step 1**: Install the [`@aikidosec/ci-api-client`](https://www.npmjs.com/package/@aikidosec/ci-api-client) package globally.
 
 ```sh
 # For npm users
@@ -36,23 +36,15 @@ $ aikido-api-client scan <repository_id or repository_name> <base_commit_id> <he
 
 **Options**:
 
-* `--no-fail-on-dependency-scan`: Skip failing the build on new dependency vulnerabilities.
-* `--fail-on-sast-scan`: Fail the scan if new SAST issues are detected.
-* `--fail-on-iac-scan`: Fail the scan if new infrastructure-as-code issues are found.
-* `--fail-on-secrets-scan`: Fail the scan if exposed secrets are detected.
-* `--minimum-severity-level="CRITICAL"`: Minimum severity level for the scan to fail/block\
-  Options: `LOW`, `MEDIUM`, `HIGH`, `CRITICAL` (default: `CRITICAL`)
-* `--poll-interval [interval]`: Set the poll interval for checking updated scan results (default: 10).
+Flags for this command are documented on the [`@aikidosec/ci-api-client`](https://www.npmjs.com/package/@aikidosec/ci-api-client) package. Print them locally with:
+
+```shell
+aikido-api-client help scan
+```
 
 **Step 4**: Upload custom test results (only supported for the `scan` command)\
 You can optionally upload custom test results using the following command:
 
 ```
 $ aikido-api-client upload --repository-id <repository_id> --type checkov --file <path_to_payload_file>
-```
-
-### For more detailed options <a href="#for-more-detailed-options" id="for-more-detailed-options"></a>
-
-```
-$ aikido-api-client help
 ```

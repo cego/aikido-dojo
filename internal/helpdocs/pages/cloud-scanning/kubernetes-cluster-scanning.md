@@ -46,6 +46,14 @@ helm upgrade aikido -n aikido \
 
 {% endhint %}
 
+### Threat detection
+
+Runtime Sensors can monitor a connected cluster for threats. Turn on the threat detection toggle in the cluster's edit settings.
+
+{% hint style="warning" %}
+The toggle alone doesn't start threat detection. Run a Helm upgrade with `runtimeDetection.enabled=true`. For more information, see [Enable Runtime Sensors](/runtime-sensors/runtime-sensors-overview/enable-runtime-sensors.md).
+{% endhint %}
+
 ## OpenShift Support
 
 Aikido fully supports **OpenShift** clusters, including OpenShift Container Platform running on-prem or in managed environments. The agent and SBOM collector work the same way as on other Kubernetes distributions, with a few OpenShift-specific integrations and considerations outlined below:

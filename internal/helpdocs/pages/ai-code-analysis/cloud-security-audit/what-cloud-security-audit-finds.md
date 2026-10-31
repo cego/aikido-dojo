@@ -22,7 +22,7 @@ Cloud Security Audit reads the inventory Aikido already collected. It does not c
 
 It does not replace [Cloud Scanning](/cloud-scanning/cloud-scanning-overview.md), which checks known misconfiguration rules on every cloud scan. It also does not replace a [Code Security Audit](/ai-code-analysis/ai-code-audit-overview/what-ai-code-audit-finds.md), which reasons about application source. IaC here is context for the live account.
 
-Retesting a Cloud Security Audit finding is not supported. See [Track Progress and Findings](/ai-code-analysis/ai-code-audit-overview/track-progress-and-findings.md).
+You can retest a single Cloud Security Audit finding after you fix it, without running the whole audit again. See [Track Progress and Findings](/ai-code-analysis/ai-code-audit-overview/track-progress-and-findings.md).
 
 ## Related
 

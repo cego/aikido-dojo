@@ -33,7 +33,9 @@ Aikido sends a message when it finds a new issue that matches the criteria you s
 
 * **Team to notify**: **All Teams**, or one team. A team alert only includes issues in the repositories, containers, and other resources linked to that team.
 * **Connected Slack channel**: The channel that receives the alert.
-* **Issue type & Severity**
+* **Issue type & Severity**: pick one issue type and one severity level.
+  * Issue types: All Issue Types, Open Source Dependencies, Cloud, Kubernetes, Containers, Exposed Secrets, SAST, IAC, DAST/Surface Monitoring, EOL, Malware, Mobile, License, AI Pentest, Virtual Machines.
+  * Severity levels: Critical issues; High and critical issues; Medium, high and critical issues; Any severity issues.
 
 ### Weekly digest
 
@@ -52,6 +54,7 @@ SLA alerts apply to the whole workspace. Aikido notifies you for issues that bec
   * **Upon Breach**: Aikido sends a message when an issue breaches its SLA.
   * **Due Soon**: Aikido sends a message when an issue enters the Due Soon window from your SLA settings.
 * **Connected Slack channel**: The channel that receives the alert.
+* **Severity**: Critical issues; High and critical issues; Medium, high and critical issues; or Any severity issues.
 
 ## Adding the Aikido Slackbot to a private channel <a href="#adding-the-aikido-slackbot-to-a-private-channel" id="adding-the-aikido-slackbot-to-a-private-channel"></a>
 
