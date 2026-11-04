@@ -19,7 +19,7 @@ The goal is simple: fix more, faster, with less noise. AI Autofix helps you patc
 Good to Know
 
 * **Processing Time:** It can take up to 5 minutes for Autofix to generate suggestions, as it scans all potential base image updates for vulnerabilities.
-* **Public and Private Base Images**: Container Autofix can update both public base images and private base images. The private base images need to be scanned by Aikido. Supported registries for private base images are: Docker Hub, GitHub Container Registry, AWS Elastic Container Registry, Azure Container Registry, GCP Container Registry.
+* **Public and Private Base Images**: Container Autofix can update both public base images and private base images. The private base images need to be scanned by Aikido. Supported registries for private base images are: Docker Hub, GitHub Container Registry, AWS Elastic Container Registry, Azure Container Registry, GCP Container Registry. For Docker Hardened Images on `dhi.io`, see [Container AutoFix for Docker Hardened Images](/autofix-and-remediation/configure/container-autofix-for-docker-hardened-images.md).
 * **Dockerfile Linking**: We auto-detect the Dockerfile from your repo. If there’s ambiguity, you’ll be asked to set the correct path in the UI.
 * **Privacy First**: code snippets are sent securely to AWS Bedrock via encrypted channels. Neither Aikido **nor** [AWS Bedrock](https://aws.amazon.com/bedrock/security-compliance/) use your code for training or fine-tuning AI models.
 

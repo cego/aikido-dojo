@@ -41,7 +41,7 @@ jobs:
         run: aikido-api-client scan-release ${{ github.event.repository.name }} $GITHUB_SHA --apikey ${{ secrets.AIKIDO_CLIENT_API_KEY }} --fail-on-sast-scan --fail-on-iac-scan --fail-on-secrets-scan
 ```
 
-Tweak the command if needed, all options can be found [here](https://www.npmjs.com/package/@aikidosec/ci-api-client).
+Tweak the command if needed. Every flag is documented on the [`@aikidosec/ci-api-client`](https://www.npmjs.com/package/@aikidosec/ci-api-client) package.
 
 ## 3. Run your first scan <a href="#id-3-run-your-first-scan" id="id-3-run-your-first-scan"></a>
 

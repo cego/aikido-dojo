@@ -20,3 +20,4 @@
 - [Transferring Ownership of the Aikido App in Github Enterprise (Cloud & Server)](https://help.aikido.dev/code-scanning/connect-your-source-code/connect-github-enterprise/transferring-ownership-of-the-aikido-app-in-github-enterprise.md)
 - [Connect additional organizations to Aikido](https://help.aikido.dev/code-scanning/connect-your-source-code/connect-github-enterprise/connect-additional-organizations-to-aikido.md)
 - [Connect GitHub Enterprise (Cloud & Server) (Broker Set-Up)](https://help.aikido.dev/code-scanning/connect-your-source-code/connect-github-enterprise/connect-github-enterprise-cloud-and-server-broker-set-up.md)
+- [Upload a Repository as a Zip](https://help.aikido.dev/code-scanning/connect-your-source-code/upload-a-repository-as-a-zip.md)

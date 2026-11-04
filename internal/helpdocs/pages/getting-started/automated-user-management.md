@@ -13,7 +13,7 @@
 - [SAML Login](https://help.aikido.dev/getting-started/automated-user-management/saml-login.md)
 - [SAML User Rights: Access Profiles (Recommended)](https://help.aikido.dev/getting-started/automated-user-management/saml-login/saml-user-rights-access-profiles-recommended.md)
 - [SAML User Rights: Custom Attributes (Advanced)](https://help.aikido.dev/getting-started/automated-user-management/saml-login/saml-user-rights-using-custom-attributes-advanced.md)
-- [Enterprise SAML Login](https://help.aikido.dev/getting-started/automated-user-management/saml-login/enterprise-saml-login.md)
+- [Enterprise SAML Login](https://help.aikido.dev/getting-started/automated-user-management/saml-login/enterprise-saml-login.md): Create a company SAML client from the enterprise login page, then link it to the new workspace before anyone else signs in.
 - [Okta: Login with SAML](https://help.aikido.dev/getting-started/automated-user-management/saml-login/okta-login-with-saml.md)
 - [JumpCloud: Login with SAML](https://help.aikido.dev/getting-started/automated-user-management/saml-login/jumpcloud-login-with-saml.md)
 - [Google Workspaces: Login with SAML](https://help.aikido.dev/getting-started/automated-user-management/saml-login/google-workspaces-login-with-saml.md)

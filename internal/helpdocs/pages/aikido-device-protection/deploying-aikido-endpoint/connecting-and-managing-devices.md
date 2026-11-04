@@ -25,11 +25,31 @@ The device list shows every connected device. Each row shows:
 
 Aikido sets a device's status based on how long it has been since the agent's last heartbeat. The agent sends a heartbeat every 10 minutes.
 
-| Status                             | Rule                                                                                                                         |
-| ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| Archived                           | No heartbeat for 30 days or more.                                                                                            |
-| Offline                            | No heartbeat for more than 60 minutes.                                                                                       |
-| Not protected / Update / Protected | Heartbeat within the last 60 minutes. Which one shows depends on whether setup is complete and the agent version is current. |
+| Status                             | Rule                                                                                                                                                                                                                          |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Archived                           | No heartbeat for 30 days or more.                                                                                                                                                                                             |
+| Offline                            | No heartbeat for more than 60 minutes.                                                                                                                                                                                        |
+| Not protected / Update / Protected | Heartbeat within the last 60 minutes. Which one shows depends on whether setup is complete and the agent version is current. A device shows Update when a newer agent version is available (see [Auto-update](#auto-update)). |
+
+## Auto-update
+
+Auto-update keeps the agent on your devices up to date without redeploying it. The policy applies to every device in your workspace and works on devices running agent 1.3.0 or later. New workspaces start on **Auto-update to latest version**.
+
+* **Off:** devices stay on their installed version. They show the Update status until you update them yourself.
+* **Auto-update to latest version:** devices update to each new agent release.
+
+{% hint style="success" %}
+Keep auto-update on so devices get bug fixes and new features as soon as they ship. Aikido runs end-to-end tests and releases every version internally first, then rolls it out gradually and rolls it back automatically if needed.
+{% endhint %}
+
+To change the policy:
+
+1. Go to the [Devices](https://app.aikido.dev/endpoint-protection/devices) page.
+2. Click **Auto-Update**.
+3. Under **Update Policy**, select a policy.
+4. Click **Save Changes**.
+
+[image: Auto-Update Devices dialog with the Off and Auto-update to latest version policies]
 
 ## User groups
 

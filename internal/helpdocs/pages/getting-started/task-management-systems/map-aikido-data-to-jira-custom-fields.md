@@ -69,6 +69,7 @@ Shortcodes are placeholders that pull data from your Aikido issues. When a Jira 
 | `$CVSS`                 | The highest CVSS score of the issues related to this task                                                     |
 | `$ISSUE_TYPE`           | The type of the issue related to this task                                                                    |
 | `$PROGRAMMING_LANGUAGE` | The programming language of the issue related to this task                                                    |
+| $TEAMS                  | The teams responsible for the issues related to this task                                                     |
 
 #### Date and Datetime Fields
 

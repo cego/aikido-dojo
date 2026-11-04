@@ -25,6 +25,8 @@ Options:
   --result-output <output>          JSON file to write issues to. (default: "./aikido-image-scan-results.json")
   --output-cyclonedx-json <output>  JSON file to write CycloneDX JSON SBOM to.
   --fail-on <severity>              Exit with a non-zero status code when the scan produces findings at or above the given severity. (choices: "low", "medium", "high", "critical")
+  --allowed-distro <distro>         Fail the scan when the base image OS of the scanned image is not in this list. Matches on the distro id as reported in /etc/os-release (e.g. alpine, debian, ubuntu, rhel, amzn, wolfi). Specify this option multiple times to allow multiple distros. (default: [])
+  --allow-unknown-distro            Do not fail on --allowed-distro when no base image OS could be detected (images built FROM scratch).
   --include-unfixed                 Include CVEs that have no fix available yet (by default only fixable findings are reported).
   --debug                           Add additional debug information to command output.
   --scan-timeout <timeout>          Timeout in milliseconds for each scan (defaults to 900000ms).
