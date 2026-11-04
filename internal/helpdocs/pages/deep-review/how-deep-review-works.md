@@ -28,6 +28,8 @@ Deep Review checks `AGENTS.md`, `CLAUDE.md`, `.claude/`, and `.cursor/` for acce
 
 Put standing guidance in `AGENTS.md` at the repository root: trust boundaries, intentional behavior, and accepted risks. See [Guide Agents with Repository Files](/ai-and-dev-tools/guide-an-audit-with-repository-files.md).
 
+Aikido also builds [memory](/deep-review/memory.md) from replies on pull requests. Use `AGENTS.md` when you want to write the guidance yourself.
+
 ## Cross-repository context
 
 If your application spans multiple repositories, you can [link related repositories](/deep-review/link-repositories.md) to the repository under review. Deep Review can then use those repositories as additional context when reasoning about shared libraries, APIs, and services.
@@ -49,10 +51,9 @@ Reply to any Deep Review comment in plain language. You don't need to tag Aikido
 | What you say                   | Example                                                  | Outcome                                                                                                                  |
 | ------------------------------ | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
 | **Ignore a finding**           | "This is a false positive, please ignore."               | Aikido ignores the finding.                                                                                              |
-| **Share context or push back** | "This is intentional because we validate on the server." | Aikido remembers this for future reviews.                                                                                |
+| **Share context or push back** | "This is intentional because we validate on the server." | Aikido stores this in [repository memory](/deep-review/memory.md) for later reviews.                                     |
 | **Ask for a fix**              | "Can you fix this?"                                      | Aikido opens a pull request with the fix when [AutoFix](/autofix-and-remediation/overview-aikido-autofix.md) is enabled. |
-| **Ask for clarification**      | "Can you explain why this is a problem?"                 | Coming soon                                                                                                              |
-| **Request a follow-up**        | "Suggest a safer alternative."                           | Coming soon                                                                                                              |
+| **Ask for clarification**      | "Can you explain why this is a problem?"                 | Aikido replies to your question.                                                                                         |
 
 ## Exclude paths and files
 

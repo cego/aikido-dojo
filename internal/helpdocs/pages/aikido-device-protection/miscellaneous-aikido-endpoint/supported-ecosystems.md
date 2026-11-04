@@ -37,6 +37,7 @@ Device Protection monitors packages from the following sources:
 * PyPI (pip, pip3, pipx, pdm, poetry, uv, uvx, ..)
 * VS Code
 * Open VSX (Cursor, Windsurf, Kiro, ..)
+* Jetbrains
 * Maven (Gradle, sbt, ..)
 * NuGet
 * Chrome extensions

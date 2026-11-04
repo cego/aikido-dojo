@@ -55,7 +55,7 @@ This performs the same action as manually ignoring the issue in the Aikido platf
 * PR gating can turn green once all blocking issues are resolved or ignored.
 
 {% hint style="info" %}
-If you do not have ignore permissions, this comment creates a request in the [Approval Inbox](/getting-started/core-functionalities/approval-inbox-for-ignored-issues.md) instead of ignoring the issue immediately. The finding stays in the feed until an admin approves or rejects it.
+This reply ignores the finding only when you have the **Can ignore issues** permission. Without that permission, Aikido replies that the ignore is not allowed, and the finding stays open.
 {% endhint %}
 
 ### Make failed PR checks block merges <a href="#make-failed-pr-checks-block-merges" id="make-failed-pr-checks-block-merges"></a>

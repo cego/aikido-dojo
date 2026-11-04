@@ -8,6 +8,8 @@ For most workflows we still recommend using the [standard Aikido integrations](/
 
 Before you start, make sure you have an Aikido account/workspace that supports local scanning. Follow [Account Creation for Local Scanning](/code-scanning/local-code-scanning/account-creation-for-local-scanning-on-aikido.md).
 
+To send Aikido a zip of a repository instead, follow [Upload a Repository as a Zip](/code-scanning/connect-your-source-code/upload-a-repository-as-a-zip.md). That upload sends the archive to Aikido, and Aikido stores it. Local scanning keeps the code on your machines.
+
 If you are looking to scan container images instead, check the [container image scanning docs](/container-image-scanning/local-image-scanning.md).
 
 ## General

@@ -4,6 +4,8 @@ Aikido posts inline feedback on your pull requests, so you can resolve issues wi
 
 PR Checks can comment on SAST, Secrets, IaC, open-source dependencies (SCA), Code Quality, and Deep Review findings.
 
+Inline comments work on GitHub, GitLab Cloud and Server, Bitbucket Cloud, Bitbucket Data Center, and Azure DevOps.
+
 Configure comments for each repository in the PR Check settings modal. When available, Aikido also provides AutoFix suggestions that let you apply the fixes directly from the pull request.
 
 ### Prerequisites <a href="#prerequisities" id="prerequisities"></a>

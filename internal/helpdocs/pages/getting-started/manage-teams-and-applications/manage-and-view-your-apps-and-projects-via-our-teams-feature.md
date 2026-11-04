@@ -45,3 +45,17 @@ Repo linking is only available for manually created teams (not imported from SCM
 **Aikido's Feed** features a **team filter** at the top of the page. This filter allows users to tailor the feed to display only the issues relevant to selected teams. This filter can be used on basically every page in Aikido (feed, reports, settings etc).
 
 [image: Team filter dropdown with stats for solved and newly detected issues this week.]
+
+## Parent teams
+
+A parent team groups existing teams and takes on their resources. Select the parent team in the team filter to see issues for every child team.
+
+{% hint style="info" %}
+Parent teams are available on request. [Contact Support](/miscellaneous-info/contact-support.md) to enable them for your workspace.
+{% endhint %}
+
+Create a parent team with the [Create parent team](https://apidocs.aikido.dev/reference/createparentteam) endpoint. Pass the parent name and the child team IDs. Replace the child teams later with [Update child teams for parent team](https://apidocs.aikido.dev/reference/updatechildteamsforparentteam). Both calls need the `teams:write` scope.
+
+Aikido copies repositories, clouds, containers, domains, and Zen apps from the child teams onto the parent. Link and unlink those resources on the child teams, not on the parent. Members of the parent team stay separate from the child teams.
+
+The team filter nests child teams under each parent team. Aikido refreshes the parent's resources when you open it under **Settings** → **Teams**, and when you select it in the team filter. Selecting it refreshes the copy at most once an hour.

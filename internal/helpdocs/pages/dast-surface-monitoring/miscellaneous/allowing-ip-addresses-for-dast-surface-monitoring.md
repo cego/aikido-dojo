@@ -12,15 +12,20 @@ To use 'Fetch OpenAPI by URL', you must also add the [Code & Container scanning 
 
 Domain scanning traffic comes from the region where **your Aikido workspace** is hosted, not from the region where your application runs. Check the URL you use to log in to Aikido, then allowlist that region's IPs:
 
-| Aikido URL                                     | Region | IP list               |
-| ---------------------------------------------- | ------ | --------------------- |
-| [app.aikido.dev](https://app.aikido.dev)       | EU     | EU-based IP addresses |
-| [app.us.aikido.dev](https://app.us.aikido.dev) | US     | US-based IP addresses |
-| [app.au.aikido.dev](https://app.au.aikido.dev) | AU     | AU-based IP addresses |
-| [app.me.aikido.dev](https://app.me.aikido.dev) | ME     | ME-based IP addresses |
+| Aikido URL                                     | Region  | IP list               |
+| ---------------------------------------------- | ------- | --------------------- |
+| [app.aikido.dev](https://app.aikido.dev)       | EU      | EU-based IP addresses |
+| [app.us.aikido.dev](https://app.us.aikido.dev) | US      | US-based IP addresses |
+| [app.aikidogov.us](https://app.aikidogov.us)   | FedRAMP | FedRAMP IP addresses  |
+| [app.au.aikido.dev](https://app.au.aikido.dev) | AU      | AU-based IP addresses |
+| [app.me.aikido.dev](https://app.me.aikido.dev) | ME      | ME-based IP addresses |
 
 {% hint style="warning" %}
 If you log in at `app.aikido.dev`, scanning uses **EU** IPs, even when your endpoints are hosted in the US. Allowlisting only US IPs in that case will cause scans to fail.
+{% endhint %}
+
+{% hint style="warning" %}
+If you log in at `app.aikidogov.us`, scanning uses FedRAMP IPs. Commercial US IPs (`app.us.aikido.dev`) will not work for FedRAMP workspaces.
 {% endhint %}
 
 ## IP Addresses
@@ -44,6 +49,11 @@ If you log in at `app.aikido.dev`, scanning uses **EU** IPs, even when your endp
 * 35.173.56.162
 * 54.227.161.94
 * 44.209.154.183
+
+### FedRAMP IP addresses (`app.aikidogov.us`)
+
+* 16.65.244.192
+* 16.65.77.60
 
 ### ME-based IP addresses (`app.me.aikido.dev`)
 

@@ -12,6 +12,8 @@ The Container Setting modal allows you to select a repository and Dockerfile:
 
 In case your container build requires build args, these can be configured in the advanced section in the `Container Settings` :
 
+The `AIKIDO_TOKEN` used for Aikido images will be provided automatically as a build arg, so you don't need to configure it yourself. Any other build arg has to be configured here.
+
 ## Automated Container AutoFixes
 
 Container AutoFix can automatically create pull requests for base image upgrades. These jobs run daily and a pull request is created when a newer base images solves open container issues.

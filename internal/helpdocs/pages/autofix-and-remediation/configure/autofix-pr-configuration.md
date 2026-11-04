@@ -5,7 +5,7 @@
 You can configure the AutoFix pull requests to your own needs with the ["PR Configuration" settings](https://app.aikido.dev/issues/fix/settings). It's possible to change the following fields:
 
 * **Title Prefix:** Customize the title to match your internal processes.
-* **Labels:** Add specific labels to the PR for easier sorting and tracking, labels are comma-separated. Use the `$AUTOFIX_TYPE` and `$SEVERITY` placeholders to include the type of AutoFix (eg. dependency, sast) and severity (eg. high, medium) as a label.
+* **Labels:** Add specific labels to the PR for easier sorting and tracking, labels are comma-separated.
 * **Branch name:** Customize the prefix of the branch Autofix creates.
 * **Commit Message:** Customize the prefix of the commit message in the PR.
 * **Summary:** Optionally include an additional message for each PR. For example add custom instructions for engineers or additional context.
@@ -13,7 +13,11 @@ You can configure the AutoFix pull requests to your own needs with the ["PR Conf
 * **Auto-Merge PR:** Aikido relies on built-in Github, Gitlab and Azure DevOps auto-merge features for this, learn more [here](/autofix-and-remediation/automation-and-merging/auto-merge-autofix-pull-requests.md).
 * **Create Task for PR:** important for compliance reasons. This will automatically create a new task in your connected task tracker, linking to the created PR.
 
-The `$TASK_REF` placeholder can be used in PR titles, branch names and commit messages to [link tasks with the PR](/autofix-and-remediation/configure/linking-tasks-and-prs.md).
+The following **variables** can be used in PR titles, labels, branch names and commit messages:
+
+* `$TASK_REF` is the reference (eg. JIRA-1234) of the tasks linked to the issues solved in the PR and can be used to [link tasks with the PR](/autofix-and-remediation/configure/linking-tasks-and-prs.md)
+* `$SEVERITY` is the highest severity of the issues solved in the PR (eg. `critical`, `high`, `medium`, `low`)
+* `$AUTOFIX_TYPE` is replace by `dependency`, `sast`, `iac`, `quality`, `container`, `pentest`, `audit`, `gradle`, `dotnet` or `zen`
 
 {% hint style="info" %}
 Aikido doesn't support configuring default reviewers for AutoFix PRs. To make sure the right people review them, use CODEOWNERS and required reviews on the repository. See [Assigning Default Reviewers for AutoFix PRs](/autofix-and-remediation/faq/assigning-default-reviewers-for-autofix-prs.md).

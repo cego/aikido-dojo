@@ -17,3 +17,4 @@
 - [Deploy Device Protection with Rippling](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/device-protection-mdm-for-macos/deploy-aikido-endpoint-with-rippling.md)
 - [Deploy Device Protection with Scalefusion](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/device-protection-mdm-for-macos/deploy-aikido-endpoint-with-scalefusion.md)
 - [Deploy Device Protection with SimpleMDM](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/device-protection-mdm-for-macos/deploy-aikido-endpoint-with-simplemdm.md)
+- [Deploy Device Protection with XFA](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/device-protection-mdm-for-macos/deploy-aikido-endpoint-with-xfa.md)

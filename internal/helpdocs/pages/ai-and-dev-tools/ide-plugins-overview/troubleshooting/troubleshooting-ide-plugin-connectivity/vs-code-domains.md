@@ -3,7 +3,7 @@
 To function correctly, the Local Scanner must be able to access the following domains over HTTPS (port 443):
 
 * `*.aikido.dev`
-* &#x20;Depending on `Download All Dependencies From Aikido Domain` in Settings
+* Depending on `Download All Dependencies From Aikido Domain` in Settings
   * Disabled (default): `github.com`
   * Enabled: `static-binaries.aikido.dev`
 

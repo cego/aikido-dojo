@@ -47,7 +47,7 @@ aikido_release_gate:
 {% endtab %}
 {% endtabs %}
 
-Tweak the command if needed, all options can be found [here](https://www.npmjs.com/package/@aikidosec/ci-api-client).
+Tweak the command if needed. Every flag is documented on the [`@aikidosec/ci-api-client`](https://www.npmjs.com/package/@aikidosec/ci-api-client) package.
 
 ### 3. Run your first scan <a href="#id-3-run-your-first-scan" id="id-3-run-your-first-scan"></a>
 

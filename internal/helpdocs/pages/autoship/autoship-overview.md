@@ -99,8 +99,6 @@ Make sure your CI/CD and monitoring tools allow access from these IP addresses:
 * `52.50.198.227`
 * `52.51.98.186`
 
-  &#x20;
-
 The IP addresses for Smoke Testing can be found [here](/autoship/smoke-testing.md).
 
 ### Try it!
