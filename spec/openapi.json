@@ -6875,6 +6875,7 @@
                     {
                       "id": 1,
                       "last_heartbeat_at": 1716854400,
+                      "mac_address": "3C:22:FB:8A:41:7E",
                       "name": "Yuri's MacBook Pro",
                       "os": "macos",
                       "permission_group_id": 1,
@@ -6887,6 +6888,7 @@
                     {
                       "id": 2,
                       "last_heartbeat_at": 1716854400,
+                      "mac_address": null,
                       "name": "Sugman's MacBook Pro",
                       "os": "macos",
                       "permission_group_id": 2,
@@ -6906,6 +6908,11 @@
                       "last_heartbeat_at": {
                         "description": "The Unix timestamp of the last heartbeat of the device sent by the Aikido endpoint protection software",
                         "type": "integer"
+                      },
+                      "mac_address": {
+                        "description": "The permanent hardware MAC address of the network adapter behind the device's default route, uppercase and colon-separated (e.g. 00:1C:42:72:22:DE), or null if it has not been reported yet",
+                        "nullable": true,
+                        "type": "string"
                       },
                       "name": {
                         "description": "The name of the device",
@@ -10373,6 +10380,15 @@
             "schema": {
               "description": "The unique UUID of the assessment",
               "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "A filter to only export open source issues matching this exact CVE id, e.g. CVE-2026-12345",
+            "in": "query",
+            "name": "filter_cve_id",
+            "required": false,
+            "schema": {
               "type": "string"
             }
           },
@@ -14022,6 +14038,7 @@
                         "draft",
                         "pending",
                         "running",
+                        "paused",
                         "completed",
                         "cancelled",
                         "failed"
@@ -14167,6 +14184,27 @@
                         "step_info": "Send an identical request but with pg_sleep(5) to induce a delay"
                       }
                     ],
+                    "retests": [
+                      {
+                        "created_at": "2026-04-02T09:15:00Z",
+                        "id": "8c1e2f3a-4b5d-6e7f-8091-a2b3c4d5e6f7",
+                        "result": {
+                          "description": "Retesting /api/faq/search with the original pg_sleep payload returned immediately and no longer executed stacked SQL.",
+                          "remediation": [],
+                          "reproduction_steps": [
+                            {
+                              "code_block": "curl -i \"https://user.domain/api/faq/search?q=%27%3B%20SELECT%20pg_sleep(5)%3B%20--\"",
+                              "observed_result": "HTTP/1.1 200 OK. Response returns in ~0.2s.",
+                              "step_info": "Repeat the timing payload against the fixed endpoint"
+                            }
+                          ],
+                          "solved": true,
+                          "summary": "The search endpoint now uses parameterized queries. The previous time-based payload no longer delays the response."
+                        },
+                        "status": "completed",
+                        "status_details": null
+                      }
+                    ],
                     "risk": "This vulnerability enables attackers to run arbitrary SQL statements against the application database. Potential impacts include reading or modifying sensitive data, altering application behavior, creating or deleting records, and escalating attacks by extracting credentials or tokens stored in the database. As the endpoint is unauthenticated and public, the likelihood of exploitation is high and could lead to data breaches, service instability, and regulatory non-compliance if personal or operational data is exposed.",
                     "root_cause_analysis": "User-controlled input (q) is directly concatenated into a SQL query string and wrapped in single quotes without escaping or parameterization. The code at server/index.ts:1004 uses a template literal with ${search} inside the SQL, which allows breaking out of the literal and appending stacked statements. Using the simple query protocol in Postgres enables multiple statements separated by semicolons, making timing-based exploitation possible.",
                     "summary": "The /api/faq/search endpoint concatenates the user-supplied q parameter directly into a SQL string. This allows unauthenticated attackers to inject arbitrary SQL, including stacked queries, evidenced by timing-based payloads using pg_sleep.",
@@ -14196,6 +14234,92 @@
                           },
                           "step_info": {
                             "description": "The reproduction step description",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "retests": {
+                      "description": "Retests of this finding, oldest first. The result is null while a retest is still running.",
+                      "items": {
+                        "properties": {
+                          "created_at": {
+                            "description": "When the retest was created",
+                            "format": "date-time",
+                            "type": "string"
+                          },
+                          "id": {
+                            "description": "The unique ID of the retest",
+                            "type": "string"
+                          },
+                          "result": {
+                            "description": "The retest result. Null while the retest has not finished.",
+                            "nullable": true,
+                            "properties": {
+                              "description": {
+                                "description": "A detailed description of the retest result",
+                                "type": "string"
+                              },
+                              "remediation": {
+                                "description": "Updated remediation from the retest",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array"
+                              },
+                              "reproduction_steps": {
+                                "description": "The reproduction steps from the retest",
+                                "items": {
+                                  "properties": {
+                                    "code_block": {
+                                      "description": "The optional code block related to the reproduction step",
+                                      "nullable": true,
+                                      "type": "string"
+                                    },
+                                    "observed_result": {
+                                      "description": "The observed result of the reproduction step",
+                                      "nullable": true,
+                                      "type": "string"
+                                    },
+                                    "step_info": {
+                                      "description": "The reproduction step description",
+                                      "nullable": true,
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object"
+                                },
+                                "type": "array"
+                              },
+                              "solved": {
+                                "description": "Whether the retest confirmed the finding is fixed",
+                                "type": "boolean"
+                              },
+                              "summary": {
+                                "description": "A short summary of the retest result",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "status": {
+                            "description": "The retest status",
+                            "enum": [
+                              "draft",
+                              "pending",
+                              "running",
+                              "paused",
+                              "failed",
+                              "completed",
+                              "cancelled"
+                            ],
+                            "type": "string"
+                          },
+                          "status_details": {
+                            "description": "Additional status detail, when present",
+                            "nullable": true,
                             "type": "string"
                           }
                         },
@@ -16866,7 +16990,7 @@
             }
           },
           {
-            "description": "Include configuration issues information (has_missing_lockfile, has_faulty_lockfile) in the response",
+            "description": "Include configuration issues information (has_missing_lockfile, has_faulty_lockfile, scan_error) in the response",
             "in": "query",
             "name": "include_config_issues_info",
             "required": false,
@@ -16904,7 +17028,9 @@
                     ],
                     "last_scanned_at": 1720083163,
                     "name": "Compression service",
+                    "project": "aikidemo",
                     "provider": "github",
+                    "scan_error": "Authentication Failed",
                     "sensitivity": "normal",
                     "url": "https://api.github.com/repos/aikidemo/compression-service"
                   },
@@ -16972,6 +17098,11 @@
                       "description": "The name of the code repository.",
                       "type": "string"
                     },
+                    "project": {
+                      "description": "The project, group or organization the repository belongs to from the provider",
+                      "nullable": true,
+                      "type": "string"
+                    },
                     "provider": {
                       "description": "The place where the code repository is hosted",
                       "enum": [
@@ -16982,6 +17113,10 @@
                         "azure_devops",
                         "selfscan"
                       ],
+                      "type": "string"
+                    },
+                    "scan_error": {
+                      "description": "The error message from the last scan in case this one failed.",
                       "type": "string"
                     },
                     "sensitivity": {
@@ -21042,7 +21177,8 @@
                       "repo",
                       "cloud",
                       "domain",
-                      "container"
+                      "container",
+                      "single_issue"
                     ],
                     "type": "string"
                   },
@@ -21535,6 +21671,73 @@
         "summary": "List tasks from project"
       }
     },
+    "/task_tracking/unlinkTaskFromIssueGroup": {
+      "post": {
+        "description": "Removes the link between a task and an issue group.",
+        "operationId": "unlinkTaskFromIssueGroup",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "example": {
+                  "issue_group_id": 1,
+                  "task_id": 42
+                },
+                "format": "object",
+                "properties": {
+                  "issue_group_id": {
+                    "description": "The id of the issue group in the workspace",
+                    "type": "integer"
+                  },
+                  "task_id": {
+                    "description": "The Aikido id of the task to remove",
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "issue_group_id",
+                  "task_id"
+                ],
+                "title": "unlink task from issue group request body"
+              }
+            }
+          },
+          "description": "The issue group and the Aikido task link to remove",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": 1
+                  },
+                  "format": "object",
+                  "properties": {
+                    "success": {
+                      "description": "The integer 1 indicating success",
+                      "title": "success",
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "The request was accepted. The Aikido task link is removed when one exists for this `task_id` in the workspace. The same response is returned when no matching link exists. The external tracker task is not deleted or closed."
+          }
+        },
+        "security": [
+          {
+            "oauth": [
+              "task_tracking:write"
+            ]
+          }
+        ],
+        "summary": "Unlink a task from issue"
+      }
+    },
     "/teams": {
       "get": {
         "description": "Returns a list of all the teams in your account",
@@ -21749,6 +21952,212 @@
           }
         ],
         "summary": "Create team"
+      }
+    },
+    "/teams/createParentTeam": {
+      "post": {
+        "description": "Create a new parent team and link it to the provided child teams. Parent teams aggregate the responsibilities of their child teams. Unknown child team IDs are ignored.",
+        "operationId": "createParentTeam",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "example": {
+                  "child_team_ids": [
+                    1,
+                    2,
+                    5
+                  ],
+                  "name": "Engineering"
+                },
+                "format": "Object",
+                "properties": {
+                  "child_team_ids": {
+                    "description": "The IDs of the child teams to link to this parent team. Unknown IDs are ignored.",
+                    "items": {
+                      "description": "The ID of a child team in Aikido.",
+                      "type": "integer"
+                    },
+                    "type": "array"
+                  },
+                  "name": {
+                    "description": "The name of the parent team.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "child_team_ids"
+                ],
+                "title": "Create parent team request body"
+              }
+            }
+          },
+          "description": "The parameters needed to create a new parent team",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "id": 123
+                  },
+                  "format": "object",
+                  "properties": {
+                    "id": {
+                      "description": "The ID of the newly created parent team in Aikido.",
+                      "title": "ID",
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "The parent team has been successfully created"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "format": "object",
+                  "properties": {
+                    "reason_phrase": {
+                      "description": "A human friendly reason why the request failed",
+                      "title": "reason_phrase",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Parent teams are not enabled for this account, or one or more of the provided fields are invalid."
+          }
+        },
+        "security": [
+          {
+            "oauth": [
+              "teams:write"
+            ]
+          }
+        ],
+        "summary": "Create parent team"
+      }
+    },
+    "/teams/{parent_team_id}/updateChildTeams": {
+      "post": {
+        "description": "Replace the child teams linked to a parent team. The provided list of child team IDs entirely replaces the current set: missing child teams are linked and extra child teams are unlinked. Parent team responsibilities are then recalculated from the linked child teams.",
+        "operationId": "updateChildTeamsForParentTeam",
+        "parameters": [
+          {
+            "description": "Unique ID of the parent team",
+            "in": "path",
+            "name": "parent_team_id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "example": {
+                  "child_team_ids": [
+                    1,
+                    2,
+                    5
+                  ]
+                },
+                "format": "Object",
+                "properties": {
+                  "child_team_ids": {
+                    "description": "The full list of child team IDs that should be linked to this parent team. This list replaces the current set of child teams. Pass an empty array to unlink all child teams.",
+                    "items": {
+                      "description": "The ID of a child team in Aikido.",
+                      "type": "integer"
+                    },
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "child_team_ids"
+                ],
+                "title": "Update child teams request body"
+              }
+            }
+          },
+          "description": "The parameters needed to update the child teams of a parent team",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": 1
+                  },
+                  "format": "object",
+                  "properties": {
+                    "success": {
+                      "description": "The integer 1 indicating success",
+                      "title": "success",
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "The child teams of the parent team have been successfully updated"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "format": "object",
+                  "properties": {
+                    "reason_phrase": {
+                      "description": "A human friendly reason why the request failed",
+                      "title": "reason_phrase",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "The provided team is not a parent team, or one or more of the provided fields are invalid."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "format": "object",
+                  "properties": {
+                    "reason_phrase": {
+                      "description": "A human friendly reason why the request failed",
+                      "title": "reason_phrase",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "The provided parent_team_id does not belong to an existing team."
+          }
+        },
+        "security": [
+          {
+            "oauth": [
+              "teams:write"
+            ]
+          }
+        ],
+        "summary": "Update child teams for parent team"
       }
     },
     "/teams/{team_id}": {
@@ -23266,6 +23675,26 @@
               "default": 0,
               "type": "integer"
             }
+          },
+          {
+            "description": "The page number to return. Starts at 0.",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "The number of virtual machines to return per page",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "type": "integer"
+            }
           }
         ],
         "responses": {
@@ -23518,7 +23947,12 @@
                           "issue.unignored.manual",
                           "issue.severity.changed.manual",
                           "configuration_issue.detected",
-                          "inbox.issues.request.created"
+                          "inbox.issues.request.created",
+                          "pentest.running",
+                          "pentest.paused",
+                          "pentest.finished",
+                          "pentest.failed",
+                          "pentest.cancelled"
                         ],
                         "title": "webhook event type",
                         "type": "string"
@@ -23601,7 +24035,12 @@
                       "issue.unignored.manual",
                       "issue.severity.changed.manual",
                       "configuration_issue.detected",
-                      "inbox.issues.request.created"
+                      "inbox.issues.request.created",
+                      "pentest.running",
+                      "pentest.paused",
+                      "pentest.finished",
+                      "pentest.failed",
+                      "pentest.cancelled"
                     ],
                     "type": "string"
                   },
