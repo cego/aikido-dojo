@@ -517,6 +517,7 @@ issue export
 	--filter-container-repo-id int64
 	--filter-container-repo-ids string
 	--filter-container-repo-name string
+	--filter-cve-id string
 	--filter-domain-id int64
 	--filter-issue-group-id int64
 	--filter-issue-type string
@@ -643,6 +644,14 @@ issue-group-task create
 	--scope string body
 	--scope-id int64 body
 	--task-id string required body
+issue-group-task delete
+	POST /task_tracking/unlinkTaskFromIssueGroup scope=task_tracking:write destructive
+	--body string
+	--body-file string
+	--dry-run bool
+	--issue-group-id int64 required body
+	--task-id int64 required body
+	--yes bool
 issue-group-task list <issue_group_id>
 	GET /issues/groups/{issue_group_id}/tasks scope=issues:read
 issue-reachability get <issue_id>
@@ -687,6 +696,17 @@ package-license update
 	--package-name string required body
 	--reason string body
 	--risk string required body
+parent-team create
+	POST /teams/createParentTeam scope=teams:write
+	--body string
+	--body-file string
+	--dry-run bool
+	--name string required body
+parent-team-child update <parent_team_id>
+	POST /teams/{parent_team_id}/updateChildTeams scope=teams:write
+	--body string
+	--body-file string
+	--dry-run bool
 pentest-assessment create
 	POST /pentests/assessments/createDraft scope=pentests:write
 	--body string
@@ -1060,11 +1080,12 @@ user-role update <user_id>
 	--dry-run bool
 	--role string required body
 virtual-machine list
-	GET /virtual-machines scope=virtual_machines:read
+	GET /virtual-machines scope=virtual_machines:read paged=per_page:20:empty
 	--cloud-id int64
 	--filter-os string
 	--filter-os-version string
 	--include-os-info int64
+	--limit int64
 	--search string
 virtual-machine-sbom export <virtual_machine_id> <format>
 	GET /virtual-machines/{virtual_machine_id}/export/{format} scope=virtual_machines:read

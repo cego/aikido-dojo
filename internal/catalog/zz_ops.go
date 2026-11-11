@@ -9,8 +9,8 @@ import (
 
 // SpecUpdatedAt and SpecSHA256 identify the spec snapshot this catalog was generated from.
 const (
-	SpecUpdatedAt = "2026-10-23T12:06:53Z"
-	SpecSHA256    = "287076ee25f4d19259bf897bafa0a570ecc7a644c17f1aab80f52e9a0db08a83"
+	SpecUpdatedAt = "2026-10-28T15:45:59Z"
+	SpecSHA256    = "3af7e0f4d6c087e6966fd47124b3337db496d11dc69e3e19089e933882b52664"
 )
 
 // All is every generated command, sorted by command.
@@ -1490,6 +1490,7 @@ var All = []ops.Op{
 			{Name: "filter_container_repo_id", Kind: ops.Integer, Required: false, Usage: "A filter to only export issues that belong to a given container repo"},
 			{Name: "filter_container_repo_ids", Kind: ops.String, Required: false, Usage: "A filter to only export issues that belong to given container repos (up to 15). Multiple values should be comma separated. Only available for Pro and Scale workspaces."},
 			{Name: "filter_container_repo_name", Kind: ops.String, Required: false, Usage: "A filter to only export issues that belong to a container repo which matches this name exactly"},
+			{Name: "filter_cve_id", Kind: ops.String, Required: false, Usage: "A filter to only export open source issues matching this exact CVE id, e.g. CVE-2026-12345"},
 			{Name: "filter_domain_id", Kind: ops.Integer, Required: false, Usage: "A filter to only export issues that belong to a given domain"},
 			{Name: "filter_issue_group_id", Kind: ops.Integer, Required: false, Usage: "A filter to only export issues that belong to a given issue group"},
 			{Name: "filter_issue_type", Kind: ops.String, Required: false, Usage: "A filter to only export issues that have a give type. 'app_level_open_source' excludes open source issues found in containers or virtual machines, while 'open_source' includes open source issues for all attack surfaces. (one of: open_source, leaked_secret, cloud, sast, iac, docker_container, cloud_instance, surface_monitoring, malware, eol, mobile, scm_security, ai_pentest, agentic_review, license, app_level_open_source)"},
@@ -1821,11 +1822,27 @@ var All = []ops.Op{
 				{Name: "integration_id", Kind: ops.Integer, Required: false, Usage: "Optional. The id of the task tracker integration when multiple integrations are available"},
 				{Name: "issue_group_id", Kind: ops.Integer, Required: true, Usage: "The id of the issue group a task should be linked (required)"},
 				{Name: "project_id", Kind: ops.String, Required: true, Usage: "The id of the task tracker project related to the task (required)"},
-				{Name: "scope", Kind: ops.String, Required: false, Usage: "The scope that relates issues to the task. Default is 'group' that relates all the issues in the issue group to the task (one of: group, repo, cloud, domain, container)"},
+				{Name: "scope", Kind: ops.String, Required: false, Usage: "The scope that relates issues to the task. Default is 'group' that relates all the issues in the issue group to the task (one of: group, repo, cloud, domain, container, single_issue)"},
 				{Name: "scope_id", Kind: ops.Integer, Required: false, Usage: "The id of the specified scope. Not required when scope is 'group'"},
 				{Name: "task_id", Kind: ops.String, Required: true, Usage: "The id of the task that should be linked to the issue group (required)"},
 			},
 		},
+	},
+	{
+		ID:          "unlinkTaskFromIssueGroup",
+		Command:     "issue-group-task delete",
+		Method:      "POST",
+		Path:        "/task_tracking/unlinkTaskFromIssueGroup",
+		Summary:     "Unlink a task from issue",
+		Description: "Removes the link between a task and an issue group.",
+		Scope:       "task_tracking:write",
+		Body: &ops.Body{Required: true, Object: true,
+			Fields: []ops.Param{
+				{Name: "issue_group_id", Kind: ops.Integer, Required: true, Usage: "The id of the issue group in the workspace (required)"},
+				{Name: "task_id", Kind: ops.Integer, Required: true, Usage: "The Aikido id of the task to remove (required)"},
+			},
+		},
+		Destructive: true,
 	},
 	{
 		ID:          "getIssueGroupTasks",
@@ -1962,12 +1979,39 @@ var All = []ops.Op{
 		},
 	},
 	{
+		ID:          "createParentTeam",
+		Command:     "parent-team create",
+		Method:      "POST",
+		Path:        "/teams/createParentTeam",
+		Summary:     "Create parent team",
+		Description: "Create a new parent team and link it to the provided child teams. Parent teams aggregate the responsibilities of their child teams. Unknown child team IDs are ignored.",
+		Scope:       "teams:write",
+		Body: &ops.Body{Required: true, Object: true,
+			Fields: []ops.Param{
+				{Name: "name", Kind: ops.String, Required: true, Usage: "The name of the parent team. (required)"},
+			},
+		},
+	},
+	{
+		ID:          "updateChildTeamsForParentTeam",
+		Command:     "parent-team-child update",
+		Method:      "POST",
+		Path:        "/teams/{parent_team_id}/updateChildTeams",
+		Summary:     "Update child teams for parent team",
+		Description: "Replace the child teams linked to a parent team. The provided list of child team IDs entirely replaces the current set: missing child teams are linked and extra child teams are unlinked. Parent team responsibilities are then recalculated from the linked child teams.",
+		Scope:       "teams:write",
+		Args: []ops.Param{
+			{Name: "parent_team_id", Kind: ops.Integer, Required: true, Usage: "Unique ID of the parent team"},
+		},
+		Body: &ops.Body{Required: true, Object: true},
+	},
+	{
 		ID:          "createPentestDraftAssessment",
 		Command:     "pentest-assessment create",
 		Method:      "POST",
 		Path:        "/pentests/assessments/createDraft",
 		Summary:     "Create pentest draft",
-		Description: "Create a new draft pentest assessment. The project will be created if it doesn't exist. You can either provide existing repository IDs or create a custom repository from a download URL.",
+		Description: "Create a new draft pentest assessment. The project will be created if it doesn't exist.",
 		Scope:       "pentests:write",
 		Body: &ops.Body{Required: true, Object: true,
 			Fields: []ops.Param{
@@ -2262,7 +2306,7 @@ var All = []ops.Op{
 		Flags: []ops.Param{
 			{Name: "filter_branch", Kind: ops.String, Required: false, Usage: "filter repositories by branch"},
 			{Name: "filter_name", Kind: ops.String, Required: false, Usage: "filter repositories by name"},
-			{Name: "include_config_issues_info", Kind: ops.Boolean, Required: false, Usage: "Include configuration issues information (has_missing_lockfile, has_faulty_lockfile) in the response"},
+			{Name: "include_config_issues_info", Kind: ops.Boolean, Required: false, Usage: "Include configuration issues information (has_missing_lockfile, has_faulty_lockfile, scan_error) in the response"},
 			{Name: "include_inactive", Kind: ops.Boolean, Required: false, Usage: "Include inactive repositories"},
 			{Name: "include_labels", Kind: ops.Boolean, Required: false, Usage: "Include labels in the response"},
 		},
@@ -2975,6 +3019,7 @@ var All = []ops.Op{
 			{Name: "include_os_info", Kind: ops.Integer, Required: false, Usage: "Includes the operating system and operating system version of the virtual machines. 1 means true, 0 means false."},
 			{Name: "search", Kind: ops.String, Required: false, Usage: "Filter to search all virtual machines"},
 		},
+		Paging: &api.Paging{End: api.EndEmpty, SizeParam: "per_page", Size: 20, Items: "", More: ""},
 	},
 	{
 		ID:          "exportVirtualMachineSBOM",
@@ -3008,7 +3053,7 @@ var All = []ops.Op{
 		Scope:       "webhooks:write",
 		Body: &ops.Body{Required: true, Object: true,
 			Fields: []ops.Param{
-				{Name: "event_type", Kind: ops.String, Required: true, Usage: "The event type of the webhook (one of: issue.open.created, issue.open.created.open_source, issue.open.created.sast, issue.snoozed, issue.ignored.manual, ci.gate.failed, issue.closed, ci.gate.passed, issue.sla.breached, zen.attack, zen.attack_wave, zen.outbound.discovered, scan.image.finished, scan.domain.finished, issue.unignored, issue.unignored.manual, issue.severity.changed.manual, configuration_issue.detected, inbox.issues.request.created; required)"},
+				{Name: "event_type", Kind: ops.String, Required: true, Usage: "The event type of the webhook (one of: issue.open.created, issue.open.created.open_source, issue.open.created.sast, issue.snoozed, issue.ignored.manual, ci.gate.failed, issue.closed, ci.gate.passed, issue.sla.breached, zen.attack, zen.attack_wave, zen.outbound.discovered, scan.image.finished, scan.domain.finished, issue.unignored, issue.unignored.manual, issue.severity.changed.manual, configuration_issue.detected, inbox.issues.request.created, pentest.running, pentest.paused, pentest.finished, pentest.failed, pentest.cancelled; required)"},
 				{Name: "target_url", Kind: ops.String, Required: true, Usage: "The target url of the webhook (required)"},
 			},
 		},

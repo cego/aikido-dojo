@@ -99,7 +99,7 @@ func TestLoadVendoredSpec(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(s.Ops) != 214 {
-		t.Errorf("ops = %d, want the 214 of the 2026-10-23 snapshot", len(s.Ops))
+	if len(s.Ops) != 217 {
+		t.Errorf("ops = %d, want the 217 of the 2026-10-28 snapshot", len(s.Ops))
 	}
 }
