@@ -1,6 +1,6 @@
 # Signed Commits
 
-Aikido supports signed commits for both **GitHub** and **GitLab** to ensure the authenticity of code changes. While GitHub requires no configuration, GitLab users must add a specific Aikido-provided SSH key to their profile.
+Aikido supports signed commits for **GitHub**, **GitLab**, **Bitbucket Cloud** and **Bitbucket Data Center** to ensure the authenticity of code changes. While GitHub requires no configuration, GitLab and Bitbucket users must add a specific Aikido-provided SSH key to their account.
 
 ## Why use signed commits?
 
@@ -36,3 +36,23 @@ Setup steps:
 You will now see the `Verified` badge on the commits from Aikido:
 
 Aikido creates a unique SSH key for each account, this SSH key can be recreated by clicking `Delete SSH Key` and creating a new key.
+
+### Bitbucket Cloud
+
+Signed commits on Bitbucket Cloud require [AutoFix with a Workspace Access Token](/autofix-and-remediation/configure/autofix-for-bitbucket-with-workspace-access-token.md). The SSH key must belong to a real user, and the commit email must be a verified email of that user in your workspace.
+
+1. **Navigate to Settings:** In Aikido, go to the [**Update Workspace Access Token** page](https://app.aikido.dev/onboarding/bitbucket/update-workspace-access-token) and open the **AutoFix** tab.
+2. **Set the commit email:** In Aikido, enter the email address of the Bitbucket user that will own the SSH key.
+3. **Generate SSH Key:** In the **Advanced** section, click **Generate SSH Key**.
+
+4. **Add to Bitbucket:** Copy the public key provided by Aikido. In Bitbucket, click the **Settings** icon on the top right **> Personal Bitbucket settings**, then go to **Security > SSH keys > Add key** and paste the key.
+
+You will now see the `Verified` badge on the commits from Aikido.
+
+### Bitbucket Data Center
+
+1. **Navigate to AutoFix Settings:** In Aikido, go to the [**AutoFix settings** page](https://app.aikido.dev/issues/fix/settings) and click **Manage Personal Access Token** for Bitbucket Data Center.
+2. **Set the commit email:** In Aikido, enter the email address of the Bitbucket user that will own the SSH key.
+3. **Generate SSH Key:** In the **Advanced** section of the modal, click **Generate SSH Key**.
+
+4. **Add to Bitbucket:** Copy the public key provided by Aikido. In Bitbucket Data Center, go to **Profile > Manage account > SSH keys > Add key** and paste the key.

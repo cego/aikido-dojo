@@ -16,3 +16,4 @@
 - [Deploy Device Protection with Rippling](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/windows/deploy-aikido-endpoint-with-rippling.md)
 - [Deploy Device Protection with Scalefusion](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/windows/deploy-aikido-endpoint-with-scalefusion.md)
 - [Deploy Device Protection with SCCM](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/windows/deploy-aikido-endpoint-with-sccm.md): Deploy Aikido Device Protection to managed Windows devices with a Microsoft Configuration Manager (SCCM) package that runs the install command.
+- [Deploy Device Protection with XFA](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/windows/deploy-aikido-endpoint-with-xfa.md)

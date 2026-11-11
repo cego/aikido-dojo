@@ -31,3 +31,4 @@ Pick the setup that matches your provider and authentication method.
 * [Signed Commits](/autofix-and-remediation/configure/signed-commits.md)
 * [Pull request templates](/autofix-and-remediation/configure/pull-request-templates.md)
 * [Setting up Container AutoFix](/autofix-and-remediation/configure/setting-up-container-autofix.md)
+* [Container AutoFix for Docker Hardened Images](/autofix-and-remediation/configure/container-autofix-for-docker-hardened-images.md)

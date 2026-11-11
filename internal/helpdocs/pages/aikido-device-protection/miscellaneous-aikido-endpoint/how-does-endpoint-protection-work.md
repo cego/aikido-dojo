@@ -1,6 +1,6 @@
 # How Does Device Protection Work?
 
-Aikido Device Protection installs a lightweight Layer 4 proxy on each device. It only inspects traffic to supported package registries, and to AI providers when AI Usage monitoring is enabled. Everything else bypasses it. The agent also scans local files on the device for hardcoded secrets.
+Aikido Device Protection installs a lightweight Layer 4 proxy on each device. It only inspects traffic to supported package registries, plus AI providers when AI Usage monitoring is enabled. Everything else bypasses it. The agent also scans local files on the device for hardcoded secrets.
 
 ```mermaid
 flowchart LR
@@ -21,6 +21,8 @@ flowchart LR
     class F allow;
 ```
 
+## How it works
+
 ### Decisions happen on the device
 
 All allow and block decisions happen locally. Aikido does not receive your traffic, browsing history, or downloaded files.
@@ -33,36 +35,11 @@ The agent downloads only the data it needs to enforce policy:
 
 After that sync, the device can enforce rules on its own.
 
-### What data Aikido receives and when
+### Only supported ecosystems are intercepted
 
-Package contents stay on the device, and general browsing stays invisible to Aikido. The agent only reports install outcomes and installed packages:
+The proxy is not a general web filter. It only intercepts [supported package ecosystems](/aikido-device-protection/miscellaneous-aikido-endpoint/supported-ecosystems.md), plus AI provider domains when AI Usage monitoring is enabled.
 
-* Allowed installs
-* Blocked installs
-* Flagged installs
-* Installed packages
-
-Installed packages are compiled into an SBOM (a software bill of materials, the inventory of packages in use), generated and synced once a day. Install outcomes are reported immediately, and the agent sends a heartbeat every 10 minutes so you know it's online.
-
-The agent needs outbound internet access to reach Aikido. Allowlist `*.aikido.dev` over HTTPS on port 443.
-
-### AI features
-
-When [AI Usage](/aikido-device-protection/using-aikido-endpoint/ai-monitoring.md) monitoring is enabled, the agent also inspects traffic to AI provider domains. Prompts are analyzed on the device to flag malicious ones. Aikido does not receive your prompts or your conversation history.
-
-Aikido receives the inventory only: the MCP servers, models, and tools that were used, and the devices they were used on.
-
-### Secret scanning
-
-[Secret Scanning](/aikido-device-protection/using-aikido-endpoint/secret-scanning.md) reads local files on the device, such as shell history. File contents are never uploaded to Aikido.
-
-When a secret is detected, Aikido receives the type of secret and a few characters of the value, enough for you to recognize the finding. The full secret is never sent.
-
-### It only intercepts supported ecosystems
-
-The proxy is not a general web filter. It only intercepts [supported package ecosystems](/aikido-device-protection/miscellaneous-aikido-endpoint/supported-ecosystems.md), plus AI provider domains when AI Usage monitoring is enabled. All other traffic passes through unchanged.
-
-Those domains are served over HTTPS. To inspect that traffic, the agent uses a local Certificate Authority (CA) on the device. It is only used for the domains listed below.
+These domains are served over HTTPS. To inspect them, the agent uses a local Certificate Authority (CA) on the device, which is only used for the domains below. See [Certificates](#certificates).
 
 These are the domains Aikido Device Protection intercepts. Package registries and developer tool marketplaces are always intercepted. AI provider domains are only intercepted when [AI Usage](/aikido-device-protection/using-aikido-endpoint/ai-monitoring.md) monitoring is enabled.
 
@@ -257,16 +234,45 @@ zenmux.ai
 {% endtab %}
 {% endtabs %}
 
+### Network requirements
+
+The agent needs outbound internet access to reach Aikido. Allowlist `*.aikido.dev` over HTTPS on port 443.
+
+## Data Aikido receives
+
+### Install outcomes and SBOM
+
+Package contents and general browsing stay on the device. The agent only reports:
+
+* Allowed installs
+* Blocked installs
+* Flagged installs
+* Installed packages
+
+Install outcomes are reported immediately. Installed packages are compiled into an SBOM (software bill of materials, the inventory of packages in use), generated and synced once a day. The agent also sends a heartbeat every 10 minutes so you know it's online.
+
+### AI features
+
+When [AI Usage](/aikido-device-protection/using-aikido-endpoint/ai-monitoring.md) monitoring is enabled, the agent also inspects traffic to AI provider domains. Aikido receives the inventory only: the MCP servers, models, and tools that were used, and the devices they were used on.
+
+### Secret scanning
+
+[Secret Scanning](/aikido-device-protection/using-aikido-endpoint/secret-scanning.md) reads local files on the device, such as shell history. File contents are never uploaded. When a secret is detected, Aikido receives the type of secret and a few characters of the value, enough to recognize the finding. The full secret is never sent.
+
+## Certificates
+
 ### How the CA works
 
 Aikido uses a two-tier CA chain:
 
-1. **Workspace CA:** the root of the chain, generated in Aikido and unique to your workspace. Its public certificate is what your devices trust, and its private key stays with Aikido.
-2. **Device certificate:** short-lived and unique per device, signed by your workspace CA. This is what the proxy uses to inspect package manager traffic.
+1. **Workspace CA:** the root of the chain, generated in Aikido and unique to your workspace. Your devices trust its public certificate. Its private key stays with Aikido.
+2. **Device certificate:** short-lived, unique per device, and signed by your workspace CA. The proxy uses it to inspect package manager traffic.
 
-Each device generates its own private key locally and asks Aikido to sign a certificate for it. On macOS that key is stored in Apple's protected storage (Secure Enclave / Keychain), which prevents it from being read or exported, even by the device owner. The private key never leaves the device, only a signing request goes to Aikido.
+Each device generates its own private key locally and sends only a signing request to Aikido. The private key never leaves the device. On macOS it is stored in Apple's protected storage (Secure Enclave / Keychain), so it can't be read or exported, even by the device owner.
 
-Device certificates are valid for a maximum of 4 days and are re-issued automatically before they expire. If one is ever extracted from memory, it expires quickly and cannot be used to sign further certificates, which is enforced at signing time.
+Device certificates are valid for at most 4 days and are re-issued automatically before they expire. They can't sign further certificates, which is enforced at signing time. If one is ever extracted from memory, it expires quickly.
+
+You don't need to distribute the workspace CA yourself. The MDM configuration profile and the installer package both include it, so it reaches the device trust store as part of a normal deployment.
 
 **CA file location on macOS:**
 
@@ -277,18 +283,31 @@ Device certificates are valid for a maximum of 4 days and are re-issued automati
 The [Certificates](https://app.aikido.dev/endpoint-protection/certificates) page in Aikido shows:
 
 * **Root CA Certificate:** your workspace CA, with its SHA-256 fingerprint, creation and expiry dates, and the public certificate in PEM format.
-* **Issued Certificates:** every device certificate signed by your workspace CA, showing the device it was issued to, when it was issued, and its fingerprint.
+* **Issued Certificates:** every device certificate signed by your workspace CA, with the device it was issued to, when it was issued, and its fingerprint.
 
-You don't need to distribute the workspace CA yourself. The MDM configuration profile and the installer package both include it, so it reaches the device trust store as part of a normal deployment. Use this page to confirm a device is enrolled, or to check a certificate you're seeing on a device against what Aikido issued.
+Use this page to confirm a device is enrolled, or to check a certificate on a device against what Aikido issued.
 
-### Signed agent updates
+## Signed agent updates
 
-Every agent release is cryptographically signed in Aikido's build pipeline. Before installing an update, the agent's updater verifies that signature, so a tampered or unsigned build is rejected.
+Every agent release is cryptographically signed in Aikido's build pipeline. Before installing an update, the updater verifies that signature and rejects tampered or unsigned builds. To install updates automatically, turn on [Auto-update](/aikido-device-protection/deploying-aikido-endpoint/connecting-and-managing-devices.md#auto-update).
 
 * **macOS:** every binary and the installer package are signed with Aikido's Apple Developer ID and notarized by Apple.
 * **Windows:** binaries are signed with Authenticode.
 
-### Limitations
+## Network filters on macOS
 
-* **Aikido Device Protection is not a virus scanner.** Apart from Secret Scanning, it does not inspect files, processes, or your system for existing threats. Instead, it works by blocking malware before it can reach your device. This means that if malware is already present on a device, Aikido Device Protection will not detect or remove it, and the device should be considered compromised.
-* **Docker containers:** enable **Protect Containers** to protect Docker. See [Device Protection in Docker Containers](/aikido-device-protection/deploying-aikido-endpoint/device-protection-in-docker-containers.md).
+On macOS, **System Settings** → **Network** → **Filters** shows three Aikido entries per device. This is expected.
+
+| Entry             | Created by                   | Expected state | Purpose                                                                                      |
+| ----------------- | ---------------------------- | -------------- | -------------------------------------------------------------------------------------------- |
+| Content filter    | MDM profile                  | *Disabled*     | For future protection support that Aikido is adding. Stays disabled until then.              |
+| Transparent proxy | MDM profile                  | *Disabled*     | Pre-approves the Aikido system extension. Holds no configuration.                            |
+| Transparent proxy | Aikido extension, at runtime | *Enabled*      | Holds the full proxy configuration, including auto-enable, which can only be set at runtime. |
+
+Don't remove the disabled MDM entries. The runtime transparent proxy depends on the pre-approval they provide.
+
+## Limitations
+
+* **Device Protection is not a virus scanner.** Apart from Secret Scanning, it doesn't inspect files, processes, or your system for existing threats. It blocks malware before it reaches the device, so malware already on a device is not detected or removed. Consider that device compromised.
+* **Docker containers:** not protected by default. Turn on **Protect Containers** to cover them. See [Device Protection in Docker Containers](/aikido-device-protection/deploying-aikido-endpoint/device-protection-in-docker-containers.md).
+* **WSL2:** package installs inside WSL2 distros on Windows are not protected by default. Turn on **Protect WSL2** and Aikido installs the Linux agent into each running distro. WSL2 protection is available on request. See [Device Protection in WSL2](/aikido-device-protection/deploying-aikido-endpoint/device-protection-in-wsl2.md).

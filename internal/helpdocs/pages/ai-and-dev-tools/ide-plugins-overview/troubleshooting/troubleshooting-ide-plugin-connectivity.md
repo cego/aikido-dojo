@@ -24,11 +24,11 @@ ide.aikido.dev
 
 More details on domains per IDE:
 
-{% content-ref url="/spaces/yKbzcQGrx7UtrG0nPZZ7/pages/RovfGwV8By5yZpZWD9rB" %}
+{% content-ref url="/pages/RovfGwV8By5yZpZWD9rB" %}
 [JetBrains - domains](/ai-and-dev-tools/ide-plugins-overview/troubleshooting/troubleshooting-ide-plugin-connectivity/jetbrains-domains.md)
 {% endcontent-ref %}
 
-{% content-ref url="/spaces/yKbzcQGrx7UtrG0nPZZ7/pages/8naZI06ZynRXUwbAlc7B" %}
+{% content-ref url="/pages/8naZI06ZynRXUwbAlc7B" %}
 [VS Code - domains](/ai-and-dev-tools/ide-plugins-overview/troubleshooting/troubleshooting-ide-plugin-connectivity/vs-code-domains.md)
 {% endcontent-ref %}
 

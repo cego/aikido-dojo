@@ -6,15 +6,20 @@ If your Git provider only allows specific static IP addresses to access your cod
 
 Code and container scanning traffic comes from the region where **your Aikido workspace** is hosted, not from the region where your Git provider or registry runs. Check the URL you use to log in to Aikido, then allowlist that region's IPs:
 
-| Aikido URL                                     | Region | IP list               |
-| ---------------------------------------------- | ------ | --------------------- |
-| [app.aikido.dev](https://app.aikido.dev)       | EU     | EU-based IP addresses |
-| [app.us.aikido.dev](https://app.us.aikido.dev) | US     | US-based IP addresses |
-| [app.au.aikido.dev](https://app.au.aikido.dev) | AU     | AU-based IP addresses |
-| [app.me.aikido.dev](https://app.me.aikido.dev) | ME     | ME-based IP addresses |
+| Aikido URL                                     | Region  | IP list               |
+| ---------------------------------------------- | ------- | --------------------- |
+| [app.aikido.dev](https://app.aikido.dev)       | EU      | EU-based IP addresses |
+| [app.us.aikido.dev](https://app.us.aikido.dev) | US      | US-based IP addresses |
+| [app.aikidogov.us](https://app.aikidogov.us)   | FedRAMP | FedRAMP IP addresses  |
+| [app.au.aikido.dev](https://app.au.aikido.dev) | AU      | AU-based IP addresses |
+| [app.me.aikido.dev](https://app.me.aikido.dev) | ME      | ME-based IP addresses |
 
 {% hint style="warning" %}
 If you log in at `app.aikido.dev`, scanning uses **EU** IPs, even when your Git provider or registry is hosted in the US. Allowlisting only US IPs in that case will cause scans to fail.
+{% endhint %}
+
+{% hint style="warning" %}
+If you log in at `app.aikidogov.us`, scanning uses FedRAMP IPs. Commercial US IPs (`app.us.aikido.dev`) will not work for FedRAMP workspaces.
 {% endhint %}
 
 ## IP Addresses
@@ -31,6 +36,13 @@ If you log in at `app.aikido.dev`, scanning uses **EU** IPs, even when your Git 
 * 3.211.221.73
 * 54.163.131.24
 * 54.225.143.47
+
+### FedRAMP IP addresses (`app.aikidogov.us`)
+
+* 18.252.220.64
+* 16.64.88.75
+* 18.252.60.10
+* 16.64.93.238
 
 ### ME-based IP addresses (`app.me.aikido.dev`)
 

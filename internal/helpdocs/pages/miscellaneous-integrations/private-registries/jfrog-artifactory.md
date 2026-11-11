@@ -1,6 +1,8 @@
 # JFrog Artifactory
 
-Use Aikido Registry Proxy as the default upstream for Artifactory, so every package your team installs is checked for malware, age restrictions, and known vulnerabilities. Additionally this allows you to install [Aikido Libraries](/autofix-and-remediation/aikido-libraries-overview.md) directly from your Artifactory.
+Use Aikido Registry Proxy as the default upstream for Artifactory. The proxy blocks malware and enforces a minimum package age on every package your team installs.
+
+The same Artifactory setup also lets you install [Aikido Libraries](/autofix-and-remediation/aikido-libraries-overview.md).
 
 {% stepper %}
 {% step %}

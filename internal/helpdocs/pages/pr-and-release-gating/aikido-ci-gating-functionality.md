@@ -14,7 +14,7 @@ Aikido offers two gating modes:
 You can configure gating in two ways:
 
 1. **Aikido Interface:** Use our 1-click configuration for [GitHub](/pr-and-release-gating/github-ci-pr-gating-via-aikido-dashboard.md), [GitLab](/pr-and-release-gating/gitlab-mr-gating.md), [Bitbucket](/pr-and-release-gating/bitbucket-pr-gating.md), and [Azure](/pr-and-release-gating/azure-pipelines-ci-pr-gating-via-aikido-dashboard-with-a-personal-access-token.md). This setup is managed entirely within the Aikido interface, provides a better overview, and **doesn’t consume your CI minutes.**
-2. **CI Pipeline:** For teams that prefer managing configuration in their own environment. You can use [Bitbucket Pipes](/pr-and-release-gating/bitbucket-pr-gating/bitbucket-pipes-setting-up-gating-for-pull-requests-via-code.md) natively, or integrate with any other runner (Jenkins, CircleCI, etc.) using the [Aikido CLI](https://help.aikido.dev/~/revisions/SGhJfnCIOpxRjx1gC1k5/pr-and-release-gating/cli-for-pr-and-release-gating) or our [Public CI API](https://help.aikido.dev/en/articles/8711075-aikido-ci-api).
+2. **CI Pipeline:** For teams that prefer managing configuration in their own environment. You can use [Bitbucket Pipes](/pr-and-release-gating/bitbucket-pr-gating/bitbucket-pipes-setting-up-gating-for-pull-requests-via-code.md) natively, or integrate with any other runner (Jenkins, CircleCI, etc.) using the [`@aikidosec/ci-api-client`](https://www.npmjs.com/package/@aikidosec/ci-api-client) package. Setup steps are in [Aikido CLI: Release Gating](/pr-and-release-gating/cli-for-pr-and-release-gating/aikido-cli-release-and-pr-gating.md).
 
 ## Configuring Your CI Gate
 
@@ -52,13 +52,9 @@ Fine-tune how Aikido interacts with your workflow to maintain developer velocity
 
 * **Always make the PR check green:** Keep PR checks green across your workspace while Aikido continues to report findings from all enabled scans. This applies to every configured gate and repository.
 * **Disable checks on draft Pull Requests:** Avoid generating noise on work-in-progress code. Scans only trigger once the PR is moved to "Ready for Review."
-* **Restrict `@AikidoSec` commands to Aikido users:** Only members of your Aikido workspace can trigger actions via PR or MR comments (like `@AikidoSec ignore`). Comments from other users are rejected with a reply.
+* **Restrict `@AikidoSec` commands to Aikido users:** Only a comment Aikido can link to a workspace member can ignore a finding. [Who can ignore a finding on a pull request](#who-can-ignore-a-finding-on-a-pull-request) lists the platforms that support this and how to link SAML users.
 
 <div data-with-frame="true"></div>
-
-{% hint style="info" %}
-**Restrict `@AikidoSec` commands to Aikido users** is available for GitHub and GitLab. Support for Bitbucket and Azure DevOps is coming soon.
-{% endhint %}
 
 ## **Checking results**
 
@@ -76,5 +72,27 @@ After a CI run, Aikido provides a direct link to the scan results for that speci
 In case you would like to bypass a failed state, this is possible by ignoring the issues that caused the CI gate to fail. You can do this by clicking the issue and in the top right **Actions menu** select Ignore or Snooze. This issue will then be ignored/snoozed in any future branches in your CI.
 
 {% hint style="info" %}
-Only users that have the permission to snooze or ignore issues can bypass the CI gate immediately. Users without ignore permissions can request an ignore from a PR or MR comment or the issue feed. Admins review those in the [Approval Inbox](/getting-started/core-functionalities/approval-inbox-for-ignored-issues.md).
+Only users with permission to snooze or ignore issues can bypass the CI gate immediately. Users without ignore permission can request an ignore from the issue feed when [ignore requests are enabled](/getting-started/core-functionalities/approval-inbox-for-ignored-issues.md). A reply on a PR or MR comment ignores the finding only when you have ignore permission. Without that permission, Aikido replies that the ignore is not allowed.
 {% endhint %}
+
+## Who can ignore a finding on a pull request
+
+Reply `@AikidoSec ignore: [reason]` on the Aikido comment to ignore that finding on the pull request. Aikido matches that person to a member of the workspace.
+
+{% hint style="info" %}
+A SAML login matches only on GitHub.com, and only when the identity provider sends the GitHub claims in [SAML User Rights: Custom Attributes](/getting-started/automated-user-management/saml-login/saml-user-rights-using-custom-attributes-advanced.md).
+{% endhint %}
+
+When that person is a workspace member:
+
+* **With Can ignore issues:** the finding is ignored.
+* **Without Can ignore issues:** Aikido replies on the pull request that the ignore is not allowed.
+
+Someone who is not a workspace member can ignore a finding on a public repository. If you want to stop that, turn on **Restrict `@AikidoSec` commands to Aikido users**. With the setting on, Aikido replies on the pull request that the ignore is not allowed.
+
+| Platform     | Restrict `@AikidoSec` commands | How the commenter is linked                                                                                                                                                           |
+| ------------ | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| GitHub.com   | Available                      | GitHub login, or the SAML claims in [SAML User Rights: Custom Attributes](/getting-started/automated-user-management/saml-login/saml-user-rights-using-custom-attributes-advanced.md) |
+| GitLab.com   | Available                      | GitLab login. A SAML, Google, or Microsoft login can not be linked.                                                                                                                   |
+| Azure DevOps | Not available                  | Matched by the Microsoft account email on the Aikido account.                                                                                                                         |
+| Bitbucket    | Not available                  | Ignoring a finding from a pull request comment is coming soon.                                                                                                                        |

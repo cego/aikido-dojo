@@ -20,7 +20,7 @@ The VM Scanner Agent runs once a day, at a random time between 4:00 AM - 8:00 AM
 After install, **a first scan will start automatically**. If you want to run it on demand, you can manually execute:
 
 ```bash
-/opt/aikido-vm-scanner-1.5.0/aikido-vm-scanner
+/opt/aikido-vm-scanner-1.5.2/aikido-vm-scanner
 ```
 
 #### **For Red Hat-based Systems (RHEL, CentOS, Fedora)**
@@ -28,18 +28,18 @@ After install, **a first scan will start automatically**. If you want to run it 
 **x86\_64**
 
 ```
-AIKIDO_TOKEN=REPLACE_ME VM_TYPE=production dnf install -y https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/v1.5.0/aikido-vm-scanner.x86_64.rpm
+AIKIDO_TOKEN=REPLACE_ME VM_TYPE=production dnf install -y https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/v1.5.2/aikido-vm-scanner.x86_64.rpm
 ```
 
-<table><thead><tr><th width="100.1015625">Hash</th><th>aikido-vm-scanner.x86_64.rpm</th></tr></thead><tbody><tr><td>MD5</td><td>227b56a1863b0b771bfeaa465c59f72e</td></tr><tr><td>SHA256</td><td>57ea588e9b0bc80bd9265b08101e16a833117e5420141c090be7e6a7df46c3a8</td></tr></tbody></table>
+<table><thead><tr><th width="100.1015625">Hash</th><th>aikido-vm-scanner.x86_64.rpm</th></tr></thead><tbody><tr><td>MD5</td><td>30f49344338a5d4ed76804e4eee09520</td></tr><tr><td>SHA256</td><td>c491f00999f7ef98bb4e17210fa094141e4899b2facac46e545e37358e5f96b2</td></tr></tbody></table>
 
 **aarch64**
 
 ```
-AIKIDO_TOKEN=REPLACE_ME VM_TYPE=production dnf install -y https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/v1.5.0/aikido-vm-scanner.aarch64.rpm
+AIKIDO_TOKEN=REPLACE_ME VM_TYPE=production dnf install -y https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/v1.5.2/aikido-vm-scanner.aarch64.rpm
 ```
 
-<table><thead><tr><th width="99.953125">Hash</th><th>aikido-vm-scanner.aarch64.rpm</th></tr></thead><tbody><tr><td>MD5</td><td>8222422733861e37061f5c9342d7db94</td></tr><tr><td>SHA256</td><td>3df217c38330b94c7c684c32d5ffeac0551ce1b45e5265b355a5c2a64942e7dd</td></tr></tbody></table>
+<table><thead><tr><th width="99.953125">Hash</th><th>aikido-vm-scanner.aarch64.rpm</th></tr></thead><tbody><tr><td>MD5</td><td>024f02a6415ef4c76485d897723e1a79</td></tr><tr><td>SHA256</td><td>f6df7e8c6e9c3cd00d29e7a7ade2ad607cc26405ca5de1d042f7c46830bcaf38</td></tr></tbody></table>
 
 #### **For Debian-based Systems (Debian, Ubuntu)**
 
@@ -50,20 +50,20 @@ We support Debian >= 10 and Ubuntu >= 20.04.
 **x86\_64**
 
 ```
-curl -L -O https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/v1.5.0/aikido-vm-scanner.amd64.deb
+curl -L -O https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/v1.5.2/aikido-vm-scanner.amd64.deb
 AIKIDO_TOKEN=REPLACE_ME VM_TYPE=production apt-get install -y ./aikido-vm-scanner.amd64.deb
 ```
 
-<table><thead><tr><th width="100.36328125">Hash</th><th>aikido-vm-scanner.amd64.deb</th></tr></thead><tbody><tr><td>MD5</td><td>818941bd3da7506ca5269872cd00ffbf</td></tr><tr><td>SHA256</td><td>222c1fa58bd841767707b720df130d1f40b84c00a02e12e8b7ddcd87f92b1286</td></tr></tbody></table>
+<table><thead><tr><th width="100.36328125">Hash</th><th>aikido-vm-scanner.amd64.deb</th></tr></thead><tbody><tr><td>MD5</td><td>f7237173e2fd9d938b242e0553516795</td></tr><tr><td>SHA256</td><td>06164f5aa7eca359be1bf8fc4fd26ad6198a12e1613216d042edc5c747cc4fef</td></tr></tbody></table>
 
 **aarch64**
 
 ```
-curl -L -O https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/v1.5.0/aikido-vm-scanner.arm64.deb
+curl -L -O https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/v1.5.2/aikido-vm-scanner.arm64.deb
 AIKIDO_TOKEN=REPLACE_ME VM_TYPE=production apt-get install -y ./aikido-vm-scanner.arm64.deb
 ```
 
-<table><thead><tr><th width="100.19921875">Hash</th><th>aikido-vm-scanner.arm64.deb</th></tr></thead><tbody><tr><td>MD5</td><td>9d26a64ddc625b11389ee398114abb4c</td></tr><tr><td>SHA256</td><td>f99cbf4acda7acc916d80a866c830c84ceae909804ecaaf7bb1a40c0edd87ae5</td></tr></tbody></table>
+<table><thead><tr><th width="100.19921875">Hash</th><th>aikido-vm-scanner.arm64.deb</th></tr></thead><tbody><tr><td>MD5</td><td>932211a27db8a76f51d55ea0f7e9aecd</td></tr><tr><td>SHA256</td><td>fd1e2058c18cc89c5a0f0c70a9de3ca440f46be9a4a9444093e866d0f357b7c8</td></tr></tbody></table>
 
 ### Latest version
 
@@ -80,8 +80,8 @@ If you have an automated install process and you always want to be on the latest
 
 If for any reason you can't set the AIKIDO\_TOKEN at install time, you can set the token post install in one of two ways:
 
-* Paste the token in `/opt/aikido-vm-scanner-1.5.0/.token`
-* Change the contents of `/opt/aikido-vm-scanner-1.5.0/config.json` :
+* Paste the token in `/opt/aikido-vm-scanner-1.5.2/.token`
+* Change the contents of `/opt/aikido-vm-scanner-1.5.2/config.json` :
 
 ```
 {
@@ -157,7 +157,7 @@ If you want to control the output channel of the VM scanner, when installing you
 Example for rpm x86\_64:
 
 ```
-AIKIDO_TOKEN=REPLACE_ME VM_TYPE=production OUTPUT=stderr dnf install -y https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/v1.5.0/aikido-vm-scanner.x86_64.rpm
+AIKIDO_TOKEN=REPLACE_ME VM_TYPE=production OUTPUT=stderr dnf install -y https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/v1.5.2/aikido-vm-scanner.x86_64.rpm
 ```
 
 {% hint style="info" %}
@@ -170,8 +170,26 @@ When a rpm/deb package is installed, it automatically triggers an initial scan.\
 If you want to disable this feature, you can set the `INITIAL_SCAN` parameter to 0 at install time, like this:
 
 ```
-AIKIDO_TOKEN=REPLACE_ME INITIAL_SCAN=0 dnf install -y https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/v1.5.0/aikido-vm-scanner.x86_64.rpm
+AIKIDO_TOKEN=REPLACE_ME INITIAL_SCAN=0 dnf install -y https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/v1.5.2/aikido-vm-scanner.x86_64.rpm
 ```
+
+#### Enable threat detection
+
+Threat detection requires systemd and kernel 5.8 or later.
+
+Set `RUNTIME_DETECTION_ENABLED=true` on the install command. Example for rpm on x86\_64:
+
+```shell
+AIKIDO_TOKEN=REPLACE_ME VM_TYPE=production RUNTIME_DETECTION_ENABLED=true dnf install -y https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/v1.5.2/aikido-vm-scanner.x86_64.rpm
+```
+
+When the scanner is already installed, run:
+
+```shell
+sudo systemctl enable --now aikido-runtime-agent
+```
+
+See [Enable Runtime Sensors](/runtime-sensors/runtime-sensors-overview/enable-runtime-sensors.md).
 
 #### CLI parameters
 
@@ -197,13 +215,13 @@ We trigger an automatic scan once per day and those scans will still use the con
 * Example for setting a custom hostname via CLI:
 
 ```
-/opt/aikido-vm-scanner-1.5.0/aikido-vm-scanner --hostname "My Custom VM"
+/opt/aikido-vm-scanner-1.5.2/aikido-vm-scanner --hostname "My Custom VM"
 ```
 
 * Example for excluding Golang catalogers via CLI:
 
 ```
-/opt/aikido-vm-scanner-1.5.0/aikido-vm-scanner --select-catalogers "-go"
+/opt/aikido-vm-scanner-1.5.2/aikido-vm-scanner --select-catalogers "-go"
 ```
 
 ### Connecting through a proxy
@@ -226,7 +244,7 @@ The daily scan runs from root's crontab, and cron jobs start with a minimal envi
 ```
 HTTPS_PROXY=http://proxy.example.com:8080
 NO_PROXY=localhost,127.0.0.1
-37 5 * * * /opt/aikido-vm-scanner-1.5.0/aikido-vm-scanner
+37 5 * * * /opt/aikido-vm-scanner-1.5.2/aikido-vm-scanner
 ```
 
 If your proxy requires authentication, include the credentials in the URL: `http://user:password@proxy.example.com:8080`.
@@ -240,7 +258,7 @@ Keep the variables on separate lines rather than inlining them on the scanner li
 To test the proxy immediately, run a scan on demand:
 
 ```bash
-sudo HTTPS_PROXY=http://proxy.example.com:8080 /opt/aikido-vm-scanner-1.5.0/aikido-vm-scanner
+sudo HTTPS_PROXY=http://proxy.example.com:8080 /opt/aikido-vm-scanner-1.5.2/aikido-vm-scanner
 ```
 
 #### Proxies that perform SSL inspection
@@ -254,7 +272,7 @@ Alternatively, point the scanner at a PEM bundle by adding `SSL_CERT_FILE=/path/
 
 #### Verifying the proxy is used
 
-Every run records which proxy it detected in the logs at `/var/log/aikido-vm-scanner-1.5.0/`:
+Every run records which proxy it detected in the logs at `/var/log/aikido-vm-scanner-1.5.2/`:
 
 ```
 Using proxy http://proxy.example.com:8080 for https://bg.aikido.dev/api/integrations/vm_scan/uploadScanResult
@@ -280,4 +298,4 @@ apt-get remove -y aikido-vm-scanner
 
 ### Logs
 
-Logs are available here, along with the last generated SBOM: `/var/log/aikido-vm-scanner-1.5.0`
+Logs are available here, along with the last generated SBOM: `/var/log/aikido-vm-scanner-1.5.2`
