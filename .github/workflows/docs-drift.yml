@@ -2,7 +2,7 @@ name: docs-drift
 
 on:
   schedule:
-    - cron: "41 5 * * *"
+    - cron: "41 5 */3 * *"
   workflow_dispatch:
     inputs:
       full:

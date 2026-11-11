@@ -47,6 +47,7 @@ func TestPagePaths(t *testing.T) {
 			"zen/node.js-esm",
 			"cloud/get-values-+-connect-gcp",
 		}},
+		{name: "skips translations", index: "## Docs\n- [A](https://help.test/a.md)\n\n## Docs\n- [A ja](https://help.test/docs/docs-ja/a.md)\n", want: []string{"a"}},
 		{name: "refuses a link off origin", index: "## Docs\n- [X](https://evil.test/x.md)\n", wantErr: "is not on https://help.test"},
 		{name: "refuses a path that climbs", index: "## Docs\n- [X](https://help.test/a/../../x.md)\n", wantErr: "unexpected path"},
 		{name: "refuses an escaped climb", index: "## Docs\n- [X](https://help.test/%2e%2e/x.md)\n", wantErr: "unexpected path"},

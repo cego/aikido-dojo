@@ -13,24 +13,27 @@ import (
 	"path/filepath"
 	"slices"
 	"strings"
+	"time"
 
 	"github.com/cego/aikido-dojo/internal/specfetch"
 )
 
-// Gentle on GitBook: a full run is ~750 pages.
+// Gentle on the help centre: a full run is ~780 pages.
 const concurrency = 2
 
 // Snapshot is snapshot.json: what the last run saw, so the next can tell what changed.
 type Snapshot struct {
 	FullSHA256 string            `json:"full_sha256"`
 	LastMod    map[string]string `json:"lastmod"`
+	Synced     string            `json:"synced,omitempty"` // the UTC day of the run, YYYY-MM-DD
 }
 
 // Options says where to fetch from and where the copy lives.
 type Options struct {
-	Origin string // the help centre
-	Dir    string // holds pages/ and snapshot.json
-	Full   bool   // refetch every page
+	Origin string           // the help centre
+	Dir    string           // holds pages/ and snapshot.json
+	Full   bool             // refetch every page
+	Now    func() time.Time // the clock; time.Now when nil
 }
 
 // Report says what a run did; the caller fills in Requests.
@@ -60,7 +63,7 @@ func Sync(ctx context.Context, c *http.Client, o Options) (Report, error) {
 	if err != nil {
 		return Report{}, err
 	}
-	digest, err := FullDigest(ctx, c, o.Origin+"/llms-full.txt", origin)
+	digest, err := FullDigest(ctx, c, o.Origin+"/llms-full.txt")
 	if err != nil {
 		return Report{}, err
 	}
@@ -103,7 +106,7 @@ func Sync(ctx context.Context, c *http.Client, o Options) (Report, error) {
 	r := Report{Full: o.Full || old.FullSHA256 == ""}
 	want := paths
 	if !r.Full {
-		want = stale(paths, mods, old.LastMod, held)
+		want = stale(paths, mods, old.LastMod, held, dayBefore(old.Synced))
 	}
 	changed, err := update(ctx, c, o.Origin, root, want)
 	if err != nil {
@@ -119,7 +122,11 @@ func Sync(ctx context.Context, c *http.Client, o Options) (Report, error) {
 			keep[p] = m
 		}
 	}
-	if err := writeSnapshot(snapPath, Snapshot{FullSHA256: digest, LastMod: keep}); err != nil {
+	now := time.Now
+	if o.Now != nil {
+		now = o.Now
+	}
+	if err := writeSnapshot(snapPath, Snapshot{FullSHA256: digest, LastMod: keep, Synced: now().UTC().Format(time.DateOnly)}); err != nil {
 		return Report{}, err
 	}
 	slices.Sort(changed)
@@ -127,11 +134,12 @@ func Sync(ctx context.Context, c *http.Client, o Options) (Report, error) {
 	return r, nil
 }
 
-// stale lists the pages to refetch: new, without a lastmod, or with a lastmod that moved.
-func stale(paths []string, mods, old map[string]string, held map[string]bool) []string {
+// stale lists the pages to refetch: new, without a lastmod, with a lastmod that moved, or dated
+// since (a day's second edit keeps the date the last run stored). Dates compare as strings.
+func stale(paths []string, mods, old map[string]string, held map[string]bool, since string) []string {
 	var out []string
 	for _, p := range paths {
-		if !held[p] || mods[p] == "" || mods[p] != old[p] {
+		if !held[p] || mods[p] == "" || mods[p] != old[p] || (since != "" && mods[p] >= since) {
 			out = append(out, p)
 		}
 	}
@@ -250,4 +258,13 @@ func writeSnapshot(path string, s Snapshot) error {
 		return fmt.Errorf("write %s: %w", path, err)
 	}
 	return nil
+}
+
+// dayBefore returns the day before day, or "" when day isn't one; the sitemap's time zone is unknown.
+func dayBefore(day string) string {
+	t, err := time.Parse(time.DateOnly, day)
+	if err != nil {
+		return ""
+	}
+	return t.AddDate(0, 0, -1).Format(time.DateOnly)
 }

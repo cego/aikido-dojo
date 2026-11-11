@@ -16,7 +16,7 @@ const (
 	fetchConcurrency = 4
 	// Far above any real page; the cap only stops a misbehaving server from
 	// exhausting memory.
-	maxBodyBytes = 8 << 20
+	maxBodyBytes = 32 << 20
 )
 
 // Assemble fetches the index and every page it lists, and returns the merged

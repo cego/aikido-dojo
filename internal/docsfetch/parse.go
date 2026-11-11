@@ -37,7 +37,7 @@ var (
 	blanksRE  = regexp.MustCompile(`\n{3,}`)
 )
 
-// PagePaths returns the pages llms.txt lists under "## Docs", in index order, as paths without ".md".
+// PagePaths returns the English pages llms.txt lists under "## Docs", in index order, as paths without ".md".
 func PagePaths(index string, origin *url.URL) ([]string, error) {
 	var paths []string
 	seen := map[string]bool{}
@@ -59,6 +59,10 @@ func PagePaths(index string, origin *url.URL) ([]string, error) {
 		p, err := pathOf(m[1], origin)
 		if err != nil {
 			return nil, err
+		}
+		// Translations live under docs/docs-<lang>/; the copy keeps the English pages.
+		if strings.HasPrefix(p, "docs/") {
+			continue
 		}
 		if !seen[p] {
 			seen[p] = true
