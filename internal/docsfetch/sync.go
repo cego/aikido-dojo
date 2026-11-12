@@ -103,7 +103,8 @@ func Sync(ctx context.Context, c *http.Client, o Options) (Report, error) {
 		return Report{}, fmt.Errorf("llms.txt lists %d pages but %d are held; refusing to delete most of the copy", len(paths), len(held))
 	}
 	gone := unlisted(held, paths)
-	r := Report{Full: o.Full || old.FullSHA256 == ""}
+	// A snapshot without a sync day predates day-only lastmods, so its dates can't be trusted.
+	r := Report{Full: o.Full || old.FullSHA256 == "" || old.Synced == ""}
 	want := paths
 	if !r.Full {
 		want = stale(paths, mods, old.LastMod, held, dayBefore(old.Synced))

@@ -14,9 +14,12 @@ import (
 // The changelog is the last page and changes with every post; the copy leaves it out.
 var changelog = []byte("\n# Changelog\n")
 
+// maxFullBytes caps llms-full.txt, every page in one file (6.7 MB in 2026-11); pages keep specfetch's smaller cap.
+const maxFullBytes = 32 << 20
+
 // FullDigest returns the SHA-256 of llms-full.txt without its changelog, so one digest tells whether any page changed.
 func FullDigest(ctx context.Context, c *http.Client, u string) (string, error) {
-	body, err := specfetch.Get(ctx, c, u)
+	body, err := specfetch.GetUpTo(ctx, c, u, maxFullBytes)
 	if err != nil {
 		return "", err
 	}

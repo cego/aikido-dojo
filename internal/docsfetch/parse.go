@@ -61,7 +61,7 @@ func PagePaths(index string, origin *url.URL) ([]string, error) {
 			return nil, err
 		}
 		// Translations live under docs/docs-<lang>/; the copy keeps the English pages.
-		if strings.HasPrefix(p, "docs/") {
+		if strings.HasPrefix(p, "docs/docs-") {
 			continue
 		}
 		if !seen[p] {

@@ -16,7 +16,7 @@ const (
 	fetchConcurrency = 4
 	// Far above any real page; the cap only stops a misbehaving server from
 	// exhausting memory.
-	maxBodyBytes = 32 << 20
+	maxBodyBytes = 8 << 20
 )
 
 // Assemble fetches the index and every page it lists, and returns the merged
@@ -104,6 +104,11 @@ func GetAll(ctx context.Context, c *http.Client, urls []string, concurrency int)
 
 // Get fetches u and returns its body, refusing a non-200 answer or a body over the cap.
 func Get(ctx context.Context, c *http.Client, u string) ([]byte, error) {
+	return GetUpTo(ctx, c, u, maxBodyBytes)
+}
+
+// GetUpTo is Get with a cap of limit bytes, for a body known to be larger than a page.
+func GetUpTo(ctx context.Context, c *http.Client, u string, limit int) ([]byte, error) {
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, u, nil)
 	if err != nil {
 		return nil, fmt.Errorf("get %s: %w", u, err)
@@ -116,12 +121,12 @@ func Get(ctx context.Context, c *http.Client, u string) ([]byte, error) {
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("get %s: HTTP %d", u, resp.StatusCode)
 	}
-	body, err := io.ReadAll(io.LimitReader(resp.Body, maxBodyBytes+1))
+	body, err := io.ReadAll(io.LimitReader(resp.Body, int64(limit)+1))
 	if err != nil {
 		return nil, fmt.Errorf("get %s: read body: %w", u, err)
 	}
-	if len(body) > maxBodyBytes {
-		return nil, fmt.Errorf("get %s: body exceeds %d bytes", u, maxBodyBytes)
+	if len(body) > limit {
+		return nil, fmt.Errorf("get %s: body exceeds %d bytes", u, limit)
 	}
 	return body, nil
 }

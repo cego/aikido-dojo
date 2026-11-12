@@ -304,3 +304,22 @@ func TestSyncRefetchesPagesDatedAroundTheLastSync(t *testing.T) {
 		t.Errorf("changed = %q, want the same-day edit", r.Changed)
 	}
 }
+
+// A snapshot from before the sync day was stored can't tell a same-day edit apart, so the run fetches every page.
+func TestSyncFetchesEveryPageAfterASnapshotWithoutASyncDay(t *testing.T) {
+	f, dir := newFakeHelp(t), t.TempDir()
+	f.mustSync(t, dir, false)
+	path := filepath.Join(dir, "snapshot.json")
+	var snap Snapshot
+	if err := json.Unmarshal(mustRead(t, path), &snap); err != nil {
+		t.Fatal(err)
+	}
+	snap.FullSHA256, snap.Synced = "older", ""
+	if err := writeSnapshot(path, snap); err != nil {
+		t.Fatal(err)
+	}
+	f.reset()
+	if r := f.mustSync(t, dir, false); !r.Full || len(f.fetched()) != 4 {
+		t.Errorf("report = %+v, fetched %q; want a full run of all 4 pages", r, f.fetched())
+	}
+}

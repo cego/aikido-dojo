@@ -53,3 +53,12 @@ func TestFullDigestRefusesWhatIsNotLlmsFull(t *testing.T) {
 		t.Errorf("err = %v, want a challenge page refused", err)
 	}
 }
+
+// llms-full.txt holds every page, so it may exceed the cap a single page gets.
+func TestFullDigestReadsAFileLargerThanAPage(t *testing.T) {
+	body := "# A\n" + strings.Repeat("x", 9<<20)
+	srv := rawServer(t, func(string) string { return body })
+	if _, err := digestOf(t, srv); err != nil {
+		t.Errorf("err = %v, want a 9 MiB llms-full.txt read", err)
+	}
+}
