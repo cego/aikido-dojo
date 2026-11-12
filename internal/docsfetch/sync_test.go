@@ -12,6 +12,7 @@ import (
 	"strings"
 	"sync"
 	"testing"
+	"time"
 )
 
 // fakeHelp is a help centre a test can change between runs; it counts requests per path.
@@ -22,11 +23,12 @@ type fakeHelp struct {
 	pages map[string]string
 	mods  map[string]string
 	hits  map[string]int
+	today string // the day a sync runs, YYYY-MM-DD
 }
 
 func newFakeHelp(t *testing.T) *fakeHelp {
 	t.Helper()
-	f := &fakeHelp{pages: map[string]string{}, mods: map[string]string{}, hits: map[string]int{}}
+	f := &fakeHelp{pages: map[string]string{}, mods: map[string]string{}, hits: map[string]int{}, today: "2026-11-12"}
 	f.srv = httptest.NewTLSServer(http.HandlerFunc(f.serve))
 	t.Cleanup(f.srv.Close)
 	f.set("readme", "# Overview\n\nWelcome.", "2026-10-01T00:00:00.000Z")
@@ -36,7 +38,7 @@ func newFakeHelp(t *testing.T) *fakeHelp {
 	return f
 }
 
-// set adds or changes a page as GitBook serves it; an empty lastmod leaves it out of the sitemap's dates.
+// set adds or changes a page as the help centre serves it; an empty lastmod leaves it out of the sitemap's dates.
 func (f *fakeHelp) set(path, body, lastmod string) {
 	f.mu.Lock()
 	defer f.mu.Unlock()
@@ -63,7 +65,6 @@ func (f *fakeHelp) serve(w http.ResponseWriter, r *http.Request) {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	f.hits[r.URL.Path]++
-	half := len(f.order) / 2
 	switch r.URL.Path {
 	case "/llms.txt":
 		fmt.Fprint(w, "# Aikido\n\n## Docs\n\n")
@@ -86,13 +87,8 @@ func (f *fakeHelp) serve(w http.ResponseWriter, r *http.Request) {
 		}
 		fmt.Fprint(w, "</urlset>")
 	case "/llms-full.txt":
-		fmt.Fprintf(w, "> This is part 1 of 2.\n> Next part: %s/llms-full.txt/1\n\n", f.srv.URL)
-		for _, p := range f.order[:half] {
-			fmt.Fprintln(w, f.pages[p])
-		}
-	case "/llms-full.txt/1":
-		fmt.Fprint(w, "> This is part 2 of 2.\n\n")
-		for _, p := range f.order[half:] {
+		fmt.Fprint(w, "# Aikido\n\n")
+		for _, p := range f.order {
 			fmt.Fprintln(w, f.pages[p])
 		}
 	default:
@@ -134,7 +130,11 @@ func (f *fakeHelp) fetched() []string {
 
 func (f *fakeHelp) sync(t *testing.T, dir string, full bool) (Report, error) {
 	t.Helper()
-	return Sync(t.Context(), f.srv.Client(), Options{Origin: f.srv.URL, Dir: dir, Full: full})
+	now, err := time.Parse(time.DateOnly, f.today)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return Sync(t.Context(), f.srv.Client(), Options{Origin: f.srv.URL, Dir: dir, Full: full, Now: func() time.Time { return now }})
 }
 
 func (f *fakeHelp) mustSync(t *testing.T, dir string, full bool) Report {
@@ -173,8 +173,8 @@ func TestSyncFirstRunFetchesEveryPage(t *testing.T) {
 	if err := json.Unmarshal(mustRead(t, filepath.Join(dir, "snapshot.json")), &snap); err != nil {
 		t.Fatal(err)
 	}
-	if snap.FullSHA256 == "" || len(snap.LastMod) != 3 || snap.LastMod["readme"] != "2026-10-01T00:00:00.000Z" {
-		t.Errorf("snapshot = %+v, want the digest and the 3 lastmods the sitemap gave", snap)
+	if snap.FullSHA256 == "" || len(snap.LastMod) != 3 || snap.LastMod["readme"] != "2026-10-01T00:00:00.000Z" || snap.Synced != "2026-11-12" {
+		t.Errorf("snapshot = %+v, want the digest, the 3 lastmods the sitemap gave and the day it ran", snap)
 	}
 }
 
@@ -186,7 +186,7 @@ func TestSyncUnchangedAsksOnlyForLlmsFull(t *testing.T) {
 	if !r.Unchanged || r.Fetched != 0 {
 		t.Errorf("report = %+v, want unchanged", r)
 	}
-	if got, want := f.requests(), map[string]int{"/llms-full.txt": 1, "/llms-full.txt/1": 1}; !maps.Equal(got, want) {
+	if got, want := f.requests(), map[string]int{"/llms-full.txt": 1}; !maps.Equal(got, want) {
 		t.Errorf("requests = %v, want only %v", got, want)
 	}
 }
@@ -285,5 +285,41 @@ func TestSyncFullRefetchesEveryPage(t *testing.T) {
 	r := f.mustSync(t, dir, true)
 	if !r.Full || len(f.fetched()) != 4 || len(r.Changed) != 0 {
 		t.Errorf("report = %+v, fetched %q; want all 4 fetched and none changed", r, f.fetched())
+	}
+}
+
+// The sitemap dates pages by day, so a second edit on the day of a sync keeps the date the sync stored.
+func TestSyncRefetchesPagesDatedAroundTheLastSync(t *testing.T) {
+	f, dir := newFakeHelp(t), t.TempDir()
+	f.set("guide/setup", "# Setup\n\nSteps.", "2026-11-12")
+	f.mustSync(t, dir, false)
+	f.set("guide/setup", "# Setup\n\nSteps, edited later that day.", "2026-11-12")
+	f.today = "2026-11-15"
+	f.reset()
+	r := f.mustSync(t, dir, false)
+	if want := []string{"guide/group", "guide/setup"}; !slices.Equal(f.fetched(), want) {
+		t.Errorf("fetched %q, want the page dated on the last sync day and the page without a lastmod %q", f.fetched(), want)
+	}
+	if !slices.Equal(r.Changed, []string{"guide/setup"}) {
+		t.Errorf("changed = %q, want the same-day edit", r.Changed)
+	}
+}
+
+// A snapshot from before the sync day was stored can't tell a same-day edit apart, so the run fetches every page.
+func TestSyncFetchesEveryPageAfterASnapshotWithoutASyncDay(t *testing.T) {
+	f, dir := newFakeHelp(t), t.TempDir()
+	f.mustSync(t, dir, false)
+	path := filepath.Join(dir, "snapshot.json")
+	var snap Snapshot
+	if err := json.Unmarshal(mustRead(t, path), &snap); err != nil {
+		t.Fatal(err)
+	}
+	snap.FullSHA256, snap.Synced = "older", ""
+	if err := writeSnapshot(path, snap); err != nil {
+		t.Fatal(err)
+	}
+	f.reset()
+	if r := f.mustSync(t, dir, false); !r.Full || len(f.fetched()) != 4 {
+		t.Errorf("report = %+v, fetched %q; want a full run of all 4 pages", r, f.fetched())
 	}
 }

@@ -34,7 +34,7 @@ func Handler(dir string, edits map[string]string) http.Handler {
 		p := strings.TrimPrefix(r.URL.Path, "/")
 		switch {
 		case p == "llms-full.txt":
-			fmt.Fprint(w, "> This is part 1 of 1\n")
+			fmt.Fprint(w, "# Aikido\n")
 			for _, path := range slices.Sorted(maps.Keys(edits)) {
 				fmt.Fprintf(w, "\n%s\n%s", path, edits[path])
 			}
