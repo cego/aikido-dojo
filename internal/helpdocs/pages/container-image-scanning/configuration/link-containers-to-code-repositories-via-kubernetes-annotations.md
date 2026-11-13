@@ -28,5 +28,5 @@ To use a custom annotation key, reach out to Aikido support to have it mapped fo
 #### How it works
 
 * Aikido reads the relevant label or annotation off the Kubernetes workload (standard key, or your mapped custom key).
-* Aikido uses this tag to automatically link the container to the matching code repository.
+* Aikido uses this tag to automatically link the container to the matching code repository.&#x20;
 * If the container is already linked to a repository, this won't override it.

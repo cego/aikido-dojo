@@ -7,7 +7,7 @@ Aikido ensures a one-to-one mapping with this Bitbucket Workspace, including rep
 If you have multiple Bitbucket workspaces, you can connect these by setting up multiple Aikido workspaces.
 
 {% hint style="warning" %}
-For automatic onboarding to work, developers need to have **access to all repos**. If you want to give access to a developer with limited access to repos in Bitbucket, we suggest inviting them [via Google/Microsoft](/getting-started/automated-user-management/invite-users-to-aikido-without-a-git-account.md).
+For automatic onboarding to work, developers need to have **access to all repos**. If you want to give access to a developer with limited access to repos in Bitbucket, we suggest inviting them [via Google/Microsoft](https://help.aikido.dev/getting-started/automated-user-management/invite-users-to-aikido-without-a-git-account).
 {% endhint %}
 
 ### Benefits <a href="#benefits" id="benefits"></a>
@@ -19,4 +19,4 @@ For automatic onboarding to work, developers need to have **access to all repos*
 
 ### Inviting users to Aikido without an organisational Bitbucket account <a href="#inviting-users-to-aikido-without-an-organisational-bitbucket-account" id="inviting-users-to-aikido-without-an-organisational-bitbucket-account"></a>
 
-You can invite users via Gmail, Microsoft or using a personal Bitbucket Account. This can be helpful when a developer only has limited access in Bitbucket. More information can be [found here.](/getting-started/automated-user-management/invite-users-to-aikido-without-a-git-account.md)
+You can invite users via Gmail, Microsoft or using a personal Bitbucket Account. This can be helpful when a developer only has limited access in Bitbucket. More information can be [found here.](https://help.aikido.dev/getting-started/automated-user-management/invite-users-to-aikido-without-a-git-account)

@@ -8,15 +8,13 @@ Azure DevOps Artifacts only supports custom upstream sources for **NPM**.
 
 {% stepper %}
 {% step %}
-
 ### Get your Aikido proxy URL
 
-Go to [Settings > Registry Proxy](https://app.aikido.dev/issues/aikido-libraries/setup-instructions), select **NPM**, and copy the upstream proxy URL.
+Go to [Settings > Registry Proxy](https://app.aikido.dev/issues/aikido-libraries/setup-instructions?regionRedirect=1), select **NPM**, and copy the upstream proxy URL.
 
 {% endstep %}
 
 {% step %}
-
 ### Add Aikido as an upstream source
 
 1. In Azure DevOps Project, go to **Artifacts** and open your feed.
@@ -31,20 +29,18 @@ Go to [Settings > Registry Proxy](https://app.aikido.dev/issues/aikido-libraries
 6. Enter `@aikidosec/mcp` in the **Validation** field and click **Validate** to confirm the connection works.
 7. Click **Validate**, and then **Add**.
 8. Click **Save**
-   {% endstep %}
+{% endstep %}
 
 {% step %}
-
 ### Remove the default npm upstream source
 
 To ensure all npm traffic goes through Aikido instead of the public registry directly:
 
 1. In the same **Upstream sources** tab, find the existing `npmjs` upstream source.
 2. Click the delete icon next to it and confirm removal.
-   {% endstep %}
+{% endstep %}
 
 {% step %}
-
 ### Configure Developer Machines to use Azure Artifacts
 
 Point each developer's npm client at the Artifacts feed. See Microsoft's documentation for the exact steps:
@@ -53,13 +49,12 @@ Point each developer's npm client at the Artifacts feed. See Microsoft's documen
 {% endstep %}
 
 {% step %}
-
 ### (Optional) Block the public registry with Device Protection
 
 Once Artifacts is in place, developers can still bypass it by pointing npm directly at the public registry. Deploy Aikido Device Protection to enforce that all traffic goes through your private registry.
 
-{% content-ref url="/pages/sa7N9YXthBxZbm6WmKBq" %}
-[Block Public Package Registries](/aikido-device-protection/using-aikido-endpoint/block-public-package-registries.md)
+{% content-ref url="../../aikido-device-protection/using-aikido-endpoint/block-public-package-registries.md" %}
+[block-public-package-registries.md](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/block-public-package-registries)
 {% endcontent-ref %}
 {% endstep %}
 {% endstepper %}

@@ -2,14 +2,14 @@
 
 Once the agent is deployed, these pages cover the day-to-day work: setting installation policies, approving install requests, blocking domains, and reviewing what is installed across your devices.
 
-{% content-ref url="/pages/zGykVnsI7QVXxz0u4Jdf" %}
-[Configuring Installation Policies](/aikido-device-protection/using-aikido-endpoint/configuring-installation-policies.md)
+{% content-ref url="configuring-installation-policies.md" %}
+[configuring-installation-policies.md](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/configuring-installation-policies)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/c8juUG0pkeoH5JbRzfbB" %}
-[Approving Install Requests](/aikido-device-protection/using-aikido-endpoint/reviewing-install-requests.md)
+{% content-ref url="reviewing-install-requests.md" %}
+[reviewing-install-requests.md](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/reviewing-install-requests)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/hnvKFlXHFNG2bipsytE2" %}
-[Browsing Packages](/aikido-device-protection/using-aikido-endpoint/browsing-packages.md)
+{% content-ref url="browsing-packages.md" %}
+[browsing-packages.md](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/browsing-packages)
 {% endcontent-ref %}

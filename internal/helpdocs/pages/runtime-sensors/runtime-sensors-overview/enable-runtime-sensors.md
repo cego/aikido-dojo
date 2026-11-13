@@ -18,14 +18,12 @@ The toggle alone doesn't start threat detection. After you turn it on, run a Hel
 
 {% stepper %}
 {% step %}
-
 ### Turn on the toggle
 
 Open the cluster's edit settings and turn on the threat detection toggle. Hover over the toggle to see a reminder that a Helm upgrade is required.
 {% endstep %}
 
 {% step %}
-
 ### Upgrade the Helm release
 
 Run `helm upgrade` against your cluster and set `runtimeDetection.enabled=true`. Reuse your existing values so the rest of your configuration stays the same.
@@ -41,7 +39,7 @@ To turn threat detection off again, turn off the toggle and run the same command
 {% endstep %}
 {% endstepper %}
 
-To connect a cluster, see [Kubernetes Cluster Scanning](/cloud-scanning/kubernetes-cluster-scanning.md).
+To connect a cluster, see [Kubernetes Cluster Scanning](https://help.aikido.dev/cloud-scanning/kubernetes-cluster-scanning).
 
 ## Enable threat detection on a VM
 
@@ -51,7 +49,7 @@ Set `RUNTIME_DETECTION_ENABLED=true` on the install command, next to `AIKIDO_TOK
 AIKIDO_TOKEN=REPLACE_ME VM_TYPE=production RUNTIME_DETECTION_ENABLED=true dnf install -y https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/v1.5.0/aikido-vm-scanner.x86_64.rpm
 ```
 
-Commands for each distribution are in [Setting Up the Local VM Scanner on Linux](/virtual-machine-scanning/local-vm-scanning/setting-up-the-local-vm-scanner-linux.md#enable-threat-detection).
+Commands for each distribution are in [Setting Up the Local VM Scanner on Linux](https://help.aikido.dev/virtual-machine-scanning/local-vm-scanning/setting-up-the-local-vm-scanner-linux#enable-threat-detection).
 
 When the scanner is already installed, run:
 
@@ -65,14 +63,14 @@ Agentless scanning of AWS EC2, Azure, and Google Cloud VMs doesn't install the s
 
 ## Related
 
-{% content-ref url="/pages/KZiqfv3WtFIfhwAFAdAq" %}
-[Runtime Sensors Overview](/runtime-sensors/runtime-sensors-overview.md)
+{% content-ref url="./" %}
+[.](https://help.aikido.dev/runtime-sensors/runtime-sensors-overview)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/HJqrXQMWoUZAKUrWnpkb" %}
-[Kubernetes Cluster Scanning](/cloud-scanning/kubernetes-cluster-scanning.md)
+{% content-ref url="../../cloud-scanning/kubernetes-cluster-scanning/" %}
+[kubernetes-cluster-scanning](https://help.aikido.dev/cloud-scanning/kubernetes-cluster-scanning)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/fjGmtGeYh1jY4HTLkr1C" %}
-[VM Scanning Overview](/virtual-machine-scanning/virtual-machines-overview.md)
+{% content-ref url="../../virtual-machine-scanning/virtual-machines-overview.md" %}
+[virtual-machines-overview.md](https://help.aikido.dev/virtual-machine-scanning/virtual-machines-overview)
 {% endcontent-ref %}

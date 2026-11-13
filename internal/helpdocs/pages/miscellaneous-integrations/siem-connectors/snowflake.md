@@ -21,7 +21,6 @@ Before connecting, get these from Snowflake:
 
 {% stepper %}
 {% step %}
-
 #### Set up a Snowflake service account
 
 We recommend a dedicated service account rather than a personal login. Which kind of user you create depends on your authentication method.
@@ -76,11 +75,9 @@ If you're pointing Aikido at a table you created yourself, rather than letting A
 ```sql
 GRANT INSERT ON TABLE {your_database}.{your_schema}.{your_table} TO ROLE aikido_service_account_role;
 ```
-
 {% endstep %}
 
 {% step %}
-
 #### Connect a SIEM
 
 Go to **Settings > Integrations** in the Aikido app and add a new SIEM integration. In the **Connect a SIEM** dialog, select **Snowflake** and fill in:
@@ -116,7 +113,6 @@ Click **Test connection** to confirm Aikido can reach Snowflake, then **Save cha
 {% endstep %}
 
 {% step %}
-
 #### Configure which issues sync
 
 On the Snowflake integration page, under **Issue input settings**, configure which Aikido issues are synced:

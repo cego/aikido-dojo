@@ -10,16 +10,16 @@ AI assistants can review their own output, but that review is not perfect. Aikid
 * Immediate detection and remediation of vulnerabilities and hardcoded secrets in AI assisted workflows
 * Real time feedback, making AI driven development safer by default
 
-For the full list of tools the MCP server exposes, see [Available tools](/ai-and-dev-tools/aikido-mcp/using-aikido-mcp.md#available-tools).
+For the full list of tools the MCP server exposes, see [Available tools](https://help.aikido.dev/ai-and-dev-tools/aikido-mcp/using-aikido-mcp#available-tools).
 
 ## Installation
 
 ### IDE
 
-The Aikido VSCode IDE plugin uses [Expansion Packs](/ai-and-dev-tools/ide-plugins-overview/features/aikido-expansion-packs.md) to provide additional features. The Aikido MCP for Github Copilot is one of these Expansion Packs, making installation simple and fast without a separate setup process. See the linked page below for instructions on how to enable it.
+The Aikido VSCode IDE plugin uses [Expansion Packs](https://help.aikido.dev/ai-and-dev-tools/ide-plugins-overview/features/aikido-expansion-packs) to provide additional features. The Aikido MCP for Github Copilot is one of these Expansion Packs, making installation simple and fast without a separate setup process. See the linked page below for instructions on how to enable it.
 
-{% content-ref url="/pages/mgd9l65M1Oa5zH7GUy7e" %}
-[VS Code IDE](/ai-and-dev-tools/ide-plugins-overview/vs-code-plugin.md)
+{% content-ref url="../ide-plugins-overview/vs-code-plugin.md" %}
+[vs-code-plugin.md](https://help.aikido.dev/ai-and-dev-tools/ide-plugins-overview/vs-code-plugin)
 {% endcontent-ref %}
 
 ### Integration with Copilot IDE plugins
@@ -40,7 +40,6 @@ Go to Github Copilot plugin settings and open the `mcp.json` file. Add the Aikid
   }
 }
 ```
-
 {% endstep %}
 
 {% step %}
@@ -57,12 +56,11 @@ Add an instruction to your `AGENTS.md` file or custom instructions to tell agent
 ```
 Scan any new or modified code with `aikido_scan_paths` before finalizing changes. This security check is required.
 ```
-
 {% endstep %}
 {% endstepper %}
 
 {% hint style="info" %}
-For CI/CD or headless setups where browser login is not possible, see [Token Authentication](/ai-and-dev-tools/aikido-mcp/token-authentication.md).
+For CI/CD or headless setups where browser login is not possible, see [Token Authentication](https://help.aikido.dev/ai-and-dev-tools/aikido-mcp/token-authentication).
 {% endhint %}
 
 ### Integration with Copilot Cloud Agents
@@ -70,7 +68,7 @@ For CI/CD or headless setups where browser login is not possible, see [Token Aut
 GitHub Copilot coding agent can call tools from MCP servers while it runs. Follow the steps below to set up Aikido MCP for your repository. Configuration is done per repository.
 
 {% hint style="warning" %}
-Copilot Cloud Agents run in a headless environment and require a token because browser-based login is not available. You will need an Aikido Personal Access Token. See [Token Authentication](/ai-and-dev-tools/aikido-mcp/token-authentication.md) for how to create one.
+Copilot Cloud Agents run in a headless environment and require a token because browser-based login is not available. You will need an Aikido Personal Access Token. See [Token Authentication](https://help.aikido.dev/ai-and-dev-tools/aikido-mcp/token-authentication) for how to create one.
 {% endhint %}
 
 If you already use Aikido MCP in VS Code, [you can reuse that configuration](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/extend-coding-agent-with-mcp#reusing-your-mcp-configuration-from-visual-studio-code) and only add the token in your repository settings.
@@ -91,7 +89,6 @@ Example configuration for Aikido MCP (local/stdio via npx):
 
 {% tabs %}
 {% tab title="Copilot Cloud Agent" %}
-
 ```json
 {
   "mcpServers": {
@@ -107,7 +104,6 @@ Example configuration for Aikido MCP (local/stdio via npx):
   }
 }
 ```
-
 {% endtab %}
 {% endtabs %}
 {% endstep %}
@@ -132,7 +128,6 @@ Add an instruction such as:
 ```
 Scan any new or modified code with `aikido_scan_paths` before finalizing changes. This security check is required.
 ```
-
 {% endstep %}
 
 {% step %}
@@ -142,4 +137,4 @@ You can now [verify your configuration](https://docs.github.com/en/copilot/how-t
 {% endstep %}
 {% endstepper %}
 
-For ways to ask your agent to use Aikido, see [Example prompts](/ai-and-dev-tools/aikido-mcp/using-aikido-mcp.md#example-prompts).
+For ways to ask your agent to use Aikido, see [Example prompts](https://help.aikido.dev/ai-and-dev-tools/aikido-mcp/using-aikido-mcp#example-prompts).

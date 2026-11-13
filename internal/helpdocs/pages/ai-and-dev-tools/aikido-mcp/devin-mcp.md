@@ -10,7 +10,7 @@ AI assistants can review their own output, but that review is not perfect. Aikid
 * Immediate detection and remediation of vulnerabilities and hardcoded secrets in AI assisted workflows
 * Real time feedback, making AI driven development safer by default
 
-For the full list of tools the MCP server exposes, see [Available tools](/ai-and-dev-tools/aikido-mcp/using-aikido-mcp.md#available-tools).
+For the full list of tools the MCP server exposes, see [Available tools](https://help.aikido.dev/ai-and-dev-tools/aikido-mcp/using-aikido-mcp#available-tools).
 
 ## Installation
 
@@ -80,4 +80,4 @@ Restart Devin Desktop if it was open.
 
 Devin namespaces MCP tools as `mcp__aikido__<tool>` and puts them behind its permission system, so approve the Aikido tools the first time the agent calls them.
 
-For ways to ask your agent to use Aikido, see [Example prompts](/ai-and-dev-tools/aikido-mcp/using-aikido-mcp.md#example-prompts).
+For ways to ask your agent to use Aikido, see [Example prompts](https://help.aikido.dev/ai-and-dev-tools/aikido-mcp/using-aikido-mcp#example-prompts).

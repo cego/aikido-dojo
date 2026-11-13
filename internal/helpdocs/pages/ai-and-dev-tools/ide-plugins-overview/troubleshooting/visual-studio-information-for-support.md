@@ -7,11 +7,11 @@ When contacting Aikido Support about the Visual Studio IDE plugin, please includ
 * Is the issue consistently reproducible?
 * Does it occur with a single file or with multiple files?
   * If possible share the file with us
-* [Did you check connection to Aikido platform?](/ai-and-dev-tools/ide-plugins-overview/troubleshooting/troubleshooting-ide-plugin-connectivity.md)
+* [Did you check connection to Aikido platform?](https://help.aikido.dev/ai-and-dev-tools/ide-plugins-overview/troubleshooting/troubleshooting-ide-plugin-connectivity)
 
 ### Plugin & Repository information
 
-* [Plugin version (instructions below)](#visual-studio-version-details)
+* [Plugin version (instructions below)](https://help.aikido.dev/ai-and-dev-tools/ide-plugins-overview/troubleshooting/visual-studio-information-for-support#visual-studio-version-details)
 * Operating System
 * IDE Version
 * Link to repository in Aikido

@@ -37,19 +37,20 @@ After that sync, the device can enforce rules on its own.
 
 ### Only supported ecosystems are intercepted
 
-The proxy is not a general web filter. It only intercepts [supported package ecosystems](/aikido-device-protection/miscellaneous-aikido-endpoint/supported-ecosystems.md), plus AI provider domains when AI Usage monitoring is enabled.
+The proxy is not a general web filter. It only intercepts [supported package ecosystems](https://help.aikido.dev/aikido-device-protection/miscellaneous-aikido-endpoint/supported-ecosystems), plus AI provider domains when AI Usage monitoring is enabled.
 
 These domains are served over HTTPS. To inspect them, the agent uses a local Certificate Authority (CA) on the device, which is only used for the domains below. See [Certificates](#certificates).
 
-These are the domains Aikido Device Protection intercepts. Package registries and developer tool marketplaces are always intercepted. AI provider domains are only intercepted when [AI Usage](/aikido-device-protection/using-aikido-endpoint/ai-monitoring.md) monitoring is enabled.
+These are the domains Aikido Device Protection intercepts. Package registries and developer tool marketplaces are always intercepted. AI provider domains are only intercepted when [AI Usage](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/ai-monitoring) monitoring is enabled.
 
 {% tabs %}
 {% tab title="Package registries & marketplaces" %}
-
 ```
 api.nuget.org
 app.aikido.dev
 endpoint-server.aikido.dev
+endpoint-server.us.aikido.dev
+endpoint-server.au.aikido.dev
 aikido-endpoint-binaries.s3.eu-west-1.amazonaws.com
 central.maven.org
 chromewebstore.google.com
@@ -61,8 +62,10 @@ index.crates.io
 static.crates.io
 device-protection.aikido.help
 files.pythonhosted.org
+formulae.brew.sh
 gallery.vsassets.io
 gallerycdn.vsassets.io
+ghcr.io
 github.com
 globalcdn.nuget.org
 marketplace.cursorapi.com
@@ -71,6 +74,7 @@ open-vsx.org
 proxy.golang.org
 pypi.org
 pypi.python.org
+raw.githubusercontent.com
 registry.npmjs.com
 registry.npmjs.org
 registry.yarnpkg.com
@@ -84,7 +88,6 @@ sum.golang.org
 update.googleapis.com
 www.nuget.org
 ```
-
 {% endtab %}
 
 {% tab title="AI providers" %}
@@ -230,7 +233,6 @@ tokenhub.tencentmaas.com
 www.xpersona.co
 zenmux.ai
 ```
-
 {% endtab %}
 {% endtabs %}
 
@@ -253,11 +255,11 @@ Install outcomes are reported immediately. Installed packages are compiled into 
 
 ### AI features
 
-When [AI Usage](/aikido-device-protection/using-aikido-endpoint/ai-monitoring.md) monitoring is enabled, the agent also inspects traffic to AI provider domains. Aikido receives the inventory only: the MCP servers, models, and tools that were used, and the devices they were used on.
+When [AI Usage](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/ai-monitoring) monitoring is enabled, the agent also inspects traffic to AI provider domains. Aikido receives the inventory only: the MCP servers, models, and tools that were used, and the devices they were used on.
 
 ### Secret scanning
 
-[Secret Scanning](/aikido-device-protection/using-aikido-endpoint/secret-scanning.md) reads local files on the device, such as shell history. File contents are never uploaded. When a secret is detected, Aikido receives the type of secret and a few characters of the value, enough to recognize the finding. The full secret is never sent.
+[Secret Scanning](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/secret-scanning) reads local files on the device, such as shell history. File contents are never uploaded. When a secret is detected, Aikido receives the type of secret and a few characters of the value, enough to recognize the finding. The full secret is never sent.
 
 ## Certificates
 
@@ -280,7 +282,7 @@ You don't need to distribute the workspace CA yourself. The MDM configuration pr
 
 ### Viewing your certificates
 
-The [Certificates](https://app.aikido.dev/endpoint-protection/certificates) page in Aikido shows:
+The [Certificates](https://app.aikido.dev/endpoint-protection/certificates?regionRedirect=1) page in Aikido shows:
 
 * **Root CA Certificate:** your workspace CA, with its SHA-256 fingerprint, creation and expiry dates, and the public certificate in PEM format.
 * **Issued Certificates:** every device certificate signed by your workspace CA, with the device it was issued to, when it was issued, and its fingerprint.
@@ -289,7 +291,7 @@ Use this page to confirm a device is enrolled, or to check a certificate on a de
 
 ## Signed agent updates
 
-Every agent release is cryptographically signed in Aikido's build pipeline. Before installing an update, the updater verifies that signature and rejects tampered or unsigned builds. To install updates automatically, turn on [Auto-update](/aikido-device-protection/deploying-aikido-endpoint/connecting-and-managing-devices.md#auto-update).
+Every agent release is cryptographically signed in Aikido's build pipeline. Before installing an update, the updater verifies that signature and rejects tampered or unsigned builds. To install updates automatically, turn on [Auto-update](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/connecting-and-managing-devices#auto-update).
 
 * **macOS:** every binary and the installer package are signed with Aikido's Apple Developer ID and notarized by Apple.
 * **Windows:** binaries are signed with Authenticode.
@@ -298,16 +300,16 @@ Every agent release is cryptographically signed in Aikido's build pipeline. Befo
 
 On macOS, **System Settings** → **Network** → **Filters** shows three Aikido entries per device. This is expected.
 
-| Entry             | Created by                   | Expected state | Purpose                                                                                      |
-| ----------------- | ---------------------------- | -------------- | -------------------------------------------------------------------------------------------- |
-| Content filter    | MDM profile                  | *Disabled*     | For future protection support that Aikido is adding. Stays disabled until then.              |
-| Transparent proxy | MDM profile                  | *Disabled*     | Pre-approves the Aikido system extension. Holds no configuration.                            |
-| Transparent proxy | Aikido extension, at runtime | *Enabled*      | Holds the full proxy configuration, including auto-enable, which can only be set at runtime. |
+| Entry | Created by | Expected state | Purpose |
+| --- | --- | --- | --- |
+| Content filter | MDM profile | _Disabled_ | For future protection support that Aikido is adding. Stays disabled until then. |
+| Transparent proxy | MDM profile | _Disabled_ | Pre-approves the Aikido system extension. Holds no configuration. |
+| Transparent proxy | Aikido extension, at runtime | _Enabled_ | Holds the full proxy configuration, including auto-enable, which can only be set at runtime. |
 
 Don't remove the disabled MDM entries. The runtime transparent proxy depends on the pre-approval they provide.
 
 ## Limitations
 
 * **Device Protection is not a virus scanner.** Apart from Secret Scanning, it doesn't inspect files, processes, or your system for existing threats. It blocks malware before it reaches the device, so malware already on a device is not detected or removed. Consider that device compromised.
-* **Docker containers:** not protected by default. Turn on **Protect Containers** to cover them. See [Device Protection in Docker Containers](/aikido-device-protection/deploying-aikido-endpoint/device-protection-in-docker-containers.md).
-* **WSL2:** package installs inside WSL2 distros on Windows are not protected by default. Turn on **Protect WSL2** and Aikido installs the Linux agent into each running distro. WSL2 protection is available on request. See [Device Protection in WSL2](/aikido-device-protection/deploying-aikido-endpoint/device-protection-in-wsl2.md).
+* **Docker containers:** not protected by default. Turn on **Protect Containers** to cover them. See [Device Protection in Docker Containers](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-in-docker-containers).
+* **WSL2:** package installs inside WSL2 distros on Windows are not protected by default. Turn on **Protect WSL2** and Aikido installs the Linux agent into each running distro. WSL2 protection is available on request. See [Device Protection in WSL2](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-in-wsl2).

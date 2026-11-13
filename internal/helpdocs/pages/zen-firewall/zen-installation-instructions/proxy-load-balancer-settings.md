@@ -1,4 +1,4 @@
-# Proxy & Load Balancer Settings
+# Proxy & Load balancer settings
 
 ## Proxy & Client's IP address <a href="#proxy--clients-ip-address" id="proxy--clients-ip-address"></a>
 

@@ -1,7 +1,5 @@
 # Azure VM Access Configuration
 
-This page describes how to grant access to Aikido to scan your Azure Virtual Machines.
-
 ## Entra ID App Registration
 
 Log into your [**Azure Portal**](https://portal.azure.com/) and navigate to the **Microsoft Entra ID service**.

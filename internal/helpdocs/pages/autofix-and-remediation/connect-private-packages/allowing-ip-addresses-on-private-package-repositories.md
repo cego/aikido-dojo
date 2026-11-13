@@ -6,12 +6,12 @@ If your private package repository only allows specific static IP addresses to a
 
 AutoFix traffic to private package repositories comes from the region where **your Aikido workspace** is hosted, not from the region where your package registry runs. Check the URL you use to log in to Aikido, then allowlist that region's IPs:
 
-| Aikido URL                                     | Region | IP list               |
-| ---------------------------------------------- | ------ | --------------------- |
-| [app.aikido.dev](https://app.aikido.dev)       | EU     | EU-based IP addresses |
-| [app.us.aikido.dev](https://app.us.aikido.dev) | US     | US-based IP addresses |
-| [app.au.aikido.dev](https://app.au.aikido.dev) | AU     | Coming soon           |
-| [app.me.aikido.dev](https://app.me.aikido.dev) | ME     | ME-based IP addresses |
+| Aikido URL | Region | IP list |
+| --- | --- | --- |
+| [app.aikido.dev](https://app.aikido.dev/?regionRedirect=1) | EU | EU-based IP addresses |
+| [app.us.aikido.dev](https://app.us.aikido.dev) | US | US-based IP addresses |
+| [app.au.aikido.dev](https://app.au.aikido.dev) | AU | Coming soon |
+| [app.me.aikido.dev](https://app.me.aikido.dev) | ME | ME-based IP addresses |
 
 {% hint style="warning" %}
 If you log in at `app.aikido.dev`, AutoFix uses **EU** IPs, even when your package registry is hosted in the US. Allowlisting only US IPs in that case will cause AutoFix to fail.

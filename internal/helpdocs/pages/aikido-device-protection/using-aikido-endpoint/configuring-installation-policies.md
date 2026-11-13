@@ -4,7 +4,7 @@ You can set installation policies for each ecosystem independently. This lets yo
 
 ## Accessing policy settings
 
-Go to [Device Protection and open the Settings tab](https://app.aikido.dev/endpoint-protection/settings). You will see a list of all supported ecosystems with their current policy status. Click on any ecosystem to configure its settings.
+Go to [Device Protection and open the Settings tab](https://app.aikido.dev/endpoint-protection/settings?regionRedirect=1). You will see a list of all supported ecosystems with their current policy status. Click on any ecosystem to configure its settings.
 
 ## How Aikido decides to block or allow a package
 
@@ -44,7 +44,7 @@ Sets how long a package must have existed before it can be installed. For exampl
 
 This helps protect against supply chain attacks, where an attacker publishes malicious code to a public registry and tries to get people to install it before the community can flag it.
 
-Versions that fix a **critical** vulnerability are allowed through even when they are too new, provided Aikido scanned them and found no malware. See [Minimum Package Age & Version Fallback](/aikido-device-protection/using-aikido-endpoint/minimum-package-age-fallback.md#critical-security-fixes) for what happens when a version is too new.
+Versions that fix a **critical** vulnerability are allowed through even when they are too new, provided Aikido scanned them and found no malware. See [Minimum Package Age & Version Fallback](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/minimum-package-age-fallback#critical-security-fixes) for what happens when a version is too new.
 
 ## Exceptions
 
@@ -65,7 +65,7 @@ In the **Add Package** dialog you set:
 * **Permission Group**: the group this exception applies to.
 
 {% hint style="warning" %}
-Package identifiers vary by ecosystem. [Double-check the correct identifier before adding an exception](/aikido-device-protection/miscellaneous-aikido-endpoint/package-identifiers.md).
+Package identifiers vary by ecosystem. [Double-check the correct identifier before adding an exception](https://help.aikido.dev/aikido-device-protection/miscellaneous-aikido-endpoint/package-identifiers).
 {% endhint %}
 
 ### Use cases

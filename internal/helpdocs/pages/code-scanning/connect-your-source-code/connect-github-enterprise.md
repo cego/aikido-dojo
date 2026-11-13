@@ -18,12 +18,12 @@ To create the GitHub app on your instance, follow the steps below.
 
 If you don’t have an Aikido account yet, create one through Google or Microsoft first. This is required before you can connect your GitHub Enterprise Server.
 
-Open the [onboarding page](https://app.aikido.dev/onboarding/self-managed/select-onboarding-type) and select "GitHub Enterprise", this should bring you to the installation page. Enter the URL of your GitHub Enterprise and click `Next, Install App`.
+Open the [onboarding page](https://app.aikido.dev/onboarding/self-managed/select-onboarding-type?regionRedirect=1) and select "GitHub Enterprise", this should bring you to the installation page. Enter the URL of your GitHub Enterprise and click `Next, Install App`.
 
 {% hint style="warning" %}
 If your GitHub Enterprise Server is not reachable from the internet, enable the Broker setting.
 
-For details about how the Aikido Broker works, [see the documentation.](/miscellaneous-info/aikido-broker-for-internal-applications.md)
+For details about how the Aikido Broker works, [see the documentation.](https://help.aikido.dev/miscellaneous-info/aikido-broker-for-internal-applications)
 {% endhint %}
 
 {% endstep %}
@@ -63,10 +63,10 @@ After granting access and validating the repositories you want to scan, Aikido w
 
 #### Managing the GitHub Enterprise App
 
-{% content-ref url="/pages/5YL34gWIMKDGXRu439cp" %}
-[Connect additional organizations to Aikido](/code-scanning/connect-your-source-code/connect-github-enterprise/connect-additional-organizations-to-aikido.md)
+{% content-ref url="connect-additional-organizations-to-aikido.md" %}
+[connect-additional-organizations-to-aikido.md](https://help.aikido.dev/code-scanning/connect-your-source-code/connect-github-enterprise/connect-additional-organizations-to-aikido)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/a6y6CCo8IlNrKKxZfNFp" %}
-[Transferring Ownership of the Aikido App in Github Enterprise (Cloud & Server)](/code-scanning/connect-your-source-code/connect-github-enterprise/transferring-ownership-of-the-aikido-app-in-github-enterprise.md)
+{% content-ref url="transferring-ownership-of-the-aikido-app-in-github-enterprise.md" %}
+[transferring-ownership-of-the-aikido-app-in-github-enterprise.md](https://help.aikido.dev/code-scanning/connect-your-source-code/connect-github-enterprise/transferring-ownership-of-the-aikido-app-in-github-enterprise)
 {% endcontent-ref %}

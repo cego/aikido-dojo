@@ -1,8 +1,8 @@
-# Add Additional Headers in API Scanning
+# Add additional headers in API scanning
 
 Add custom headers that Aikido will include in every request during an API scan. This is useful for auth tokens, tenant IDs or any header your service needs before it accepts traffic.
 
-Aikido sends each header you define with all scan requests. The scanner does not try to detect missing headers on its own, so make sure you include everything your API requires. Unlike our [Authentication](/dast-surface-monitoring/api-scanning/authenticated-api-scanning-for-rest-graphql.md) these headers are included during the scan.
+Aikido sends each header you define with all scan requests. The scanner does not try to detect missing headers on its own, so make sure you include everything your API requires. Unlike our [Authentication](https://help.aikido.dev/dast-surface-monitoring/api-scanning/authenticated-api-scanning-for-rest-graphql) these headers are included during the scan.&#x20;
 
 ### Typical use cases
 

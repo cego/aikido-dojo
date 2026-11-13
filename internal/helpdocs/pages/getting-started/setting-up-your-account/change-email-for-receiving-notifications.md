@@ -6,7 +6,7 @@ You can change your email address for receiving notifications (e.g., new issues 
 
 ## How To Change Your Email <a href="#how-to-change-your-email" id="how-to-change-your-email"></a>
 
-**Step 1:** Navigate to [**Your Profile**](https://app.aikido.dev/my-profile) via the top right corner of the Aikido interface.
+**Step 1:** Navigate to [**Your Profile**](https://app.aikido.dev/my-profile?regionRedirect=1) via the top right corner of the Aikido interface.
 
 [image: User profile dropdown menu with options to view profile, add workspace, or log out.]
 

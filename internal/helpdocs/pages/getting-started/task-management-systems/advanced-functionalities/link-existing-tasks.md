@@ -8,7 +8,7 @@ Aikido supports the linking of existing Task Tracker (e.g. Jira, Clickup) ticket
 
 ### How to Link an Existing Task <a href="#how-to-link-an-existing-task" id="how-to-link-an-existing-task"></a>
 
-*Following example is for Jira. Functionality is similar for other task trackers.*
+_Following example is for Jira. Functionality is similar for other task trackers._
 
 **Step 1:** Click on '**Add Task**'. For issue groups: located at the top of the sidebar or in the action menu. For subissues: triple dots menu on subissue level.\
 ​

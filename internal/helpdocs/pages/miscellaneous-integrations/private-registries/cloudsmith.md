@@ -4,15 +4,13 @@ Route your registry traffic through Aikido's registry proxy by adding it as an u
 
 {% stepper %}
 {% step %}
-
 ### Get your Aikido proxy URL
 
-Go to [Settings > Registry Proxy](https://app.aikido.dev/issues/aikido-libraries/setup-instructions), select your ecosystem and copy the upstream proxy URL
+Go to [Settings > Registry Proxy](https://app.aikido.dev/issues/aikido-libraries/setup-instructions?regionRedirect=1), select your ecosystem and copy the upstream proxy URL
 
 {% endstep %}
 
 {% step %}
-
 ### Add an Upstream in Cloudsmith
 
 1. In Cloudsmith, open the repository you want to route through Aikido.
@@ -23,10 +21,9 @@ Go to [Settings > Registry Proxy](https://app.aikido.dev/issues/aikido-libraries
 6. Set the **Mode** to **Cache and Proxy** so Cloudsmith serves packages that Aikido has approved.
 7. Leave **SSL Verification** enabled and set a **Priority** (higher priority upstreams are resolved first).
 8. Save the upstream.
-   {% endstep %}
+{% endstep %}
 
 {% step %}
-
 ### Configure Developer Machines to use Cloudsmith
 
 Point each developer's package manager at your Cloudsmith repository. Cloudsmith provides copy-paste setup snippets, pre-configured with your namespace and repository, under the repository's **Setup** instructions. See Cloudsmith's documentation for the exact steps, including authentication:
@@ -51,13 +48,12 @@ Point each developer's package manager at your Cloudsmith repository. Cloudsmith
 {% endstep %}
 
 {% step %}
-
 ### (Optional) Block the public registry with Device Protection
 
 Once Cloudsmith is in place, developers can still bypass it by pointing their package manager directly at the public registry. Deploy Aikido Device Protection to enforce that all traffic goes through your private registry.
 
-{% content-ref url="/pages/sa7N9YXthBxZbm6WmKBq" %}
-[Block Public Package Registries](/aikido-device-protection/using-aikido-endpoint/block-public-package-registries.md)
+{% content-ref url="../../aikido-device-protection/using-aikido-endpoint/block-public-package-registries.md" %}
+[block-public-package-registries.md](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/block-public-package-registries)
 {% endcontent-ref %}
 {% endstep %}
 {% endstepper %}

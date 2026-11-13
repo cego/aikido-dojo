@@ -8,10 +8,10 @@ This means when our system detects vulnerabilities in dependencies, it can seaml
 
 Once write access to the repos is set up, you can configure Aikido to authenticate with your private registry by following the steps below:
 
-1. Go to your account's settings page for AutoFix, [here](https://app.aikido.dev/issues/fix/settings).
-2. Click on "*Connect registry*" to see the modal below
+1. Go to your account's settings page for AutoFix, [here](https://app.aikido.dev/issues/fix/settings?regionRedirect=1).
+2. Click on "_Connect registry_" to see the modal below
 
-3. When you select '*Environment variables*' you will be able to enter the environment variables needed to create automated fixes in your repositories. In the example below we show a setup for a private registry for Poetry.
+3. When you select '_Environment variables_' you will be able to enter the environment variables needed to create automated fixes in your repositories. In the example below we show a setup for a private registry for Poetry.
 
 4. Fill in the "key" and "value" and add as many variables which are needed. Aikido will encrypt all values automatically for you.
 

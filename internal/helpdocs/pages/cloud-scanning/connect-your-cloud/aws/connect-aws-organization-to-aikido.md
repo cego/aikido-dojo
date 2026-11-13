@@ -1,7 +1,5 @@
 # Connect AWS Organization
 
-Connect your entire AWS Organization to Aikido by onboarding just the management account. Automatically discover and connect all member accounts, simplify setup, and ensure full coverage.
-
 {% hint style="info" %}
 This functionality is available only for **Pro** and **Advanced** plans. **Contact us** via chat for more information.
 {% endhint %}
@@ -23,7 +21,7 @@ By onboarding at the organization level, you benefit from:
 
 ## Getting Started
 
-To connect your AWS organization, select the 'Full AWS Organization' option in the [AWS connection wizard](https://app.aikido.dev/clouds/add/aws). You will need to provide the following:
+To connect your AWS organization, select the 'Full AWS Organization' option in the [AWS connection wizard](https://app.aikido.dev/clouds/add/aws?regionRedirect=1). You will need to provide the following:
 
 * **Organization ID**: It should look like 'o-wma21z4agr'.
 * **Root ID** or one or more **Organization Unit (OU) IDs**, separated by commas: This option allows you to connect the entire organization (by providing the root ID) or specific parts of it (for example, you may want to connect only the production and staging OUs).
@@ -74,7 +72,7 @@ If Aikido scanned your AWS management account (you can manually scan it) and the
 
 4. **What happens if I suspend an AWS account or remove it from the AWS org?**
 
-Aikido will detect that the account is no longer active or part of the organization and will mark the corresponding connection as "not reachable". You will see this on the [clouds page](https://app.aikido.dev/clouds).
+Aikido will detect that the account is no longer active or part of the organization and will mark the corresponding connection as "not reachable". You will see this on the [clouds page](https://app.aikido.dev/clouds?regionRedirect=1).
 
 5. **Can I use Terraform to set up the required AWS resources?**
 

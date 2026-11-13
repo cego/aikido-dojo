@@ -2,7 +2,7 @@
 
 For node project, the connection with an Azure DevOps Artifact Feed can be configured by providing an `.npmrc` file in the Aikido Autofix configuration
 
-1. Go to your account's settings page for the autofixer in Aikido, [here](https://app.aikido.dev/issues/fix/settings).
+1. Go to your account's settings page for the autofixer in Aikido, [here](https://app.aikido.dev/issues/fix/settings?regionRedirect=1).
 2. Click on "Connect Registry", an select "NPM"
 
 3. Fill in the `.nmprc` file like described below

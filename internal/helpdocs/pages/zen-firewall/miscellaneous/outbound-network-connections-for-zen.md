@@ -2,7 +2,7 @@
 
 Zen requires outbound internet access to function correctly.
 
-During operation, Zen [sends data](/zen-firewall/miscellaneous/data-sent-by-aikido-zen.md) to the following Aikido services:
+During operation, Zen [sends data](https://help.aikido.dev/zen-firewall/miscellaneous/data-sent-by-aikido-zen) to the following Aikido services:
 
 **EU-based domains:**
 
@@ -48,4 +48,4 @@ Resolve-DnsName guard.aikido.dev
 Test-NetConnection guard.aikido.dev -Port 443
 ```
 
-If you use a proxy, corporate firewall, VPN, or SSL interception, verify that outbound traffic to `*.aikido.dev` on port 443 is allowed and that Aikido's certificates are not being rewritten. Proxy configuration is covered in [Proxy & Load Balancer Settings](/zen-firewall/zen-installation-instructions/proxy-load-balancer-settings.md).
+If you use a proxy, corporate firewall, VPN, or SSL interception, verify that outbound traffic to `*.aikido.dev` on port 443 is allowed and that Aikido's certificates are not being rewritten. Proxy configuration is covered in [Proxy & Load Balancer Settings](https://help.aikido.dev/zen-firewall/zen-installation-instructions/proxy-load-balancer-settings).

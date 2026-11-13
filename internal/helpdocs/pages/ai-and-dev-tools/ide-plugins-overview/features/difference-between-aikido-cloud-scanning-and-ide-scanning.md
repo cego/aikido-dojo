@@ -1,6 +1,6 @@
 # Difference Between Aikido Cloud Scanning and IDE Scanning
 
-Aikido offers security scanning in two places: inside the developer’s editor and in the cloud platform. Both scan code and dependencies, but with different depth and context.
+Aikido offers security scanning in two places: inside the developer’s editor and in the cloud platform. Both scan code and dependencies, but with different depth and context.&#x20;
 
 ### Cloud Scans
 

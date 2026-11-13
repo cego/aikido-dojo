@@ -40,7 +40,7 @@ AIKIDO_DEBUG="true"
 
 ## Proxy Settings <a href="#proxy-settings" id="proxy-settings"></a>
 
-You can use the `AIKIDO_TRUST_PROXY` env variable to [trust proxies](/zen-firewall/zen-installation-instructions/proxy-load-balancer-settings.md):
+You can use the `AIKIDO_TRUST_PROXY` env variable to [trust proxies](https://help.aikido.dev/zen-firewall/zen-installation-instructions/proxy-load-balancer-settings):
 
 > By default, trust proxy is **enabled**.
 

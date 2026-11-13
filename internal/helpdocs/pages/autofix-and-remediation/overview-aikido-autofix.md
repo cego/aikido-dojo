@@ -4,10 +4,10 @@ While most security programs are optimized for finding vulnerabilities instead o
 
 AutoFix is available for the following use cases
 
-* [Open-source dependencies](/autofix-and-remediation/scope/autofix-for-open-source-dependencies.md) (including [Aikido Libraries](/autofix-and-remediation/aikido-libraries-overview.md) drop-in replacements)
-* [SAST and IaC issues](/autofix-and-remediation/scope/ai-autofix-for-sast-and-iac-issues.md)
-* [Containers](/autofix-and-remediation/scope/ai-autofix-for-containers.md) (including [Aikido Images](/autofix-and-remediation/aikido-images/autofix-for-containers-using-aikido-images.md) zero-CVE base images)
-* [Code Quality](/code-quality/code-quality-overview.md)
+* [Open-source dependencies](https://help.aikido.dev/autofix-and-remediation/scope/autofix-for-open-source-dependencies) (including [Aikido Libraries](https://help.aikido.dev/autofix-and-remediation/aikido-libraries-overview) drop-in replacements)
+* [SAST and IaC issues](https://help.aikido.dev/autofix-and-remediation/scope/ai-autofix-for-sast-and-iac-issues)
+* [Containers](https://help.aikido.dev/autofix-and-remediation/scope/ai-autofix-for-containers) (including [Aikido Images](https://help.aikido.dev/autofix-and-remediation/aikido-images/autofix-for-containers-using-aikido-images) zero-CVE base images)
+* [Code Quality](https://help.aikido.dev/code-quality/code-quality-overview)
 * Pentest Issues
 * AI Code Audit issues
 
@@ -49,9 +49,9 @@ Infrastructure as Code (IaC) AutoFixes follow the same pattern but operate on co
 
 #### Code Quality
 
-AutoFix can fix [Code Quality](/code-quality/code-quality-overview.md) findings, including default checks and [custom rules](/code-quality/add-custom-code-rules.md). For a custom rule, add an AutoFix prompt when you create or edit the rule and validate it against a non-compliant example. Aikido suggests a fix on pull request comments and can open a pull request from a repository scan finding.
+AutoFix can fix [Code Quality](https://help.aikido.dev/code-quality/code-quality-overview) findings, including default checks and [custom rules](https://help.aikido.dev/code-quality/add-custom-code-rules). For a custom rule, add an AutoFix prompt when you create or edit the rule and validate it against a non-compliant example. Aikido suggests a fix on pull request comments and can open a pull request from a repository scan finding.
 
-Turn on [automatic pull request creation](/autofix-and-remediation/automation-and-merging/automatic-creation-of-pull-requests.md) to open a pull request each day for critical and high severity findings on default checks.
+Turn on [automatic pull request creation](https://help.aikido.dev/autofix-and-remediation/automation-and-merging/automatic-creation-of-pull-requests) to open a pull request each day for critical and high severity findings on default checks.
 
 #### Containers and base images
 

@@ -2,14 +2,13 @@
 
 Add Device Protection to a Dev Container as a [Feature](https://containers.dev/implementors/features/), so any `devcontainer.json` can add it to any base image without a custom Dockerfile.
 
-Read [Device Protection in Containers](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/device-protection-in-containers.md) first. The Feature installs the same package in the same `--container` mode, so the entrypoint, the Aikido CA variables, and the token rules all work the same way.
+Read [Device Protection in Containers](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/device-protection-in-containers) first. The Feature installs the same package in the same `--container` mode, so the entrypoint, the Aikido CA variables, and the token rules all work the same way.
 
 ## Add the Feature
 
 Create this alongside your project, for example at `.devcontainer/features/device-protection/`:
 
 {% code title=".devcontainer/features/device-protection/devcontainer-feature.json" overflow="wrap" %}
-
 ```json
 {
   "id": "device-protection",
@@ -19,13 +18,11 @@ Create this alongside your project, for example at `.devcontainer/features/devic
   "entrypoint": "aikido-endpoint-protection-container-entrypoint"
 }
 ```
-
 {% endcode %}
 
 `entrypoint` runs the agent's supervisor alongside the image's own entrypoint, instead of replacing it.
 
 {% code title=".devcontainer/features/device-protection/install.sh" overflow="wrap" %}
-
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -55,7 +52,6 @@ else
   exit 1
 fi
 ```
-
 {% endcode %}
 
 This is the package-file flavor from Device Protection in Containers, so no token is baked into the image. It picks the `.deb` or `.rpm` that matches the base image's package manager and architecture, the same files the manual Linux install uses.
@@ -67,7 +63,6 @@ Don't add `token` as a Feature option. Options are written into a `devcontainer-
 ## Wire it up in devcontainer.json
 
 {% code title=".devcontainer/devcontainer.json" overflow="wrap" %}
-
 ```json
 {
   "name": "my-app",
@@ -81,7 +76,6 @@ Don't add `token` as a Feature option. Options are written into a `devcontainer-
   "postCreateCommand": "echo 'for f in /etc/profile.d/aikido-*.sh; do [ -e \"$f\" ] && . \"$f\"; done' >> ~/.bashrc"
 }
 ```
-
 {% endcode %}
 
 * `features` references the Feature by its local path, relative to `devcontainer.json`.
@@ -92,19 +86,15 @@ If your Dev Container's default shell is zsh instead of bash, append to `~/.zshr
 
 {% tabs %}
 {% tab title="bash" %}
-
 ```json
 "postCreateCommand": "echo 'for f in /etc/profile.d/aikido-*.sh; do [ -e \"$f\" ] && . \"$f\"; done' >> ~/.bashrc"
 ```
-
 {% endtab %}
 
 {% tab title="zsh" %}
-
 ```json
 "postCreateCommand": "echo 'for f in /etc/profile.d/aikido-*.sh; do [ -e \"$f\" ] && . \"$f\"; done' >> ~/.zshrc"
 ```
-
 {% endtab %}
 {% endtabs %}
 
@@ -121,12 +111,10 @@ For Codespaces, add `AIKIDO_TOKEN` as a repository or organization Codespaces se
 Open a new terminal in the Dev Container (a fresh one, so it picks up the `postCreateCommand` change) and run:
 
 {% code overflow="wrap" %}
-
 ```bash
 curl -sS -o /dev/null -w "%{http_code}\n" --max-time 15 https://registry.npmjs.org/safe-chain-test/-/safe-chain-test-0.0.1-security.tgz
 aikidoctl version
 ```
-
 {% endcode %}
 
 The `curl` prints `403`, the agent refusing the malware test package, and `aikidoctl version` reports the installed version and the agent's state.
@@ -135,7 +123,7 @@ The `curl` prints `403`, the agent refusing the malware test package, and `aikid
 
 The entrypoint and install steps are the same as any Linux container, so start with the troubleshooting table on Device Protection in Containers. Two additions specific to Dev Containers:
 
-| Problem                                                                                                                          | Fix                                                                                                                                                                                                              |
-| -------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Problem                                                                                                                          | Fix                                                                                                                                                                 |
+| --------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Package installs fail with `SELF_SIGNED_CERT_IN_CHAIN` in the integrated terminal, but work when run through `postCreateCommand` | The terminal was open before `postCreateCommand` finished, or it's a different shell than the one it appended to. Open a new terminal, and check `~/.bashrc` (or `~/.zshrc`) for the `aikido-*.sh` sourcing line |
-| `no apt-get or dnf found, unsupported base image`                                                                                | The base image uses a package manager the Feature doesn't handle yet, for example Alpine's `apk`. Add a branch for it or install the agent manually as shown on Device Protection in Containers                  |
+| `no apt-get or dnf found, unsupported base image`                                                                                 | The base image uses a package manager the Feature doesn't handle yet, for example Alpine's `apk`. Add a branch for it or install the agent manually as shown on Device Protection in Containers |

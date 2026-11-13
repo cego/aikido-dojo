@@ -7,7 +7,7 @@ Custom Code Rules allow you to enforce team-specific coding standards and patter
 Custom Code Rules are AI-powered checks that you define to match your team's specific requirements. Unlike default checks that apply general best practices, custom rules enforce standards unique to your codebase, architecture, or business logic.
 
 {% hint style="info" %}
-If you want to implement global or repo-specific guidelines, check out our [Code Context](/code-quality/add-extra-code-context.md) functionality.
+If you want to implement global or repo-specific guidelines, check out our [Code Context](https://help.aikido.dev/code-quality/add-extra-code-context) functionality.
 {% endhint %}
 
 ### Creating a Custom Code Rule
@@ -16,7 +16,7 @@ If you want to implement global or repo-specific guidelines, check out our [Code
 {% step %}
 **Define your rule**
 
-1. Navigate to [**Code Quality** > **Checks**](https://app.aikido.dev/code-quality/checks) tab
+1. Navigate to [**Code Quality** > **Checks**](https://app.aikido.dev/code-quality/checks?regionRedirect=1) tab
 2. Click **Add Custom Code Rule**
 3. Write a clear description of what the rule should detect:
 
@@ -25,7 +25,6 @@ Example:
 ```
 Allow only Alpine base images in Dockerfiles as base images
 ```
-
 {% endstep %}
 
 {% step %}
@@ -56,7 +55,6 @@ RUN apk add --no-cache nodejs
 FROM ubuntu:latest
 RUN apt-get update && apt-get install nodejs
 ```
-
 {% endstep %}
 
 {% step %}
@@ -68,12 +66,12 @@ RUN apt-get update && apt-get install nodejs
    * Your non-compliant examples are correctly flagged
    * The rule logic is consistent and clear
 3. Adjust examples if validation fails
-   {% endstep %}
+{% endstep %}
 
 {% step %}
 **Add an AutoFix prompt**
 
-This step is optional. [AutoFix](/autofix-and-remediation/overview-aikido-autofix.md) must be enabled for the workspace.
+This step is optional. [AutoFix](https://help.aikido.dev/autofix-and-remediation/overview-aikido-autofix) must be enabled for the workspace.
 
 1. Write a prompt that tells AutoFix how to correct a violation. For the Alpine example: `Replace the base image with alpine`.
 2. Click **Validate Prompt**. Aikido applies the prompt to your non-compliant example, then checks the result against the rule.
@@ -88,20 +86,20 @@ Click **Skip** to save the rule without AutoFix. Aikido offers AutoFix for a cus
 
 Once validated, provide additional information about your rule:
 
-1. **Title:** Give your rule a clear, descriptive name
+1.  **Title:** Give your rule a clear, descriptive name
 
-   ```
-   Use Alpine base images in Docker containers
-   ```
-2. **TL;DR:** Write a brief summary of the issue
+    ```
+    Use Alpine base images in Docker containers
+    ```
+2.  **TL;DR:** Write a brief summary of the issue
 
-   ```
-   Non-Alpine base images increase container size and attack surface
-   ```
-3. **How to fix:** Provide actionable guidance for developers. This text is what people see on the finding. The AutoFix prompt from the previous step is what Aikido uses to generate the change.
+    ```
+    Non-Alpine base images increase container size and attack surface
+    ```
+3.  **How to fix:** Provide actionable guidance for developers. This text is what people see on the finding. The AutoFix prompt from the previous step is what Aikido uses to generate the change.
 
-   <pre data-overflow="wrap"><code>Replace your base image with an Alpine Linux variant. For example, change 'FROM node:18' to 'FROM node:18-alpine'. You may need to adjust package installation commands from apt-get to apk.
-   </code></pre>
+    <pre data-overflow="wrap"><code>Replace your base image with an Alpine Linux variant. For example, change 'FROM node:18' to 'FROM node:18-alpine'. You may need to adjust package installation commands from apt-get to apk.
+    </code></pre>
 4. Click **Save Rule** to activate it
 
 Your custom rule will now appear in the Checks tab and begin scanning new pull requests in enabled repositories.

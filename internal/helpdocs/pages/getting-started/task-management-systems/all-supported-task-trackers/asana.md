@@ -1,6 +1,6 @@
 # Asana
 
-This one-time setup *per workspace* allows everyone in your Aikido organization to create issues directly in Asana.
+This one-time setup _per workspace_ allows everyone in your Aikido organization to create issues directly in Asana.
 
 Following use cases are supported :
 
@@ -9,17 +9,17 @@ Following use cases are supported :
 
 ## Connecting the Aikido App to Asana <a href="#connecting-the-aikido-app-to-asana" id="connecting-the-aikido-app-to-asana"></a>
 
-1. Navigate to [Integration Settings](https://app.aikido.dev/settings/integrations) within the Aikido app.
+1. Navigate to [Integration Settings](https://app.aikido.dev/settings/integrations?regionRedirect=1) within the Aikido app.
 2. In the 'Task Trackers' section, select 'Asana'
-3. A prompt will request authorization for Asana.
+3.  A prompt will request authorization for Asana.
 
-   [image: Asana integration unauthorized; prompt to authorize access for issue-tracking.]
+    [image: Asana integration unauthorized; prompt to authorize access for issue-tracking.]
 
-   ​
+    ​
 4. Login into your Asana account
-5. Grant Aikido permission to access your Asana workspace
+5.  Grant Aikido permission to access your Asana workspace
 
-   [image: Asana permission request for Aikido Security to access and modify your account data.]
+    [image: Asana permission request for Aikido Security to access and modify your account data.]
 6. Once authorized, Aikido is successfully connected to Asana, enhancing your task management capabilities 🚀
 
 [image: Configure Asana integration to map repositories and enable automatic task creation.]
@@ -33,20 +33,20 @@ There are two different options to create new tasks from Aikido into Asana.
 
 ## 1. Manual Task Creation <a href="#id-1-manual-task-creation" id="id-1-manual-task-creation"></a>
 
-1. Hover over any issue in your feed and click the ***+*** in the **assignee column.**\
-   ​
+1.  Hover over any issue in your feed and click the _**+**_ in the **assignee column.**\
+    ​
 
-   [image: Task assignee section with add and options buttons visible.]
+    [image: Task assignee section with add and options buttons visible.]
 
-   Alternatively, you can click the triple dots in the last columns to open up the action menu. If you have grouped issues, the triple dot action menu is available on every subissue.
+    Alternatively, you can click the triple dots in the last columns to open up the action menu. If you have grouped issues, the triple dot action menu is available on every subissue.
 
-   [image: Action menu with options to manage, snooze, ignore, share, or adjust task severity.]
+    [image: Action menu with options to manage, snooze, ignore, share, or adjust task severity.]
 
-   ​
-2. Fill in the required details in the popup modal.\
-   ​
+    ​
+2.  Fill in the required details in the popup modal.\
+    ​
 
-   [image: Create a ClickUp task reporting a high-severity XSS vulnerability with details and link.]
+    [image: Create a ClickUp task reporting a high-severity XSS vulnerability with details and link.]
 3. The newly created task in Asana will be linked in the Aikido Issue Detail under the 'Tasks' tab (sidepanel).
 
 [image: High-priority task warning: Unescaped input may cause XSS attacks.]
@@ -57,7 +57,7 @@ There are two different options to create new tasks from Aikido into Asana.
 Aikido will automatically create tasks **every hour in bulk.** There is at the moment no option to trigger this manually.
 {% endhint %}
 
-1. Go to the [Asana Integration](https://app.aikido.dev/settings/integrations/tasktracker) settings
+1. Go to the [Asana Integration](https://app.aikido.dev/settings/integrations/tasktracker?regionRedirect=1) settings
 2. Make sure to enable '**Autocreation**' by clicking the toggle to **On.**
 3. Define the criteria for automatic task creation.
 

@@ -1,7 +1,5 @@
 # Exploit Intelligence with KEV and EPSS
 
-Learn how Aikido uses EPSS and the CISA KEV catalog to prioritize dependency CVEs, and how to configure optional EPSS-based noise reduction.
-
 Aikido uses exploit intelligence from two sources to help you focus on CVEs that matter: the **CISA Known Exploited Vulnerabilities (KEV)** catalog and the **Exploit Prediction Scoring System (EPSS)**. KEV always influences severity for actively exploited CVEs. EPSS-based prioritization is optional and can further **auto-ignore** or **downgrade** low-risk vulnerabilities based on predicted exploit likelihood.
 
 ## How exploit intelligence works in Aikido
@@ -12,7 +10,7 @@ Aikido refreshes both data sources daily and applies them when calculating each 
 
 The [CISA KEV catalog](https://www.cisa.gov/known-exploited-vulnerabilities-catalog) lists CVEs with confirmed active exploitation in the wild. Aikido syncs this list every day.
 
-When a CVE appears on the KEV catalog, Aikido **raises its severity by 5 points** (up to a maximum score of 100). You'll see **Actively exploited vulnerability** in the issue's severity breakdown, with the description *It is actively being exploited in the wild.*
+When a CVE appears on the KEV catalog, Aikido **raises its severity by 5 points** (up to a maximum score of 100). You'll see **Actively exploited vulnerability** in the issue's severity breakdown, with the description _It is actively being exploited in the wild._
 
 KEV-based scoring is always enabled. You don't need to turn anything on.
 
@@ -22,7 +20,7 @@ KEV-based scoring is always enabled. You don't need to turn anything on.
 
 Aikido syncs EPSS scores daily. When you enable EPSS-based prioritization, Aikido can use those scores to ignore or downgrade findings that are unlikely to be exploited soon.
 
-EPSS is **off by default**. Workspace admins enable it in [Triage Settings](https://app.aikido.dev/settings/advanced).
+EPSS is **off by default**. Workspace admins enable it in [Triage Settings](https://app.aikido.dev/settings/advanced?regionRedirect=1).
 
 ### How KEV and EPSS work together
 
@@ -50,14 +48,12 @@ Click an issue's severity score to see which rules applied, including KEV, PoC, 
 
 {% stepper %}
 {% step %}
-
 ### Open Triage settings
 
 Go to **Settings** → **Triage** and find the **EPSS-Based Prioritization** section.
 {% endstep %}
 
 {% step %}
-
 ### Manage EPSS rules
 
 Click **Manage** in the EPSS-based prioritization section.
@@ -66,7 +62,6 @@ Click **Manage** in the EPSS-based prioritization section.
 {% endstep %}
 
 {% step %}
-
 ### Choose your rules
 
 Select which EPSS rules to apply in your workspace:
@@ -79,7 +74,6 @@ Select which EPSS rules to apply in your workspace:
 {% endstep %}
 
 {% step %}
-
 ### Save and rescan
 
 Click **Save EPSS-based prioritization** to apply your rules.
@@ -97,6 +91,6 @@ Manually trigger a rescan to apply the new prioritization immediately, or wait u
 
 ## Related features
 
-* [**How is severity score calculated?**](/getting-started/core-functionalities/how-is-severity-score-calculated.md): Overview of Aikido's 0-100 severity model and contextual adjustments.
-* [**CVE Exploitability Analysis**](/aikido-agent/cve-exploitability-analysis.md): Agent triage for dependency CVEs in your repositories and containers.
-* [**Reachability analysis**](/getting-started/reachability-analysis/introduction-to-reachability-analysis.md): Filters findings with no execution path to vulnerable code.
+* [**How is severity score calculated?**](https://help.aikido.dev/getting-started/core-functionalities/how-is-severity-score-calculated): Overview of Aikido's 0-100 severity model and contextual adjustments.
+* [**CVE Exploitability Analysis**](https://help.aikido.dev/aikido-agent/cve-exploitability-analysis): Agent triage for dependency CVEs in your repositories and containers.
+* [**Reachability analysis**](https://help.aikido.dev/getting-started/reachability-analysis/introduction-to-reachability-analysis): Filters findings with no execution path to vulnerable code.

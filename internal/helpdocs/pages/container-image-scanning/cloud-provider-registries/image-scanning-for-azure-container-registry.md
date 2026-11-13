@@ -18,7 +18,7 @@ After creating the token you have to click it again to generate a password. That
 
 [image: Password generation screen prompting user to securely save new password and Docker login command.]
 
-**Step 3:** Back in Aikido, go to settings, then [containers](https://app.aikido.dev/settings/container-image-registry). Click 'Connect registry' and pick
+**Step 3:** Back in Aikido, go to settings, then [containers](https://app.aikido.dev/settings/container-image-registry?regionRedirect=1). Click 'Connect registry' and pick
 
 Azure Container Registry. Enter the data from the previous steps. Username being the Token name.
 

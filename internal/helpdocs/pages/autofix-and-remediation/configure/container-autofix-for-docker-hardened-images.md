@@ -8,7 +8,6 @@ Container AutoFix can upgrade base images from Docker Hardened Images (DHI) on `
 * A Dockerfile that uses `dhi.io` base images, for example:
 
 {% code title="Dockerfile" %}
-
 ```dockerfile
 FROM dhi.io/node:24-alpine3.23-dev AS build-base
 # ...
@@ -16,7 +15,6 @@ FROM dhi.io/node:24-alpine3.23-dev AS build-base
 FROM dhi.io/node:24-alpine3.23 AS runner
 # ...
 ```
-
 {% endcode %}
 
 ## How it works
@@ -25,7 +23,7 @@ Container AutoFix rebuilds your image with newer base image tags to check which 
 
 Without a connected Docker Hub registry, Container AutoFix fails with this error:
 
-```
+```text
 The registry for the private base image could not be found, container autofix is not available.
 ```
 
@@ -33,7 +31,6 @@ The registry for the private base image could not be found, container autofix is
 
 {% stepper %}
 {% step %}
-
 ### Create a Docker access token
 
 In [Docker Home](https://app.docker.com/), go to **Account settings** → **Personal access tokens** and click **Generate new token**. Enter a description, set **Repository permissions** to **Repo Public Read-only**, and click **Generate**. Copy the token.
@@ -44,16 +41,14 @@ To use an organization access token instead, give it the **Read public repositor
 {% endstep %}
 
 {% step %}
-
 ### Connect Docker Hub in Aikido
 
-Go to [**Settings** → **Containers**](https://app.aikido.dev/settings/container-image-registry), click **Connect Registry**, and select **Docker Hub**.
+Go to [**Settings** → **Containers**](https://app.aikido.dev/settings/container-image-registry?regionRedirect=1), click **Connect Registry**, and select **Docker Hub**.
 
 [image: Scan Your Container Images modal with Docker Hub listed next to AWS Elastic Container Registry and Azure Container Registry]
 {% endstep %}
 
 {% step %}
-
 ### Enter the credentials
 
 Fill in the form and click **Save**:
@@ -61,13 +56,12 @@ Fill in the form and click **Save**:
 * **Username:** your Docker username, or your Docker organization name for an organization access token.
 * **Access token:** the token from the first step.
 * **Organization name:** optional. You don't need it for Docker Hardened Images.
-  {% endstep %}
+{% endstep %}
 
 {% step %}
-
 ### Run Container AutoFix again
 
-Go to [**AutoFix** → **Cloud** → **Containers**](https://app.aikido.dev/issues/fix/container) and click **Regenerate AutoFix** in the action menu of your container, or **Create AutoFix** if it has no AutoFix yet. AutoFix now pulls the `dhi.io` base images and suggests upgrades.
+Go to [**AutoFix** → **Cloud** → **Containers**](https://app.aikido.dev/issues/fix/container?regionRedirect=1) and click **Regenerate AutoFix** in the action menu of your container, or **Create AutoFix** if it has no AutoFix yet. AutoFix now pulls the `dhi.io` base images and suggests upgrades.
 {% endstep %}
 {% endstepper %}
 
@@ -75,7 +69,7 @@ Go to [**AutoFix** → **Cloud** → **Containers**](https://app.aikido.dev/issu
 
 ### AutoFix still can't find the registry
 
-Check that a Docker Hub registry is connected and active on [**Settings** → **Containers**](https://app.aikido.dev/settings/container-image-registry).
+Check that a Docker Hub registry is connected and active on [**Settings** → **Containers**](https://app.aikido.dev/settings/container-image-registry?regionRedirect=1).
 
 ### AutoFix can't pull the `dhi.io` image
 
@@ -83,14 +77,14 @@ Aikido uses the first active Docker Hub registry in your workspace. Check that i
 
 ## Related
 
-{% content-ref url="/pages/HpcSKja4JtykQJfw4a7E" %}
-[Setting up Container AutoFix](/autofix-and-remediation/configure/setting-up-container-autofix.md)
+{% content-ref url="setting-up-container-autofix.md" %}
+[setting-up-container-autofix.md](https://help.aikido.dev/autofix-and-remediation/configure/setting-up-container-autofix)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/EoYN3dnzRmRNca3sD6Ro" %}
-[AutoFix for Containers](/autofix-and-remediation/scope/ai-autofix-for-containers.md)
+{% content-ref url="../scope/ai-autofix-for-containers.md" %}
+[ai-autofix-for-containers.md](https://help.aikido.dev/autofix-and-remediation/scope/ai-autofix-for-containers)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/Er37SLkZeTlVzY0f8EGj" %}
-[Docker Hub images](/container-image-scanning/standalone-registries/docker-hub-images.md)
+{% content-ref url="../../container-image-scanning/standalone-registries/docker-hub-images.md" %}
+[docker-hub-images.md](https://help.aikido.dev/container-image-scanning/standalone-registries/docker-hub-images)
 {% endcontent-ref %}

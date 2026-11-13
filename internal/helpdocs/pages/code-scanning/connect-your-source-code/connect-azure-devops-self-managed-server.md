@@ -6,7 +6,7 @@ Note that each Azure Project with one or more repos maps to one Aikido workspace
 
 ### Select Microsoft / Office 365 or Google to authenticate <a href="#select-microsoft--office-365-or-google-to-authenticate" id="select-microsoft--office-365-or-google-to-authenticate"></a>
 
-**Step 1.** To connect your Azure DevOps project, you first need to authenticate via Microsoft / Office 365 or Google to create a user in Aikido. On the [signup screen](https://app.aikido.dev/login), click on 'Microsoft / Google' to continue.
+**Step 1.** To connect your Azure DevOps project, you first need to authenticate via Microsoft / Office 365 or Google to create a user in Aikido. On the [signup screen](https://app.aikido.dev/login?regionRedirect=1), click on 'Microsoft / Google' to continue.
 
 > Depending on your organization's Microsoft Entra settings, you may need IT admin approval to authorize the Aikido application. [For more information about the approval process, check Azure docs.](https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/grant-admin-consent?pivots=portal)
 

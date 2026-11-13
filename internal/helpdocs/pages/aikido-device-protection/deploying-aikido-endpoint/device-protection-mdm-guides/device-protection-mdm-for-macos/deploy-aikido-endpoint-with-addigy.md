@@ -1,4 +1,4 @@
-# Deploy Device Protection with Addigy
+# Deploy Aikido Device Protection with Addigy on macOS
 
 Use Addigy to deploy Aikido Device Protection across your managed macOS fleet with the required permissions in place.
 
@@ -10,10 +10,10 @@ Use Addigy to deploy Aikido Device Protection across your managed macOS fleet wi
 
 Before starting, make sure you have the following from the Aikido Device Protection dashboard:
 
-* The **Aikido Device Protection `.mobileconfig`** (downloaded from the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices))
+* The **Aikido Device Protection `.mobileconfig`** (downloaded from the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices?regionRedirect=1))
 * The **Aikido Device Protection installer** (`.pkg` file, downloaded from the dashboard)
 
-If you're missing any of these, go back to the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices), click **Connect Device**, and complete the pre-flight steps.
+If you're missing any of these, go back to the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices?regionRedirect=1), click **Connect Device**, and complete the pre-flight steps.
 {% endstep %}
 
 {% step %}
@@ -38,14 +38,14 @@ This profile allows the Aikido Device Protection system extension to load silent
 5. Click **Auto-fill** under **Install Command**. Addigy generates the installer command automatically.
 6. Click **Save**.
 7. Click the three dots (**...**) next to the Smart Software item, select **Assignments**, choose the same target policy, and click **Save**.
-   {% endstep %}
+{% endstep %}
 
 {% step %}
 **Deploy to your devices**
 
 1. Verify the **Aikido Device Protection** configuration profile is installed: open the profile in **Catalog** → **Device Settings** and confirm the assignment status shows all target devices.
 2. Trigger the **Aikido Device Protection** Smart Software deployment by assigning it to the policy (or letting the next policy check-in run).
-   {% endstep %}
+{% endstep %}
 
 {% step %}
 **Reboot devices after installation**
@@ -58,16 +58,16 @@ Restart your target devices after the agent installation completes. In Addigy, y
 
 On a test device, confirm:
 
-1. The system extension is activated:
+1.  The system extension is activated:
 
-   ```bash
-   systemextensionsctl list | grep aikido
-   ```
+    ```bash
+    systemextensionsctl list | grep aikido
+    ```
 
-   Expect to see the extension marked `[activated enabled]`.
+    Expect to see the extension marked `[activated enabled]`.
 2. Open **System Settings** → **General** → **Login Items & Extensions** and confirm the Aikido Device Protection entries cannot be toggled off.
-   {% endstep %}
-   {% endstepper %}
+{% endstep %}
+{% endstepper %}
 
 ## Troubleshooting
 

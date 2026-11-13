@@ -4,7 +4,7 @@ Aikido lets you connect a self-managed GitLab instance to scan and secure your c
 
 ### Before you start
 
-* If your GitLab is behind a firewall, [allowlist the Aikido IP addresses](/code-scanning/miscellaneous/allowing-ip-addresses-for-code-container-scanning.md) so Aikido can reach it.
+* If your GitLab is behind a firewall, [allowlist the Aikido IP addresses](https://help.aikido.dev/code-scanning/miscellaneous/allowing-ip-addresses-for-code-container-scanning) so Aikido can reach it.
 * The person setting this up needs access to both the GitLab instance **and** the GitLab group you want to connect.
 
 {% hint style="warning" %}
@@ -19,7 +19,7 @@ We recommend connecting Aikido to a top-level (root) group that contains all sub
 {% step %}
 **Create an Aikido account**
 
-To connect your GitLab server, first sign up or log in to Aikido using Google or Microsoft. On the [signup screen](https://app.aikido.dev/login), click **Google / Microsoft**.
+To connect your GitLab server, first sign up or log in to Aikido using Google or Microsoft. On the [signup screen](https://app.aikido.dev/login?regionRedirect=1), click **Google / Microsoft**.
 {% endstep %}
 
 {% step %}
@@ -35,7 +35,7 @@ Once you’re authenticated, create a new workspace by clicking **Self-Managed**
 To create the workspace, provide a few details about your self-managed GitLab instance so Aikido can connect to it.
 
 {% hint style="info" %}
-If your GitLab runs behind a firewall, [allowlist the Aikido IP addresses](/code-scanning/miscellaneous/allowing-ip-addresses-for-code-container-scanning.md) so we can access it. If that’s not possible, use the [Broker setup guide](/code-scanning/connect-your-source-code/connect-gitlab-self-managed-server-to-aikido/connect-gitlab-self-managed-server-broker-set-up.md).
+If your GitLab runs behind a firewall, [allowlist the Aikido IP addresses](https://help.aikido.dev/code-scanning/miscellaneous/allowing-ip-addresses-for-code-container-scanning) so we can access it. If that’s not possible, use the [Broker setup guide](https://help.aikido.dev/code-scanning/connect-your-source-code/connect-gitlab-self-managed-server-to-aikido/connect-gitlab-self-managed-server-broker-set-up).
 {% endhint %}
 
 Enter the URL to your GitLab server in the first input field.

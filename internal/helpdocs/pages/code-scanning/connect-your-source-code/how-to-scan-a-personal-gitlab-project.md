@@ -2,9 +2,9 @@
 
 **Table of contents:**
 
-* [Step 1. Create a new group in GitLab](#step-1-create-a-new-group-in-gitlab)
-* [Step 2. Transfer your personal projects to the newly created group](#step-2-transfer-your-personal-projects-to-the-newly-created-group)
-* [Step 3. Connect the group to Aikido](#step-3-connect-the-group-to-aikido)
+* [Step 1. Create a new group in GitLab](https://help.aikido.dev/code-scanning/connect-your-source-code/how-to-scan-a-personal-gitlab-project#step-1-create-a-new-group-in-gitlab)
+* [Step 2. Transfer your personal projects to the newly created group](https://help.aikido.dev/code-scanning/connect-your-source-code/how-to-scan-a-personal-gitlab-project#step-2-transfer-your-personal-projects-to-the-newly-created-group)
+* [Step 3. Connect the group to Aikido](https://help.aikido.dev/code-scanning/connect-your-source-code/how-to-scan-a-personal-gitlab-project#step-3-connect-the-group-to-aikido)
 
 ## How to scan a personal GitLab project
 

@@ -2,70 +2,70 @@
 
 ### Jira
 
-{% content-ref url="/pages/s7ArXQbQNd7CXc6fL9Z8" %}
-[Jira Cloud](/getting-started/task-management-systems/all-supported-task-trackers/jira-cloud.md)
+{% content-ref url="all-supported-task-trackers/jira-cloud.md" %}
+[jira-cloud.md](https://help.aikido.dev/getting-started/task-management-systems/all-supported-task-trackers/jira-cloud)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/WfzmwGRszNZsxsLit2xy" %}
-[Troubleshoot Jira Task Creation: Set Up Default Issue Types](/getting-started/task-management-systems/troubleshoot-jira-task-creation-set-up-default-issue-types.md)
+{% content-ref url="troubleshoot-jira-task-creation-set-up-default-issue-types.md" %}
+[troubleshoot-jira-task-creation-set-up-default-issue-types.md](https://help.aikido.dev/getting-started/task-management-systems/troubleshoot-jira-task-creation-set-up-default-issue-types)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/OcpQXllbbE7ApQdqQ2Hi" %}
-[Jira Data Center](/getting-started/task-management-systems/all-supported-task-trackers/jira-data-center.md)
+{% content-ref url="all-supported-task-trackers/jira-data-center.md" %}
+[jira-data-center.md](https://help.aikido.dev/getting-started/task-management-systems/all-supported-task-trackers/jira-data-center)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/Vn09m74DFty8op2s18p3" %}
-[Auto-Close Jira Tasks When Aikido Issues Are Resolved / Ignored](/getting-started/task-management-systems/advanced-functionalities/auto-close-jira-tasks-when-aikido-issues-are-resolved.md)
+{% content-ref url="advanced-functionalities/auto-close-jira-tasks-when-aikido-issues-are-resolved.md" %}
+[auto-close-jira-tasks-when-aikido-issues-are-resolved.md](https://help.aikido.dev/getting-started/task-management-systems/advanced-functionalities/auto-close-jira-tasks-when-aikido-issues-are-resolved)
 {% endcontent-ref %}
 
 ### Linear
 
-{% content-ref url="/pages/amQjsuScSm860YvcyNOo" %}
-[Linear](/getting-started/task-management-systems/all-supported-task-trackers/linear.md)
+{% content-ref url="all-supported-task-trackers/linear.md" %}
+[linear.md](https://help.aikido.dev/getting-started/task-management-systems/all-supported-task-trackers/linear)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/wILek0K1ugPeN6QiGI0q" %}
-[Auto-Close Linear Tasks When Aikido Issues Are Resolved / Ignored](/getting-started/task-management-systems/advanced-functionalities/auto-close-linear-tasks-when-aikido-issues-are-resolved.md)
+{% content-ref url="advanced-functionalities/auto-close-linear-tasks-when-aikido-issues-are-resolved.md" %}
+[auto-close-linear-tasks-when-aikido-issues-are-resolved.md](https://help.aikido.dev/getting-started/task-management-systems/advanced-functionalities/auto-close-linear-tasks-when-aikido-issues-are-resolved)
 {% endcontent-ref %}
 
 ### Others
 
-{% content-ref url="/pages/IW7dwgSkdg8Fsw2m1V4w" %}
-[Asana](/getting-started/task-management-systems/all-supported-task-trackers/asana.md)
+{% content-ref url="all-supported-task-trackers/asana.md" %}
+[asana.md](https://help.aikido.dev/getting-started/task-management-systems/all-supported-task-trackers/asana)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/ksHTEsXT6kf5yZsaBWBG" %}
-[Azure DevOps Boards](/getting-started/task-management-systems/all-supported-task-trackers/azure-devops-boards.md)
+{% content-ref url="all-supported-task-trackers/azure-devops-boards.md" %}
+[azure-devops-boards.md](https://help.aikido.dev/getting-started/task-management-systems/all-supported-task-trackers/azure-devops-boards)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/E67t7cvel70gsbgesE6J" %}
-[ClickUp](/getting-started/task-management-systems/all-supported-task-trackers/clickup.md)
+{% content-ref url="all-supported-task-trackers/clickup.md" %}
+[clickup.md](https://help.aikido.dev/getting-started/task-management-systems/all-supported-task-trackers/clickup)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/OMf0HBMgMdwa2fxmL4DJ" %}
-[GitHub Issues](/getting-started/task-management-systems/all-supported-task-trackers/github-issues.md)
+{% content-ref url="all-supported-task-trackers/github-issues.md" %}
+[github-issues.md](https://help.aikido.dev/getting-started/task-management-systems/all-supported-task-trackers/github-issues)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/52DvGrsHujSyEkkWKMoP" %}
-[GitHub Enterprise Cloud Issues](/getting-started/task-management-systems/all-supported-task-trackers/github-enterprise-cloud-issues.md)
+{% content-ref url="all-supported-task-trackers/github-enterprise-cloud-issues.md" %}
+[github-enterprise-cloud-issues.md](https://help.aikido.dev/getting-started/task-management-systems/all-supported-task-trackers/github-enterprise-cloud-issues)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/AA4em9z3TTylSuDQQgQY" %}
-[GitLab Issues](/getting-started/task-management-systems/all-supported-task-trackers/gitlab-issues.md)
+{% content-ref url="all-supported-task-trackers/gitlab-issues.md" %}
+[gitlab-issues.md](https://help.aikido.dev/getting-started/task-management-systems/all-supported-task-trackers/gitlab-issues)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/MOn0KkWFHCqtLxOmIuzM" %}
-[GitLab Issues Self-Managed](/getting-started/task-management-systems/all-supported-task-trackers/gitlab-issues-self-managed.md)
+{% content-ref url="all-supported-task-trackers/gitlab-issues-self-managed.md" %}
+[gitlab-issues-self-managed.md](https://help.aikido.dev/getting-started/task-management-systems/all-supported-task-trackers/gitlab-issues-self-managed)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/cjRLm8xzMPRDZl7M8gfe" %}
-[JetBrains YouTrack](/getting-started/task-management-systems/all-supported-task-trackers/jetbrains-youtrack.md)
+{% content-ref url="all-supported-task-trackers/jetbrains-youtrack.md" %}
+[jetbrains-youtrack.md](https://help.aikido.dev/getting-started/task-management-systems/all-supported-task-trackers/jetbrains-youtrack)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/FIVKrCNtam6oBIjKCpcE" %}
-[Monday.com](/getting-started/task-management-systems/all-supported-task-trackers/mondaycom.md)
+{% content-ref url="all-supported-task-trackers/mondaycom.md" %}
+[mondaycom.md](https://help.aikido.dev/getting-started/task-management-systems/all-supported-task-trackers/mondaycom)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/UAZRG426sexlkkyoFvwR" %}
-[Shortcut](/getting-started/task-management-systems/all-supported-task-trackers/shortcut.md)
+{% content-ref url="all-supported-task-trackers/shortcut.md" %}
+[shortcut.md](https://help.aikido.dev/getting-started/task-management-systems/all-supported-task-trackers/shortcut)
 {% endcontent-ref %}

@@ -1,6 +1,6 @@
 # Team Comparison Report
 
-The [Team Comparison](https://app.aikido.dev/reports/teams/compare) Report gives you a side by side view of how different teams perform on security. It helps you identify gaps, measure progress, and create accountability across the organization.
+The [Team Comparison](https://app.aikido.dev/reports/teams/compare?regionRedirect=1) Report gives you a side by side view of how different teams perform on security. It helps you identify gaps, measure progress, and create accountability across the organization.
 
 Instead of looking at a single team in isolation, this report shows how teams compare in terms of issue volume, remediation speed, and compliance coverage.
 

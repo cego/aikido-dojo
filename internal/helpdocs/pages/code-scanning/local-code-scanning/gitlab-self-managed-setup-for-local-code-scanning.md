@@ -2,11 +2,11 @@
 
 **Table of contents:**
 
-* [How to set up Local Scanning](#how-to-set-up-local-scanning)
-* [1. Get your authentication token](#1-get-your-authentication-token)
-* [2. Running the Local Scanner](#2-running-the-local-scanner)
-  * [Using Docker](#using-docker)
-* [3. Check your scanning results](#3-check-your-scanning-results)
+* [How to set up Local Scanning](https://help.aikido.dev/code-scanning/local-code-scanning/gitlab-self-managed-setup-for-local-code-scanning#how-to-set-up-local-scanning)
+* [1. Get your authentication token](https://help.aikido.dev/code-scanning/local-code-scanning/gitlab-self-managed-setup-for-local-code-scanning#1-get-your-authentication-token)
+* [2. Running the Local Scanner](https://help.aikido.dev/code-scanning/local-code-scanning/gitlab-self-managed-setup-for-local-code-scanning#2-running-the-local-scanner)
+  * [Using Docker](https://help.aikido.dev/code-scanning/local-code-scanning/gitlab-self-managed-setup-for-local-code-scanning#using-docker)
+* [3. Check your scanning results](https://help.aikido.dev/code-scanning/local-code-scanning/gitlab-self-managed-setup-for-local-code-scanning#3-check-your-scanning-results)
 
 ## GitLab Self Managed Setup for Local Code Scanning
 
@@ -14,18 +14,18 @@ The Aikido Security Local Scanner is a tool that enables you to perform Aikido S
 
 ### How to set up Local Scanning <a href="#how-to-set-up-local-scanning" id="how-to-set-up-local-scanning"></a>
 
-**Prerequisite**: make sure to have created an account that allows for Local Scanning. [More information on creating a Local Scanning Account](https://help.aikido.dev/en/articles/9070345-how-to-create-an-account-for-local-scanning-on-aikido).
+**Prerequisite**: make sure to have created an account that allows for Local Scanning. [More information on creating a Local Scanning Account](https://help.aikido.dev/code-scanning/local-code-scanning/account-creation-for-local-scanning-on-aikido).
 
 ### 1. Get your authentication token <a href="#id-1-get-your-authentication-token" id="id-1-get-your-authentication-token"></a>
 
-1. Go to the [Local Scanner setup page](https://app.aikido.dev/settings/integrations/localscan).
+1. Go to the [Local Scanner setup page](https://app.aikido.dev/settings/integrations/localscan?regionRedirect=1).
 2. Generate an authentication token and copy. Note that you will only be able to view this token once.
-3. Add the authentication token to the CI/CD variables in Gitlab to make it available for use in the pipeline.\
-   To do this, you need to go to your group's Settings page and then navigate to the **CI/CD** sub-page.
+3.  Add the authentication token to the CI/CD variables in Gitlab to make it available for use in the pipeline.\
+    To do this, you need to go to your group's Settings page and then navigate to the **CI/CD** sub-page.
 
-   [image: GitLab CI/CD settings page for configuring variables, runners, and Auto DevOps automation.]
+    [image: GitLab CI/CD settings page for configuring variables, runners, and Auto DevOps automation.]
 
-   Click on 'Expand' next to variables and click on 'Add variable'. You can then add the authentication token with `AIKIDO_LOCAL_SCANNER_TOKEN` as the key and the copied token contents as the value.
+    Click on 'Expand' next to variables and click on 'Add variable'. You can then add the authentication token with `AIKIDO_LOCAL_SCANNER_TOKEN` as the key and the copied token contents as the value.
 
 ### 2. Running the Local Scanner <a href="#id-2-running-the-local-scanner" id="id-2-running-the-local-scanner"></a>
 
@@ -54,11 +54,11 @@ Specify your default branch using the `--branchname` option when executing the c
 
 If this is the first scan for this repository, Aikido will create a repository with the name you specified, containing all the scanning results. Subsequent scan results will be collected under this repository name in Aikido.
 
-By default all scan types will be executed, if you'd like to run only a selection of scans (eg only a SAST scan), you can do so by supplying the scan types via the `--scan-types` option. More information on CLI options can be found [here](https://help.aikido.dev/en/articles/9027526-local-scanner-cli-options).
+By default all scan types will be executed, if you'd like to run only a selection of scans (eg only a SAST scan), you can do so by supplying the scan types via the `--scan-types` option. More information on CLI options can be found [here](https://help.aikido.dev/code-scanning/local-code-scanning/cli-options-for-local-scanner).
 
 You can also run the scanner in release or PR gating mode. Release gating mode is helpful when scanning your repository prior to releasing, as it ensures there are no open issues before a potential release. When running in release gating mode, the scanner process will fail when there are any open issues of the chosen severity or higher after the scan is finished. PR gating mode can be used to scan for any potentially newly introduced issues in a PR.
 
-More information about release or PR gating mode can be found in [this article](/code-scanning/local-code-scanning/pr-gating-for-code-using-local-scanner.md).
+More information about release or PR gating mode can be found in [this article](https://help.aikido.dev/code-scanning/local-code-scanning/pr-gating-for-code-using-local-scanner).
 
 ### 3. Check your scanning results <a href="#id-3-check-your-scanning-results" id="id-3-check-your-scanning-results"></a>
 

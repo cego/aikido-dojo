@@ -13,7 +13,7 @@ Aikido provides flexible options for inviting users who do not have a GitHub/Bit
 
 ## Steps to Invite Users <a href="#steps-to-invite-users" id="steps-to-invite-users"></a>
 
-**Step 1**: Navigate to the [Users Section](https://app.aikido.dev/settings/users) in Settings. Click **'Add'** to open the user invite dialogue
+**Step 1**: Navigate to the [Users Section](https://app.aikido.dev/settings/users?regionRedirect=1) in Settings. Click **'Add'** to open the user invite dialogue
 
 **Step 2**: Enter one or multiple **email address**. The email needs to be a company email.
 

@@ -1,6 +1,6 @@
 # Jetbrains Proxy Setup
 
-Use this guide when your network requires a proxy for [outbound traffic to Aikido](/ai-and-dev-tools/ide-plugins-overview/troubleshooting/troubleshooting-ide-plugin-connectivity.md) in JetBrains IDEs.
+Use this guide when your network requires a proxy for [outbound traffic to Aikido](https://help.aikido.dev/ai-and-dev-tools/ide-plugins-overview/troubleshooting/troubleshooting-ide-plugin-connectivity) in JetBrains IDEs.
 
 ## Configuration
 

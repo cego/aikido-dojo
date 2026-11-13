@@ -4,15 +4,13 @@ Route your registry traffic through Aikido's registry proxy by configuring Nexus
 
 {% stepper %}
 {% step %}
-
 ### Get your Aikido proxy URL
 
-Go to [Settings > Registry Proxy](https://app.aikido.dev/issues/aikido-libraries/setup-instructions), select your ecosystem and copy the upstream proxy URL
+Go to [Settings > Registry Proxy](https://app.aikido.dev/issues/aikido-libraries/setup-instructions?regionRedirect=1), select your ecosystem and copy the upstream proxy URL
 
 {% endstep %}
 
 {% step %}
-
 ### Create a Proxy Repository in Nexus
 
 1. In Nexus, go to **Settings > Repository > Repositories**.
@@ -27,7 +25,6 @@ Do not change the Remote Storage URL after the repository is created. Doing so c
 {% endstep %}
 
 {% step %}
-
 ### (Optional) Create a Group Repository
 
 If you also have internal packages in a hosted Nexus repository, create a Group Repository to expose both under a single URL:
@@ -42,7 +39,6 @@ Group repositories are read-only in Nexus Community Edition. To publish packages
 {% endstep %}
 
 {% step %}
-
 ### Configure Developer Machines to use Nexus
 
 Point each developer's package manager at the Nexus repository. See Sonatype's documentation for the exact steps, including authentication setup:
@@ -67,13 +63,12 @@ Point each developer's package manager at the Nexus repository. See Sonatype's d
 {% endstep %}
 
 {% step %}
-
 ### (Optional) Block the public registry with Device Protection
 
 Once Nexus is in place, developers can still bypass it by pointing their package manager directly at the public registry. Deploy Aikido Device Protection to enforce that all traffic goes through your private registry.
 
-{% content-ref url="/pages/sa7N9YXthBxZbm6WmKBq" %}
-[Block Public Package Registries](/aikido-device-protection/using-aikido-endpoint/block-public-package-registries.md)
+{% content-ref url="../../aikido-device-protection/using-aikido-endpoint/block-public-package-registries.md" %}
+[block-public-package-registries.md](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/block-public-package-registries)
 {% endcontent-ref %}
 {% endstep %}
 {% endstepper %}

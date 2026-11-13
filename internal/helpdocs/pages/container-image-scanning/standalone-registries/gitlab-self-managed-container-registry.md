@@ -1,4 +1,4 @@
-# Gitlab Self Managed Container Registry
+# GitLab Self Managed Container Registry
 
 You can integrate your GitLab Self Managed Container Registry with Aikido to scan your containers for known vulnerabilities.
 
@@ -16,7 +16,7 @@ We'll have to gather your username (see screenshot)
 Make sure to create a **Personal Access Token**, and not an **Impersonation Token**.
 {% endhint %}
 
-**Step 4:** Enter the collected data in Aikido (direct link: <https://app.aikido.dev/settings/container-image-registry/add/gitlab-self>)
+**Step 4:** Enter the collected data in Aikido (direct link: [https://app.aikido.dev/settings/container-image-registry/add/gitlab-self](https://app.aikido.dev/settings/container-image-registry/add/gitlab-self?regionRedirect=1))
 
 [image: Form to connect GitLab self-hosted container image registry with required credentials.]
 
@@ -28,7 +28,7 @@ Make sure to create a **Personal Access Token**, and not an **Impersonation Toke
 
 ## Connect a registry on an internal network (Broker)
 
-If your GitLab instance or its container registry is not reachable from the internet, connect them through the [Aikido Broker](/miscellaneous-info/aikido-broker-for-internal-applications.md).
+If your GitLab instance or its container registry is not reachable from the internet, connect them through the [Aikido Broker](https://help.aikido.dev/miscellaneous-info/aikido-broker-for-internal-applications).
 
 {% hint style="warning" %}
 GitLab usually serves the container registry on a different host than the GitLab instance. Add **both** as Broker resources:
@@ -43,7 +43,7 @@ You can find the registry URL in GitLab under **Deploy > Container Registry**, o
 {% step %}
 **Add both resources to the Broker**
 
-On the [Broker Clients page](https://app.aikido.dev/settings/integrations/broker/clients), add the GitLab instance URL and the registry URL as resources on your broker client.
+On the [Broker Clients page](https://app.aikido.dev/settings/integrations/broker/clients?regionRedirect=1), add the GitLab instance URL and the registry URL as resources on your broker client.
 {% endstep %}
 
 {% step %}

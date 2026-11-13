@@ -1,13 +1,11 @@
 # Bitbucket Premium: PR Gating Setup
 
-Configure Bitbucket pull request scanning to publish scan results and comments for issues from Aikido. No pipeline code needed.
-
 {% hint style="warning" %}
 This setup is for **Bitbucket Premium**.
 
 Use it when you want to authenticate via a **Workspace Access Token**. It also supports required checks before merge (PR gating).
 
-If you’re on **Bitbucket Free or Standard**, use the [**user-based setup**](/pr-and-release-gating/bitbucket-pr-gating/bitbucket-ci-pr-gating-via-aikido-dashboard.md) instead.
+If you’re on **Bitbucket Free or Standard**, use the [**user-based setup**](https://help.aikido.dev/pr-and-release-gating/bitbucket-pr-gating/bitbucket-ci-pr-gating-via-aikido-dashboard) instead.
 {% endhint %}
 
 ## Set up Bitbucket PR Scanning <a href="#setting-up-bitbucket-ci" id="setting-up-bitbucket-ci"></a>
@@ -51,7 +49,7 @@ The token is only shown once. You can’t retrieve it later.
 {% step %}
 **Enable the integration**
 
-In Aikido, open the [Integrations](https://app.aikido.dev/settings/integrations?section=ci) page. Then select **Bitbucket** under **PR Quality Gating**.
+In Aikido, open the [Integrations](https://app.aikido.dev/settings/integrations?section=ci&regionRedirect=1) page. Then select **Bitbucket** under **PR Quality Gating**.
 
 <div data-with-frame="true"></div>
 {% endstep %}
@@ -67,7 +65,7 @@ Paste the Workspace Access Token in Aikido. Aikido will validate the token and i
 {% step %}
 **Configure your first repository**
 
-After authorization, Aikido opens the [Bitbucket PR Checks](https://app.aikido.dev/settings/integrations/bitbucket/checks) page.
+After authorization, Aikido opens the [Bitbucket PR Checks](https://app.aikido.dev/settings/integrations/bitbucket/checks?regionRedirect=1) page.
 
 Start with **one repository** first. Confirm everything works before rolling out broadly.
 
@@ -98,7 +96,7 @@ Atlassian reference: [Suggest or require checks before a merge](https://support.
 {% step %}
 **Enable for all repositories**
 
-Once you’re happy with the results, go back to the [Bitbucket PR Checks](https://app.aikido.dev/settings/integrations/bitbucket/checks) page and enable checks for the rest of your repositories.
+Once you’re happy with the results, go back to the [Bitbucket PR Checks](https://app.aikido.dev/settings/integrations/bitbucket/checks?regionRedirect=1) page and enable checks for the rest of your repositories.
 
 <div data-with-frame="true"></div>
 {% endstep %}
@@ -108,6 +106,6 @@ Once you’re happy with the results, go back to the [Bitbucket PR Checks](https
 
 In the top-right, open `Actions` and select `Set Default for New Repos`.
 
-See [Default PR/MR gating configuration for new repositories](/pr-and-release-gating/aikido-ci-gating-functionality/default-pr-mr-gating-configuration-for-new-repositories.md) for UI guidance.
+See [Default PR/MR gating configuration for new repositories](https://help.aikido.dev/pr-and-release-gating/aikido-ci-gating-functionality/default-pr-mr-gating-configuration-for-new-repositories) for UI guidance.
 {% endstep %}
 {% endstepper %}

@@ -6,7 +6,7 @@ For Aikido to update dependencies that include private gems, it needs access to 
 
 You can configure Aikido to authenticate with your private RubyGems registry when updating the dependencies by following the steps below:
 
-1. Go to your account's settings page for the autofixer in Aikido, [here](https://app.aikido.dev/issues/fix/settings).
+1. Go to your account's settings page for the autofixer in Aikido, [here](https://app.aikido.dev/issues/fix/settings?regionRedirect=1).
 2. Click on "Connect Registry", the private registry modal will now be shown
 
 3. Select "Bundler". In the example below, we show a possible setup for a private GitHub RubyGems registry. The environment variable key is `BUNDLE_RUBYGEMS__PKG__GITHUB__COM`, and the value is a GitHub access token with the `read:packages` scope. This will vary depending on the private registry you use.
@@ -17,13 +17,13 @@ You can configure Aikido to authenticate with your private RubyGems registry whe
 
 ### Same SCM organization <a href="#same-scm-organization" id="same-scm-organization"></a>
 
-If the private git repository for the gem is in the same organization as the code being autofixed, you can extend the permissions of the existing access token to include access to the private repository [here](https://app.aikido.dev/issues/fix/settings).
+If the private git repository for the gem is in the same organization as the code being autofixed, you can extend the permissions of the existing access token to include access to the private repository [here](https://app.aikido.dev/issues/fix/settings?regionRedirect=1).
 
 ### Different SCM organization <a href="#different-scm-organization" id="different-scm-organization"></a>
 
 You can configure Aikido to authenticate with your private RubyGems git repositories when updating the dependencies by following the steps below:
 
-1. Go to your account's settings page for the autofixer in Aikido, [here](https://app.aikido.dev/issues/fix/settings).
+1. Go to your account's settings page for the autofixer in Aikido, [here](https://app.aikido.dev/issues/fix/settings?regionRedirect=1).
 2. Click on "Connect Registry" and then select Bundler.
 
 In the example above, we show a possible setup for a private GitHub Git repository. The environment variable key is `BUNDLE_GITHUB__COM`, and the value is a GitHub access token with repository access.

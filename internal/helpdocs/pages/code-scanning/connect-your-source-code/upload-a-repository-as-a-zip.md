@@ -22,7 +22,6 @@ Uploading a new version of an existing repository is not supported yet. Support 
 
 {% stepper %}
 {% step %}
-
 ### Create the zip
 
 From the repository root, run:
@@ -35,14 +34,12 @@ git archive --format=zip --output=my-app.zip HEAD
 {% endstep %}
 
 {% step %}
-
 ### Open repository settings
 
-Go to [Repository settings](https://app.aikido.dev/settings/integrations/repositories). From **Repositories**, click **Manage Repos**.
+Go to [Repository settings](https://app.aikido.dev/settings/integrations/repositories?regionRedirect=1). From **Repositories**, click **Manage Repos**.
 {% endstep %}
 
 {% step %}
-
 ### Choose upload source code
 
 Click **Add repo**. Select **Upload source code**, then click **Continue**.
@@ -51,24 +48,21 @@ Click **Add repo**. Select **Upload source code**, then click **Continue**.
 {% endstep %}
 
 {% step %}
-
 ### Name the repository and add the zip
 
 Enter a **Repository name**. Click the upload area, or drag the `.zip` onto it.
 {% endstep %}
 
 {% step %}
-
 ### Upload
 
 Click **Upload**. Aikido adds the repository, confirms with **Repository uploaded**, and starts the scan automatically.
 {% endstep %}
 
 {% step %}
-
 ### Select the repository in a setup flow
 
-Open [AI Code Analysis](/ai-code-analysis/ai-code-analysis.md) or [set up a pentest](/pentests/configure-a-pentest/starting-an-assessment.md). When the setup flow asks you to choose repositories, select this one. Other features that read repository code work the same way.
+Open [AI Code Analysis](https://help.aikido.dev/ai-code-analysis/ai-code-analysis) or [set up a pentest](https://help.aikido.dev/pentests/configure-a-pentest/starting-an-assessment). When the setup flow asks you to choose repositories, select this one. Other features that read repository code work the same way.
 {% endstep %}
 {% endstepper %}
 
@@ -91,10 +85,10 @@ The zip is a static snapshot, so anything that needs a live git connection is li
 
 ## Related
 
-{% content-ref url="/pages/5VOmohZt3vDXzoKPHmDk" %}
-[Connect Your Repositories](/getting-started/setting-up-your-account/create-account-and-connect-your-repositories.md)
+{% content-ref url="../../getting-started/setting-up-your-account/create-account-and-connect-your-repositories.md" %}
+[create-account-and-connect-your-repositories.md](https://help.aikido.dev/getting-started/setting-up-your-account/create-account-and-connect-your-repositories)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/KVMq059PBtgOs1XY2NCO" %}
-[Local Code Scanning](/code-scanning/local-code-scanning.md)
+{% content-ref url="../local-code-scanning/" %}
+[local-code-scanning](https://help.aikido.dev/code-scanning/local-code-scanning)
 {% endcontent-ref %}

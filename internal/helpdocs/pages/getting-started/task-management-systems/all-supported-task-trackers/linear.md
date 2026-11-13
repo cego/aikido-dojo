@@ -1,6 +1,6 @@
 # Linear
 
-This one-time setup *per workspace* allows everyone in your Aikido organization to create issues directly in Linear.
+This one-time setup _per workspace_ allows everyone in your Aikido organization to create issues directly in Linear.
 
 Following use cases are supported :
 
@@ -9,16 +9,16 @@ Following use cases are supported :
 
 ## Connecting the Aikido App to Linear <a href="#connecting-the-aikido-app-to-linear" id="connecting-the-aikido-app-to-linear"></a>
 
-1. Navigate to [Integration Settings](https://app.aikido.dev/settings/integrations) within the Aikido app.
+1. Navigate to [Integration Settings](https://app.aikido.dev/settings/integrations?regionRedirect=1) within the Aikido app.
 2. In the 'Task Trackers' section, select 'Linear Issues'
-3. A prompt will request authorization for Linear.\
-   ​
+3.  A prompt will request authorization for Linear.\
+    ​
 
-   [image: Authorization prompt for Linear issue-tracking; user currently unauthorized.]
+    [image: Authorization prompt for Linear issue-tracking; user currently unauthorized.]
 4. Login into your Linear account
-5. Grant Aikido permission to access your Linear workspace
+5.  Grant Aikido permission to access your Linear workspace
 
-   [image: Aikido Security requests access to manage and comment on issues in your Linear workspace.]
+    [image: Aikido Security requests access to manage and comment on issues in your Linear workspace.]
 6. Once authorized, Aikido is successfully connected to Linear, enhancing your task management capabilities 🚀
 
 ## ​Options for Task Creation in Linear via Aikido <a href="#options-for-task-creation-in-linear-via-aikido" id="options-for-task-creation-in-linear-via-aikido"></a>
@@ -30,19 +30,19 @@ There are two different options to create new tasks from Aikido into Linear.
 
 ### 1. Manual Task Creation <a href="#id-1-manual-task-creation" id="id-1-manual-task-creation"></a>
 
-1. Hover over any issue in your feed and click the ***+*** in the **assign column.**\
-   ​
+1.  Hover over any issue in your feed and click the _**+**_ in the **assign column.**\
+    ​
 
-   [image: Task management interface showing the "Assignee" column with add and options buttons.]
+    [image: Task management interface showing the "Assignee" column with add and options buttons.]
 
-   Alternatively, you can click the triple dots in the last columns to open up the action menu. If you have grouped issues, the triple dot action menu is available on every subissue.\
-   ​
+    Alternatively, you can click the triple dots in the last columns to open up the action menu. If you have grouped issues, the triple dot action menu is available on every subissue.\
+    ​
 
-   [image: Dropdown menu offering task creation and additional action options.]
-2. Fill in the required details in the popup modal.\
-   ​
+    [image: Dropdown menu offering task creation and additional action options.]
+2.  Fill in the required details in the popup modal.\
+    ​
 
-   [image: Task creation form for reporting a critical Content Security Policy issue in Aikido.]
+    [image: Task creation form for reporting a critical Content Security Policy issue in Aikido.]
 3. The newly created task in Linear will be linked in the Aikido Issue Detail under the 'Tasks' tab (sidepanel).
 
 [image: Critical task: CSP header missing, issue unassigned and currently open for resolution.]
@@ -53,7 +53,7 @@ There are two different options to create new tasks from Aikido into Linear.
 Aikido will automatically create tasks **every hour in bulk.** There is at the moment no option to trigger this manually.
 {% endhint %}
 
-1. Go to the [Linear Integration](https://app.aikido.dev/settings/integrations/tasktracker) settings
+1. Go to the [Linear Integration](https://app.aikido.dev/settings/integrations/tasktracker?regionRedirect=1) settings
 2. Select '**Change auto creation**'
 3. Define the criteria for automatic task creation.
 

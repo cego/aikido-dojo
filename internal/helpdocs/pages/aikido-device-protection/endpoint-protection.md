@@ -6,11 +6,11 @@ Device Protection gives you visibility and control over the software packages in
 Your Device Protection covers the same number of devices as users in your plan. Need more? Contact us to add extra devices.
 {% endhint %}
 
-{% content-ref url="/pages/d9ByerwsIf4TaXV4rbWH" %}
-[Supported Operating Systems & Ecosystems](/aikido-device-protection/miscellaneous-aikido-endpoint/supported-ecosystems.md)
+{% content-ref url="miscellaneous-aikido-endpoint/supported-ecosystems.md" %}
+[supported-ecosystems.md](https://help.aikido.dev/aikido-device-protection/miscellaneous-aikido-endpoint/supported-ecosystems)
 {% endcontent-ref %}
 
-{% embed url="<https://www.youtube.com/watch?t=5s&v=uN2QVB_lPYM>" %}
+{% embed url="https://www.youtube.com/watch?t=5s&v=uN2QVB_lPYM" %}
 
 ## Use cases
 
@@ -30,8 +30,8 @@ Ready to start securing your devices from malware and malicious packages? Follow
 
 Deploy Aikido Device Protection across your organization using MDM or a manual installation. If you need different configurations for different teams or devices, you can create multiple groups.
 
-{% content-ref url="/pages/xXvoa6tkJFFwrtRRsc9Z" %}
-[Deploying Device Protection](/aikido-device-protection/deploying-aikido-endpoint.md)
+{% content-ref url="deploying-aikido-endpoint/" %}
+[deploying-aikido-endpoint](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint)
 {% endcontent-ref %}
 {% endstep %}
 
@@ -40,20 +40,20 @@ Deploy Aikido Device Protection across your organization using MDM or a manual i
 
 Configure your package protection settings, including supported ecosystems, allowlists, blocklists, minimum package age, and group-specific exceptions.
 
-{% content-ref url="/pages/zGykVnsI7QVXxz0u4Jdf" %}
-[Configuring Installation Policies](/aikido-device-protection/using-aikido-endpoint/configuring-installation-policies.md)
+{% content-ref url="using-aikido-endpoint/configuring-installation-policies.md" %}
+[configuring-installation-policies.md](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/configuring-installation-policies)
 {% endcontent-ref %}
 {% endstep %}
 
 {% step %}
 **Learn more**
 
-{% content-ref url="/pages/hnvKFlXHFNG2bipsytE2" %}
-[Browsing Packages](/aikido-device-protection/using-aikido-endpoint/browsing-packages.md)
+{% content-ref url="using-aikido-endpoint/browsing-packages.md" %}
+[browsing-packages.md](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/browsing-packages)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/c8juUG0pkeoH5JbRzfbB" %}
-[Approving Install Requests](/aikido-device-protection/using-aikido-endpoint/reviewing-install-requests.md)
+{% content-ref url="using-aikido-endpoint/reviewing-install-requests.md" %}
+[reviewing-install-requests.md](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/reviewing-install-requests)
 {% endcontent-ref %}
 {% endstep %}
 {% endstepper %}

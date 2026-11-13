@@ -25,6 +25,6 @@ Select a specific app and continue to the Outbound Domains tab. You will get a f
 
 Knowing when your apps connect to new external destinations is crucial for security and oversight. Get alerted whenever an application makes an outbound connection to a hostname it hasn't contacted before.
 
-To receive these alerts, go to the [**Services Overview**](https://app.aikido.dev/runtime/services) and click **Manage Alerts**. Find and enable the setting **"Send notifications for new outbound hostnames"**. On this same page, you can also fine-tune which specific apps trigger these alerts and choose your preferred Slack or Microsoft Teams channels.
+To receive these alerts, go to the [**Services Overview**](https://app.aikido.dev/runtime/services?regionRedirect=1) and click **Manage Alerts**. Find and enable the setting **"Send notifications for new outbound hostnames"**. On this same page, you can also fine-tune which specific apps trigger these alerts and choose your preferred Slack or Microsoft Teams channels.
 
 [image: Configure Slack alerts by selecting apps, channel, and notification preferences for instant alerts.]

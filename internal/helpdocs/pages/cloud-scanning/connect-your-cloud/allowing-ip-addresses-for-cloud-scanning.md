@@ -7,7 +7,7 @@ These scans are performed from a fixed set of Aikido IP addresses. To allow scan
 {% hint style="warning" %}
 This applies only to cloud misconfiguration scanning (CSPM).
 
-Other Aikido features, such as [container scanning](/code-scanning/miscellaneous/allowing-ip-addresses-for-code-container-scanning.md), [code scanning](/code-scanning/miscellaneous/allowing-ip-addresses-for-code-container-scanning.md), or [api scanning](/dast-surface-monitoring/miscellaneous/allowing-ip-addresses-for-dast-surface-monitoring.md), do not use these IPs.
+Other Aikido features, such as [container scanning](https://help.aikido.dev/code-scanning/miscellaneous/allowing-ip-addresses-for-code-container-scanning), [code scanning](https://help.aikido.dev/code-scanning/miscellaneous/allowing-ip-addresses-for-code-container-scanning), or [api scanning](https://help.aikido.dev/dast-surface-monitoring/miscellaneous/allowing-ip-addresses-for-dast-surface-monitoring), do not use these IPs.
 {% endhint %}
 
 ## Why allowlist our IPs?
@@ -25,7 +25,7 @@ Cloud scanning traffic comes from the region where **your Aikido workspace** is 
 
 | Aikido URL                                     | Region  | IP list               |
 | ---------------------------------------------- | ------- | --------------------- |
-| [app.aikido.dev](https://app.aikido.dev)       | EU      | EU-based IP addresses |
+| [app.aikido.dev](https://app.aikido.dev/?regionRedirect=1)       | EU      | EU-based IP addresses |
 | [app.us.aikido.dev](https://app.us.aikido.dev) | US      | US-based IP addresses |
 | [app.aikidogov.us](https://app.aikidogov.us)   | FedRAMP | FedRAMP IP addresses  |
 | [app.au.aikido.dev](https://app.au.aikido.dev) | AU      | Coming soon           |

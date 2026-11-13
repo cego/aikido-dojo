@@ -1,7 +1,5 @@
 # Data Exposure Audit (DSPM)
 
-What DSPM is, and how Aikido's Data Exposure Audit takes a code-based approach.
-
 Data security posture management (DSPM) helps you understand where sensitive data lives, who can access it, how it's protected, and where it may be exposed.
 
 Sensitive data doesn't stay in one place. It moves through APIs, databases, logs, queues, SaaS tools, warehouses, backups, and AI workflows, because your application moves it. Traditional DSPM finds where that data landed in storage. For developers, the harder question is often: what code path created the exposure?
@@ -29,8 +27,8 @@ Traditional DSPM finds sensitive data where it lives. Code-based DSPM finds how 
 
 ## Data Exposure Audit in Aikido
 
-**Data Exposure Audit** is the data-focused audit type in [AI Code Analysis](/ai-code-analysis/ai-code-analysis.md). It is Aikido's code-based DSPM, alongside Code Security Audit, Cloud Security Audit, and Smart Contract Audit.
+**Data Exposure Audit** is the data-focused audit type in [AI Code Analysis](https://help.aikido.dev/ai-code-analysis/ai-code-analysis). It is Aikido's code-based DSPM, alongside Code Security Audit, Cloud Security Audit, and Smart Contract Audit.
 
-A Data Exposure Audit maps sensitive data handling in your repositories and returns findings with evidence and remediation in code. No database access required. To run one, see [Run a Data Exposure Audit](/ai-code-analysis/what-is-dspm/data-exposure-audit.md). For the finding classes in scope, see [What Data Exposure Audit Finds](/ai-code-analysis/what-is-dspm/what-data-exposure-audit-finds.md).
+A Data Exposure Audit maps sensitive data handling in your repositories and returns findings with evidence and remediation in code. No database access required. To run one, see [Run a Data Exposure Audit](https://help.aikido.dev/ai-code-analysis/what-is-dspm/data-exposure-audit). For the finding classes in scope, see [What Data Exposure Audit Finds](https://help.aikido.dev/ai-code-analysis/what-is-dspm/what-data-exposure-audit-finds).
 
 For a longer product perspective, see [What developers need to know about DSPM and data exposure in code](https://www.aikido.dev/blog/what-is-dspm).

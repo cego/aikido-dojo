@@ -23,16 +23,15 @@ The provider manages configuration for repositories that already exist in Aikido
 
 * Terraform 1.0 or later, or OpenTofu
 * An Aikido workspace with API access
-* OAuth2 client credentials from the [Aikido REST API integration page](https://app.aikido.dev/settings/integrations/api/aikido/rest)
+* OAuth2 client credentials from the [Aikido REST API integration page](https://app.aikido.dev/settings/integrations/api/aikido/rest?regionRedirect=1)
 
 ## Set up the provider
 
 {% stepper %}
 {% step %}
-
 ### Create API credentials
 
-1. Go to the [Aikido REST API integration page](https://app.aikido.dev/settings/integrations/api/aikido/rest).
+1. Go to the [Aikido REST API integration page](https://app.aikido.dev/settings/integrations/api/aikido/rest?regionRedirect=1).
 2. Create a client ID and client secret.
 3. Store the secret securely. You will not be able to view it again after you leave the page.
 
@@ -40,13 +39,11 @@ See the [API authorization docs](https://apidocs.aikido.dev/reference/authorizat
 {% endstep %}
 
 {% step %}
-
 ### Declare the provider
 
 Add the provider to your Terraform configuration, then run `terraform init`:
 
 {% code title="main.tf" %}
-
 ```terraform
 terraform {
   required_providers {
@@ -62,7 +59,6 @@ provider "aikido" {
   client_secret = var.aikido_client_secret
 }
 ```
-
 {% endcode %}
 
 You can also pass credentials with environment variables instead of hardcoding them:
@@ -75,11 +71,9 @@ When those are set, you can use an empty provider block:
 ```terraform
 provider "aikido" {}
 ```
-
 {% endstep %}
 
 {% step %}
-
 ### Target your Aikido region (optional)
 
 By default, the provider uses the EU API (`https://app.aikido.dev/api`). If your workspace is hosted in another region, set `base_url` (or the `AIKIDO_BASE_URL` environment variable) to match the app URL you use to log in:
@@ -98,7 +92,6 @@ provider "aikido" {
   base_url      = "https://app.us.aikido.dev/api"
 }
 ```
-
 {% endstep %}
 {% endstepper %}
 
@@ -148,5 +141,5 @@ For every argument, import ID, and resource-specific behavior, use the official 
 ## Related docs
 
 * [Aikido management API](https://apidocs.aikido.dev/)
-* [AutoFix](/autofix-and-remediation/overview-aikido-autofix.md)
-* [PR gating](/pr-and-release-gating/aikido-ci-gating-functionality.md)
+* [AutoFix](https://help.aikido.dev/autofix-and-remediation/overview-aikido-autofix)
+* [PR gating](https://help.aikido.dev/pr-and-release-gating/aikido-ci-gating-functionality)

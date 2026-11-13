@@ -4,7 +4,7 @@ When "Force Requests for New Packages" is enabled for an ecosystem, team members
 
 ## Accessing the Inbox
 
-Click [View Requests](https://app.aikido.dev/endpoint-protection/inbox) in the top right of the Device Protection page.
+Click [View Requests](https://app.aikido.dev/endpoint-protection/inbox?regionRedirect=1) in the top right of the Device Protection page.
 
 ## Approving a request
 
@@ -24,7 +24,7 @@ You can receive notifications when new install requests arrive in the Inbox. Aik
 * **Slack:** Connect your Slack workspace to receive a message in a channel of your choice whenever a new request is pending.
 * **Microsoft Teams:** Connect Microsoft Teams to receive notifications in a Teams channel.
 
-To configure notifications, go to the [Inbox](https://app.aikido.dev/endpoint-protection/inbox) page and click **Manage Alerts**.
+To configure notifications, go to the [Inbox](https://app.aikido.dev/endpoint-protection/inbox?regionRedirect=1) page and click **Manage Alerts**.
 
 ## Pending and Handled
 
@@ -37,6 +37,6 @@ You can use the **Search** bar to find specific requests by package name.
 
 ## What happens after a decision
 
-An approved request counts as an explicit allow going forward. If the same package is requested again on another device, it will be allowed automatically (see rule 3 in [Configuring Installation Policies](/aikido-device-protection/using-aikido-endpoint/configuring-installation-policies.md#how-aikido-decides-to-block-or-allow-a-package)).
+An approved request counts as an explicit allow going forward. If the same package is requested again on another device, it will be allowed automatically (see rule 3 in [Configuring Installation Policies](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/configuring-installation-policies#how-aikido-decides-to-block-or-allow-a-package)).
 
 A rejected request does not permanently block the package. If the same user or device requests it again, a new request will appear in the Inbox.

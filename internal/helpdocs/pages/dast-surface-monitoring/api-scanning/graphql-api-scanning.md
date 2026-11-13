@@ -1,7 +1,7 @@
 # GraphQL API Scanning
 
 {% hint style="warning" %}
-**Agentic Scan is the recommended option for testing GraphQL APIs.** It covers fuzzing-style checks plus business-logic flaws, IDOR and cross-tenant data leaks that the GraphQL scanner cannot find. See [Aikido Pentest](/pentests/aikido-pentest.md).
+**Agentic Scan is the recommended option for testing GraphQL APIs.** It covers fuzzing-style checks plus business-logic flaws, IDOR and cross-tenant data leaks that the GraphQL scanner cannot find. See [Aikido Pentest](https://help.aikido.dev/pentests/aikido-pentest).
 {% endhint %}
 
 Aikido can scan your GraphQL API endpoints to uncover endpoint vulnerabilities specifically related to GraphQL. One of the methods we use is API fuzzing, which essentially includes spamming dangerous payloads to each field in your API.
@@ -12,11 +12,11 @@ NEVER run on a production environment, always on staging to avoid potential down
 
 ### Main Use Cases <a href="#main-use-cases" id="main-use-cases"></a>
 
-You can see all checks in the [Aikido app here](https://app.aikido.dev/domains/checks?scanner=graphql).
+You can see all checks in the [Aikido app here](https://app.aikido.dev/domains/checks?scanner=graphql&regionRedirect=1).
 
 ### Setting up GraphQL API Scanning <a href="#setting-up-graphql-api-scanning" id="setting-up-graphql-api-scanning"></a>
 
-**Step 1:** Click **Add Domain** in the [Domain Overview](https://app.aikido.dev/domains), expand **Advanced** in the scan-type chooser and select **GraphQL**
+**Step 1:** Click **Add Domain** in the [Domain Overview](https://app.aikido.dev/domains?regionRedirect=1), expand **Advanced** in the scan-type chooser and select **GraphQL**
 
 [image: Choose scan type modal with the Advanced section expanded showing REST API and GraphQL options.]
 
@@ -30,7 +30,7 @@ You can see all checks in the [Aikido app here](https://app.aikido.dev/domains/c
 
 [image: Domain action menu offering scan, configuration, authentication, and delete options.]
 
-This will trigger the modal where you can fill in the authentication details. For the full list of supported authentication methods, see [Authenticated API Scanning for REST/GraphQL](/dast-surface-monitoring/api-scanning/authenticated-api-scanning-for-rest-graphql.md).
+This will trigger the modal where you can fill in the authentication details. For the full list of supported authentication methods, see [Authenticated API Scanning for REST/GraphQL](https://help.aikido.dev/dast-surface-monitoring/api-scanning/authenticated-api-scanning-for-rest-graphql).
 
 [image: Domain authentication setup form for enabling form-based login credentials.]
 
@@ -40,4 +40,4 @@ All requests coming from Aikido REST and GraphQL scans will have:
 
 * the `User-Agent` set to `aikido-scan-agent/1.0`
 * the following header `aikido-api-test` set to value `1` in the request
-* [will come from the IP's documented here](/dast-surface-monitoring/miscellaneous/allowing-ip-addresses-for-dast-surface-monitoring.md)
+* [will come from the IP's documented here](https://help.aikido.dev/dast-surface-monitoring/miscellaneous/allowing-ip-addresses-for-dast-surface-monitoring)

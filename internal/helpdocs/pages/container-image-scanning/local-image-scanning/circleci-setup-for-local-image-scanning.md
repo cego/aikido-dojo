@@ -6,12 +6,12 @@ The Aikido Security Local Scanner is a tool that enables you to perform Aikido S
 
 ### 1. Get your authentication token <a href="#id-1-get-your-authentication-token" id="id-1-get-your-authentication-token"></a>
 
-1. Go to the [Local Scanner Image setup page](https://app.aikido.dev/settings/container-image-registry/add/localscan)
+1. Go to the [Local Scanner Image setup page](https://app.aikido.dev/settings/container-image-registry/add/localscan?regionRedirect=1)
 2. Generate an authentication token and copy. Note that you will only be able to view this token once.
 3. Add this token as argument `--apikey` when running the Local Scanner in your project .
-4. Save this token as an environment variable by going to **Project Settings** > **Environment Variables** > **Add Environment Variable** in CircleCI.
+4.  Save this token as an environment variable by going to **Project Settings** > **Environment Variables** > **Add Environment Variable** in CircleCI.
 
-   [image: API key environment variable added with value and creation timestamp options.]
+    [image: API key environment variable added with value and creation timestamp options.]
 
 ### 2. Running the Local Scanner <a href="#id-2-running-the-local-scanner" id="id-2-running-the-local-scanner"></a>
 

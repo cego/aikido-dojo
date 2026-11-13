@@ -12,14 +12,12 @@ Assigning **cloud resources by tag** to teams in Aikido can help to streamline i
 
 {% stepper %}
 {% step %}
-
 ### Create a team and assign the cloud
 
-Create a new team or select an existing one, then assign the cloud to it. See [Managing User Access with Teams](/getting-started/manage-teams-and-applications/managing-user-access-with-teams.md).
+Create a new team or select an existing one, then assign the cloud to it. See [Managing User Access with Teams](https://help.aikido.dev/getting-started/manage-teams-and-applications/managing-user-access-with-teams).
 {% endstep %}
 
 {% step %}
-
 ### Click Limit Access By Tag
 
 In the team's list of resources, open the actions menu next to the cloud and click **"Limit Access By Tag"**.
@@ -27,7 +25,6 @@ In the team's list of resources, open the actions menu next to the cloud and cli
 {% endstep %}
 
 {% step %}
-
 ### Define the tags
 
 Choose whether to **include** or **exclude** tags for the team, then enter the tag **key** and **value**. Click **"Add Another Tag"** to add more, then click **"Save Changes"**.
@@ -47,7 +44,6 @@ For example, including `env`=`production` and `team`=`payments` shows issues on 
 {% endstep %}
 
 {% step %}
-
 ### Filter issues in the feed and reports
 
 Go to the **Feed** or **Reports** section and filter by the team. You'll only see the cloud issues that match the tag condition. Other issue types, like virtual machine issues, aren't affected by tag filters and are still shown.

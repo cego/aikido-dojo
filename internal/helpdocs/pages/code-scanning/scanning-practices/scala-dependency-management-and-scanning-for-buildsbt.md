@@ -1,6 +1,6 @@
 # Scala: Dependency Management and Scanning for build.sbt
 
-## The Challenge <a href="#the-challenge" id="the-challenge"></a>
+## The Challenge {#the-challenge}
 
 Aikido can find known vulnerabilities (CVE) in your Scala dependencies as well as malware and dangerous licenses being used by those dependencies.
 
@@ -8,15 +8,15 @@ How does Aikido find those dependencies and their transitive subdependencies?
 
 In case of Scala we scan the `build.sbt` file for dependencies. It should be noted that `build.sbt` files might not contain exact versions for some of your dependencies. This can cause Aikido to not find the full range of risks in your application.
 
-It's therefore recommended to use `build.sbt.lock` lockfiles that contain an exact version for each dependency as well as the subdependencies.
+It's therefore recommended to use `build.sbt.lock` lockfiles that contain an exact version for each dependency as well as the subdependencies. 
 
 There are other reasons to use lockfiles besides making security scanning easier for Aikido:
 
-* Using a lockfile protects you against supply chain attacks via malicious packages. This kind of attack is becoming more popular
-* Using a lockfiles makes your build more predictable as everyone is using the exact same minor version of packages. Less chance of 'works on my machine'
-* Faster build times: no need for dependency resolution anymore
+- Using a lockfile protects you against supply chain attacks via malicious packages. This kind of attack is becoming more popular
+- Using a lockfiles makes your build more predictable as everyone is using the exact same minor version of packages. Less chance of 'works on my machine'
+- Faster build times: no need for dependency resolution anymore
 
-## Example <a href="#example" id="example"></a>
+## Example {#example}
 
 Let's look at a recent case that highlights these challenges.
 
@@ -31,9 +31,11 @@ libraryDependencies ++= Seq(
 
 Aikido reported:
 
-* 3 Critical CVEs in Akka HTTP
-* 2 High-severity vulnerabilities in Spark
-* 1 Critical vulnerability in the Cassandra driver
+- 3 Critical CVEs in Akka HTTP
+
+- 2 High-severity vulnerabilities in Spark
+
+- 1 Critical vulnerability in the Cassandra driver
 
 After investigation, all turned out to be false positives. The scanner was checking against different versions than what was actually being used in production:
 
@@ -49,7 +51,7 @@ spark-core 3.3.2   // Secure
 cassandra-driver 4.15.0  // Secure
 ```
 
-## Solution: Add a lockfile <a href="#solution-add-a-lockfile" id="solution-add-a-lockfile"></a>
+## Solution: Add a lockfile {#solution-add-a-lockfile}
 
 Use the [SBT Dependency Lock](https://github.com/stringbean/sbt-dependency-lock) plugin to generate a lockfile for your project.
 
@@ -84,11 +86,11 @@ The resulting lock file (build.sbt.lock) explicitly defines all dependencies:
 sbt "dependencyLockCheck"
 ```
 
-### Alternative Workaround: Container Scanning <a href="#alternative-workaround-container-scanning" id="alternative-workaround-container-scanning"></a>
+### Alternative Workaround: Container Scanning {#alternative-workaround-container-scanning}
 
 While lock files provide excellent dependency control at the source level, container scanning offers another powerful approach to security validation. Since containers include the compiled artifacts, they represent the actual state of your production environment.
 
-#### Benefits of Container Scanning <a href="#benefits-of-container-scanning" id="benefits-of-container-scanning"></a>
+#### Benefits of Container Scanning {#benefits-of-container-scanning}
 
 ```
 # Example Dockerfile showing what gets scanned
@@ -106,22 +108,25 @@ RUN ls -la /app/lib/
 # cassandra-driver-core-4.15.0.jar
 ```
 
-#### When to Use Container Scanning <a href="#when-to-use-container-scanning" id="when-to-use-container-scanning"></a>
+#### When to Use Container Scanning {#when-to-use-container-scanning}
 
 Container scanning is particularly valuable when:
 
-* You need to validate production-ready artifacts
-* Your build process involves multiple stages
-* You want to verify the exact versions running in production
-* You need to scan both your application and its runtime environment
+- You need to validate production-ready artifacts
 
-## Container Scanning vs. Lock Files <a href="#container-scanning-vs-lock-files" id="container-scanning-vs-lock-files"></a>
+- Your build process involves multiple stages
 
-| **Aspect**     | **Container Scanning** | **Lock Files**       |
-| -------------- | ---------------------- | -------------------- |
-| When to verify | Post-build             | Pre-build            |
-| What's checked | Compiled artifacts     | Source dependencies  |
-| Accuracy       | Production-exact       | Development-exact    |
-| Integration    | CI/CD pipeline         | Development workflow |
+- You want to verify the exact versions running in production
+
+- You need to scan both your application and its runtime environment
+
+## Container Scanning vs. Lock Files {#container-scanning-vs-lock-files}
+
+| **Aspect** | **Container Scanning** | **Lock Files** |
+| --- | --- | --- |
+| When to verify | Post-build | Pre-build |
+| What's checked | Compiled artifacts | Source dependencies |
+| Accuracy | Production-exact | Development-exact |
+| Integration | CI/CD pipeline | Development workflow |
 
 > **Best Practice**: Use both approaches. While container scanning is valuable, it's most effective when used alongside lock files.

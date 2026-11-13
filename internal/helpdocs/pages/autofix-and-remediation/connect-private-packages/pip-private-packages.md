@@ -6,7 +6,7 @@ For Aikido to update dependencies that include private packages, it needs access
 
 You can configure Aikido to authenticate with your private PyPI registry when updating the PIP dependencies by following the steps below:
 
-1. Go to your account's settings page for the autofixer in Aikido, [here](https://app.aikido.dev/issues/fix/settings).
+1. Go to your account's settings page for the autofixer in Aikido, [here](https://app.aikido.dev/issues/fix/settings?regionRedirect=1).
 2. Click on "Connect Registry", the private registry modal will now be shown
 
 3. Select PIP and provide the index URL to the PyPI registry including the username and password in the following format:
@@ -23,13 +23,13 @@ If the private registry is hosted on **GitHub**, **GitLab**, **BitBucket** or **
 
 ### Same SCM organization <a href="#same-scm-organization" id="same-scm-organization"></a>
 
-If the private Git repository for the pip is in the same organization as the code being autofixed, make sure your [AutoFix access token](https://app.aikido.dev/issues/fix/settings) has access to the private git repository.
+If the private Git repository for the pip is in the same organization as the code being autofixed, make sure your [AutoFix access token](https://app.aikido.dev/issues/fix/settings?regionRedirect=1) has access to the private git repository.
 
 ### Different SCM organization <a href="#different-scm-organization" id="different-scm-organization"></a>
 
 You can configure Aikido to authenticate with your private repositories when updating the dependencies by following the steps below:
 
-1. Go to your account's settings page for the autofixer in Aikido, [here](https://app.aikido.dev/settings/integrations/autofix).
+1. Go to your account's settings page for the autofixer in Aikido, [here](https://app.aikido.dev/settings/integrations/autofix?regionRedirect=1).
 2. Click on "Connect Registry", the configuration modal will now be shown
 
 3. Select "Environment Variables"

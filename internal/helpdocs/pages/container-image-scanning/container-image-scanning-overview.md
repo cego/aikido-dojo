@@ -1,6 +1,6 @@
 # Container Image Scanning Overview
 
-<table data-card-size="large" data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><a href="/container-image-scanning/cloud-provider-registries.md"><strong>Connect Your Container Registry</strong></a></td><td></td><td><a href="/container-image-scanning/cloud-provider-registries.md">Cloud Provider Registries</a></td></tr><tr><td><a href="/container-image-scanning/standalone-registries.md"><strong>Connect Standalone Registry</strong></a></td><td></td><td><a href="/container-image-scanning/standalone-registries.md">Standalone Registries</a></td></tr></tbody></table>
+<table data-card-size="large" data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><a href="https://help.aikido.dev/container-image-scanning/cloud-provider-registries"><strong>Connect Your Container Registry</strong></a></td><td></td><td><a href="https://help.aikido.dev/container-image-scanning/cloud-provider-registries">cloud-provider-registries</a></td></tr><tr><td><a href="https://help.aikido.dev/container-image-scanning/standalone-registries"><strong>Connect Standalone Registry</strong></a></td><td></td><td><a href="https://help.aikido.dev/container-image-scanning/standalone-registries">standalone-registries</a></td></tr></tbody></table>
 
 Container image scanning in Aikido is designed to treat your images as first-class security assets. It connects three things that are usually siloed: registries (where images live), code (where you can actually fix issues), and runtimes (where risk materializes).
 
@@ -83,7 +83,7 @@ When Aikido finds vulnerabilities in a container’s base image, AutoFix suggest
 
 #### Aikido Images
 
-When upgrading to a newer OS release or base image is expensive or risky, Aikido offers [**Aikido Images**](/autofix-and-remediation/aikido-images/autofix-for-containers-using-aikido-images.md), a registry of zero-CVE base images for containers. These are:
+When upgrading to a newer OS release or base image is expensive or risky, Aikido offers [**Aikido Images**](https://help.aikido.dev/autofix-and-remediation/aikido-images/autofix-for-containers-using-aikido-images), a registry of zero-CVE base images for containers. These are:
 
 * Available for both maintained and end-of-life base images
 * Provided as drop-in replacements that are intended to be compatible while removing known severe (critical and high) CVEs

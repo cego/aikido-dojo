@@ -1,7 +1,5 @@
 # Default PR/MR gating configuration for new repositories
 
-Automatically apply a default PR/MR gating config when new repositories are added.
-
 If you frequently add repositories to Aikido, you can set a single default PR/MR gating configuration once, and Aikido will automatically apply it to every newly added repository in the future.
 
 ### Prerequisite <a href="#prerequisite" id="prerequisite"></a>
@@ -10,10 +8,10 @@ Make sure Aikido automatically **activates new repositories**.
 
 If Aikido doesn’t activate the repository, it can’t apply the default configuration.
 
-1. Go to [Repository Settings](https://app.aikido.dev/settings/integrations/repositories).
+1. Go to [Repository Settings](https://app.aikido.dev/settings/integrations/repositories?regionRedirect=1).
 2. Enable **Automatically activate new repos**.
 
-Need the UI walkthrough? See [Ensuring Aikido Scans New Repositories](/code-scanning/miscellaneous/ensuring-aikido-scans-new-repositories.md).
+Need the UI walkthrough? See [Ensuring Aikido Scans New Repositories](https://help.aikido.dev/code-scanning/miscellaneous/ensuring-aikido-scans-new-repositories).
 
 ### Steps <a href="#steps" id="steps"></a>
 
@@ -21,7 +19,7 @@ Need the UI walkthrough? See [Ensuring Aikido Scans New Repositories](/code-scan
 {% step %}
 **Go to the configuration page**
 
-Open [Repositories](https://app.aikido.dev/repositories) → [Pull/Merge Requests](https://app.aikido.dev/repositories/prs) → `Manage PR/MR Checks`.
+Open [Repositories](https://app.aikido.dev/repositories?regionRedirect=1) → [Pull/Merge Requests](https://app.aikido.dev/repositories/prs?regionRedirect=1) → `Manage PR/MR Checks`.
 
 <div data-with-frame="true"></div>
 

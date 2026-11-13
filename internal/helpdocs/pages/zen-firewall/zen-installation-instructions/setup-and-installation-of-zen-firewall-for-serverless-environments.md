@@ -2,11 +2,11 @@
 
 Zen Firewall can be deployed directly into popular serverless platforms to protect your applications and event-driven workloads. We currently support:
 
-* [AWS Lambda (NodeJS)](/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/aws-lambda.md)
+* [AWS Lambda (NodeJS)](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/aws-lambda)
   * API Gateway
   * SQS
-* [Google Cloud Functions (NodeJS)](/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/google-cloud-functions.md)
-* [Google Cloud Pub/Sub (NodeJS)](/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/google-cloud-pubsub.md)
+* [Google Cloud Functions (NodeJS)](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/google-cloud-functions)
+* [Google Cloud Pub/Sub (NodeJS)](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/google-cloud-pubsub)
 
 ## How It Works
 

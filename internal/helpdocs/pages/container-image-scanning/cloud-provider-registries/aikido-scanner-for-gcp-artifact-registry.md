@@ -12,18 +12,18 @@ Aikido supports scanning GCP Artifact images through both the **GCP scanner** an
 
 ## Installing the Aikido Scanner <a href="#installing-the-aikido-scanner" id="installing-the-aikido-scanner"></a>
 
-1. **Navigate to** [**Containers Page**](https://app.aikido.dev/containers)
-2. **Connect Registry**: Click on 'Connect registry' and select the first option: *'GCP artifact registry'*.
-3. **Select Aikido Scanner**.\
-   ​
+1. **Navigate to** [**Containers Page**](https://app.aikido.dev/containers?regionRedirect=1)
+2. **Connect Registry**: Click on 'Connect registry' and select the first option: _'GCP artifact registry'_.
+3.  **Select Aikido Scanner**.\
+    ​
 
-   [image: Choose a scanner for GCP Artifact Registry: Aikido or GCP Vulnerability scanning.]
-4. **Fill in the Details**: Create a service account called "AikidoContainerReader" and give it the role of "**Artifact Registry Reader**" at the project level.\
-   ​\
-   Once the service account is created, you'll need to generate an access key and upload it to Aikido. This key will be used by Aikido to make the necessary API requests to scan your resources.\
-   ​
+    [image: Choose a scanner for GCP Artifact Registry: Aikido or GCP Vulnerability scanning.]
+4.  **Fill in the Details**: Create a service account called "AikidoContainerReader" and give it the role of "**Artifact Registry Reader**" at the project level.\
+    ​\
+    Once the service account is created, you'll need to generate an access key and upload it to Aikido. This key will be used by Aikido to make the necessary API requests to scan your resources.\
+    ​
 
-   [image: Enter GCP Project ID and upload JSON to connect GCP Artifact Registry service.]
+    [image: Enter GCP Project ID and upload JSON to connect GCP Artifact Registry service.]
 5. **Completion**: Once the setup is complete, Aikido will scan the connected registry with the Aikido scanner on a nightly basis.
 
 ***

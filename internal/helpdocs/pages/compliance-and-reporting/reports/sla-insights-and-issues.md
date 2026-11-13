@@ -1,6 +1,6 @@
 # SLA Insights & Issues
 
-[SLA Insights](https://app.aikido.dev/reports/sla/stats) gives you visibility into how well your organization meets its remediation targets (MTTR Mean Time to Remediation). It focuses on response time, overdue issues, and overall remediation performance across severities.
+[SLA Insights](https://app.aikido.dev/reports/sla/stats?regionRedirect=1) gives you visibility into how well your organization meets its remediation targets (MTTR Mean Time to Remediation). It focuses on response time, overdue issues, and overall remediation performance across severities.
 
 This report helps you understand whether security issues are being resolved within the timeframes you defined.
 

@@ -20,7 +20,7 @@ Aikido maintains the lists on the **Recommended** and **Optional** tabs and keep
 
 ## Set a policy on a domain list
 
-1. Go to [Device Protection and open the Firewall tab](https://app.aikido.dev/endpoint-protection/firewall).
+1. Go to [Device Protection and open the Firewall tab](https://app.aikido.dev/endpoint-protection/firewall?regionRedirect=1).
 2. Open the **Recommended** or **Optional** tab.
 3. Select the list you want to configure.
 4. Set its status:
@@ -47,7 +47,7 @@ Start new lists on Monitoring for a week, check the traffic numbers, then switch
 
 Use an exception to set a policy on one of your own domains, or to override the domain lists for a single domain.
 
-1. Go to [Device Protection and open the Firewall tab](https://app.aikido.dev/endpoint-protection/firewall).
+1. Go to [Device Protection and open the Firewall tab](https://app.aikido.dev/endpoint-protection/firewall?regionRedirect=1).
 2. Open the **Exceptions** tab.
 3. Click **Add Exception**.
 4. Enter the domain (for example `clawhub.ai`).

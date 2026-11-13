@@ -9,7 +9,7 @@ Use it to catch risky changes before they land on your main branch. You decide w
 Start with the page that matches your Bitbucket plan. Then configure repositories in the dashboard.
 
 * **Bitbucket Free & Standard**
-  * Follow: [Bitbucket Free & Standard: PR Scans Setup](/pr-and-release-gating/bitbucket-pr-gating/bitbucket-ci-pr-gating-via-aikido-dashboard.md)
+  * Follow: [Bitbucket Free & Standard: PR Scans Setup](https://help.aikido.dev/pr-and-release-gating/bitbucket-pr-gating/bitbucket-ci-pr-gating-via-aikido-dashboard)
 * **Bitbucket Premium**
   * Use a dedicated Workspace Access Token
-  * Follow: [Bitbucket Premium: PR Gating Setup](/pr-and-release-gating/bitbucket-pr-gating/bitbucket-ci-pr-gating-via-aikido-dashboard-with-a-workspace-access-token.md)
+  * Follow: [Bitbucket Premium: PR Gating Setup](https://help.aikido.dev/pr-and-release-gating/bitbucket-pr-gating/bitbucket-ci-pr-gating-via-aikido-dashboard-with-a-workspace-access-token)

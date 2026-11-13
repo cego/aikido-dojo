@@ -1,8 +1,6 @@
 # What Code Security Audits Find
 
-What a Code Security Audit checks for in your source code.
-
-Code Security Audit reasons about your source code using the agentic engine [Aikido Pentest](/pentests/aikido-pentest.md) is built on. It covers the vulnerability classes Aikido Pentest validates, plus issues a pentest can't safely or reliably reach against a running app. The trade-off is that purely runtime concerns still need a live target. Each finding ships with code-based **Evidence**. See [Track Progress and Findings](/ai-code-analysis/ai-code-audit-overview/track-progress-and-findings.md) for how to read it.
+Code Security Audit reasons about your source code using the agentic engine [Aikido Pentest](https://help.aikido.dev/pentests/aikido-pentest) is built on. It covers the vulnerability classes Aikido Pentest validates, plus issues a pentest can't safely or reliably reach against a running app. The trade-off is that purely runtime concerns still need a live target. Each finding ships with code-based **Evidence**. See [Track Progress and Findings](https://help.aikido.dev/ai-code-analysis/ai-code-audit-overview/track-progress-and-findings) for how to read it.
 
 ## Coverage at a glance
 
@@ -15,9 +13,9 @@ Code Security Audit reasons about the issue classes Aikido Pentest validates, in
 * **SSRF, deserialization, and file handling:** Unsafe URL fetches, dangerous deserialization, path traversal, and unrestricted upload patterns.
 * **Cryptographic failures:** Broken algorithms, weak signatures (e.g., JWT), and sensitive data exposure in code paths.
 * **Business logic flaws:** Workflow bypasses, payment and checkout shortcuts, and multi-step exploit chains.
-* **Agentic application risks:** Prompt injection, excessive agency, insecure tool use, and the rest of the [OWASP Top 10 for Agentic Applications](/pentests/coverage-and-findings/what-issues-can-aikido-pentest-find/owasp-top-10-for-agentic-applications.md).
+* **Agentic application risks:** Prompt injection, excessive agency, insecure tool use, and the rest of the [OWASP Top 10 for Agentic Applications](https://help.aikido.dev/pentests/coverage-and-findings/what-issues-can-aikido-pentest-find/owasp-top-10-for-agentic-applications).
 
-For the full vulnerability catalog, see [What Issues Can Aikido Pentest Find?](/pentests/coverage-and-findings/what-issues-can-aikido-pentest-find.md). Every class listed there is in scope for Code Security Audit unless it appears in **What still needs a live target** below.
+For the full vulnerability catalog, see [What Issues Can Aikido Pentest Find?](https://help.aikido.dev/pentests/coverage-and-findings/what-issues-can-aikido-pentest-find). Every class listed there is in scope for Code Security Audit unless it appears in **What still needs a live target** below.
 
 ## Beyond what a live pentest reaches
 
@@ -29,7 +27,7 @@ Some issues are easier to identify from source, and others are only visible ther
 
 ## What still needs a live target
 
-Some checks only make sense against a running application. Code Security Audit can flag risky configuration in source, but it can't confirm what your environment actually does on the wire. For these, use [Aikido Pentest](/pentests/aikido-pentest.md):
+Some checks only make sense against a running application. Code Security Audit can flag risky configuration in source, but it can't confirm what your environment actually does on the wire. For these, use [Aikido Pentest](https://help.aikido.dev/pentests/aikido-pentest):
 
 * **TLS and transport posture:** Cipher suites, protocol versions, certificate chains, and HSTS as served.
 * **HTTP security headers as delivered:** Code Security Audit can see whether headers are set in code, but not what your CDN, WAF, or edge layer actually sends to a client.
@@ -45,7 +43,7 @@ Some checks only make sense against a running application. Code Security Audit c
 Code Security Audit is especially valuable for codebases that are **hard or impractical to set up for live testing**. If wiring up a staging environment, simulator, or deployed instance is the blocker, source-level reasoning gets you pentest-grade findings without any of that overhead:
 
 * **Mobile apps:** iOS and Android codebases that would otherwise need devices, simulators, or instrumentation to test.
-* **Smart contracts:** Solidity and other on-chain code, where setting up a realistic exploit environment is non-trivial. For a review focused only on the contracts, use [Smart Contract Audit](/ai-code-analysis/smart-contract-audit.md).
+* **Smart contracts:** Solidity and other on-chain code, where setting up a realistic exploit environment is non-trivial. For a review focused only on the contracts, use [Smart Contract Audit](https://help.aikido.dev/ai-code-analysis/smart-contract-audit).
 * **Desktop apps:** Installed binaries with no public URL to point a pentest at.
 * **Embedded software, libraries, and SDKs:** Code that ships into someone else's runtime, with no live target of your own.
 * **Internal tools and back-office systems:** Code paths behind VPNs, SSO, or admin-only access that a live pentest typically can't reach.
@@ -56,10 +54,10 @@ Agents work across mainstream application languages, configuration, and infrastr
 
 ### Can you confirm coverage before I start?
 
-Yes. [Contact support](/miscellaneous-info/contact-support.md) to check a specific framework, application type, or finding class before you spend credits.
+Yes. [Contact support](https://help.aikido.dev/miscellaneous-info/contact-support) to check a specific framework, application type, or finding class before you spend credits.
 
 ## Related
 
-{% content-ref url="/pages/kZRWK6NswIlL0dAmeNea" %}
-[Code Security Audit](/ai-code-analysis/ai-code-audit-overview.md)
+{% content-ref url="./" %}
+[.](https://help.aikido.dev/ai-code-analysis/ai-code-audit-overview)
 {% endcontent-ref %}

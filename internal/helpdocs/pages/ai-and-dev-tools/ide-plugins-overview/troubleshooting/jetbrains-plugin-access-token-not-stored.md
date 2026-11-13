@@ -6,6 +6,6 @@ Make sure the option "**Do not save, forget passwords after restart**" is **NOT*
 
 If "In native Keychain" or "In KeePass" is selected, verify that no mechanisms are interfering with JetBrains accessing your system's native keychain or KeePass on your machine.
 
-*Example configuration*
+_Example configuration_
 
 More info can be found in [JetBrains documentation.](https://www.jetbrains.com/help/idea/reference-ide-settings-password-safe.html#0)

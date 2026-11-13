@@ -1,6 +1,4 @@
-# Deploy Device Protection with SCCM
-
-Deploy Aikido Device Protection to managed Windows devices with a Microsoft Configuration Manager (SCCM) package that runs the install command.
+# Deploy Aikido Device Protection with SCCM on Windows
 
 Use Microsoft Configuration Manager (SCCM) to deploy Aikido Device Protection across your managed Windows fleet with the required permissions in place.
 
@@ -12,15 +10,13 @@ All devices must run the Configuration Manager client and be members of a device
 
 {% stepper %}
 {% step %}
-
 ### Prepare the package source
 
-1. Copy the **PowerShell install command** from the [Aikido app](https://app.aikido.dev/endpoint-protection/devices) (click **Connect Device**).
+1. Copy the **PowerShell install command** from the [Aikido app](https://app.aikido.dev/endpoint-protection/devices?regionRedirect=1) (click **Connect Device**).
 2. Save it as `aikido-install.ps1` in a folder on a network share the site server can read, for example `\\<server>\<share>\Aikido`.
 3. In the same folder, save the following script as `aikido-applocker.ps1`. It turns on the Application Identity service that AppLocker needs to enforce rules, then adds an AppLocker rule that stops users from launching the Aikido uninstaller.
 
 {% code title="aikido-applocker.ps1" %}
-
 ```powershell
 sc.exe config appidsvc start= auto
 Start-Service -Name AppIDSvc
@@ -29,12 +25,10 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/AikidoSec/safechain-in
 Set-AppLockerPolicy -XmlPolicy $tmp -Merge
 Remove-Item $tmp -Force
 ```
-
 {% endcode %}
 {% endstep %}
 
 {% step %}
-
 ### Create the package and install program
 
 1. In the Configuration Manager console, go to **Software Library** → **Application Management** → **Packages** and click **Create Package**.
@@ -45,10 +39,9 @@ Remove-Item $tmp -Force
    * **Command line**: `%windir%\Sysnative\WindowsPowerShell\v1.0\powershell.exe -NoProfile -ExecutionPolicy Bypass -File aikido-install.ps1`
    * **Run**: **Hidden**
    * **Program can run**: **Whether or not a user is logged on** (runs as SYSTEM)
-     {% endstep %}
+{% endstep %}
 
 {% step %}
-
 ### Add the lockdown program
 
 1. Select the **Aikido Device Protection** package, open the **Programs** tab, and click **Create Program**.
@@ -69,7 +62,6 @@ If end users are local administrators, AppLocker rules can be bypassed. Combine 
 {% endstep %}
 
 {% step %}
-
 ### Distribute and deploy the package
 
 1. Select the **Aikido Device Protection** package, click **Distribute Content**, and add your distribution points.
@@ -86,10 +78,10 @@ Clients pick up new deployments at the next machine policy polling interval (60 
 
 ## Troubleshooting
 
-| Problem                                                      | Fix                                                                                                                                                                             |
-| ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Device doesn't appear in the dashboard after the script runs | Reboot the device; the agent fully registers on the next boot                                                                                                                   |
-| Script exits with an error in the MDM console                | Run the script manually as SYSTEM on a test host to see the full error; confirm the device has internet access to download the installer                                        |
-| Agent service is not running                                 | Reboot the device; if the service is still absent, re-run the install script                                                                                                    |
-| Script is blocked by execution policy                        | Scripts run via MDM execute as SYSTEM and bypass user-level execution policy restrictions; confirm the MDM is not applying an additional policy that restricts script execution |
-| Device shows as inactive after installation                  | The agent needs a reboot to fully activate; check back after rebooting                                                                                                          |
+| Problem | Fix |
+| ------- | --- |
+| Device doesn't appear in the dashboard after the script runs | Reboot the device; the agent fully registers on the next boot |
+| Script exits with an error in the MDM console | Run the script manually as SYSTEM on a test host to see the full error; confirm the device has internet access to download the installer |
+| Agent service is not running | Reboot the device; if the service is still absent, re-run the install script |
+| Script is blocked by execution policy | Scripts run via MDM execute as SYSTEM and bypass user-level execution policy restrictions; confirm the MDM is not applying an additional policy that restricts script execution |
+| Device shows as inactive after installation | The agent needs a reboot to fully activate; check back after rebooting |

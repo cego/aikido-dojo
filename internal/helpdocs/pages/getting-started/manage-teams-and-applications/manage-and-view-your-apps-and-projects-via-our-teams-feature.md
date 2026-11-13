@@ -2,15 +2,15 @@
 
 ## Introduction <a href="#introduction" id="introduction"></a>
 
-Aikido lets you create teams, connect multiple repositories and clouds to have a clear overview of your apps and projects. This project/app view is available throughout the entire Aikido app, going from feed, alerting and reporting. This article focuses on using Teams in order to group resources into Project and Apps. Managing of User Access. If you are looking to manage User Access with teams, please [**click here**](/getting-started/manage-teams-and-applications/managing-user-access-with-teams.md).
+Aikido lets you create teams, connect multiple repositories and clouds to have a clear overview of your apps and projects. This project/app view is available throughout the entire Aikido app, going from feed, alerting and reporting. This article focuses on using Teams in order to group resources into Project and Apps. Managing of User Access. If you are looking to manage User Access with teams, please [**click here**](https://help.aikido.dev/getting-started/manage-teams-and-applications/managing-user-access-with-teams).
 
 ## Use Cases <a href="#use-cases" id="use-cases"></a>
 
-* **Agency Project Management:** Agencies frequently handle multiple clients, necessitating a structured approach to manage each client's repositories separately. Aikido facilitates this by allowing the creation of teams for each client, making it straightforward to organize and access client-specific repositories. Additionally, this allows for easy generation of client-specific reports.
+*   **Agency Project Management:** Agencies frequently handle multiple clients, necessitating a structured approach to manage each client's repositories separately. Aikido facilitates this by allowing the creation of teams for each client, making it straightforward to organize and access client-specific repositories. Additionally, this allows for easy generation of client-specific reports.
 
-  [image: Dropdown menu for selecting "All teams" or individual client teams.]
+    [image: Dropdown menu for selecting "All teams" or individual client teams.]
 * **Specify resources connect to an app:** you can use the team functionality to combine resources that are part of the same app (combination of repos, containers and clouds). This also allows you to view all reports
-* **Better overview when using a monorepo split.** You can assign team members to specific directories of your monorepo, improving their overview. More information on splitting monorepositories can be found [here](https://help.aikido.dev/en/articles/9026666-splitting-up-your-monorepo-per-directory).
+* **Better overview when using a monorepo split.** You can assign team members to specific directories of your monorepo, improving their overview. More information on splitting monorepositories can be found [here](https://help.aikido.dev/code-scanning/miscellaneous/split-your-monorepo-per-path).
 
 {% hint style="info" %}
 Repo linking is only available for manually created teams (not imported from SCM). Other resources like containers, clouds & Zen apps can be linked to both manually created and SCM-imported teams.
@@ -32,7 +32,7 @@ Repo linking is only available for manually created teams (not imported from SCM
 
 [image: User management interface for assigning people to the "Architects" team.]
 
-**Step 4:** **Link different resources** via the **responsibility tab.** You can add different resources such as repositories, clouds, containers, domains and zen apps. You can add repositories and containers **in bulk** via the [repository](https://app.aikido.dev/settings/integrations/repositories) and [container settings](https://app.aikido.dev/settings/container-image-registry) screen.
+**Step 4:** **Link different resources** via the **responsibility tab.** You can add different resources such as repositories, clouds, containers, domains and zen apps. You can add repositories and containers **in bulk** via the [repository](https://app.aikido.dev/settings/integrations/repositories?regionRedirect=1) and [container settings](https://app.aikido.dev/settings/container-image-registry?regionRedirect=1) screen.
 
 > If you want to link specific domains to a team, you can set this up by linking your domains to a repo or container. It will automatically inherit access permissions.
 
@@ -51,7 +51,7 @@ Repo linking is only available for manually created teams (not imported from SCM
 A parent team groups existing teams and takes on their resources. Select the parent team in the team filter to see issues for every child team.
 
 {% hint style="info" %}
-Parent teams are available on request. [Contact Support](/miscellaneous-info/contact-support.md) to enable them for your workspace.
+Parent teams are available on request. [Contact Support](https://help.aikido.dev/miscellaneous-info/contact-support) to enable them for your workspace.
 {% endhint %}
 
 Create a parent team with the [Create parent team](https://apidocs.aikido.dev/reference/createparentteam) endpoint. Pass the parent name and the child team IDs. Replace the child teams later with [Update child teams for parent team](https://apidocs.aikido.dev/reference/updatechildteamsforparentteam). Both calls need the `teams:write` scope.

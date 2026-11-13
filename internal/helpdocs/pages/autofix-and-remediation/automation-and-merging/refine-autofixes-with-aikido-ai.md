@@ -1,6 +1,6 @@
 # Refine AutoFixes with Aikido AI
 
-Aikido allows to automatically fix different types of findings. The **Refine with Aikido AI** chat panel lets you iteratively adjust AutoFixes using natural language, without leaving the diff view. This is powered by [Aikido Agent](/aikido-agent/aikido-agent.md), the same intelligence behind [Ask Aikido](/aikido-agent/ask-aikido.md).
+Aikido allows to automatically fix different types of findings. The **Refine with Aikido AI** chat panel lets you iteratively adjust AutoFixes using natural language, without leaving the diff view. This is powered by [Aikido Agent](https://help.aikido.dev/aikido-agent/aikido-agent), the same intelligence behind [Ask Aikido](https://help.aikido.dev/aikido-agent/ask-aikido).
 
 #### Use Cases
 
@@ -35,4 +35,4 @@ Be specific about intent, not just the symptom:
 
 ## Persisting the context
 
-If you want Aikido to always take into account your prefences while creating an AutoFix, use [Custom Context for AutoFixes](/autofix-and-remediation/automation-and-merging/custom-context-for-autofixes.md).
+If you want Aikido to always take into account your prefences while creating an AutoFix, use [Custom Context for AutoFixes](https://help.aikido.dev/autofix-and-remediation/automation-and-merging/custom-context-for-autofixes).

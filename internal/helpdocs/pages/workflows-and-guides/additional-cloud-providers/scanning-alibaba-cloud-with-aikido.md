@@ -2,10 +2,10 @@
 
 Aikido fully supports protecting workloads on Alibaba Cloud through specific integrations. A native integration may be added in the future, but you can already achieve full coverage by combining:<br>
 
-* [**Container image scanning**](#container-image-scanning) for Alibaba Cloud registry or any other OCI-compatible registry
-* [**Kubernetes cluster scanning**](#kubernetes-cluster-scanning) for Alibaba Cloud Managed Kubernetes or self-managed clusters
-* [**Kubernetes cluster image scanning**](#kubernetes-cluster-image-scanning) for Alibaba Cloud Managed Kubernetes or self-managed clusters
-* [**Virtual machine scanning**](#virtual-machine-scanning) via the Local VM Scanner on Alibaba Cloud instances
+* [**Container image scanning**](https://help.aikido.dev/workflows-and-guides/additional-cloud-providers/scanning-alibaba-cloud-with-aikido#container-image-scanning) for Alibaba Cloud registry or any other OCI-compatible registry
+* [**Kubernetes cluster scanning**](https://help.aikido.dev/workflows-and-guides/additional-cloud-providers/scanning-alibaba-cloud-with-aikido#kubernetes-cluster-scanning) for Alibaba Cloud Managed Kubernetes or self-managed clusters
+* [**Kubernetes cluster image scanning**](https://help.aikido.dev/workflows-and-guides/additional-cloud-providers/scanning-alibaba-cloud-with-aikido#kubernetes-cluster-image-scanning) for Alibaba Cloud Managed Kubernetes or self-managed clusters
+* [**Virtual machine scanning**](https://help.aikido.dev/workflows-and-guides/additional-cloud-providers/scanning-alibaba-cloud-with-aikido#virtual-machine-scanning) via the Local VM Scanner on Alibaba Cloud instances
 
 ## Features
 
@@ -13,36 +13,36 @@ Aikido fully supports protecting workloads on Alibaba Cloud through specific int
 
 Alibaba Cloud’s container registry and most third-party registries you use from Alibaba Cloud are OCI-compatible, so they can be scanned using Aikido.
 
-Create a read-only or pull-only user in Alibaba Cloud registry: <https://www.alibabacloud.com/help/en/acr/user-guide/configure-access-credentials?spm=a2c63.p38356.0.i1#task617>
+Create a read-only or pull-only user in Alibaba Cloud registry: [https://www.alibabacloud.com/help/en/acr/user-guide/configure-access-credentials?spm=a2c63.p38356.0.i1#task617](https://www.alibabacloud.com/help/en/acr/user-guide/configure-access-credentials?spm=a2c63.p38356.0.i1#task617)
 
 Follow the OCI guide below to configure container image scanning
 
-{% content-ref url="/pages/WbT1GJFncHssApSoIXH7" %}
-[Generic OCI-Compatible Registry](/container-image-scanning/standalone-registries/generic-oci-compatible-registry.md)
+{% content-ref url="../../container-image-scanning/standalone-registries/generic-oci-compatible-registry.md" %}
+[generic-oci-compatible-registry.md](https://help.aikido.dev/container-image-scanning/standalone-registries/generic-oci-compatible-registry)
 {% endcontent-ref %}
 
 ### Kubernetes cluster scanning
 
 If you use Alibaba Cloud Managed Kubernetes or run your own Kubernetes clusters on Alibaba Cloud VMs, you can connect them as generic Kubernetes clusters.
 
-{% content-ref url="/pages/HJqrXQMWoUZAKUrWnpkb" %}
-[Kubernetes Cluster Scanning](/cloud-scanning/kubernetes-cluster-scanning.md)
+{% content-ref url="../../cloud-scanning/kubernetes-cluster-scanning/" %}
+[kubernetes-cluster-scanning](https://help.aikido.dev/cloud-scanning/kubernetes-cluster-scanning)
 {% endcontent-ref %}
 
 ### Kubernetes cluster image scanning
 
 If you use Alibaba Cloud Managed Kubernetes or run your own Kubernetes clusters on Alibaba Cloud VMs, you can scan the images of running containers with Kubernetes image scanning.
 
-{% content-ref url="/pages/rSbyejklgqsaULug65TZ" %}
-[Kubernetes In-Cluster Image Scanning](/cloud-scanning/kubernetes-cluster-scanning/kubernetes-in-cluster-image-scanning.md)
+{% content-ref url="../../cloud-scanning/kubernetes-cluster-scanning/kubernetes-in-cluster-image-scanning.md" %}
+[kubernetes-in-cluster-image-scanning.md](https://help.aikido.dev/cloud-scanning/kubernetes-cluster-scanning/kubernetes-in-cluster-image-scanning)
 {% endcontent-ref %}
 
 ### Virtual Machine scanning
 
 To scan Virtual Machines on Alibaba Cloud, use the Local VM Scanner. It inspects packages, system dependencies and configuration directly on the instance.
 
-{% content-ref url="/pages/07U0LWsYijoM6UzZxn2i" %}
-[Local VM Scanning](/virtual-machine-scanning/local-vm-scanning.md)
+{% content-ref url="../../virtual-machine-scanning/local-vm-scanning/" %}
+[local-vm-scanning](https://help.aikido.dev/virtual-machine-scanning/local-vm-scanning)
 {% endcontent-ref %}
 
 You can roll this out centrally using your usual automation tooling (e.g. Ansible, Terraform-provisioned scripts, or cloud-init) so that new Alibaba Cloud instances are automatically enrolled.

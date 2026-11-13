@@ -21,7 +21,6 @@ Before connecting, make sure you have:
 
 {% stepper %}
 {% step %}
-
 #### Set up the HTTP Receiver log source in QRadar
 
 1. In QRadar, go to **Admin > Data Sources > Log Sources > Add**.
@@ -30,12 +29,11 @@ Before connecting, make sure you have:
    * **Listen Port** - any free port on the QRadar host (default `12469`). You'll enter the same port in Aikido.
    * **Communication Type** - `HTTP`, `HTTPS`, or `HTTPS and Client Authentication (mTLS)`. This must match what you select in Aikido.
    * **Event Parsing Method** - `Event Per Line` for newline-delimited JSON, or `Event Per JSON Array` for one JSON array per request. This must also match what you select in Aikido.
-   * *(Optional)* Turn on **Use HTTP Authentication Token Header** and set a header name and value, if you want to require an auth header on every request.
+   * _(Optional)_ Turn on **Use HTTP Authentication Token Header** and set a header name and value, if you want to require an auth header on every request.
 4. Save and deploy the log source.
-   {% endstep %}
+{% endstep %}
 
 {% step %}
-
 #### Connect a SIEM
 
 Go to **Settings > Integrations** in the Aikido app and add a new SIEM integration. In the **Connect a SIEM** dialog, select **IBM QRadar** and fill in:
@@ -51,7 +49,7 @@ Go to **Settings > Integrations** in the Aikido app and add a new SIEM integrati
 * **Event Parsing Method** - must match the log source's Event Parsing Method:
   * **Event Per Line** - newline-delimited JSON, one event per line.
   * **Event Per JSON Array** - a single JSON array of events per request.
-* **Authentication** *(optional)* - leave unset for an unauthenticated log source, or choose:
+* **Authentication** _(optional)_ - leave unset for an unauthenticated log source, or choose:
   * **HTTP Basic** - enter a **Username** and **Password**.
   * **Custom Header** - enter a **Header Name** and **Header Value** (use this if QRadar's **Use HTTP Authentication Token Header** option is on).
 
@@ -59,7 +57,6 @@ Click **Test connection** to confirm Aikido can reach QRadar, then **Save change
 {% endstep %}
 
 {% step %}
-
 #### Configure which issues sync
 
 On the QRadar integration page, under **Issue input settings**, configure which Aikido issues are synced to your SIEM:

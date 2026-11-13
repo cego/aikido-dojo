@@ -1,7 +1,5 @@
 # AutoFix for Gitlab with Deploy Keys
 
-Configure deploy keys so AutoFix pushes to your GitLab repositories over SSH instead of using your Personal Access Token (PAT).
-
 ## Why use deploy keys?
 
 Deploys keys are required when your GitLab group enforces both signed commits and uses Single Sign-on (SSO). With SSO enforced, GitLab requires your PAT to be re-authorized periodically for git pushes. Deploy keys aren’t tied to an SSO session, so AutoFix keeps working.
@@ -20,7 +18,7 @@ Your PAT is still required. Aikido uses it to add and remove the deploy keys thr
 
 ### Enable deploy keys
 
-1. In Aikido, go to [GitLab token settings](https://app.aikido.dev/onboarding/gitlab/update-workspace-access-token), open the AutoFix tab, and expand Advanced.
+1. In Aikido, go to [GitLab token settings](https://app.aikido.dev/onboarding/gitlab/update-workspace-access-token?regionRedirect=1), open the AutoFix tab, and expand Advanced.
 
 2. Under Deploy Key, open the Repositories field and select the repositories AutoFix should push to over SSH using the deploy keys.
 3. Click Add deploy key on repos.
@@ -29,6 +27,6 @@ Wait for the Updating Repositories dialog to finish.
 
 ## Remove deploy keys
 
-1. In Aikido, go to [GitLab token settings](https://app.aikido.dev/onboarding/gitlab/update-workspace-access-token), open the AutoFix tab and expand Advanced.
+1. In Aikido, go to [GitLab token settings](https://app.aikido.dev/onboarding/gitlab/update-workspace-access-token?regionRedirect=1), open the AutoFix tab and expand Advanced.
 2. Unselect the repositories you want to remove.
 3. Click Remove deploy key from repos and confirm.

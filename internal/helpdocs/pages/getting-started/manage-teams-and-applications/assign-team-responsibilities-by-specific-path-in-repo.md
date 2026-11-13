@@ -9,7 +9,7 @@ Assigning **specific repo paths** to teams in Aikido can help to streamline issu
 
 ### Assigning Specific Paths <a href="#assigning-specific-paths" id="assigning-specific-paths"></a>
 
-**Step 1:** Create a Team and Link Repositories (see [article](/getting-started/manage-teams-and-applications/managing-user-access-with-teams.md))
+**Step 1:** Create a Team and Link Repositories (see [article](https://help.aikido.dev/getting-started/manage-teams-and-applications/managing-user-access-with-teams))
 
 * Create a new team or select an existing one, then link the relevant repositories to this team.
 

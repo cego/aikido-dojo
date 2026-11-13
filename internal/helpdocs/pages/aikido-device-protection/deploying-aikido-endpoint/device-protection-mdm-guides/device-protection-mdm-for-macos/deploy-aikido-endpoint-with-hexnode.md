@@ -1,4 +1,4 @@
-# Deploy Device Protection with Hexnode
+# Deploy Aikido Device Protection with Hexnode on macOS
 
 Use Hexnode UEM to deploy Aikido Device Protection across your managed macOS fleet with the required permissions in place.
 
@@ -10,10 +10,10 @@ Use Hexnode UEM to deploy Aikido Device Protection across your managed macOS fle
 
 Before starting, make sure you have the following from the Aikido Device Protection dashboard:
 
-* The **Aikido Device Protection `.mobileconfig`** (downloaded from the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices))
+* The **Aikido Device Protection `.mobileconfig`** (downloaded from the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices?regionRedirect=1))
 * The **Aikido Device Protection installer** (`.pkg` file, downloaded from the dashboard)
 
-If you're missing any of these, go back to the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices), click **Connect Device**, and complete the pre-flight steps.
+If you're missing any of these, go back to the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices?regionRedirect=1), click **Connect Device**, and complete the pre-flight steps.
 {% endstep %}
 
 {% step %}
@@ -33,7 +33,7 @@ This profile allows the Aikido Device Protection system extension to load silent
 1. In your Hexnode portal, go to **Apps** → **+Add Apps** → **Enterprise App**.
 2. Select **macOS** as the platform and upload the Aikido Device Protection `.pkg` file.
 3. Complete the app details and save to finish adding it to your app inventory.
-   {% endstep %}
+{% endstep %}
 
 {% step %}
 **Create the install policy**
@@ -42,7 +42,7 @@ This profile allows the Aikido Device Protection system extension to load silent
 2. Under the **macOS** tab, go to **App Management** and click **Configure** next to **Mandatory Apps**.
 3. Add the uploaded Aikido Device Protection app.
 4. Go to **Policy Targets**, assign it to the same target devices or device groups, and save.
-   {% endstep %}
+{% endstep %}
 
 {% step %}
 **Deploy to your devices**
@@ -50,7 +50,7 @@ This profile allows the Aikido Device Protection system extension to load silent
 1. Deploy the **Aikido Device Protection** configuration profile policy.
 2. Verify it has reached all target devices. Check device compliance status in the Hexnode console.
 3. Deploy the **Aikido Device Protection** install policy.
-   {% endstep %}
+{% endstep %}
 
 {% step %}
 **Reboot devices after installation**
@@ -66,16 +66,16 @@ The agent fully activates on the next boot.
 
 On a test device, confirm:
 
-1. The system extension is activated:
+1.  The system extension is activated:
 
-   ```bash
-   systemextensionsctl list | grep aikido
-   ```
+    ```bash
+    systemextensionsctl list | grep aikido
+    ```
 
-   Expect to see the extension marked `[activated enabled]`.
+    Expect to see the extension marked `[activated enabled]`.
 2. Open **System Settings** → **General** → **Login Items & Extensions** and confirm the Aikido Device Protection entries cannot be toggled off.
-   {% endstep %}
-   {% endstepper %}
+{% endstep %}
+{% endstepper %}
 
 ## Troubleshooting
 

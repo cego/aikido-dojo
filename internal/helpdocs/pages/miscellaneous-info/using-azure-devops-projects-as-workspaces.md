@@ -16,7 +16,7 @@ The feature must be enabled by Aikido support. Contact us via chat to activate.
    * Go through the onboarding flow
    * No need to select any repositories here; this workspace will be used to split into other projects.
 2. **Access the project-based onboarding link**
-   * Go to <https://app.aikido.dev/onboarding/azure/connect-project-based-group>
+   * Go to [https://app.aikido.dev/onboarding/azure/connect-project-based-group](https://app.aikido.dev/onboarding/azure/connect-project-based-group?regionRedirect=1)
 3. **Enter your Azure Devops project name**
    * Provide the name of the project you want to create an Aikido workspace for.
 4. **Select repositories**

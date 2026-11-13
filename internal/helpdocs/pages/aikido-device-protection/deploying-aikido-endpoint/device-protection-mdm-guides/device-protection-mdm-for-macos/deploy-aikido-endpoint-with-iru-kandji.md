@@ -1,4 +1,4 @@
-# Deploy Device Protection with Iru / Kandji
+# Deploy Aikido Device Protection with Iru / Kandji
 
 Use Iru / Kandji to roll out Aikido Device Protection across your organization and protect managed macOS devices with a consistent setup.
 
@@ -10,10 +10,10 @@ Use Iru / Kandji to roll out Aikido Device Protection across your organization a
 
 Before starting, make sure you have the following from the Aikido Device Protection dashboard:
 
-* The **Aikido Device Protection `.mobileconfig`** (downloaded from the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices))
+* The **Aikido Device Protection `.mobileconfig`** (downloaded from the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices?regionRedirect=1))
 * The **Aikido Device Protection installer** (`.pkg` file, downloaded from the dashboard)
 
-If you're missing any of these, go back to the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices), click **Connect Device**, and complete the pre-flight steps.
+If you're missing any of these, go back to the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices?regionRedirect=1), click **Connect Device**, and complete the pre-flight steps.
 {% endstep %}
 
 {% step %}
@@ -44,7 +44,7 @@ Choosing **Audit and enforce** makes Iru reinstall the package on every check-in
 1. Deploy the **Aikido Device Protection** configuration profile
 2. Verify it has reached all target devices. Check status in the Iru console.
 3. Deploy the **Aikido Device Protection** app
-   {% endstep %}
+{% endstep %}
 
 {% step %}
 **Reboot devices after installation**
@@ -57,16 +57,16 @@ Restart your target devices after the agent installation completes. The agent fu
 
 On a test device, confirm:
 
-1. The system extension is activated:
+1.  The system extension is activated:
 
-   ```bash
-   systemextensionsctl list | grep aikido
-   ```
+    ```bash
+    systemextensionsctl list | grep aikido
+    ```
 
-   Expect to see the extension marked `[activated enabled]`.
+    Expect to see the extension marked `[activated enabled]`.
 2. Open **System Settings** → **General** → **Login Items & Extensions** and confirm the Aikido Device Protection entries cannot be toggled off.
-   {% endstep %}
-   {% endstepper %}
+{% endstep %}
+{% endstepper %}
 
 ## Troubleshooting
 

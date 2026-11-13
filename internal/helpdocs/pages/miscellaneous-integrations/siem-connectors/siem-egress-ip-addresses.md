@@ -18,4 +18,4 @@ This page is the canonical list of Aikido's SIEM egress IPs. Confirm against it 
 
 Add the addresses above to your SIEM's allowlist if it restricts inbound access by IP, for example a self-managed Splunk HEC, Elasticsearch cluster, or QRadar HTTP Receiver sitting behind a firewall.
 
-See [SIEM Connectors](/miscellaneous-integrations/siem-connectors.md) for setup steps for each SIEM.
+See [SIEM Connectors](https://help.aikido.dev/miscellaneous-integrations/siem-connectors) for setup steps for each SIEM.

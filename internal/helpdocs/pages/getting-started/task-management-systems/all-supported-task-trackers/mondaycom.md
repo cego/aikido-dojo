@@ -1,6 +1,6 @@
 # Monday.com
 
-This one-time setup *per workspace* allows everyone in your Aikido organization to create issues directly in the Monday app.
+This one-time setup _per workspace_ allows everyone in your Aikido organization to create issues directly in the Monday app.
 
 Following use cases are supported :
 
@@ -9,16 +9,16 @@ Following use cases are supported :
 
 ## Connecting the Aikido App to Monday.com <a href="#connecting-the-aikido-app-to-mondaycom" id="connecting-the-aikido-app-to-mondaycom"></a>
 
-1. Navigate to [Integration Settings](https://app.aikido.dev/settings/integrations) within the Aikido app.
-2. In the 'Task Trackers' section, select 'Monday.com'\
-   A modal will request an **API Key** (of your Monday workspace). This API key can be found in Administration -> Connections -> API.\
-   ​
+1. Navigate to [Integration Settings](https://app.aikido.dev/settings/integrations?regionRedirect=1) within the Aikido app.
+2.  In the 'Task Trackers' section, select 'Monday.com'\
+    A modal will request an **API Key** (of your Monday workspace). This API key can be found in Administration -> Connections -> API.\
+    ​
 
-   [image: Monday.com integration setup screen requesting API key for issue tracking configuration.]
-3. When you have filled in the credentials correctly, the 'Connected' status will appear.\
-   ​
+    [image: Monday.com integration setup screen requesting API key for issue tracking configuration.]
+3.  When you have filled in the credentials correctly, the 'Connected' status will appear.\
+    ​
 
-   [image: Monday.com issue-tracking integration successfully connected.]
+    [image: Monday.com issue-tracking integration successfully connected.]
 
 Close the modal & open the Monday.com Integration page.
 
@@ -33,21 +33,21 @@ There are two different options to create new tasks from Aikido into Monday.com.
 
 ## 1. Manual Task Creation <a href="#id-1-manual-task-creation" id="id-1-manual-task-creation"></a>
 
-1. Hover over any issue in your feed and click the ***+*** in the **assignee column.**\
-   ​
+1.  Hover over any issue in your feed and click the _**+**_ in the **assignee column.**\
+    ​
 
-   [image: Task assignment interface with options to add or manage an assignee.]
+    [image: Task assignment interface with options to add or manage an assignee.]
 
-   Alternatively, you can click the triple dots in the last columns to open up the action menu. If you have grouped issues, the triple dot action menu is available on every subissue.\
-   ​
+    Alternatively, you can click the triple dots in the last columns to open up the action menu. If you have grouped issues, the triple dot action menu is available on every subissue.\
+    ​
 
-   [image: Action menu with options to create task, snooze, ignore, copy link, or adjust severity.]
-2. Fill in the required details in the popup modal.\
-   ​
+    [image: Action menu with options to create task, snooze, ignore, copy link, or adjust severity.]
+2.  Fill in the required details in the popup modal.\
+    ​
 
-   [image: Task creation form for project management in monday.com, detailing a critical upgrade issue.]
+    [image: Task creation form for project management in monday.com, detailing a critical upgrade issue.]
 
-   ​
+    ​
 3. The newly created task in Monday.com will be linked in the Aikido Issue Detail under the 'Tasks' tab (sidepanel).
 
 [image: Critical Log4j upgrade task assigned to Maarten De Schuymer.]
@@ -58,7 +58,7 @@ There are two different options to create new tasks from Aikido into Monday.com.
 Aikido will automatically create tasks **every hour in bulk.** There is at the moment no option to trigger this manually.
 {% endhint %}
 
-1. Go to the [Monday.com Integration](https://app.aikido.dev/settings/integrations/tasktracker) settings page
+1. Go to the [Monday.com Integration](https://app.aikido.dev/settings/integrations/tasktracker?regionRedirect=1) settings page
 2. Select '**Change auto creation**'
 3. Define the criteria for automatic task creation.
 

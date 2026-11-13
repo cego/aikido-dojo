@@ -20,17 +20,15 @@ Before connecting, get these from Coralogix:
 
 {% stepper %}
 {% step %}
-
 #### Get your Coralogix credentials
 
 1. Sign in to Coralogix and check your account URL against [Coralogix's endpoints reference](https://coralogix.com/docs/integrations/coralogix-endpoints/) to confirm your **Region**.
 2. In Coralogix, go to **Settings > API Keys** and click **Add Key**.
 3. Select **Send Your Data Key**, give it a name (for example, "Aikido"), and create it.
 4. Copy the key immediately, Coralogix only shows it once.
-   {% endstep %}
+{% endstep %}
 
 {% step %}
-
 #### Connect a SIEM
 
 Go to **Settings > Integrations** in the Aikido app and add a new SIEM integration. In the **Connect a SIEM** dialog, select **Coralogix** and fill in:
@@ -45,7 +43,7 @@ Go to **Settings > Integrations** in the Aikido app and add a new SIEM integrati
 
 **Options**
 
-* **Timestamp Record Location** *(optional)* - a JSONPath or gjson path pointing at a timestamp field in the incoming data (for example `$.timestamp`). Leave empty to stamp every record with the current time when it's sent.
+* **Timestamp Record Location** _(optional)_ - a JSONPath or gjson path pointing at a timestamp field in the incoming data (for example `$.timestamp`). Leave empty to stamp every record with the current time when it's sent.
 * **Batch Config** - controls how data is batched before sending:
   * **Batch Data Size** - maximum total size in bytes of a batch before it's sent, defaults to under Coralogix's 2 MB per-request limit.
   * **Batch Record Count** - maximum number of records to accumulate before a batch is sent automatically.
@@ -55,7 +53,6 @@ Click **Test connection** to confirm Aikido can reach Coralogix, then **Save cha
 {% endstep %}
 
 {% step %}
-
 #### Configure which issues sync
 
 On the Coralogix integration page, under **Issue input settings**, configure which Aikido issues are synced:

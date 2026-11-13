@@ -3,7 +3,7 @@
 Package installs inside Windows Subsystem for Linux (WSL) run in their own Linux environment, outside the reach of the Windows agent. With **Protect WSL2** turned on, Device Protection on Windows finds the running WSL2 distros on each device and installs the Linux agent into them, so `npm`, `pip`, and other package managers in WSL get inspected the same way they do on Windows.
 
 {% hint style="info" %}
-WSL2 protection is available on request. [Contact Support](/miscellaneous-info/contact-support.md) to turn it on for your workspace.
+WSL2 protection is available on request. [Contact Support](https://help.aikido.dev/miscellaneous-info/contact-support) to turn it on for your workspace.
 {% endhint %}
 
 ## Prerequisites
@@ -13,7 +13,7 @@ WSL2 protection is available on request. [Contact Support](/miscellaneous-info/c
 
 ## Turn on WSL2 protection
 
-1. Go to [**Device Protection** → **Settings**](https://app.aikido.dev/endpoint-protection/settings).
+1. Go to [**Device Protection** → **Settings**](https://app.aikido.dev/endpoint-protection/settings?regionRedirect=1).
 2. Under **Device Settings**, turn on **Protect WSL2**.
 
 [image: Device Settings card with the Protect Containers and Protect WSL2 toggles]
@@ -28,17 +28,17 @@ The Windows agent watches the WSL2 distros of the user signed in at the device, 
 * **The Linux agent is installed when it is missing or broken.** Aikido runs the standard Linux install script as root inside the distro with `--headless`, using the Windows device's token. A distro that already has a healthy package is left alone.
 * **One distro at a time.** An install can take a few minutes, so each check installs into at most 1 distro and moves on to the next one on the following check.
 * **The distro keeps itself up to date.** After the install, the Linux agent updates itself inside the distro, the same as on any other Linux device.
-* **Each distro is its own device.** A protected distro has its own machine ID, so it reports to Aikido as a separate Linux device.
+* **Each distro is its own device.** It shows up on the Windows device's **Containers** tab. See [Containers and WSL2 Distros](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/containers-and-wsl2-distros).
 
 These distros are skipped:
 
-| Distro                                                      | Why                                                                                                                                                                                                                                           |
-| ----------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| WSL1 distros                                                | Not supported                                                                                                                                                                                                                                 |
-| `docker-desktop`, `rancher-desktop`, and `podman-machine-*` | Vendor images, not your workspace. To protect containers, turn on **Protect Containers** instead. See [Device Protection in Docker Containers](/aikido-device-protection/deploying-aikido-endpoint/device-protection-in-docker-containers.md) |
-| Distros that are being installed, converted, or exported    | Aikido waits until they are in a normal state                                                                                                                                                                                                 |
+| Distro | Why |
+| --- | --- |
+| WSL1 distros | Not supported |
+| `docker-desktop`, `rancher-desktop`, and `podman-machine-*` | Vendor images, not your workspace. To protect containers, turn on **Protect Containers** instead. See [Device Protection in Docker Containers](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-in-docker-containers) |
+| Distros that are being installed, converted, or exported | Aikido waits until they are in a normal state |
 
-Turning **Protect WSL2** off stops new installs. It doesn't remove the agent from distros that already have it. To remove it, follow the Linux steps in [Uninstall Device Protection](/aikido-device-protection/deploying-aikido-endpoint/uninstall-aikido-endpoint.md) inside the distro.
+Turning **Protect WSL2** off stops new installs. It doesn't remove the agent from distros that already have it. To remove it, follow the Linux steps in [Uninstall Device Protection](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/uninstall-aikido-endpoint) inside the distro.
 
 ## Verify it works
 
@@ -52,19 +52,23 @@ It prints the installed version, the service status, and whether the distro is e
 
 ## Troubleshooting
 
-| Problem                                                     | Fix                                                                                                                                                                                                                                                                                                                                   |
-| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| A distro is never protected                                 | Check that it is WSL2 (`wsl -l -v` in PowerShell shows `VERSION 2`), that it is running, and that it isn't on the skipped list above                                                                                                                                                                                                  |
-| The install fails with `neither curl nor wget is installed` | Install `curl` in the distro, e.g. `sudo apt-get install curl`                                                                                                                                                                                                                                                                        |
-| The install keeps failing                                   | Aikido retries with an increasing delay, up to 30 minutes between attempts. The Windows agent log, `%ProgramData%\AikidoSecurity\EndpointProtection\logs\EndpointProtection.log`, has the installer output for each attempt on lines starting with `WSL:`. Send that log to [Contact Support](/miscellaneous-info/contact-support.md) |
-| Nothing happens while nobody is signed in                   | Expected. Aikido only acts on the distros of the user signed in at the device                                                                                                                                                                                                                                                         |
+| Problem | Fix |
+| --- | --- |
+| A distro is never protected | Check that it is WSL2 (`wsl -l -v` in PowerShell shows `VERSION 2`), that it is running, and that it isn't on the skipped list above |
+| The install fails with `neither curl nor wget is installed` | Install `curl` in the distro, e.g. `sudo apt-get install curl` |
+| The install keeps failing | Aikido retries with an increasing delay, up to 30 minutes between attempts. The Windows agent log, `%ProgramData%\AikidoSecurity\EndpointProtection\logs\EndpointProtection.log`, has the installer output for each attempt on lines starting with `WSL:`. Send that log to [Contact Support](https://help.aikido.dev/miscellaneous-info/contact-support) |
+| Nothing happens while nobody is signed in | Expected. Aikido only acts on the distros of the user signed in at the device |
 
 ## Related
 
-{% content-ref url="/pages/762qjKwRIkF3Q2lgx56s" %}
-[Install Device Protection for Linux](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/install-device-protection-for-linux.md)
+{% content-ref url="containers-and-wsl2-distros.md" %}
+[containers-and-wsl2-distros.md](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/containers-and-wsl2-distros)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/U1zOPz2xS3bI8ZXDYgin" %}
-[Device Protection in Containers](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/device-protection-in-containers.md)
+{% content-ref url="device-protection-mdm-guides/linux/install-device-protection-for-linux/" %}
+[install-device-protection-for-linux](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/install-device-protection-for-linux)
+{% endcontent-ref %}
+
+{% content-ref url="device-protection-mdm-guides/linux/device-protection-in-containers.md" %}
+[device-protection-in-containers.md](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/device-protection-in-containers)
 {% endcontent-ref %}

@@ -14,4 +14,4 @@ Aikido ensures a one-to-one mapping with your GitHub organizations, including re
 
 ### Inviting users to Aikido without an organisational GitHub account <a href="#inviting-users-to-aikido-without-an-organisational-github-account" id="inviting-users-to-aikido-without-an-organisational-github-account"></a>
 
-You can invite users via Gmail, Microsoft or using a personal GitHub Account. More information can be [found here.](/getting-started/automated-user-management/invite-users-to-aikido-without-a-git-account.md)
+You can invite users via Gmail, Microsoft or using a personal GitHub Account. More information can be [found here.](https://help.aikido.dev/getting-started/automated-user-management/invite-users-to-aikido-without-a-git-account)

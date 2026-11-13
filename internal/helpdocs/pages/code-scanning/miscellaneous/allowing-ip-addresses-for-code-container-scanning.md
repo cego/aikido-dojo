@@ -8,7 +8,7 @@ Code and container scanning traffic comes from the region where **your Aikido wo
 
 | Aikido URL                                     | Region  | IP list               |
 | ---------------------------------------------- | ------- | --------------------- |
-| [app.aikido.dev](https://app.aikido.dev)       | EU      | EU-based IP addresses |
+| [app.aikido.dev](https://app.aikido.dev/?regionRedirect=1)       | EU      | EU-based IP addresses |
 | [app.us.aikido.dev](https://app.us.aikido.dev) | US      | US-based IP addresses |
 | [app.aikidogov.us](https://app.aikidogov.us)   | FedRAMP | FedRAMP IP addresses  |
 | [app.au.aikido.dev](https://app.au.aikido.dev) | AU      | AU-based IP addresses |

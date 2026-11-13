@@ -4,7 +4,7 @@ When Aikido updates dependencies in repositories that use private packages, it n
 
 ## Prerequisites <a href="#prerequisites" id="prerequisites"></a>
 
-If you’re using **Yarn v1**, use the `.npmrc` option in Aikido as described in [the NPM & PNPM documentation](/autofix-and-remediation/connect-private-packages/npm-private-packages.md). For **Yarn v2 and newer**, use the `.yarnrc.yml` file to configure private package access.
+If you’re using **Yarn v1**, use the `.npmrc` option in Aikido as described in [the NPM & PNPM documentation](https://help.aikido.dev/autofix-and-remediation/connect-private-packages/npm-private-packages). For **Yarn v2 and newer**, use the `.yarnrc.yml` file to configure private package access.
 
 ### **Configuring `.yarnrc.yml`**
 
@@ -27,10 +27,10 @@ You can find more information in the Yarn documentation [here](https://yarnpkg.c
 
 To allow repositories using private packages to be updated, provide your private registry configuration in the Aikido UI. Aikido stores the credentials encrypted and credentials cannot be retrieved through the Aikido UI or API.
 
-1. Go to *Autofix* > *Settings* in Aikido, [here](https://app.aikido.dev/issues/fix/settings).
-2. Click on "*Connect Registry*", and the selection modal will now be shown.
+1. Go to _Autofix_ > _Settings_ in Aikido, [here](https://app.aikido.dev/issues/fix/settings?regionRedirect=1).
+2. Click on "_Connect Registry_", and the selection modal will now be shown.
 
 3. Select Yarn to input your `.yarnrc.yml` file. (Note that for Yarn V1, you will need to select NPM.)
 
 4. Fill in the contents of the `.yarnrc.yml` file. The example shows a configuration for GitHub Packages in the piedPiper GitHub organisation.
-5. Click "*Connect Registry*" to save the configuration.
+5. Click "_Connect Registry_" to save the configuration.

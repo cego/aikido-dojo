@@ -2,18 +2,18 @@
 
 If your organization routes traffic through a corporate proxy or uses a custom Certificate Authority (CA) for SSL/TLS inspection, the Aikido IDE plugin may not be able to connect. You will need to configure your IDE's proxy and/or CA settings so the plugin can reach `*.aikido.dev`.
 
-Verify you can access `ide.aikido.dev` via proxy before continuing with next steps. You can [find test commands on our troubleshooting connectivity page.](/ai-and-dev-tools/ide-plugins-overview/troubleshooting/troubleshooting-ide-plugin-connectivity.md)
+Verify you can access `ide.aikido.dev` via proxy before continuing with next steps. You can [find test commands on our troubleshooting connectivity page.](https://help.aikido.dev/ai-and-dev-tools/ide-plugins-overview/troubleshooting/troubleshooting-ide-plugin-connectivity)
 
 ### VS Code (and variants like Cursor, Windsurf)
 
-{% content-ref url="/pages/yS43oHZnXnEoeOXnQlN3" %}
-[VS Code Proxy Setup](/ai-and-dev-tools/ide-plugins-overview/troubleshooting/ide-plugin-proxy-and-ca-settings/vs-code-proxy-setup.md)
+{% content-ref url="vs-code-proxy-setup.md" %}
+[vs-code-proxy-setup.md](https://help.aikido.dev/ai-and-dev-tools/ide-plugins-overview/troubleshooting/ide-plugin-proxy-and-ca-settings/vs-code-proxy-setup)
 {% endcontent-ref %}
 
 ### JetBrains (IntelliJ IDEA, WebStorm, PyCharm, etc.)
 
-{% content-ref url="/pages/95U6ZucURUXNVpoJvpYL" %}
-[Jetbrains Proxy Setup](/ai-and-dev-tools/ide-plugins-overview/troubleshooting/ide-plugin-proxy-and-ca-settings/jetbrains-proxy-setup.md)
+{% content-ref url="jetbrains-proxy-setup.md" %}
+[jetbrains-proxy-setup.md](https://help.aikido.dev/ai-and-dev-tools/ide-plugins-overview/troubleshooting/ide-plugin-proxy-and-ca-settings/jetbrains-proxy-setup)
 {% endcontent-ref %}
 
 ### Visual Studio

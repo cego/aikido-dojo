@@ -6,7 +6,7 @@ This page is only accessible to workspace admins.
 
 MCP permissions let you control what actions all users in your workspace can perform through any MCP-connected tool (such as Claude Code, Cursor, or Copilot). Changes here apply to every user in the workspace, regardless of which MCP tool they use.
 
-To access MCP permissions, go to [Integrations → AI Code Generators → MCP → Permissions](https://app.aikido.dev/settings/integrations/ide/mcp/permissions).
+To access MCP permissions, go to [Integrations → AI Code Generators → MCP → Permissions](https://app.aikido.dev/settings/integrations/ide/mcp/permissions?regionRedirect=1).
 
 ## Available permissions
 

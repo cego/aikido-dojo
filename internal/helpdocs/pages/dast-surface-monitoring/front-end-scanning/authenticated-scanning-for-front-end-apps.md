@@ -11,7 +11,7 @@ This guide will walk you through the steps to set up authenticated domain scanni
 
 ### Setting up authentication on a domain <a href="#setting-up-authentication-on-a-domain" id="setting-up-authentication-on-a-domain"></a>
 
-**Step 1:** Go to the [Domains Overview](https://app.aikido.dev/settings/domains) and open the action menu for a domain of your choice by clicking the triple dots. Select **Authenticate Domain.**
+**Step 1:** Go to the [Domains Overview](https://app.aikido.dev/settings/domains?regionRedirect=1) and open the action menu for a domain of your choice by clicking the triple dots. Select **Authenticate Domain.**
 
 [image: Domain action menu with options to scan, configure, authenticate, or delete a domain.]
 
@@ -29,13 +29,12 @@ This guide will walk you through the steps to set up authenticated domain scanni
 
 Fill in the URL and email/password for the domain authentication. Click **Test** to let Aikido check whether it can access the domain with those credentials.
 
-You can also enter the one time password information if two factor authentication is enabled. For [more information about the OTP URL and how it works, see the documentation](/dast-surface-monitoring/miscellaneous/using-2fa-in-front-end-and-api-scans.md).
+You can also enter the one time password information if two factor authentication is enabled. For [more information about the OTP URL and how it works, see the documentation](https://help.aikido.dev/dast-surface-monitoring/miscellaneous/using-2fa-in-front-end-and-api-scans).
 
 {% hint style="success" %}
-
 * Microsoft / Google SSO is currently **not** supported. As a workaround, you can manually authenticate and pass a valid session using the Cookie header via custom headers.
 * Is your case not supported? Let us know via the chat and we will look into it!
-  {% endhint %}
+{% endhint %}
 
 [image: Domain authentication setup screen for form-based login credentials configuration.]
 
@@ -52,16 +51,17 @@ If your endpoints accepts a fixed key, cookie or token which should not change a
 
 Use-cases:
 
-* Cookies: Set the `Cookie` header.
+*   Cookies: Set the `Cookie` header.
 
-  ```
-  Cookie: sessionId=38afes7a8
-  ```
-* JWT Bearer token: Set the `Authorization` header
+    ```
+    Cookie: sessionId=38afes7a8
+    ```
 
-  ```
-  Authorization: Bearer <token>
-  ```
+*   JWT Bearer token: Set the `Authorization` header
+
+    ```
+    Authorization: Bearer <token>
+    ```
 
 **Login via AI Agent (beta)**
 

@@ -1,6 +1,6 @@
 # ServiceNow
 
-This one-time setup *per workspace* allows everyone in your Aikido organization to create issues directly in ServiceNow.
+This one-time setup _per workspace_ allows everyone in your Aikido organization to create issues directly in ServiceNow.
 
 Following use cases are supported:
 
@@ -75,7 +75,7 @@ Note: the ticket creation is linked to the user who has set up the integration. 
 {% step %}
 **Open the integration**
 
-Navigate to [Integration Settings](https://app.aikido.dev/settings/integrations) within the Aikido app. In the 'Task Trackers' section, select **ServiceNow**.
+Navigate to [Integration Settings](https://app.aikido.dev/settings/integrations?regionRedirect=1) within the Aikido app. In the 'Task Trackers' section, select **ServiceNow**.
 
 {% endstep %}
 
@@ -111,7 +111,7 @@ There are two different options to create new tasks from Aikido into ServiceNow.
 
 #### 1. Manual Task Creation
 
-1. Hover over any issue in your feed and click the ***+*** in the **assign column.** Alternatively, you can click the triple dots in the last column to open up the action menu. If you have grouped issues, the triple dot action menu is available on every subissue.\
+1. Hover over any issue in your feed and click the _**+**_ in the **assign column.** Alternatively, you can click the triple dots in the last column to open up the action menu. If you have grouped issues, the triple dot action menu is available on every subissue.\
    \
    
 2. Fill in the required details in the popup modal.\
@@ -125,7 +125,7 @@ There are two different options to create new tasks from Aikido into ServiceNow.
 Aikido will automatically create tasks **every hour in bulk.** There is at the moment no option to trigger this manually.
 {% endhint %}
 
-1. Go to the [ServiceNow Integration](https://app.aikido.dev/settings/integrations/tasktracker) settings
+1. Go to the [ServiceNow Integration](https://app.aikido.dev/settings/integrations/tasktracker?regionRedirect=1) settings
 2. Make sure to enable '**Autocreation**' by clicking the toggle to **On.**
 3. Define the criteria for automatic task creation.
 

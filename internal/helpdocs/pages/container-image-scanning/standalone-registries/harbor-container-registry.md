@@ -14,7 +14,7 @@ Follow the simple steps below to activate this feature:
 
 #### **Continue in Aikido**
 
-**Step 1:** Enter the collected data in Aikido (direct link: <https://app.aikido.dev/settings/container-image-registry/add/harbor>)
+**Step 1:** Enter the collected data in Aikido (direct link: [https://app.aikido.dev/settings/container-image-registry/add/harbor](https://app.aikido.dev/settings/container-image-registry/add/harbor?regionRedirect=1))
 
 [image: Form to connect and authenticate with a Harbor container image registry.]
 

@@ -13,7 +13,7 @@ Use it to catch risky changes before they land on your main branch. You decide w
 * You can make failed checks block merging in GitLab.
 
 {% hint style="info" %}
-If you want a broader view of the MR gating funtionality, see [PR Gating Overview](/pr-and-release-gating/aikido-ci-gating-functionality.md).
+If you want a broader view of the MR gating funtionality, see [PR Gating Overview](https://help.aikido.dev/pr-and-release-gating/aikido-ci-gating-functionality).
 {% endhint %}
 
 ### Pick the right guide
@@ -22,10 +22,10 @@ Start with the page that matches your GitLab plan. Then configure repositories i
 
 * **GitLab Premium, Ultimate, or GitLab Server (self-managed)**
   * Use a **Service Account** plus an Access Token.
-  * Follow: [GitLab Premium, Ultimate & Server: MR Scans Setup](/pr-and-release-gating/gitlab-mr-gating/gitlab-server-ci-mr-gating-via-aikido-dashboard-with-a-service-account-token.md).
+  * Follow: [GitLab Premium, Ultimate & Server: MR Scans Setup](https://help.aikido.dev/pr-and-release-gating/gitlab-mr-gating/gitlab-server-ci-mr-gating-via-aikido-dashboard-with-a-service-account-token).
 * **GitLab Free**
   * Use a dedicated GitLab user plus a Personal Access Token (PAT).
-  * Follow: [GitLab Free: MR Scans Setup](/pr-and-release-gating/gitlab-mr-gating/gitlab-free-mr-scans-setup.md).
+  * Follow: [GitLab Free: MR Scans Setup](https://help.aikido.dev/pr-and-release-gating/gitlab-mr-gating/gitlab-free-mr-scans-setup).
 
 ### What to expect after setup
 

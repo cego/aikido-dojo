@@ -4,7 +4,7 @@ Aikido lets you export a CSV of all packages detected across your managed device
 
 ## How to export
 
-1. Go to [Device Protection and open the Packages tab](https://app.aikido.dev/endpoint-protection/packages).
+1. Go to [Device Protection and open the Packages tab](https://app.aikido.dev/endpoint-protection/packages?regionRedirect=1).
 2. Optionally apply filters to narrow the export, for example by ecosystem or by a specific device.
 3. Click **Actions** in the top right, then select **Download CSV**.
 

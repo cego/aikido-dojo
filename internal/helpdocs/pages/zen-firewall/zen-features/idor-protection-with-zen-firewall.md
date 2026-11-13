@@ -85,7 +85,6 @@ Enable IDOR protection when your application starts
 
 {% tabs %}
 {% tab title="NodeJS" %}
-
 ```js
 import Zen from "@aikidosec/firewall";
 
@@ -97,16 +96,15 @@ Zen.enableIdorProtection({
 
 Configuration options:
 
-* `tenantColumnName`
+*   `tenantColumnName`
 
-  The column that identifies the tenant in your tables, for example tenant\_id, account\_id, or organization\_id.
-* `excludedTables`
+    The column that identifies the tenant in your tables, for example tenant\_id, account\_id, or organization\_id.
+*   `excludedTables`
 
-  Tables that should not be checked because they are not scoped to a single tenant. For example, a shared users table that contains users across all tenants.
-  {% endtab %}
+    Tables that should not be checked because they are not scoped to a single tenant. For example, a shared users table that contains users across all tenants.
+{% endtab %}
 
 {% tab title="Ruby" %}
-
 ```ruby
 Aikido::Zen.config.idor_protection_enabled = true
 Aikido::Zen.config.idor_tenant_column_name = "tenant_id"
@@ -115,15 +113,15 @@ Aikido::Zen.config.idor_excluded_table_names = ["users"]
 
 Configuration options:
 
-* `idor_tenant_column_name`
+*   `idor_tenant_column_name`
 
-  The column that identifies the tenant in your tables, for example tenant\_id, account\_id, or organization\_id.
-* `idor_excluded_table_names`
+    The column that identifies the tenant in your tables, for example tenant\_id, account\_id, or organization\_id.
+*   `idor_excluded_table_names`
 
-  Tables that should not be checked because they are not scoped to a single tenant. For example, a shared users table that contains users across all tenants.
-  {% endtab %}
-  {% endtabs %}
-  {% endstep %}
+    Tables that should not be checked because they are not scoped to a single tenant. For example, a shared users table that contains users across all tenants.
+{% endtab %}
+{% endtabs %}
+{% endstep %}
 
 {% step %}
 **Set the tenant ID per request**
@@ -134,7 +132,6 @@ Call setTenantId early in your request lifecycle, typically in middleware after 
 
 {% tabs %}
 {% tab title="NodeJS" %}
-
 ```js
 import Zen from "@aikidosec/firewall";
 

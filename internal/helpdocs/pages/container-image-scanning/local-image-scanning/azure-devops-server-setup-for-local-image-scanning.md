@@ -6,13 +6,13 @@ The Aikido Security Local Scanner is a tool that enables you to perform Aikido S
 
 ### 1. Get your authentication token <a href="#id-1-get-your-authentication-token" id="id-1-get-your-authentication-token"></a>
 
-1. Go to the [Local Scanner Image setup page](https://app.aikido.dev/settings/container-image-registry/add/localscan)
+1. Go to the [Local Scanner Image setup page](https://app.aikido.dev/settings/container-image-registry/add/localscan?regionRedirect=1)
 2. Generate an authentication token and copy. Note that you will only be able to view this token once.
 3. You'll need this token in the Pipeline setup.
 
 ### 2. Running the Local Scanner <a href="#id-2-running-the-local-scanner" id="id-2-running-the-local-scanner"></a>
 
-Navigate to Pipelines in the left hand navigation, click *Pipelines* and select *New Pipeline* or *Create Pipeline*. In the Configure step, select *Starter Pipeline*.
+Navigate to Pipelines in the left hand navigation, click _Pipelines_ and select _New Pipeline_ or _Create Pipeline_. In the Configure step, select _Starter Pipeline_.
 
 ```yaml
 trigger:
@@ -72,7 +72,7 @@ stages:
 ```
 
 \
-Now it is time to add the api key as a secret variable. Click variables in the right hand corner and add a new variable. Fill in AIKIDO\_API\_KEY as the name. Check the *Keep this value secret* checkbox. Now save and run your pipeline.
+Now it is time to add the api key as a secret variable. Click variables in the right hand corner and add a new variable. Fill in AIKIDO\_API\_KEY as the name. Check the _Keep this value secret_ checkbox. Now save and run your pipeline.
 
 ### 3. Check your scanning results <a href="#id-3-check-your-scanning-results" id="id-3-check-your-scanning-results"></a>
 

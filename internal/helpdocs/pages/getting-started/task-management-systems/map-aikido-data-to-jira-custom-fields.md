@@ -20,17 +20,17 @@
 * Multi-selection fields: `select list (multiple choice and cascading)`
 * Numbers: `Number field`
 * Dates: `Date Picker`
-* Datetimes: `Datetime Picker`
+* Datetimes: `Datetime Picker`&#x20;
 
 #### Configure Field Mappings
 
-1. Go to [**Integrations** > **Jira** > **Jira Field Mapping**](https://app.aikido.dev/settings/integrations/tasktracker/fields/custom) and click **Add Field**<br>
+1.  Go to [**Integrations** > **Jira** > **Jira Field Mapping**](https://app.aikido.dev/settings/integrations/tasktracker/fields/custom?regionRedirect=1) and click **Add Field**<br>
 
-   
+    
 2. Enter the Jira custom field name in the **Custom Field** input exactly as it appears in Jira
-3. Enter an Aikido shortcode (e.g., `$SEVERITY`) or a fixed text value in the **Aikido Value** input<br>
+3.  Enter an Aikido shortcode (e.g., `$SEVERITY`) or a fixed text value in the **Aikido Value** input<br>
 
-   
+    
 4. Click **Save Changes**
 
 The **Preview** column shows what value will be sent to Jira. These can be values based on shortcodes or fixed values / free text.

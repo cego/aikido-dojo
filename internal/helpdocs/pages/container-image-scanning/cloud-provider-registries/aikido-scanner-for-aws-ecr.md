@@ -10,18 +10,18 @@ Aikido supports scanning Elastic Container Registry (ECR) images through both **
 
 ## Installing the Aikido Scanner <a href="#installing-the-aikido-scanner" id="installing-the-aikido-scanner"></a>
 
-1. **Navigate to** [**Containers Page**](https://app.aikido.dev/containers)
-2. **Connect Registry**: Click on 'Connect registry' and select the first option: *'AWS Elastic Container Registry'*.
-3. **Select Aikido Scanner**.
+1. **Navigate to** [**Containers Page**](https://app.aikido.dev/containers?regionRedirect=1)
+2. **Connect Registry**: Click on 'Connect registry' and select the first option: _'AWS Elastic Container Registry'_.
+3.  **Select Aikido Scanner**.
 
-   [image: Choose a scanner for AWS ECR: Aikido (recommended) or AWS Inspector.]
-4. **Fill in the Details**: Follow the instructions to create an IAM Role and Policy for the necessary permissions, then enter a name of your registry name (you can choose this yourself) and the AWS Role Amazon Resource Name (ARN). This step encompasses setting up the IAM role and policy, as well as providing registry specifics for a complete setup.
+    [image: Choose a scanner for AWS ECR: Aikido (recommended) or AWS Inspector.]
+4.  **Fill in the Details**: Follow the instructions to create an IAM Role and Policy for the necessary permissions, then enter a name of your registry name (you can choose this yourself) and the AWS Role Amazon Resource Name (ARN). This step encompasses setting up the IAM role and policy, as well as providing registry specifics for a complete setup.
 
-   [image: Instructions and form to connect AWS Elastic Container Registry to Aikido using IAM Role.]
+    [image: Instructions and form to connect AWS Elastic Container Registry to Aikido using IAM Role.]
 5. **Completion**: Once the setup is complete, Aikido will scan the connected registry with the Aikido scanner on a daily basis.
 
 {% hint style="success" %}
-*Note.* If AWS Inspector was previously enabled during the AWS Cloud setup, Aikido will notify you to switch to Aikido scanning without any problems after filling in all the details in Step 4.
+_Note._ If AWS Inspector was previously enabled during the AWS Cloud setup, Aikido will notify you to switch to Aikido scanning without any problems after filling in all the details in Step 4.
 {% endhint %}
 
 [image: AWS account prompt: Switch from AWS Inspector to unlimited Aikido Scanner for cost savings.]

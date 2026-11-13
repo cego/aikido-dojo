@@ -1,4 +1,4 @@
-# Deploy Device Protection with Hexnode
+# Deploy Aikido Device Protection with Hexnode on Windows
 
 Use Hexnode UEM to deploy Aikido Device Protection across your managed Windows fleet with the required permissions in place.
 
@@ -16,7 +16,7 @@ Before starting, make sure you have the following from the Aikido Device Protect
 
 * Your **PowerShell install command** (copied from the user group selector on the dashboard)
 
-If you're missing it, go back to the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices), click **Connect Device**.
+If you're missing it, go back to the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices?regionRedirect=1), click **Connect Device**.
 {% endstep %}
 
 {% step %}
@@ -45,6 +45,7 @@ Use a Custom Configuration policy to block uninstallation of the Aikido Device P
 3. Click **Add Payload** and enter the following:
    * **Name**: `Block Aikido uninstall`
    * **OMA-URI**: `./Vendor/MSFT/AppLocker/ApplicationLaunchRestrictions/Aikido/MSI/Policy`
+
    * **Data Type**: `String`
    * **Value**: paste the contents of [aikido-applocker-deny-mdm.xml](https://raw.githubusercontent.com/AikidoSec/safechain-internals/refs/heads/main/docs/aikido-applocker-deny-mdm.xml) (open the link, copy the full XML text, and paste it here)
 4. Go to **Policy Targets**, assign the policy to the same target devices or device groups, and save.
@@ -73,10 +74,10 @@ The agent fully activates on the next boot.
 
 ## Troubleshooting
 
-| Problem                                                      | Fix                                                                                                                                                                             |
-| ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Device doesn't appear in the dashboard after the script runs | Reboot the device; the agent fully registers on the next boot                                                                                                                   |
-| Script exits with an error in the MDM console                | Run the script manually as SYSTEM on a test host to see the full error; confirm the device has internet access to download the installer                                        |
-| Agent service is not running                                 | Reboot the device; if the service is still absent, re-run the install script                                                                                                    |
-| Script is blocked by execution policy                        | Scripts run via MDM execute as SYSTEM and bypass user-level execution policy restrictions; confirm the MDM is not applying an additional policy that restricts script execution |
-| Device shows as inactive after installation                  | The agent needs a reboot to fully activate; check back after rebooting                                                                                                          |
+| Problem | Fix |
+| ------- | --- |
+| Device doesn't appear in the dashboard after the script runs | Reboot the device; the agent fully registers on the next boot |
+| Script exits with an error in the MDM console | Run the script manually as SYSTEM on a test host to see the full error; confirm the device has internet access to download the installer |
+| Agent service is not running | Reboot the device; if the service is still absent, re-run the install script |
+| Script is blocked by execution policy | Scripts run via MDM execute as SYSTEM and bypass user-level execution policy restrictions; confirm the MDM is not applying an additional policy that restricts script execution |
+| Device shows as inactive after installation | The agent needs a reboot to fully activate; check back after rebooting |

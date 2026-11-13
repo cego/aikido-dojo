@@ -12,7 +12,7 @@ This feature is currently behind a feature flag. Please contact [Aikido Support]
 
 Once support has enabled the feature for your workspace:
 
-1. Go to [**Settings → Bitbucket → Update Workspace Access Token**](https://app.aikido.dev/onboarding/bitbucket/update-workspace-access-token)
+1. Go to [**Settings → Bitbucket → Update Workspace Access Token**](https://app.aikido.dev/onboarding/bitbucket/update-workspace-access-token?regionRedirect=1)
 2. Scroll to the **Show Extra Tokens** section and add a new workspace token.
 3. Make sure the token includes the following scopes:
    * `repository:admin`

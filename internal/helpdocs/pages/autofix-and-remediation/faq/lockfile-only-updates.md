@@ -16,7 +16,6 @@ Updates to `package.json` are required in most scenarios, however for transitive
 For example, you project includes axios 1.15.0:
 
 {% code title="package.json" %}
-
 ```json
 {
 	"dependencies": {
@@ -24,13 +23,11 @@ For example, you project includes axios 1.15.0:
 	}
 }
 ```
-
 {% endcode %}
 
 Axios itself depends on `follow-redirects` :
 
 {% code title="package.json (axios)" %}
-
 ```json
 {
     "dependencies": {
@@ -40,7 +37,6 @@ Axios itself depends on `follow-redirects` :
   }
 }
 ```
-
 {% endcode %}
 
 If at the time of installing the dependency the latest version of `follow-redirects` was `1.15.11` , your lockfile will refer to `follow-redirects` version `1.15.11` , this version contains **CVE-2026-40895**.

@@ -2,7 +2,7 @@
 
 SAML Access Profiles allow you to define user access rights based on SAML attributes. You can manage these profiles in the app under:
 
-**Settings > General > SAML Setup > Add SAML Profile**<https://app.aikido.dev/settings/account>
+**Settings > General > SAML Setup > Add SAML Profile**[https://app.aikido.dev/settings/account](https://app.aikido.dev/settings/account?regionRedirect=1)
 
 ## Configuring SAML Access Profiles <a href="#configuring-saml-access-profiles" id="configuring-saml-access-profiles"></a>
 
@@ -88,12 +88,12 @@ When adding a new SAML Profile, you can define the following settings:
 ### 13. Member of Teams <a href="#id-8-member-of-teams" id="id-8-member-of-teams"></a>
 
 * A comma-separated list of team names the user belongs to.
-* Matches the existing `aikido_teams` [SAML claim](/getting-started/automated-user-management/saml-login/saml-user-rights-using-custom-attributes-advanced.md).
+* Matches the existing `aikido_teams` [SAML claim](https://help.aikido.dev/getting-started/automated-user-management/saml-login/saml-user-rights-using-custom-attributes-advanced).
 
 ### 14. Workspace IDs <a href="#id-9-workspace-ids" id="id-9-workspace-ids"></a>
 
 * A comma-separated list of workspace IDs where the user has access.
-* Matches the existing `aikido_workspace_ids` [SAML claim](/getting-started/automated-user-management/saml-login/saml-user-rights-using-custom-attributes-advanced.md).
+* Matches the existing `aikido_workspace_ids` [SAML claim](https://help.aikido.dev/getting-started/automated-user-management/saml-login/saml-user-rights-using-custom-attributes-advanced).
 * If left empty, the profile grants access to all workspaces linked to the SAML client.
 
 ## Using SAML Access Profiles <a href="#using-saml-access-profiles" id="using-saml-access-profiles"></a>
@@ -102,4 +102,4 @@ Once a profile is created, you can set up a custom SAML claim `aikido_access_pro
 
 > **Note**
 >
-> When using the `aikido_access_profile` in combination with other [custom SAML claims](/getting-started/automated-user-management/saml-login/saml-user-rights-using-custom-attributes-advanced.md), those other claims will take precedence.
+> When using the `aikido_access_profile` in combination with other [custom SAML claims](https://help.aikido.dev/getting-started/automated-user-management/saml-login/saml-user-rights-using-custom-attributes-advanced), those other claims will take precedence.

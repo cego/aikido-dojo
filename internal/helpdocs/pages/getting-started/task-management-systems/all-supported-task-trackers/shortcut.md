@@ -1,6 +1,6 @@
 # Shortcut
 
-This one-time setup *per workspace* allows everyone in your Aikido organization to create issues directly in Shortcut.
+This one-time setup _per workspace_ allows everyone in your Aikido organization to create issues directly in Shortcut.
 
 Following use cases are supported :
 
@@ -9,14 +9,14 @@ Following use cases are supported :
 
 ## Connecting the Aikido App to Shortcut <a href="#connecting-the-aikido-app-to-shortcut" id="connecting-the-aikido-app-to-shortcut"></a>
 
-1. Navigate to [Integration Settings](https://app.aikido.dev/settings/integrations) within the Aikido app.
+1. Navigate to [Integration Settings](https://app.aikido.dev/settings/integrations?regionRedirect=1) within the Aikido app.
 2. In the 'Task Trackers' section, select 'Shortcut'
-3. A prompt will request authorization for Shortcut.\
-   ​
+3.  A prompt will request authorization for Shortcut.\
+    ​
 
-   [image: Shortcut issue-tracking setup screen prompting for API key configuration.]
+    [image: Shortcut issue-tracking setup screen prompting for API key configuration.]
 
-   ​
+    ​
 4. Login into your Shortcut account
 5. Grant Aikido permission to access your Shortcut workspace
 6. Once authorized, Aikido is successfully connected to Shortcut, enhancing your task management capabilities 🚀
@@ -32,15 +32,15 @@ There are two different options to create new tasks from Aikido into Shortcut.
 
 ## 1. Manual Task Creation <a href="#id-1-manual-task-creation" id="id-1-manual-task-creation"></a>
 
-1. Hover over any issue in your feed and click the ***+*** in the **assignee column.**\
-   ​
+1.  Hover over any issue in your feed and click the _**+**_ in the **assignee column.**\
+    ​
 
-   [image: Task table section showing "Assignee" field with add and options buttons.]
+    [image: Task table section showing "Assignee" field with add and options buttons.]
 
-   Alternatively, you can click the triple dots in the last columns to open up the action menu. If you have grouped issues, the triple dot action menu is available on every subissue.\
-   ​
+    Alternatively, you can click the triple dots in the last columns to open up the action menu. If you have grouped issues, the triple dot action menu is available on every subissue.\
+    ​
 
-   [image: Dropdown menu with task management actions: create, snooze, ignore, copy link, adjust severity.]
+    [image: Dropdown menu with task management actions: create, snooze, ignore, copy link, adjust severity.]
 2. Fill in the required details in the popup modal.\
    ​
 3. The newly created task in ClickUp will be linked in the Aikido Issue Detail under the 'Tasks' tab (sidepanel).
@@ -53,7 +53,7 @@ There are two different options to create new tasks from Aikido into Shortcut.
 Aikido will automatically create tasks **every hour in bulk.** There is at the moment no option to trigger this manually.
 {% endhint %}
 
-1. Go to the [Shortcut Integration](https://app.aikido.dev/settings/integrations/tasktracker) settings
+1. Go to the [Shortcut Integration](https://app.aikido.dev/settings/integrations/tasktracker?regionRedirect=1) settings
 2. Select '**Change auto creation**'
 3. Define the criteria for automatic task creation.
 

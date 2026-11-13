@@ -4,7 +4,7 @@ Aikido requests read-only access to your GitHub organization to analyze your rep
 
 #### 1. Logging in using GitHub <a href="#id-1-logging-in-using-github" id="id-1-logging-in-using-github"></a>
 
-To get started, navigate to <https://app.aikido.dev/> and log in with GitHub. This will look like the screenshot below. Here, Aikido only requests access to your identity on GitHub and the associated email address.
+To get started, navigate to [https://app.aikido.dev/](https://app.aikido.dev/?regionRedirect=1) and log in with GitHub. This will look like the screenshot below. Here, Aikido only requests access to your identity on GitHub and the associated email address.
 
 [image: Aikido Security requests GitHub authorization to access user identity and email addresses.]
 
