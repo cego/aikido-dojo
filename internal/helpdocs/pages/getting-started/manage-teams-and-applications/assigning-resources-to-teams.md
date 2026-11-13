@@ -6,15 +6,15 @@ This page explains all available ways to assign resources, including individual 
 
 ### Assign from the Team Page
 
-1. Go to [Settings → Teams](https://app.aikido.dev/settings/teams)
+1. Go to [Settings → Teams](https://app.aikido.dev/settings/teams?regionRedirect=1)
 2. Select a team
-3. Open the Responsibility tab
+3.  Open the Responsibility tab
 
-   
+    
 4. Click "Link Resource"
-5. Select resource type, and search and add resources<br>
+5.  Select resource type, and search and add resources<br>
 
-   
+    
 
 ### Assign from the Resource Page
 
@@ -36,7 +36,7 @@ You can link it to either a repository or a container. Once linked, the scan inh
 
 ### Bulk Assignment
 
-Bulk actions are available on resource list pages in [settings](https://app.aikido.dev/settings/account).
+Bulk actions are available on resource list pages in [settings](https://app.aikido.dev/settings/account?regionRedirect=1).
 
 {% hint style="info" %}
 If bulk actions are not visible, assignment must be done individually.
@@ -44,12 +44,12 @@ If bulk actions are not visible, assignment must be done individually.
 
 **Repositories**
 
-[Settings → Repositories](https://app.aikido.dev/settings/integrations/repositories) → Select multiple → Bulk Actions → Assign to team
+[Settings → Repositories](https://app.aikido.dev/settings/integrations/repositories?regionRedirect=1) → Select multiple → Bulk Actions → Assign to team
 
 **Containers**
 
-[Settings → Containers](https://app.aikido.dev/settings/container-image-registry) → Select multiple → Bulk Actions → Assign to team
+[Settings → Containers](https://app.aikido.dev/settings/container-image-registry?regionRedirect=1) → Select multiple → Bulk Actions → Assign to team
 
 **Cloud**
 
-[Settings -> Clouds](https://app.aikido.dev/settings/integrations/clouds) -> Select multiple -> Bulk Actions -> Assign to team
+[Settings -> Clouds](https://app.aikido.dev/settings/integrations/clouds?regionRedirect=1) -> Select multiple -> Bulk Actions -> Assign to team

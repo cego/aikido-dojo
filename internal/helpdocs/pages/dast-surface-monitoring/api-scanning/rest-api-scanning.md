@@ -1,7 +1,7 @@
 # REST API & Web App Scanning
 
 {% hint style="warning" %}
-**Agentic Scan is the recommended option for testing REST APIs and web apps.** It covers the same OWASP risks as the REST scanner (SQL injection, path traversal, shell injection) plus business-logic flaws, IDOR and cross-tenant data leaks that fuzzing cannot find. See [Aikido Pentest](/pentests/aikido-pentest.md).
+**Agentic Scan is the recommended option for testing REST APIs and web apps.** It covers the same OWASP risks as the REST scanner (SQL injection, path traversal, shell injection) plus business-logic flaws, IDOR and cross-tenant data leaks that fuzzing cannot find. See [Aikido Pentest](https://help.aikido.dev/pentests/aikido-pentest).
 {% endhint %}
 
 Aikido can scan your REST API and Web App endpoints to uncover critical endpoint vulnerabilities, such as SQL injection or path traversal. Aikido uses API fuzzing, which essentially includes spamming dangerous payloads to each field in your API.
@@ -19,11 +19,11 @@ NEVER run on a production environment, always on staging to avoid potential down
 * Path traversal
 * Shell injection
 
-You can see all checks in the [Aikido app here](https://app.aikido.dev/domains/checks?scanner=rest).
+You can see all checks in the [Aikido app here](https://app.aikido.dev/domains/checks?scanner=rest&regionRedirect=1).
 
 ### Setting up REST API Scanning <a href="#setting-up-rest-api-scanning" id="setting-up-rest-api-scanning"></a>
 
-**Step 1:** Click **Add Domain** in the [Domain Overview](https://app.aikido.dev/domains), expand **Advanced** in the scan-type chooser and select **REST API**
+**Step 1:** Click **Add Domain** in the [Domain Overview](https://app.aikido.dev/domains?regionRedirect=1), expand **Advanced** in the scan-type chooser and select **REST API**
 
 [image: Choose scan type modal with the Advanced section expanded showing REST API and GraphQL options.]
 
@@ -33,8 +33,8 @@ You can see all checks in the [Aikido app here](https://app.aikido.dev/domains/c
 
 **Step 3:** Add your OpenAPI specification using one of these options:
 
-* [**Connect to Zen App (recommended)**](/zen-firewall/getting-started-with-zen-firewall.md): Integrate with Zen to automatically discover and update API endpoints for continuous scanning. More info about Zen [can be found here](https://help.aikido.dev/section/zen-by-aikido/sgIt4HRxlrFr). No manual work or maintenance needed!
-* [**Generate via Aikido AI (in beta)**](/dast-surface-monitoring/api-scanning/autogenerate-openapi-via-aikido-ai-code2swagger.md)**:** Using your codebase Aikido will generate an OpenAPI spec. No manual work is needed. Regular rescans keep everything current.
+* [**Connect to Zen App (recommended)**](https://help.aikido.dev/zen-firewall/getting-started-with-zen-firewall): Integrate with Zen to automatically discover and update API endpoints for continuous scanning. More info about Zen [can be found here](https://help.aikido.dev/section/zen-by-aikido/sgIt4HRxlrFr). No manual work or maintenance needed!
+* [**Generate via Aikido AI (in beta)**](https://help.aikido.dev/dast-surface-monitoring/api-scanning/autogenerate-openapi-via-aikido-ai-code2swagger)**:** Using your codebase Aikido will generate an OpenAPI spec. No manual work is needed. Regular rescans keep everything current.
 * **Fetch from URL:** Provide a URL that has the latest version of your OpenAPI spec. Aikido will fetch the spec before each scan.
 * **Manual Upload**: Upload a OpenAPI file to define your API endpoints. You will be required to manually update and upload your spec each time new API endpoints are added or changed.
 
@@ -44,7 +44,7 @@ You can see all checks in the [Aikido app here](https://app.aikido.dev/domains/c
 
 [image: Domain action menu with options: Start scan, Edit, Authenticate, and Delete domain.]
 
-This will trigger the modal where you can fill in the authentication details. For the full list of supported authentication methods, see [Authenticated API Scanning for REST/GraphQL](/dast-surface-monitoring/api-scanning/authenticated-api-scanning-for-rest-graphql.md).
+This will trigger the modal where you can fill in the authentication details. For the full list of supported authentication methods, see [Authenticated API Scanning for REST/GraphQL](https://help.aikido.dev/dast-surface-monitoring/api-scanning/authenticated-api-scanning-for-rest-graphql).
 
 [image: Domain authentication setup form with input fields for API URL, email, and password.]
 
@@ -54,4 +54,4 @@ All requests coming from Aikido REST and GraphQL scans will have:
 
 * the `User-Agent` set to `aikido-scan-agent/1.0`
 * the following header `aikido-api-test` set to value `1` in the request
-* [will come from the IP's documented here](/dast-surface-monitoring/miscellaneous/allowing-ip-addresses-for-dast-surface-monitoring.md)
+* [will come from the IP's documented here](https://help.aikido.dev/dast-surface-monitoring/miscellaneous/allowing-ip-addresses-for-dast-surface-monitoring)

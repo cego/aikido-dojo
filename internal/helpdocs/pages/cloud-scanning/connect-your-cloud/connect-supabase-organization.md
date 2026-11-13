@@ -6,14 +6,14 @@ Securing your cloud infrastructure is crucial to protecting your user data. You 
 
 #### **Main use cases**
 
-* Aikido surfaces critical cloud misconfigurations that could expose your Supabase projects to attackers - things like overly permissive policies, weak authentication settings, or misconfigured storage buckets. All configuration checks can be found [here.](https://app.aikido.dev/clouds/checks)
+* Aikido surfaces critical cloud misconfigurations that could expose your Supabase projects to attackers - things like overly permissive policies, weak authentication settings, or misconfigured storage buckets. All configuration checks can be found [here.](https://app.aikido.dev/clouds/checks?regionRedirect=1)
 * Aikido continuously monitors your Supabase organization for new risks as your setup evolves.
 
 Aikido performs daily compliance scans on the above.
 
 ### Getting started <a href="#getting-started" id="getting-started"></a>
 
-To get started, head to the [cloud overview page](https://app.aikido.dev/clouds) on Aikido and click **"Connect Cloud"**. Select **Supabase** from the list and follow the step-by-step setup wizard.
+To get started, head to the [cloud overview page](https://app.aikido.dev/clouds?regionRedirect=1) on Aikido and click **"Connect Cloud"**. Select **Supabase** from the list and follow the step-by-step setup wizard.
 
 {% stepper %}
 {% step %}

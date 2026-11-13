@@ -10,16 +10,16 @@ All your credits are managed in your **Aikido Wallet**, where you can check your
 
 Aikido Credits unlock specific, high-value actions in Aikido:
 
-* [**Aikido Libraries**](/autofix-and-remediation/aikido-libraries-overview.md): Keep every single open-source dependency in your repo secured automatically, for as long as the repo is in production. No manual upgrades, no breaking changes. Zero-CVE repos, forever.
-* [**Deep Review**](/deep-review/how-deep-review-works.md): Get an agentic review of your pull requests, with relevant repository context beyond the diff. Costs **1 credit per pull request**. Additional reviews on the same PR don't cost extra.
-* [**AI Code Analysis**](/ai-code-analysis/ai-code-analysis.md): Run a Code Security, Data Exposure, Cloud Security, or Smart Contract audit. Agents reason across your repositories or, for Cloud Security, your connected clouds.
-* [**Aikido Pentest**](/pentests/aikido-pentest.md): Run advanced, AI-powered penetration tests on your applications, including compliance reports.
-* [**Code Quality**](/code-quality/repository-scans/start-a-repository-scan.md): Enable full-repository code quality scanning for existing code.
-* [**CVE Exploitability Analysis**](/aikido-agent/cve-exploitability-analysis.md): Have Aikido Agent assess open dependency CVEs in your repositories and containers and triage what's truly exploitable.
+* [**Aikido Libraries**](https://help.aikido.dev/autofix-and-remediation/aikido-libraries-overview): Keep every single open-source dependency in your repo secured automatically, for as long as the repo is in production. No manual upgrades, no breaking changes. Zero-CVE repos, forever.
+* [**Deep Review**](https://help.aikido.dev/deep-review/how-deep-review-works): Get an agentic review of your pull requests, with relevant repository context beyond the diff. Costs **1 credit per pull request**. Additional reviews on the same PR don't cost extra.
+* [**AI Code Analysis**](https://help.aikido.dev/ai-code-analysis/ai-code-analysis): Run a Code Security, Data Exposure, Cloud Security, or Smart Contract audit. Agents reason across your repositories or, for Cloud Security, your connected clouds.
+* [**Aikido Pentest**](https://help.aikido.dev/pentests/aikido-pentest): Run advanced, AI-powered penetration tests on your applications, including compliance reports.
+* [**Code Quality**](https://help.aikido.dev/code-quality/repository-scans/start-a-repository-scan): Enable full-repository code quality scanning for existing code.
+* [**CVE Exploitability Analysis**](https://help.aikido.dev/aikido-agent/cve-exploitability-analysis): Have Aikido Agent assess open dependency CVEs in your repositories and containers and triage what's truly exploitable.
 
 ## Spending limits
 
-Workspace admins can cap how many credits each feature spends from [Wallet settings](https://app.aikido.dev/settings/wallet/settings). Limits are set per feature, and the reset period depends on the feature.
+Workspace admins can cap how many credits each feature spends from [Wallet settings](https://app.aikido.dev/settings/wallet/settings?regionRedirect=1). Limits are set per feature, and the reset period depends on the feature.
 
 1. Open **Organization Settings** and click **Manage Wallet**.
 2. On the **Settings** tab, click **Configure Limits**.
@@ -34,7 +34,7 @@ Active workspaces on eligible plans can receive complimentary credits each calen
 | Plan      | Monthly complimentary credits |
 | --------- | ----------------------------: |
 | Developer |                  Not included |
-| Basic     |                  Not included |
+| Basic     |                            25 |
 | Pro       |                           100 |
 | Advanced  |                           200 |
 
@@ -52,7 +52,7 @@ If you don't use your wallet credits, Aikido may not add a complimentary top-up 
 
 Follow these steps to add credits to your wallet:
 
-1. Open **Organization Settings** and click **Manage Wallet**, then click **Add Credits**. You can also open [Wallet settings](https://app.aikido.dev/settings/wallet/settings) directly.
+1. Open **Organization Settings** and click **Manage Wallet**, then click **Add Credits**. You can also open [Wallet settings](https://app.aikido.dev/settings/wallet/settings?regionRedirect=1) directly.
 2. **Enter Purchase Details.**
 
 * **Amount**: Enter the number of credits you wish to buy.
@@ -80,11 +80,11 @@ You can purchase credits using one of two methods:
 
 Workspace admins can have Aikido buy more credits when the wallet drops below a balance you choose. Aikido emails an invoice to workspace admins, and the credits are added after that invoice is paid.
 
-Set this up from the **Settings** tab in [Wallet settings](https://app.aikido.dev/settings/wallet/settings). See [Automatic Top-Ups](/miscellaneous-info/wallet-and-credits/automatic-top-ups.md) for the trigger, amount, monthly cap, and when a top-up is skipped.
+Set this up from the **Settings** tab in [Wallet settings](https://app.aikido.dev/settings/wallet/settings?regionRedirect=1). See [Automatic Top-Ups](https://help.aikido.dev/miscellaneous-info/wallet-and-credits/automatic-top-ups) for the trigger, amount, monthly cap, and when a top-up is skipped.
 
 ## **Checking your credit history**
 
-To see a full list of your credit purchases and usage, go to **Organization Settings** and click [**View History**](https://app.aikido.dev/settings/wallet/history) in the Wallet section.
+To see a full list of your credit purchases and usage, go to **Organization Settings** and click [**View History**](https://app.aikido.dev/settings/wallet/history?regionRedirect=1) in the Wallet section.
 
 Your credit history table includes:
 

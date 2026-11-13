@@ -6,15 +6,15 @@ The Aikido Security Local Scanner is a tool that enables you to perform Aikido S
 
 ### 1. Get your authentication token <a href="#id-1-get-your-authentication-token" id="id-1-get-your-authentication-token"></a>
 
-1. Go to the [Local Scanner Image setup page](https://app.aikido.dev/settings/container-image-registry/add/localscan)
+1. Go to the [Local Scanner Image setup page](https://app.aikido.dev/settings/container-image-registry/add/localscan?regionRedirect=1)
 2. Generate an authentication token and copy. Note that you will only be able to view this token once.
 3. Add this token as argument `--apikey` when running the Local Scanner in your project .
-4. Add the authentication token to the CI/CD variables in Gitlab to make it available for use in the pipeline.\
-   To do this, you need to go to your group's Settings page and then navigate to the **CI/CD** sub-page.
+4.  Add the authentication token to the CI/CD variables in Gitlab to make it available for use in the pipeline.\
+    To do this, you need to go to your group's Settings page and then navigate to the **CI/CD** sub-page.
 
-   [image: GitLab CI/CD settings page for managing variables, runners, and Auto DevOps automation.]
+    [image: GitLab CI/CD settings page for managing variables, runners, and Auto DevOps automation.]
 
-   Click on 'Expand' next to variables and click on 'Add variable'. You can then add the authentication token with `AIKIDO_LOCAL_SCANNER_TOKEN` as the key and the copied token contents as the value.
+    Click on 'Expand' next to variables and click on 'Add variable'. You can then add the authentication token with `AIKIDO_LOCAL_SCANNER_TOKEN` as the key and the copied token contents as the value.
 
 ### 2. Running the Local Scanner <a href="#id-2-running-the-local-scanner" id="id-2-running-the-local-scanner"></a>
 

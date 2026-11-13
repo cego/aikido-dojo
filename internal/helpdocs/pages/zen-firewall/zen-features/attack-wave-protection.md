@@ -23,4 +23,4 @@ You can easily simulate an attack wave to confirm Zen is working. Just click Sim
 
 ## Block attack waves automatically
 
-Use a [playbook](/zen-firewall/zen-features/playbooks.md) to block the IP behind an attack wave for a set period, without waiting for someone to act on the alert.
+Use a [playbook](https://help.aikido.dev/zen-firewall/zen-features/playbooks) to block the IP behind an attack wave for a set period, without waiting for someone to act on the alert.

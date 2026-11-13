@@ -19,14 +19,12 @@ Before connecting, get these from Datadog:
 
 {% stepper %}
 {% step %}
-
 #### Get your Datadog API key
 
 In Datadog, go to **Organization Settings > API Keys**, click **New Key**, and give it a descriptive name (for example, "Aikido"). Copy the key - you'll paste it into Aikido in the next step.
 {% endstep %}
 
 {% step %}
-
 #### Connect a SIEM
 
 Go to **Settings > Integrations** in the Aikido app and add a new SIEM integration. In the **Connect a SIEM** dialog, select **Datadog Logs** and fill in:
@@ -35,7 +33,7 @@ Go to **Settings > Integrations** in the Aikido app and add a new SIEM integrati
 
 * **Domain URL** – select the base domain that matches your Datadog account's region (defaults to `datadoghq.com`).
 
-**Options** *(all optional)*
+**Options** _(all optional)_
 
 * **Source** – the integration name Datadog associates with these logs. Defaults to `aikido`, so Datadog automatically installs the matching parsers and facets.
 * **Tags** – custom tags (for example `team:security`, `env:production`) for filtering and grouping in Datadog.
@@ -51,7 +49,6 @@ Click **Test connection** to confirm Aikido can reach Datadog, then **Save chang
 {% endstep %}
 
 {% step %}
-
 #### Configure which issues sync
 
 On the Datadog integration page, under **Issue input settings**, configure which Aikido issues are synced to your SIEM:

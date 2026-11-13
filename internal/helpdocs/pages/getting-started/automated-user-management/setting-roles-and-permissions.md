@@ -35,7 +35,7 @@ Aikido has an extra layer of permissions that can be enabled or disabled (both f
 
 **Configurable for Default and Team-Only**
 
-* **Can ignore issues**: Ability to permanently ignore findings. When [ignore requests are enabled](/getting-started/core-functionalities/approval-inbox-for-ignored-issues.md#enabling-ignore-requests), users without this permission can request to ignore individual issues via the [approval inbox](/getting-started/core-functionalities/approval-inbox-for-ignored-issues.md).
+* **Can ignore issues**: Ability to permanently ignore findings. When [ignore requests are enabled](https://help.aikido.dev/getting-started/core-functionalities/approval-inbox-for-ignored-issues#enabling-ignore-requests), users without this permission can request to ignore individual issues via the [approval inbox](https://help.aikido.dev/getting-started/core-functionalities/approval-inbox-for-ignored-issues).
 * **Can snooze issues**: Ability to temporarily snooze findings. When ignore requests are enabled, users without this permission can request to snooze individual issues via the same inbox.
 * **Change Issue Severity**: Ability to modify the severity level of issues.
 * **Can export data:** Ability to export csv reports of vulnerability issues.

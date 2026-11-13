@@ -1,4 +1,4 @@
-# Deploy Device Protection with Mosyle
+# Deploy Aikido Device Protection with Mosyle
 
 Use Mosyle Business to deploy Aikido Device Protection across your managed macOS fleet with the required permissions in place.
 
@@ -10,10 +10,10 @@ Use Mosyle Business to deploy Aikido Device Protection across your managed macOS
 
 Before starting, make sure you have the following from the Aikido Device Protection dashboard:
 
-* The **Aikido Device Protection `.mobileconfig`** (downloaded from the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices))
+* The **Aikido Device Protection `.mobileconfig`** (downloaded from the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices?regionRedirect=1))
 * The **Aikido Device Protection installer** (`.pkg` file, downloaded from the dashboard)
 
-If you're missing any of these, go back to the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices), click **Connect Device**, and complete the pre-flight steps.
+If you're missing any of these, go back to the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices?regionRedirect=1), click **Connect Device**, and complete the pre-flight steps.
 {% endstep %}
 
 {% step %}
@@ -34,18 +34,18 @@ This profile allows the Aikido Device Protection system extension to load silent
 1. In the same view as Step 3. In sidebar under **Management Profiles** click **Install PKG**
 2. Select **"Already have a .PKG"**
 3. On "Host your .PKG file" select "**Automatically set App info**"
-4. Use this public URL "<https://github.com/AikidoSec/safechain-internals/releases/latest/download/EndpointProtection.pkg>" and **enable "This app is Signed"** and **"Install as Managed"**. Continue with "Add Enterprise App"<br>
+4. Use this public URL "[https://github.com/AikidoSec/safechain-internals/releases/latest/download/EndpointProtection.pkg](https://github.com/AikidoSec/safechain-internals/releases/latest/download/EndpointProtection.pkg)" and **enable "This app is Signed"** and **"Install as Managed"**. Continue with "Add Enterprise App"<br>
 5. Give the profile a name (e.g. "Aikido Device Protection - Pkg").
 6. Under **Add Assignment**, select the same target device group.
 7. Click **Save**.
-   {% endstep %}
+{% endstep %}
 
 {% step %}
 **Deploy to your devices**
 
 1. Confirm the **Aikido Device Protection** configuration profile is installed: open the profile and click **View Results**, all target devices should show green.
 2. Save and assign the **Install PKG** deployment profile.
-   {% endstep %}
+{% endstep %}
 
 {% step %}
 **Reboot devices after installation**
@@ -58,16 +58,16 @@ Restart your target devices after confirming the agent package has installed. Ch
 
 On a test device, confirm:
 
-1. The system extension is activated:
+1.  The system extension is activated:
 
-   ```bash
-   systemextensionsctl list | grep aikido
-   ```
+    ```bash
+    systemextensionsctl list | grep aikido
+    ```
 
-   Expect to see the extension marked `[activated enabled]`.
+    Expect to see the extension marked `[activated enabled]`.
 2. Open **System Settings** → **General** → **Login Items & Extensions** and confirm the Aikido Device Protection entries cannot be toggled off.
-   {% endstep %}
-   {% endstepper %}
+{% endstep %}
+{% endstepper %}
 
 ## Troubleshooting
 

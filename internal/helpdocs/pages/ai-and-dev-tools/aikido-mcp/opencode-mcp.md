@@ -10,7 +10,7 @@ AI assistants can review their own output, but that review is not perfect. Aikid
 * Immediate detection and remediation of vulnerabilities and hardcoded secrets in AI assisted workflows
 * Real time feedback, making AI driven development safer by default
 
-For the full list of tools the MCP server exposes, see [Available tools](/ai-and-dev-tools/aikido-mcp/using-aikido-mcp.md#available-tools).
+For the full list of tools the MCP server exposes, see [Available tools](https://help.aikido.dev/ai-and-dev-tools/aikido-mcp/using-aikido-mcp#available-tools).
 
 ## Installation
 
@@ -32,7 +32,6 @@ Open or create `~/.config/opencode/opencode.json` and add the following to the f
   }
 }
 ```
-
 {% endstep %}
 
 {% step %}
@@ -56,7 +55,6 @@ Download the Aikido rule and add it to `~/.config/opencode/skills/aikido/SKILL.m
 curl -fsSL "https://gist.githubusercontent.com/kidk/1d2c1e754d5a5ddd05c9966d2507ae42/raw/ea8183c0ae1af5ec9bcb8b93275145adbe936c20/aikido-skill.txt" \
   -o ~/.config/opencode/skills/aikido/SKILL.md
 ```
-
 {% endstep %}
 
 {% step %}
@@ -71,7 +69,7 @@ Restart OpenCode if it was open.
 {% endstepper %}
 
 {% hint style="info" %}
-For CI/CD or headless setups where browser login is not possible, see [Token Authentication](/ai-and-dev-tools/aikido-mcp/token-authentication.md).
+For CI/CD or headless setups where browser login is not possible, see [Token Authentication](https://help.aikido.dev/ai-and-dev-tools/aikido-mcp/token-authentication).
 {% endhint %}
 
-For ways to ask your agent to use Aikido, see [Example prompts](/ai-and-dev-tools/aikido-mcp/using-aikido-mcp.md#example-prompts).
+For ways to ask your agent to use Aikido, see [Example prompts](https://help.aikido.dev/ai-and-dev-tools/aikido-mcp/using-aikido-mcp#example-prompts).

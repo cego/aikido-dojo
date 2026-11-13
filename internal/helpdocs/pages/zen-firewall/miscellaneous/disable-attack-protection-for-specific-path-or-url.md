@@ -28,9 +28,9 @@ Zen will now no longer block attacks on this specific route.
 ### Disable for Multiple Routes (Wildcard)
 
 1. Open the Routes view in your Zen dashboard.
-2. Add a new route with wildcard `*`<br>
+2.  Add a new route with wildcard `*`<br>
 
-   
+    
 3. Click the action menu (⋮)
 4. Select Disable protection for route wildcard.
 5. Confirm your choice.

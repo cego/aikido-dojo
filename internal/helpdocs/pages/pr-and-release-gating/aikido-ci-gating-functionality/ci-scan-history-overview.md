@@ -4,7 +4,7 @@ The CI Scan History feature in Aikido provides a detailed overview of all past C
 
 ### How to check your CI Scan History <a href="#how-to-check-your-ci-scan-history" id="how-to-check-your-ci-scan-history"></a>
 
-**Step 1.** Go to the CI section on the [Integrations page](https://app.aikido.dev/settings/integrations) and enter the [GitHub](https://app.aikido.dev/settings/integrations/github/checks)/[Azure](https://app.aikido.dev/settings/integrations/azure-devops/checks) CI dashboard **OR** - if you are running your CI via code - go to the [CI Settings Page](https://app.aikido.dev/settings/integrations/continuous-integration).
+**Step 1.** Go to the CI section on the [Integrations page](https://app.aikido.dev/settings/integrations?regionRedirect=1) and enter the [GitHub](https://app.aikido.dev/settings/integrations/github/checks?regionRedirect=1)/[Azure](https://app.aikido.dev/settings/integrations/azure-devops/checks?regionRedirect=1) CI dashboard **OR** - if you are running your CI via code - go to the [CI Settings Page](https://app.aikido.dev/settings/integrations/continuous-integration?regionRedirect=1).
 
 **Step 2.** Click on "CI Scan History" located at the top right of the page.
 

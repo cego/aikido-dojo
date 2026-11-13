@@ -4,13 +4,13 @@ This guide will walk you through installing and setting up Zen Firewall by Aikid
 
 If you encounter any issues or problems, don't hesitate reach out on support chat or Github issues
 
-<https://github.com/AikidoSec/firewall-php>
+[https://github.com/AikidoSec/firewall-php](https://github.com/AikidoSec/firewall-php)
 
 ## Requirements
 
 * FrankenPHP 8.2+ (tested up to FrankenPHP 8.5).
 * No framework / custom middleware.
-* [Aikido account](/getting-started/setting-up-your-account.md) & [Zen Firewall token](/zen-firewall/zen-installation-instructions/creating-an-aikido-zen-firewall-token.md)
+* [Aikido account](https://help.aikido.dev/getting-started/setting-up-your-account) & [Zen Firewall token](https://help.aikido.dev/zen-firewall/zen-installation-instructions/creating-an-aikido-zen-firewall-token)
 
 ## Installation & Configuration
 
@@ -50,7 +50,6 @@ For Debian-based arm64 / aarch64:
 curl -L -O https://github.com/AikidoSec/firewall-php/releases/latest/download/aikido-php-firewall.aarch64.deb
 dpkg -i -E ./aikido-php-firewall.aarch64.deb
 ```
-
 {% endstep %}
 
 {% step %}
@@ -73,20 +72,17 @@ RUN curl -L -o /tmp/aikido-php-firewall.deb \
 
 In `vendor/laravel/octane/src/Commands/stubs/Caddyfile`:
 
-{% @aikido-custom-code/code-highlight content="! vendor/laravel/octane/src/Commands/stubs/Caddyfile
-{$CADDY\_SERVER\_SERVER\_NAME} {
-route {
-php\_server {
-
-* ```
-        env AIKIDO_TOKEN "AIK_RUNTIME_...."
-  ```
-* ```
-        env AIKIDO_BLOCK "True"
+```code-highlight
+! vendor/laravel/octane/src/Commands/stubs/Caddyfile
+{$CADDY_SERVER_SERVER_NAME} {
+    route {
+        php_server {
++           env AIKIDO_TOKEN "AIK_RUNTIME_...."
++           env AIKIDO_BLOCK "True"
+        }
     }
-  ```
-  }
-  }" %}
+}
+```
 
 **Call \aikido\worker\_rinit() and \aikido\worker\_rshutdown() in Octane worker script**
 
@@ -94,8 +90,8 @@ Wrap your request handler with these calls to ensure Aikido processes each reque
 
 In `vendor/laravel/octane/bin/frankenphp-worker.php`:
 
-{% @aikido-custom-code/code-highlight language="php" content="! vendor/laravel/octane/bin/frankenphp-worker.php
-
+```code-highlight language="php"
+! vendor/laravel/octane/bin/frankenphp-worker.php
 <?php
 
 // ... Octane bootstrap ...
@@ -108,7 +104,8 @@ $handleRequest = static function () use ($worker, $frankenPhpClient, $debugMode)
 
 while ($requestCount < $maxRequests && frankenphp_handle_request($handleRequest)) {
     $requestCount++;
-}" %}
+}
+```
 
 In `docker/version/start-container`, add the following installation steps towards the end of the script:
 
@@ -127,7 +124,8 @@ Now you can start Sail:
 
 **Install Aikido in your Dockerfile**
 
-{% @aikido-custom-code/code-highlight content="! Dockerfile
+```code-highlight
+! Dockerfile
 FROM dunglas/frankenphp:php${PHP_VERSION}-bookworm
 
 +ARG AIKIDO_VERSION=1.5.2
@@ -141,13 +139,15 @@ FROM dunglas/frankenphp:php${PHP_VERSION}-bookworm
 
 COPY . /app
 
-ENTRYPOINT ["php", "artisan", "octane:frankenphp"]" %}
+ENTRYPOINT ["php", "artisan", "octane:frankenphp"]
+```
 
 **Pass the Aikido environment variables to FrankenPHP in Octane Caddyfile and configure the worker**
 
 In `vendor/laravel/octane/src/Commands/stubs/Caddyfile`:
 
-{% @aikido-custom-code/code-highlight content="vendor/laravel/octane/src/Commands/stubs/Caddyfile
+```code-highlight
+vendor/laravel/octane/src/Commands/stubs/Caddyfile
 {$CADDY_SERVER_SERVER_NAME} {
     route {
         php_server {
@@ -155,7 +155,8 @@ In `vendor/laravel/octane/src/Commands/stubs/Caddyfile`:
 +            env AIKIDO_BLOCK "True"
         }
     }
-}" %}
+}
+```
 
 **Call \aikido\worker\_rinit() and \aikido\worker\_rshutdown() in Octane worker script**
 
@@ -163,7 +164,8 @@ Wrap your request handler with these calls to ensure Aikido processes each reque
 
 In `vendor/laravel/octane/bin/frankenphp-worker.php`:
 
-{% @aikido-custom-code/code-highlight language="php" content="! vendor/laravel/octane/bin/frankenphp-worker.php
+```code-highlight language="php"
+! vendor/laravel/octane/bin/frankenphp-worker.php
 <?php
 
 // ... Octane bootstrap ...
@@ -176,7 +178,8 @@ $handleRequest = static function () use ($worker, $frankenPhpClient, $debugMode)
 
 while ($requestCount < $maxRequests && frankenphp_handle_request($handleRequest)) {
     $requestCount++;
-}" %}
+}
+```
 
 **Start the container**
 
@@ -191,7 +194,7 @@ env AIKIDO_BLOCK "False"
 ```
 
 {% hint style="info" %}
-You can define an environment variable `AIKIDO_DEBUG=true` to enable debug mode for more detailed information about what the agent is doing. For more information about your environment variables: [/pages/cS1d1R2qLfIJt7OJ7dW5](/pages/cS1d1R2qLfIJt7OJ7dW5 "mention")
+You can define an environment variable `AIKIDO_DEBUG=true` to enable debug mode for more detailed information about what the agent is doing. For more information about your environment variables: [configuration-via-environment-variables.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/configuration-via-environment-variables "mention")
 {% endhint %}
 
 For example
@@ -209,7 +212,8 @@ Restart your FrankenPHP process manager/web server after changes.
 
 Use `set_user` and `should_block_request` in your request pipeline:
 
-{% @aikido-custom-code/code-highlight language="php" content="+if (extension_loaded('aikido')) {
+```code-highlight language="php"
++if (extension_loaded('aikido')) {
 +   \aikido\set_user('123', 'John Doe');
 +
 +   $decision = \aikido\should_block_request();
@@ -223,13 +227,14 @@ Use `set_user` and `should_block_request` in your request pipeline:
 +       http_response_code(403);
 +       exit('You are blocked by Zen.');
 +   }
-+}" %}
++}
+```
 {% endstep %}
 
 {% step %}
 **Test your app**
 
-Browse to your application and perform a couple of actions or open a couple of pages. Zen will automatically discover the routes in your application.
+Browse to your application and perform a couple of actions or open a couple of pages. Zen will automatically discover the routes in your application.&#x20;
 
 {% hint style="info" %}
 Zen sends data back to Aikido every 10 minutes
@@ -273,18 +278,18 @@ Congrats you've successfully installed Zen Firewall. If you encountered any prob
 
 You can now go and explore the many features that Zen Firewall provides:
 
-* [/pages/f45DP3VAPtfnxJHfRRQO](/pages/f45DP3VAPtfnxJHfRRQO "mention")
-* [/pages/iP6p6jOdj6CHR4SrBjeM](/pages/iP6p6jOdj6CHR4SrBjeM "mention")
-* [/pages/DwUeaYMkfLPRxTzU0H7N](/pages/DwUeaYMkfLPRxTzU0H7N "mention")
-* [/pages/Cuhw6Bwome1nyBc0Wq51](/pages/Cuhw6Bwome1nyBc0Wq51 "mention")
-* [/pages/aTqnMKVKyl8OLchBr12Y](/pages/aTqnMKVKyl8OLchBr12Y "mention")
-* [/pages/X0AXHHmUDrRPMsgyA71F](/pages/X0AXHHmUDrRPMsgyA71F "mention")
-* [/pages/F2jaW8oZmBttuMA7fANi](/pages/F2jaW8oZmBttuMA7fANi "mention")
+* [blocking-bot-traffic-with-zen-firewall.md](https://help.aikido.dev/zen-firewall/zen-features/blocking-bot-traffic-with-zen-firewall "mention")
+* [blocking-tor-traffic-with-zen-firewall.md](https://help.aikido.dev/zen-firewall/zen-features/blocking-tor-traffic-with-zen-firewall "mention")
+* [blocking-users-with-zen-firewall.md](https://help.aikido.dev/zen-firewall/zen-features/blocking-users-with-zen-firewall "mention")
+* [blocking-known-threat-actors-with-zen-firewall.md](https://help.aikido.dev/zen-firewall/zen-features/blocking-known-threat-actors-with-zen-firewall "mention")
+* [blocking-traffic-by-country-with-zen-firewall.md](https://help.aikido.dev/zen-firewall/zen-features/blocking-traffic-by-country-with-zen-firewall "mention")
+* [setting-up-rate-limiting-for-routes.md](https://help.aikido.dev/zen-firewall/zen-features/setting-up-rate-limiting-for-routes "mention")
+* [monitor-outbound-domains.md](https://help.aikido.dev/zen-firewall/zen-features/monitor-outbound-domains "mention")
 
 Additional information:
 
-* [/pages/9pwdJjtFQRt3r4jy7U2q](/pages/9pwdJjtFQRt3r4jy7U2q "mention")
-* [/pages/7fhmf4YIX1YczgqFA1rE](/pages/7fhmf4YIX1YczgqFA1rE "mention")
-* [/pages/VL9A5lxpqzryy4ThsGRJ](/pages/VL9A5lxpqzryy4ThsGRJ "mention")
+* [how-zen-works-performance-reliability.md](https://help.aikido.dev/zen-firewall/miscellaneous/how-zen-works-performance-reliability "mention")
+* [blocking-vs-detection-mode-in-zen-firewall.md](https://help.aikido.dev/zen-firewall/zen-features/blocking-vs-detection-mode-in-zen-firewall "mention")
+* [understanding-your-zen-statistics.md](https://help.aikido.dev/zen-firewall/zen-features/understanding-your-zen-statistics "mention")
 {% endstep %}
 {% endstepper %}

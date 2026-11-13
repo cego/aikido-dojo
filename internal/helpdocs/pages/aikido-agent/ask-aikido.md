@@ -1,10 +1,8 @@
 # Ask Aikido
 
-Ask Aikido is the conversational interface to Aikido Agent on a specific finding.
+**Ask Aikido** is how you talk to [Aikido Agent](https://help.aikido.dev/aikido-agent/aikido-agent) on a specific finding. Use it when you want to validate a triage decision, inspect the real attack path, or adapt a generated fix, without leaving Aikido or pasting findings into a separate chatbot.
 
-**Ask Aikido** is how you talk to [Aikido Agent](/aikido-agent/aikido-agent.md) on a specific finding. Use it when you want to validate a triage decision, inspect the real attack path, or adapt a generated fix, without leaving Aikido or pasting findings into a separate chatbot.
-
-Aikido Agent already filters noise automatically through [SAST AutoTriage](/aikido-agent/sast-autotriage.md), [Secrets AutoTriage](/aikido-agent/secrets-autotriage.md), and [CVE Exploitability Analysis](/aikido-agent/cve-exploitability-analysis.md). Most of the time, that is enough. Use Ask Aikido when you want to dig deeper.
+Aikido Agent already filters noise automatically through [SAST AutoTriage](https://help.aikido.dev/aikido-agent/sast-autotriage), [Secrets AutoTriage](https://help.aikido.dev/aikido-agent/secrets-autotriage), and [CVE Exploitability Analysis](https://help.aikido.dev/aikido-agent/cve-exploitability-analysis). Most of the time, that is enough. Use Ask Aikido when you want to dig deeper.
 
 ### Use cases
 
@@ -38,7 +36,7 @@ You can ask Aikido Agent to:
 * add tests or small logic changes
 * adapt the patch to your architecture
 
-For more on fix refinement, see [Refine AutoFixes with Aikido AI](/autofix-and-remediation/automation-and-merging/refine-autofixes-with-aikido-ai.md).
+For more on fix refinement, see [Refine AutoFixes with Aikido AI](https://help.aikido.dev/autofix-and-remediation/automation-and-merging/refine-autofixes-with-aikido-ai).
 
 ### What it knows
 
@@ -54,11 +52,11 @@ From the chat, you can:
 
 ### Related pages
 
-* [Aikido Agent](/aikido-agent/aikido-agent.md)
-* [Custom Reports](/aikido-agent/custom-reports.md)
-* [SAST AutoTriage](/aikido-agent/sast-autotriage.md)
-* [Secrets AutoTriage](/aikido-agent/secrets-autotriage.md)
-* [CVE Exploitability Analysis](/aikido-agent/cve-exploitability-analysis.md)
-* [How Aikido Uses AI](/ai-and-dev-tools/how-aikido-uses-ai.md)
-* [Refine AutoFixes with Aikido AI](/autofix-and-remediation/automation-and-merging/refine-autofixes-with-aikido-ai.md)
-* [Introduction to Reachability Analysis](/getting-started/reachability-analysis/introduction-to-reachability-analysis.md)
+* [Aikido Agent](https://help.aikido.dev/aikido-agent/aikido-agent)
+* [Custom Reports](https://help.aikido.dev/aikido-agent/custom-reports)
+* [SAST AutoTriage](https://help.aikido.dev/aikido-agent/sast-autotriage)
+* [Secrets AutoTriage](https://help.aikido.dev/aikido-agent/secrets-autotriage)
+* [CVE Exploitability Analysis](https://help.aikido.dev/aikido-agent/cve-exploitability-analysis)
+* [How Aikido Uses AI](https://help.aikido.dev/ai-and-dev-tools/how-aikido-uses-ai)
+* [Refine AutoFixes with Aikido AI](https://help.aikido.dev/autofix-and-remediation/automation-and-merging/refine-autofixes-with-aikido-ai)
+* [Introduction to Reachability Analysis](https://help.aikido.dev/getting-started/reachability-analysis/introduction-to-reachability-analysis)

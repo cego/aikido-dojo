@@ -1,6 +1,6 @@
-# Aikido Zen for Odoo Self-Hosted
+# Aikido Zen for Odoo self-hosted
 
-[Odoo](https://www.odoo.com/) is a full-featured, modular business management suite (ERP/CRM) that covers functions like CRM, e-commerce, accounting, inventory, manufacturing, project management, warehouse operations, accounting and more.
+[Odoo](https://www.odoo.com/) is a full-featured, modular business management suite (ERP/CRM) that covers functions like CRM, e-commerce, accounting, inventory, manufacturing, project management, warehouse operations, accounting and more.&#x20;
 
 You can deploy Odoo on-premises or in the cloud. Aikido Zen does not support Odoo cloud.
 
@@ -16,7 +16,7 @@ Aikido Zen acts as a runtime security layer on the server side. By embedding int
 
 This additional layer is particularly valuable for Odoo because:
 
-* Odoo uses a modular architecture where core modules and many community or custom modules live side by side. That increases the attack surface.
+* Odoo uses a modular architecture where core modules and many community or custom modules live side by side. That increases the attack surface.&#x20;
 * Business-critical operations, including inventory, accounting, orders, and manufacturing, often rely on database interaction, file storage, or external calls. Compromise of any of these could leak sensitive data or corrupt business logic.
 * Many deployments choose on-premises hosting for full data ownership. In that context, adding runtime protection with Zen enhances security without moving data off-site.
 

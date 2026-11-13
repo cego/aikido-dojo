@@ -13,7 +13,7 @@ Aikido VM Scanner is a single-package that installs on your system, automaticall
 
 ### Installation and Upgrade
 
-Make sure you run as sudo and replace `AIKIDO_TOKEN` with [valid token from Local VM scanning page in Aikido](https://app.aikido.dev/settings/integrations/vm-scan-agent). To specify the VM environment (that you will see later in Aikido), you can also set the `VM_TYPE` variable as one of: `production`, `staging` or `development`.
+Make sure you run as sudo and replace `AIKIDO_TOKEN` with [valid token from Local VM scanning page in Aikido](https://app.aikido.dev/settings/integrations/vm-scan-agent?regionRedirect=1). To specify the VM environment (that you will see later in Aikido), you can also set the `VM_TYPE` variable as one of: `production`, `staging` or `development`.
 
 The VM Scanner Agent runs once a day, at a random time between 4:00 AM - 8:00 AM (machine time).
 
@@ -69,10 +69,10 @@ AIKIDO_TOKEN=REPLACE_ME VM_TYPE=production apt-get install -y ./aikido-vm-scanne
 
 If you have an automated install process and you always want to be on the latest version as soon as we release it, you can replace the version in the install link with `latest`:
 
-* <https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/latest/aikido-vm-scanner.x86\\_64.rpm>
-* <https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/latest/aikido-vm-scanner.aarch64.rpm>
-* <https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/latest/aikido-vm-scanner.amd64.deb>
-* <https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/latest/aikido-vm-scanner.arm64.deb>
+* https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/latest/aikido-vm-scanner.x86\_64.rpm
+* https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/latest/aikido-vm-scanner.aarch64.rpm
+* https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/latest/aikido-vm-scanner.amd64.deb
+* https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/latest/aikido-vm-scanner.arm64.deb
 
 ### Additional Configuration
 
@@ -189,7 +189,7 @@ When the scanner is already installed, run:
 sudo systemctl enable --now aikido-runtime-agent
 ```
 
-See [Enable Runtime Sensors](/runtime-sensors/runtime-sensors-overview/enable-runtime-sensors.md).
+See [Enable Runtime Sensors](https://help.aikido.dev/runtime-sensors/runtime-sensors-overview/enable-runtime-sensors).
 
 #### CLI parameters
 

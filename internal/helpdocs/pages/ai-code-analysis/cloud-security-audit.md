@@ -1,10 +1,8 @@
 # Cloud Security Audit
 
-What Cloud Security Audit is, and how it differs from rule-based cloud scanning.
+Cloud Security Audit is the cloud-focused audit type in [AI Code Analysis](https://help.aikido.dev/ai-code-analysis/ai-code-analysis). It is Aikido's agentic approach to cloud security posture management (CSPM). Agents reason about a connected cloud account, and optional infrastructure as code (IaC), then chain misconfigurations into attack paths.
 
-Cloud Security Audit is the cloud-focused audit type in [AI Code Analysis](/ai-code-analysis/ai-code-analysis.md). It is Aikido's agentic approach to cloud security posture management (CSPM). Agents reason about a connected cloud account, and optional infrastructure as code (IaC), then chain misconfigurations into attack paths.
-
-[Cloud Scanning](/cloud-scanning/cloud-scanning-overview.md) flags individual resources that fail a known check. Cloud Security Audit asks which of those settings, taken together, become an attack path.
+[Cloud Scanning](https://help.aikido.dev/cloud-scanning/cloud-scanning-overview) flags individual resources that fail a known check. Cloud Security Audit asks which of those settings, taken together, become an attack path.
 
 ## Use cases
 
@@ -28,14 +26,14 @@ Cloud Scanning flags a broken check. Cloud Security Audit shows how checks combi
 
 You pick one or more connected clouds. IaC repositories are optional. Agents read the inventory Aikido already collected. They do not change the account. When you include IaC, a finding can point at the file that defines a live setting.
 
-Findings land in the **Issues** tab and in the Feed. To run one, see [Run a Cloud Security Audit](/ai-code-analysis/cloud-security-audit/run-a-cloud-security-audit.md). For how to read findings, including retesting, see [Track Progress and Findings](/ai-code-analysis/ai-code-audit-overview/track-progress-and-findings.md). For what is in scope, see [What Cloud Security Audit Finds](/ai-code-analysis/cloud-security-audit/what-cloud-security-audit-finds.md).
+Findings land in the **Issues** tab and in the Feed. To run one, see [Run a Cloud Security Audit](https://help.aikido.dev/ai-code-analysis/cloud-security-audit/run-a-cloud-security-audit). For how to read findings, including retesting, see [Track Progress and Findings](https://help.aikido.dev/ai-code-analysis/ai-code-audit-overview/track-progress-and-findings). For what is in scope, see [What Cloud Security Audit Finds](https://help.aikido.dev/ai-code-analysis/cloud-security-audit/what-cloud-security-audit-finds).
 
 ## Related
 
-{% content-ref url="/pages/sU44cPzbmeqn9z1n9Y1a" %}
-[Run a Cloud Security Audit](/ai-code-analysis/cloud-security-audit/run-a-cloud-security-audit.md)
+{% content-ref url="run-a-cloud-security-audit.md" %}
+[run-a-cloud-security-audit.md](https://help.aikido.dev/ai-code-analysis/cloud-security-audit/run-a-cloud-security-audit)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/tweiYLnrxouYwMmBjEiE" %}
-[Cloud Scanning Overview](/cloud-scanning/cloud-scanning-overview.md)
+{% content-ref url="../../cloud-scanning/cloud-scanning-overview.md" %}
+[cloud-scanning-overview.md](https://help.aikido.dev/cloud-scanning/cloud-scanning-overview)
 {% endcontent-ref %}

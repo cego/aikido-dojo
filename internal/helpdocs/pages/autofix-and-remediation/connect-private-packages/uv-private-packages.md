@@ -27,10 +27,10 @@ If you're overriding the default index instead of adding a index in your `pyproj
 
 You can configure Aikido to authenticate with your private registry by following the steps below:
 
-1. Go to your account's settings page for AutoFix, [here](https://app.aikido.dev/issues/fix/settings).
+1. Go to your account's settings page for AutoFix, [here](https://app.aikido.dev/issues/fix/settings?regionRedirect=1).
 2. Click on “Connect Registry”, the configuration modal will now be shown.
 
 3. Select the “UV” section.
 
 4. Add the environment variables (eg. `UV_DEFAULT_INDEX`) required for your build file. All environment variables that start with `UV_` are allowed.
-5. Click “*Connect Registry*” to save the configuration.
+5. Click “_Connect Registry_” to save the configuration.

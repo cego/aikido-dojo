@@ -1,8 +1,6 @@
 # Bundle Aikido in Your Own Claude Code Plugin
 
-Bundle the Aikido MCP server and your own skills into an internal Claude Code plugin, so developers get a fixed setup with nothing to configure.
-
-The [official Aikido plugin](/ai-and-dev-tools/aikido-mcp/anthropic-claude-code-mcp.md) always ships with its own skills. If you want to decide exactly which skills your developers get, build your own internal plugin that bundles the Aikido MCP server together with the skills you pick, then distribute it from your own marketplace. A plugin is a folder of configuration that Claude Code loads as one unit: skills, agents, hooks, and MCP servers.
+The [official Aikido plugin](https://help.aikido.dev/ai-and-dev-tools/aikido-mcp/anthropic-claude-code-mcp) always ships with its own skills. If you want to decide exactly which skills your developers get, build your own internal plugin that bundles the Aikido MCP server together with the skills you pick, then distribute it from your own marketplace. A plugin is a folder of configuration that Claude Code loads as one unit: skills, agents, hooks, and MCP servers.
 
 Use this when:
 
@@ -64,7 +62,7 @@ The `name` is the namespace for your skills, so a skill folder called `scan/` be
 
 The server starts automatically when the plugin is enabled. The first time someone uses an Aikido tool, the server asks them to sign in through the browser.
 
-For headless environments, or to skip the browser sign-in, use a Personal Access Token (PAT). The server picks up `AIKIDO_API_KEY` from the environment it inherits, so set it in the developer's shell profile or through your device management tool and leave the config above unchanged. That keeps the token out of the plugin repository. See [Token Authentication](/ai-and-dev-tools/aikido-mcp/token-authentication.md) for how to create a PAT.
+For headless environments, or to skip the browser sign-in, use a Personal Access Token (PAT). The server picks up `AIKIDO_API_KEY` from the environment it inherits, so set it in the developer's shell profile or through your device management tool and leave the config above unchanged. That keeps the token out of the plugin repository. See [Token Authentication](https://help.aikido.dev/ai-and-dev-tools/aikido-mcp/token-authentication) for how to create a PAT.
 
 If you would rather have Claude Code ask each developer for a token once and store it securely, declare it in `plugin.json` under `userConfig` and reference it as `${user_config.aikido_token}` in the `env` block:
 
@@ -88,7 +86,6 @@ Then pass it to the server in `.mcp.json`:
   "AIKIDO_API_KEY": "${user_config.aikido_token}"
 }
 ```
-
 {% endstep %}
 
 {% step %}
@@ -109,7 +106,7 @@ Report every finding with its severity and file location, then fix the ones
 you introduced. Do not commit while a critical finding is open.
 ```
 
-Add as many as you need, for example a triage skill that uses `aikido_issues_list` to pull open issues for the current repository. See the [available MCP tools](/ai-and-dev-tools/aikido-mcp/using-aikido-mcp.md#available-tools) for what the server exposes.
+Add as many as you need, for example a triage skill that uses `aikido_issues_list` to pull open issues for the current repository. See the [available MCP tools](https://help.aikido.dev/ai-and-dev-tools/aikido-mcp/using-aikido-mcp#available-tools) for what the server exposes.
 {% endstep %}
 
 {% step %}
@@ -126,7 +123,6 @@ Validate the structure before you ship:
 ```shellscript
 claude plugin validate ./aikido-internal
 ```
-
 {% endstep %}
 {% endstepper %}
 
@@ -179,4 +175,4 @@ Keep the plugin folder inside the marketplace repository and reference it with a
 
 ## Control what the tools can do
 
-Bundling your own plugin controls which skills exist on the developer's machine. It does not change what the Aikido tools are allowed to do. That stays a workspace-level setting in Aikido, see [MCP Permissions](/ai-and-dev-tools/aikido-mcp/mcp-permissions.md).
+Bundling your own plugin controls which skills exist on the developer's machine. It does not change what the Aikido tools are allowed to do. That stays a workspace-level setting in Aikido, see [MCP Permissions](https://help.aikido.dev/ai-and-dev-tools/aikido-mcp/mcp-permissions).

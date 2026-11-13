@@ -20,5 +20,5 @@ Aikido introduces a flexible snooze feature that allows the snoozing of issue gr
 
 ### Viewing Snoozed Items: <a href="#viewing-snoozed-items" id="viewing-snoozed-items"></a>
 
-* Access the [Snooze View](https://app.aikido.dev/issues/snoozed) in Aikido to see all snoozed issue groups and subissues. You can extend or unsnooze any issue from this view.\
-  ​
+*   Access the [Snooze View](https://app.aikido.dev/issues/snoozed?regionRedirect=1) in Aikido to see all snoozed issue groups and subissues. You can extend or unsnooze any issue from this view.\
+    ​

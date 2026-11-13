@@ -12,13 +12,13 @@ You can set up an Aikido account through your version control system, whether yo
 
 For more specific instructions for account setup, please check out the dedicated articles below:
 
-* [Connect your GitHub Account to Aikido](/code-scanning/connect-your-source-code/connect-github-account-to-aikido.md)
-* [Connect your Bitbucket Account to Aikido](/code-scanning/connect-your-source-code/connect-bitbucket-account-to-aikido.md)
-* [Connect your GitLab Account to Aikido](/code-scanning/connect-your-source-code/connect-gitlab-account-to-aikido.md)
-* [Connect your Azure Devops Account to Aikido](/code-scanning/connect-your-source-code/connect-azure-devops-projects-to-aikido.md)
-* [Connect your Azure Devops Self-Managed Server to Aikido](/code-scanning/connect-your-source-code/connect-azure-devops-self-managed-server.md)
-* [Connect your GitLab Self-Managed Server to Aikido](/code-scanning/connect-your-source-code/connect-gitlab-self-managed-server-to-aikido.md)
-* [Setup Local Scanner Account if you don't want code to leave your premise](/code-scanning/local-code-scanning/account-creation-for-local-scanning-on-aikido.md)
-* [Upload a repository as a zip](/code-scanning/connect-your-source-code/upload-a-repository-as-a-zip.md)
+* [Connect your GitHub Account to Aikido](https://help.aikido.dev/code-scanning/connect-your-source-code/connect-github-account-to-aikido)
+* [Connect your Bitbucket Account to Aikido](https://help.aikido.dev/code-scanning/connect-your-source-code/connect-bitbucket-account-to-aikido)
+* [Connect your GitLab Account to Aikido](https://help.aikido.dev/code-scanning/connect-your-source-code/connect-gitlab-account-to-aikido)
+* [Connect your Azure Devops Account to Aikido](https://help.aikido.dev/code-scanning/connect-your-source-code/connect-azure-devops-projects-to-aikido)
+* [Connect your Azure Devops Self-Managed Server to Aikido](https://help.aikido.dev/code-scanning/connect-your-source-code/connect-azure-devops-self-managed-server)
+* [Connect your GitLab Self-Managed Server to Aikido](https://help.aikido.dev/code-scanning/connect-your-source-code/connect-gitlab-self-managed-server-to-aikido)
+* [Setup Local Scanner Account if you don't want code to leave your premise](https://help.aikido.dev/code-scanning/local-code-scanning/account-creation-for-local-scanning-on-aikido)
+* [Upload a repository as a zip](https://help.aikido.dev/code-scanning/connect-your-source-code/upload-a-repository-as-a-zip)
 
 These guides provide detailed steps and considerations for a smooth and secure integration process tailored to your needs.

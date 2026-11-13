@@ -1,23 +1,23 @@
-# Nodejs (ESM)
+# Node.js (ESM)
 
 This guide will walk you through installing and setting up Zen Firewall by Aikido for your application. Follow the steps below to protect your application.
 
 If you encounter any issues or problems, don't hesitate reach out on support chat or Github issues
 
 {% hint style="warning" %}
-Please also [check the documentation on how to integrate Zen with your used web framework](/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript.md). This page only includes additional steps for apps running as native ESM.
+Please also [check the documentation on how to integrate Zen with your used web framework](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript). This page only includes additional steps for apps running as native ESM.
 {% endhint %}
 
 ## Requirements
 
 * We recommend Node.js 24+
 * AWS Lambda handler integration.
-* [Aikido account](/getting-started/setting-up-your-account.md) & [Zen Firewall token](/zen-firewall/zen-installation-instructions/creating-an-aikido-zen-firewall-token.md)
+* [Aikido account](https://help.aikido.dev/getting-started/setting-up-your-account) & [Zen Firewall token](https://help.aikido.dev/zen-firewall/zen-installation-instructions/creating-an-aikido-zen-firewall-token)
 
 ## Installation & Configuration
 
 {% hint style="info" %}
-If you haven't already [follow the specific guide for your framework](/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript.md) before continuing here
+If you haven't already [follow the specific guide for your framework](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript) before continuing here
 {% endhint %}
 
 Modify the start command of your application to include the Zen firewall:

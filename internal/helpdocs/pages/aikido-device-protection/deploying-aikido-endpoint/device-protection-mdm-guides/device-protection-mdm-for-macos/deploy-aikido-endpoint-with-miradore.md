@@ -1,4 +1,4 @@
-# Deploy Device Protection with Miradore
+# Deploy Aikido Device Protection with Miradore on macOS
 
 Use Miradore to deploy Aikido Device Protection across your managed macOS fleet with the required permissions in place.
 
@@ -14,10 +14,10 @@ Deploying packages and scripts requires a Miradore **Premium** or **Premium+** s
 
 Before starting, make sure you have the following from the Aikido Device Protection dashboard:
 
-* The **Aikido Device Protection `.mobileconfig`** (downloaded from the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices))
+* The **Aikido Device Protection `.mobileconfig`** (downloaded from the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices?regionRedirect=1))
 * The **Aikido Device Protection installer** (`.pkg` file, downloaded from the dashboard)
 
-If you're missing any of these, go back to the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices), click **Connect Device**, and complete the pre-flight steps.
+If you're missing any of these, go back to the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices?regionRedirect=1), click **Connect Device**, and complete the pre-flight steps.
 {% endstep %}
 
 {% step %}
@@ -42,7 +42,7 @@ This profile allows the Aikido Device Protection system extension to load silent
    * **Bundle identifier** (e.g. `dev.aikido.endpoint`)
    * **Version**
 5. Click **Create** and wait for the package to finish processing before continuing.
-   {% endstep %}
+{% endstep %}
 
 {% step %}
 **Reboot devices after installation**
@@ -61,24 +61,24 @@ Use a Business Policy to deploy all three items.
 4. Select the restart script, click **Actions** → **Edit item dependency**, and set the `.pkg` as its dependency so devices only restart once the agent has installed.
 5. Assign the policy to your target devices using tags.
 6. Set the policy status to **Enabled**.
-   {% endstep %}
+{% endstep %}
 
 {% step %}
 **Verify the deployment**
 
 On a test device, confirm:
 
-1. The system extension is activated:
+1.  The system extension is activated:
 
-   ```bash
-   systemextensionsctl list | grep aikido
-   ```
+    ```bash
+    systemextensionsctl list | grep aikido
+    ```
 
-   Expect to see the extension marked `[activated enabled]`.
+    Expect to see the extension marked `[activated enabled]`.
 2. Open **System Settings** → **General** → **Login Items & Extensions** and confirm the Aikido Device Protection entries cannot be toggled off.
 3. To review deployment status, go to **Management** → **Action log** and filter by "Business policy" in the **Sender** field.
-   {% endstep %}
-   {% endstepper %}
+{% endstep %}
+{% endstepper %}
 
 ## Troubleshooting
 

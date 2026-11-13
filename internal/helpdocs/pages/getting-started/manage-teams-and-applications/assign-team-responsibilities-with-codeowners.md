@@ -15,7 +15,7 @@ Code Owners is independent from source code manager. It can easily be used with 
 ### Configuration <a href="#assigning-specific-paths" id="assigning-specific-paths"></a>
 
 {% hint style="warning" %}
-This feature is **not enabled by default** and needs to be activated for your account. Please contact **Aikido support** for assistance.
+This feature is **not enabled by default** and needs to be activated for your account. Please contact **Aikido support** for assistance.&#x20;
 {% endhint %}
 
 1. In Github/Gitlab/Bitbucket, create a new file called `CODEOWNERS.` See [GitHub docs](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners), [Gitlab docs](https://docs.gitlab.com/user/project/codeowners/) and [Bitbucket docs](https://support.atlassian.com/bitbucket-cloud/docs/set-up-and-use-code-owners/). Aikido assumes there is only 1 codeowner file and will use the first one it finds.

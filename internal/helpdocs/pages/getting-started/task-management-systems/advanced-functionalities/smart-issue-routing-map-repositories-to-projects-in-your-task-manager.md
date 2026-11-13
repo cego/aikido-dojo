@@ -10,7 +10,7 @@ Often, you have different projects in your task tracker that map to different Ai
 
 ### Step-by-Step Guide <a href="#step-by-step-guide" id="step-by-step-guide"></a>
 
-**Step 1**: Navigate to the [**Task Manager Settings**](https://app.aikido.dev/settings/integrations/tasktracker)
+**Step 1**: Navigate to the [**Task Manager Settings**](https://app.aikido.dev/settings/integrations/tasktracker?regionRedirect=1)
 
 **Step 2**: Select **Jira Project Mapping**.
 

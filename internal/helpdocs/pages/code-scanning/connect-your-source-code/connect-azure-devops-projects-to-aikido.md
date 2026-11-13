@@ -6,7 +6,7 @@ Note that each Azure Project with one or more repos will map to one Aikido works
 
 ### Select Microsoft / Office 365 or Google to authenticate <a href="#select-microsoft--office-365-or-google-to-authenticate" id="select-microsoft--office-365-or-google-to-authenticate"></a>
 
-**Step 1.** To connect your Azure DevOps project, you first need to authenticate via Microsoft / Office 365 or Google to create a user in Aikido. On the [signup screen](https://app.aikido.dev/login), click on 'Microsoft / Google' to continue.
+**Step 1.** To connect your Azure DevOps project, you first need to authenticate via Microsoft / Office 365 or Google to create a user in Aikido. On the [signup screen](https://app.aikido.dev/login?regionRedirect=1), click on 'Microsoft / Google' to continue.
 
 > Depending on your organization's Microsoft Entra settings, you may need IT admin approval to authorize the Aikido application. [For more information about the approval process, check Azure docs.](https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/grant-admin-consent?pivots=portal)
 
@@ -25,15 +25,15 @@ If you're using EntraID groups as members of Devops teams, make sure the user wh
 {% endhint %}
 
 {% hint style="success" %}
-Once your workspace is connected, you can replace the personal access token with a Microsoft Entra service principal that never expires and stores no secret. See [Code Scanning for Azure DevOps with an Entra Service Principal](/code-scanning/connect-your-source-code/code-scanning-for-azure-devops-with-entra-service-principal.md).
+Once your workspace is connected, you can replace the personal access token with a Microsoft Entra service principal that never expires and stores no secret. See [Code Scanning for Azure DevOps with an Entra Service Principal](https://help.aikido.dev/code-scanning/connect-your-source-code/code-scanning-for-azure-devops-with-entra-service-principal).
 {% endhint %}
 
 Next up, you need to create a Personal Access Token to give us access to the resources you want.
 
 * Log in to your Azure DevOps account
-* In the upper-right corner, click the user settings icon next to your avatar. It looks like this:
+*   In the upper-right corner, click the user settings icon next to your avatar. It looks like this:
 
-  [image: User profile icon with a settings gear for account management options.]
+    [image: User profile icon with a settings gear for account management options.]
 * Select **Personal Access Token** in the dropdown.
 * Click on the **+New Token** button in the top left corner
 * Enter a name for the token, eg: 'Aikido Security Access Token'

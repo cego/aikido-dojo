@@ -1,7 +1,5 @@
 # Azure DevOps PR Gating with an Entra Service Principal
 
-Let Aikido run PR checks on your Azure DevOps organization as a Microsoft Entra service principal instead of a personal access token.
-
 Instead of a personal access token (PAT), you can let Aikido post pull request (PR) statuses and comments in your Azure DevOps organization as a Microsoft Entra service principal that you own. No token or secret is created or stored: for every call, Aikido proves its identity to Microsoft Entra, which issues a short-lived access token for your service principal. Nothing expires and nothing needs rotating, and every status and comment is posted under the application's own name.
 
 {% hint style="info" %}
@@ -12,16 +10,16 @@ Your workspace must be connected to Azure DevOps Services (dev.azure.com), and y
 Azure DevOps PR gating via Aikido supports Azure Repos Git repositories only. Team Foundation Version Control (TFVC) repositories aren't supported for PR gating or Code Quality gates.
 {% endhint %}
 
-**First**, go to [General Settings](https://app.aikido.dev/settings/account), click **Update Personal Access Token** and, on the **PR Checks** tab, click **Use An Entra Service Principal Instead**. If PR checks aren't set up yet, go to [Integrations](https://app.aikido.dev/settings/integrations), click **Connect** on Azure DevOps PR checks, and click the same button on the personal access token page.
+**First**, go to [General Settings](https://app.aikido.dev/settings/account?regionRedirect=1), click **Update Personal Access Token** and, on the **PR Checks** tab, click **Use An Entra Service Principal Instead**. If PR checks aren't set up yet, go to [Integrations](https://app.aikido.dev/settings/integrations?regionRedirect=1), click **Connect** on Azure DevOps PR checks, and click the same button on the personal access token page.
 
 [image: PR Checks tab in Aikido with the personal access token card and the button to use an Entra service principal instead]
 
-You end up on the service principal management page, which can also be found at [Manage Azure DevOps PR Checks service principal](https://app.aikido.dev/settings/integrations/azure-devops/checks/service-principal). Keep this page open: it shows the **Issuer**, **Subject identifier**, and **Audience** you need in the next section.
+You end up on the service principal management page, which can also be found at [Manage Azure DevOps PR Checks service principal](https://app.aikido.dev/settings/integrations/azure-devops/checks/service-principal?regionRedirect=1). Keep this page open: it shows the **Issuer**, **Subject identifier**, and **Audience** you need in the next section.
 
 [image: Aikido service principal page showing the issuer, subject identifier, and audience values]
 
 {% hint style="info" %}
-Create a separate application for PR checks, even if you already set up [Code Scanning](/code-scanning/connect-your-source-code/code-scanning-for-azure-devops-with-entra-service-principal.md) or [AutoFix](/autofix-and-remediation/configure/autofix-for-azure-devops-with-entra-service-principal.md) with an Entra service principal. The Issuer and Audience are the same, but the Subject identifier is different because PR checks use their own Aikido identity. Copy it from the PR checks page.
+Create a separate application for PR checks, even if you already set up [Code Scanning](https://help.aikido.dev/code-scanning/connect-your-source-code/code-scanning-for-azure-devops-with-entra-service-principal) or [AutoFix](https://help.aikido.dev/autofix-and-remediation/configure/autofix-for-azure-devops-with-entra-service-principal) with an Entra service principal. The Issuer and Audience are the same, but the Subject identifier is different because PR checks use their own Aikido identity. Copy it from the PR checks page.
 {% endhint %}
 
 **Next**, follow the instructions below to create the service principal in Microsoft Entra and give it access in Azure DevOps.
@@ -101,7 +99,7 @@ az devops security permission update --org https://dev.azure.com/<your-organizat
   --allow-bit 3 -o table
 ```
 
-The output lists **ViewSubscriptions** and **EditSubscriptions** as *Allow*. Edit also covers deleting subscriptions.
+The output lists **ViewSubscriptions** and **EditSubscriptions** as _Allow_. Edit also covers deleting subscriptions.
 
 {% hint style="info" %}
 This is the same permission the PAT setup needs from the person who creates the token, which is why that setup requires an administrator. With a service principal you grant it to the application alone.
@@ -112,7 +110,7 @@ This is the same permission the PAT setup needs from the person who creates the 
 1. Go back to the service principal management page in Aikido.
 2. Insert the **Directory (tenant) ID** and the **Application (client) ID** you copied earlier and click **Save Service Principal**. Aikido requests a token from Microsoft Entra, verifies that it can access the repositories of your Azure DevOps organization, and checks that it can manage service hooks by creating and deleting a test subscription before saving.
 
-You are all set. PR checks now authenticate as the service principal, and the **PR Checks** tab shows which application is in use. Configure the repositories you want to gate on the [Azure DevOps PR Checks](https://app.aikido.dev/settings/integrations/azure-devops/checks) page, as described in [Azure DevOps PR Gating](/pr-and-release-gating/azure-pipelines-ci-pr-gating-via-aikido-dashboard-with-a-personal-access-token.md). Service hooks, statuses, and comments are created by **Aikido PR Checks**.
+You are all set. PR checks now authenticate as the service principal, and the **PR Checks** tab shows which application is in use. Configure the repositories you want to gate on the [Azure DevOps PR Checks](https://app.aikido.dev/settings/integrations/azure-devops/checks?regionRedirect=1) page, as described in [Azure DevOps PR Gating](https://help.aikido.dev/pr-and-release-gating/azure-pipelines-ci-pr-gating-via-aikido-dashboard-with-a-personal-access-token). Service hooks, statuses, and comments are created by **Aikido PR Checks**.
 
 [image: Azure DevOps PR Checks page in Aikido after saving the service principal, with the repository list ready to configure]
 

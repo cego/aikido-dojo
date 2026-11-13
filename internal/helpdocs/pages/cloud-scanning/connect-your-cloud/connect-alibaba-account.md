@@ -6,7 +6,7 @@ Securing your cloud infrastructure is crucial to protecting your user data. You 
 
 #### **Main use cases**
 
-* Aikido surfaces critical cloud misconfigurations that allow attackers to get into your Alibaba Cloud environment. We focus on the risks that have real business impact and cut the noise. All configuration checks can be found [here.](https://app.aikido.dev/clouds/checks)
+* Aikido surfaces critical cloud misconfigurations that allow attackers to get into your Alibaba Cloud environment. We focus on the risks that have real business impact and cut the noise. All configuration checks can be found [here.](https://app.aikido.dev/clouds/checks?regionRedirect=1)
 * Aikido continuously monitors your Alibaba Cloud environment for new risks as your setup evolves.
 * Container image scanning for Alibaba Cloud Container Registry (ACR).
 * Virtual machine scanning via the Local VM Scanner on Alibaba Cloud instances.
@@ -15,7 +15,7 @@ Aikido performs daily compliance scans on the above.
 
 ### Getting started
 
-Head to the [cloud overview page](https://app.aikido.dev/clouds) on Aikido, click **"Connect Cloud"**, and select **Alibaba Cloud** from the list.
+Head to the [cloud overview page](https://app.aikido.dev/clouds?regionRedirect=1) on Aikido, click **"Connect Cloud"**, and select **Alibaba Cloud** from the list.
 
 {% stepper %}
 {% step %}
@@ -35,7 +35,7 @@ You can connect to Alibaba Cloud in two ways:
 3. In the Aikido wizard, fill in:
    * **Resource Directory ID** (e.g. `rd-XXXXXX`)
    * **Root Directory ID or Folder IDs** (e.g. `r-abcdef` or `fd-abcdefghij, fd-jihgfedcba`). Use the root ID to scan everything, or list specific folder IDs to scope down.
-   * **Excluded Accounts IDs** *(optional)*: any accounts you want Aikido to skip.
+   * **Excluded Accounts IDs** _(optional)_: any accounts you want Aikido to skip.
    * **Enable ACR Scanning** if you want Aikido to scan Alibaba Cloud Container Registry images alongside your infrastructure.
 
 You can find these values in the Alibaba console under **Resource Directory**.
@@ -54,7 +54,7 @@ Go to the [Alibaba Cloud Console](https://www.alibabacloud.com/) and sign in wit
 
 In the Aikido wizard, click **"Create RAM Role & Policy"**. This opens Alibaba Cloud ROS with the template prefilled. The role gives Aikido read-only audit permissions and never lets Aikido edit your infrastructure.
 
-*No AccessKey pairs or passwords are shared with Aikido.*
+_No AccessKey pairs or passwords are shared with Aikido._
 
 * Provide the value shown in the wizard for the `ExternalId` parameter (e.g. `aikido-3377`).
 * (Resource Directory setup only) Provide the same values for `ResourceDirectoryFolderIds` and `EnableAcrScanning` as you did in Aikido.
@@ -89,20 +89,20 @@ If you connect your Alibaba Cloud Resource Directory, container images will be s
 
 Alibaba Cloud Container Registry (ACR) and most third-party registries you use from Alibaba Cloud are OCI-compatible, so Aikido can scan them.
 
-Create a read-only or pull-only user in Alibaba Cloud Container Registry: <https://www.alibabacloud.com/help/en/acr/user-guide/configure-access-credentials>
+Create a read-only or pull-only user in Alibaba Cloud Container Registry: [https://www.alibabacloud.com/help/en/acr/user-guide/configure-access-credentials](https://www.alibabacloud.com/help/en/acr/user-guide/configure-access-credentials)
 
 Then follow the OCI guide below to configure container image scanning:
 
-{% content-ref url="/pages/WbT1GJFncHssApSoIXH7" %}
-[Generic OCI-Compatible Registry](/container-image-scanning/standalone-registries/generic-oci-compatible-registry.md)
+{% content-ref url="../../container-image-scanning/standalone-registries/generic-oci-compatible-registry.md" %}
+[generic-oci-compatible-registry.md](https://help.aikido.dev/container-image-scanning/standalone-registries/generic-oci-compatible-registry)
 {% endcontent-ref %}
 
 ### Virtual Machine scanning
 
 To scan virtual machines on Alibaba Cloud, use the Local VM Scanner. It inspects packages, system dependencies, and configuration directly on the instance.
 
-{% content-ref url="/pages/07U0LWsYijoM6UzZxn2i" %}
-[Local VM Scanning](/virtual-machine-scanning/local-vm-scanning.md)
+{% content-ref url="../../virtual-machine-scanning/local-vm-scanning/" %}
+[local-vm-scanning](https://help.aikido.dev/virtual-machine-scanning/local-vm-scanning)
 {% endcontent-ref %}
 
 ECS instances can get the Local VM Scanner by [configuring the user data](https://www.alibabacloud.com/help/en/ecs/user-guide/customize-the-initialization-configuration-for-an-instance) to download and install the necessary binary. You can also roll this out centrally using your usual automation tooling (Ansible, Terraform-provisioned scripts, cloud-init) so new Alibaba Cloud instances are automatically enrolled.

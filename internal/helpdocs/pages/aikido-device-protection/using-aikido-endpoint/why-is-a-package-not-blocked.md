@@ -2,7 +2,7 @@
 
 If a package installed despite your block rules, one of the following is usually the cause.
 
-Not sure if Device Protection is active on the device? [Test it first.](/aikido-device-protection/miscellaneous-aikido-endpoint/how-to-test-device-protection.md)
+Not sure if Device Protection is active on the device? [Test it first.](https://help.aikido.dev/aikido-device-protection/miscellaneous-aikido-endpoint/how-to-test-device-protection)
 
 ### The package was already cached
 
@@ -32,13 +32,13 @@ To confirm that blocking works, force a fresh download: open the extension page,
 
 Device Protection only intercepts supported package ecosystems. Installs from other sources pass through unchanged.
 
-[Check the supported ecosystems list to confirm.](/aikido-device-protection/miscellaneous-aikido-endpoint/supported-ecosystems.md)
+[Check the supported ecosystems list to confirm.](https://help.aikido.dev/aikido-device-protection/miscellaneous-aikido-endpoint/supported-ecosystems)
 
 ### The agent is not running
 
 If the agent is stopped or has not synced recently, it cannot enforce policy.
 
-[Check the agent status on the device, and confirm the last heartbeat in the Aikido dashboard.](/aikido-device-protection/using-aikido-endpoint/end-user-experience.md)
+[Check the agent status on the device, and confirm the last heartbeat in the Aikido dashboard.](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/end-user-experience)
 
 ### The policy has not synced yet
 
@@ -46,8 +46,8 @@ New rules and exceptions reach the device on the next sync, which runs every 10 
 
 ### The install ran inside a container
 
-Enable **Protect Containers** to protect Docker. Containers with the opt-out label are skipped. See [Device Protection in Docker Containers](/aikido-device-protection/deploying-aikido-endpoint/device-protection-in-docker-containers.md).
+Enable **Protect Containers** to protect Docker. Containers with the opt-out label are skipped. See [Device Protection in Docker Containers](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-in-docker-containers).
 
 ### Still stuck?
 
-Contact support and include your [Device Protection Information for Support](/aikido-device-protection/miscellaneous-aikido-endpoint/endpoint-information-for-support.md).
+Contact support and include your [Device Protection Information for Support](https://help.aikido.dev/aikido-device-protection/miscellaneous-aikido-endpoint/endpoint-information-for-support).

@@ -6,14 +6,14 @@ Securing your cloud infrastructure is crucial to protecting your user data. You 
 
 **Main Use Cases**
 
-* Aikido surfaces critical cloud misconfigurations that allow hackers to get into your DigitalOcean cloud, such as the risk highlighted in [this blog post](https://www.aikido.dev/blog/how-a-startups-cloud-got-taken-over-by-a-simple-form-that-sends-an-email). All configuration checks can be found [here (filter on DigitalOcean)](https://app.aikido.dev/clouds/checks)
+* Aikido surfaces critical cloud misconfigurations that allow hackers to get into your DigitalOcean cloud, such as the risk highlighted in [this blog post](https://www.aikido.dev/blog/how-a-startups-cloud-got-taken-over-by-a-simple-form-that-sends-an-email). All configuration checks can be found [here (filter on DigitalOcean)](https://app.aikido.dev/clouds/checks?regionRedirect=1)
 * If you store Docker images in repo, Aikido looks for most known vulnerabilities in Apache, Nginx etc.
 
 Aikido performs a daily compliance scan on the above.
 
 ### Getting started <a href="#getting-started" id="getting-started"></a>
 
-To get started, head to the [cloud overview page](https://app.aikido.dev/clouds) on Aikido and click 'Connect cloud.' Follow the step-by-step setup wizard to connect your DigitalOcean account to Aikido.
+To get started, head to the [cloud overview page](https://app.aikido.dev/clouds?regionRedirect=1) on Aikido and click 'Connect cloud.' Follow the step-by-step setup wizard to connect your DigitalOcean account to Aikido.
 
 To connect your account, you will need to create an access token that Aikido can use in DigitalOcean. Click on "API" in the left-hand navigation to go to the following screen.
 

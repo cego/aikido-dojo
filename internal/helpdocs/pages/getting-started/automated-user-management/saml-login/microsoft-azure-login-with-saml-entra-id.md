@@ -1,14 +1,14 @@
 # Microsoft Azure: Login with SAML/ Entra ID
 
 {% hint style="info" %}
-This feature is only available on a **paying** plan and is not enabled by default. **Pro plans and up** can enable SAML [via this link](https://app.aikido.dev/settings/saml/enable).
+This feature is available on all **paid** plans and is not enabled by default. You can enable SAML [via this link](https://app.aikido.dev/settings/saml/enable?regionRedirect=1).
 {% endhint %}
 
-> If you switch to SAML Login instead of auto-onboarding via your Git provider, team import from GitHub, Bitbucket, or Azure DevOps will no longer work. You will need to manage your teams manually moving forward, either through the Aikido UI or [Access Profiles.](/getting-started/automated-user-management/saml-login/saml-user-rights-access-profiles-recommended.md)
+> If you switch to SAML Login instead of auto-onboarding via your Git provider, team import from GitHub, Bitbucket, or Azure DevOps will no longer work. You will need to manage your teams manually moving forward, either through the Aikido UI or [Access Profiles.](https://help.aikido.dev/getting-started/automated-user-management/saml-login/saml-user-rights-access-profiles-recommended)
 
 ## Setting up SAML in your account <a href="#setting-up-saml-in-your-account" id="setting-up-saml-in-your-account"></a>
 
-**Step 1.** Go to [**General Settings**](https://app.aikido.dev/settings/account) and click '**Enable SAML Authentication'**
+**Step 1.** Go to [**General Settings**](https://app.aikido.dev/settings/account?regionRedirect=1) and click '**Enable SAML Authentication'**
 
 [image: Workspace info screen with option to enable SAML authentication for GitHub account.]
 
@@ -49,7 +49,7 @@ This feature is only available on a **paying** plan and is not enabled by defaul
 [image: User attributes and claims mapping with editable options highlighted.]
 
 **Step 9.** Click the **Unique User Identifier (Name ID)**.\
-Optional: clicking 'Add new claim' at the top of this page allows you to add [custom attributes](/getting-started/automated-user-management/saml-login/saml-user-rights-using-custom-attributes-advanced.md) to SAML. More info [here](https://help.aikido.dev/doc/microsoft-azure-custom-attributes-with-saml--entra-id/docFaysVwVZy).
+Optional: clicking 'Add new claim' at the top of this page allows you to add [custom attributes](https://help.aikido.dev/getting-started/automated-user-management/saml-login/saml-user-rights-using-custom-attributes-advanced) to SAML. More info [here](https://help.aikido.dev/doc/microsoft-azure-custom-attributes-with-saml--entra-id/docFaysVwVZy).
 
 [image: Highlighted SAML claim: Unique User Identifier (Name ID) for user identification.]
 

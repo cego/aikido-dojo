@@ -1,6 +1,6 @@
 # Trends Over Time Report
 
-The [Trends Over Time](https://app.aikido.dev) Report shows how your security posture evolves week by week. It focuses on volume and movement, not just a static snapshot.
+The [Trends Over Time](https://app.aikido.dev/?regionRedirect=1) Report shows how your security posture evolves week by week. It focuses on volume and movement, not just a static snapshot.
 
 This report has two main views:
 

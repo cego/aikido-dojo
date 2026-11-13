@@ -10,7 +10,7 @@ Follow these steps to send alerts to a private Microsoft Teams channel:
 {% step %}
 **Install the Aikido app**
 
-If not already done, follow the steps described on this page: [Microsoft Teams Notifications](/getting-started/chat-and-alerts/ms-teams-notifications.md)
+If not already done, follow the steps described on this page: [ms-teams-notifications.md](https://help.aikido.dev/getting-started/chat-and-alerts/ms-teams-notifications "mention")
 {% endstep %}
 
 {% step %}

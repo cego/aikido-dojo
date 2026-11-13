@@ -6,7 +6,7 @@ Follow the simple steps below to activate this feature:
 
 **Step 1:** Log into your Scaleway account to gather some data.
 
-We'll have to create an API key. Direct URL: <https://console.scaleway.com/iam/api-keys> (see screenshots below)
+We'll have to create an API key. Direct URL: [https://console.scaleway.com/iam/api-keys](https://console.scaleway.com/iam/api-keys) (see screenshots below)
 
 [image: User profile dropdown menu showing organization and account management options.]
 
@@ -14,7 +14,7 @@ We'll have to create an API key. Direct URL: <https://console.scaleway.com/iam/a
 
 [image: API key generation form with user options and expiration settings.]
 
-**Step 2:** Enter the collected data in Aikido (direct link: <https://app.aikido.dev/settings/container-image-registry/add/scaleway>)
+**Step 2:** Enter the collected data in Aikido (direct link: [https://app.aikido.dev/settings/container-image-registry/add/scaleway](https://app.aikido.dev/settings/container-image-registry/add/scaleway?regionRedirect=1))
 
 [image: Form to connect and configure a Scaleway container image registry.]
 

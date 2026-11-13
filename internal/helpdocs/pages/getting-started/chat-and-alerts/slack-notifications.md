@@ -6,7 +6,7 @@ Aikido posts security notifications to Slack so your team can see new issues, a 
 
 * 🚨 **Instant issue alerts**: Notify a channel as soon as Aikido finds issues that match the severity and issue type you choose
 * 📅 **Weekly digest**: Send a Friday recap of open issues, new critical findings, and what changed that week
-* ⏱️ **SLA alerts**: Ping a channel when an issue is due soon or has breached its [SLA](/getting-started/core-functionalities/enable-slas-in-aikido.md)
+* ⏱️ **SLA alerts**: Ping a channel when an issue is due soon or has breached its [SLA](https://help.aikido.dev/getting-started/core-functionalities/enable-slas-in-aikido)
 
 {% hint style="info" %}
 The Developer plan includes one Slack alert. On the Basic, Pro, Advanced, and Enterprise plans you can create multiple alerts, so different teams and channels get the notifications that apply to them.
@@ -14,7 +14,7 @@ The Developer plan includes one Slack alert. On the Basic, Pro, Advanced, and En
 
 ## Connecting the Aikido Slack app to Slack <a href="#connecting-the-aikido-slack-app-to-slack" id="connecting-the-aikido-slack-app-to-slack"></a>
 
-Go to [the Slack integrations settings](https://app.aikido.dev/settings/integrations/notifications/slack) inside of the Aikido app.
+Go to [the Slack integrations settings](https://app.aikido.dev/settings/integrations/notifications/slack?regionRedirect=1) inside of the Aikido app.
 
 1. Click **"Add integration"**
 2. Select **the Slack workspace** you'd like to use on the top right dropdown
@@ -25,7 +25,7 @@ To use another channel later, open an alert and choose **Link a different channe
 
 ## Notification types <a href="#notification-types" id="notification-types"></a>
 
-On the [Slack integration page](https://app.aikido.dev/settings/integrations/notifications/slack), click **Create alert** and choose an alert type. Each alert has its own options. After you save an alert, you can send a test message from its actions menu.
+On the [Slack integration page](https://app.aikido.dev/settings/integrations/notifications/slack?regionRedirect=1), click **Create alert** and choose an alert type. Each alert has its own options. After you save an alert, you can send a test message from its actions menu.
 
 ### Instant alerts
 
@@ -46,7 +46,7 @@ Aikido sends a summary every Friday. The message includes new critical findings 
 
 ### SLA alerts
 
-Aikido notifies you when an open issue is approaching or has passed its SLA date. These alerts follow your [SLA settings](/getting-started/core-functionalities/enable-slas-in-aikido.md), including how many days before the deadline an issue counts as **Due Soon**. Enable SLAs before you create this alert.
+Aikido notifies you when an open issue is approaching or has passed its SLA date. These alerts follow your [SLA settings](https://help.aikido.dev/getting-started/core-functionalities/enable-slas-in-aikido), including how many days before the deadline an issue counts as **Due Soon**. Enable SLAs before you create this alert.
 
 SLA alerts apply to the whole workspace. Aikido notifies you for issues that become due soon or breach their SLA after you create the alert, and sends up to 30 SLA Slack messages per day in order to not create too much noise..
 
@@ -66,7 +66,7 @@ To add the Aikido Slackbot to a private channel, you first need to invite the bo
 
 [image: Slack prompt suggesting to add a user to a channel before messaging the whole group.]
 
-Now you should be able to find your private channel in the app. Create an alert and select that channel. See [Notification types](#notification-types).
+Now you should be able to find your private channel in the app. Create an alert and select that channel. See [Notification types](https://help.aikido.dev/getting-started/chat-and-alerts/slack-notifications#notification-types).
 
 ### Alternative method <a href="#alternative-method" id="alternative-method"></a>
 
@@ -84,6 +84,6 @@ Now you should be able to find your private channel in the app.
 
 ## Device Protection
 
-{% content-ref url="/pages/c8juUG0pkeoH5JbRzfbB" %}
-[Approving Install Requests](/aikido-device-protection/using-aikido-endpoint/reviewing-install-requests.md)
+{% content-ref url="../../aikido-device-protection/using-aikido-endpoint/reviewing-install-requests.md" %}
+[reviewing-install-requests.md](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/reviewing-install-requests)
 {% endcontent-ref %}

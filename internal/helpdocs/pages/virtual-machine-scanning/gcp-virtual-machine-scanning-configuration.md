@@ -25,7 +25,7 @@ Aikido needs several Google Cloud APIs enabled in your project to scan your comp
    * `compute.googleapis.com`
    * `iam.googleapis.com`
 3. Once the command completes, click **Continue**.
-   {% endstep %}
+{% endstep %}
 
 {% step %}
 **Create custom roles**
@@ -70,8 +70,8 @@ Aikido shows you the email address of its managed Google Cloud service account i
 
 * Grant the main custom role to that service account using the command shown in the wizard.
 * Then grant the delete-only role using the second command shown in the wizard. That binding includes a condition so it only applies to Aikido-created snapshots. This ensures Aikido can only delete snapshots that it created itself.
-  {% endstep %}
-  {% endstepper %}
+{% endstep %}
+{% endstepper %}
 
 ### How it works
 
@@ -109,9 +109,9 @@ The temporary disk is deleted from the Aikido-managed project.
 
 ### Using GCP VM Scanning with VPC Service Controls
 
-If your GCP project is protected by a VPC Service Controls perimeter, you may need to allow one additional cross-project operation on top of the IAM permissions described [above](#getting-started).
+If your GCP project is protected by a VPC Service Controls perimeter, you may need to allow one additional cross-project operation on top of the IAM permissions described [above](https://help.aikido.dev/virtual-machine-scanning/gcp-virtual-machine-scanning-configuration#getting-started).
 
-As described in [the "how it works" section](#how-it-works), Aikido creates a snapshot in your project and then creates a temporary disk in Aikido's scanner project from that snapshot. The disk creation can be blocked by VPC Service Controls.
+As described in [the "how it works" section](https://help.aikido.dev/virtual-machine-scanning/gcp-virtual-machine-scanning-configuration#how-it-works), Aikido creates a snapshot in your project and then creates a temporary disk in Aikido's scanner project from that snapshot. The disk creation can be blocked by VPC Service Controls.
 
 **What to allow**
 

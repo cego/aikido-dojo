@@ -17,7 +17,7 @@ Aikido’s IDE extension helps you find and fix vulnerabilities in your open-sou
 3. Click Start scanning.
 4. When results appear, select a package to view details, advisories, and fix guidance.
 5. Each finding shows the minimum safe version or version ranges that resolve the issue.
-6. For supported ecosystems, [AI AutoFix](/ai-and-dev-tools/ide-plugins-overview/features/aikido-ai-in-ide.md) can update the manifest or suggest a safe version bump that you can apply from the IDE.
+6. For supported ecosystems, [AI AutoFix](https://help.aikido.dev/ai-and-dev-tools/ide-plugins-overview/features/aikido-ai-in-ide) can update the manifest or suggest a safe version bump that you can apply from the IDE.
 
 #### Eclipse
 

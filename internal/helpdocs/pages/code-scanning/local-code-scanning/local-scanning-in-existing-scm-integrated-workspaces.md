@@ -17,7 +17,7 @@ Before setting up local scanning, ensure the following:
 
 **Step 1**: Open your existing Aikido workspace (GitHub, GitLab, etc)
 
-**Step 2**: Go to [General Settings](https://app.aikido.dev/settings/account) and click Local Scan Setup
+**Step 2**: Go to [General Settings](https://app.aikido.dev/settings/account?regionRedirect=1) and click Local Scan Setup
 
 [image: Workspace Info page with "Local Scan Setup" button highlighted for configuration.]
 

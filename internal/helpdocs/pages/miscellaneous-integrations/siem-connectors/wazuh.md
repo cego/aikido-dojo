@@ -25,7 +25,6 @@ Before connecting, make sure you have:
 
 {% stepper %}
 {% step %}
-
 #### Get your Wazuh indexer details
 
 1. Confirm your Wazuh indexer API is reachable from Aikido. If it's behind a firewall or IP allowlist, you'll need to allow Aikido's egress IPs.
@@ -39,12 +38,10 @@ The hostname in your indexer URL must appear as a Subject Alternative Name (SAN)
 ```
 openssl x509 -in config/wazuh_indexer_ssl_certs/wazuh.indexer.pem -noout -ext subjectAltName
 ```
-
 {% endhint %}
 {% endstep %}
 
 {% step %}
-
 #### Connect a SIEM
 
 Go to **Settings > Integrations** in the Aikido app and add a new SIEM integration. In the **Connect a SIEM** dialog, select **Wazuh** and fill in:
@@ -68,7 +65,6 @@ Click **Test connection** to confirm Aikido can reach your Wazuh indexer, then *
 {% endstep %}
 
 {% step %}
-
 #### Configure which issues sync
 
 On the Wazuh integration page, under **Issue input settings**, configure which Aikido issues are synced:

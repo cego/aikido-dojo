@@ -20,7 +20,7 @@ Aikido recommends running the local scanner on a machine with 2-4 core CPUs with
 
 **Step 1:** Ensure you are **logged out** of any existing Aikido accounts to start fresh for Local Scanning setup.
 
-**Step 2:** Navigate to the [Login Screen](https://app.aikido.dev/login) website and select 'Other Options'. Select your preferred login method (Microsoft or Google).<br>
+**Step 2:** Navigate to the [Login Screen](https://app.aikido.dev/login?regionRedirect=1) website and select 'Other Options'. Select your preferred login method (Microsoft or Google).<br>
 
 **Step 3:** Select Setup Local Scan on the Workspace Selection Page
 
@@ -46,12 +46,12 @@ If you have already created a workspace with Gmail/O365 (e.g. GitLab Self Manage
 
 Once the setup is complete, you're all set to install Aikido's Local Scanner on your machine. Follow one of the links provided to access additional help articles for installation and setup.
 
-* [**Aikido Local Scanning for Mac**](https://help.aikido.dev/en/articles/9061845-setting-up-local-scanner-on-your-mac)
-* [**Aikido Local Scanning for Windows**](https://help.aikido.dev/en/articles/9065418-setting-up-local-scanner-on-windows)
-* [**Aikido Local Scanning for Linux**](/code-scanning/local-code-scanning/linux-setup-for-local-code-scanning.md)
-* [**Aikido Local Scanning in a Self-Managed GitLab Project**](https://help.aikido.dev/en/articles/9061700-setting-up-local-scanner-in-self-managed-gitlab-project)
-* [**Aikido Local Scanning in Azure DevOps Server**](/code-scanning/local-code-scanning/azure-devops-server-setup-for-local-code-scanning.md)
-* [**Aikido Local Scanning for Jenkins**](https://help.aikido.dev/en/articles/9027146-setting-up-local-scanner-in-jenkins-project)
-* [**Aikido Local Scanning for Circle CI**](/code-scanning/local-code-scanning/circleci-setup-for-local-code-scanning.md)
-* [**Aikido Local Scanning for GitHub Actions**](/code-scanning/local-code-scanning/github-action-setup-for-local-code-scanning.md)
-* [**Aikido Local Scanning for Bitbucket Pipelines**](/code-scanning/local-code-scanning/bitbucket-pipeline-setup-for-local-code-scanning.md)
+* [**Aikido Local Scanning for Mac**](https://help.aikido.dev/code-scanning/local-code-scanning/mac-setup-for-local-code-scanning)
+* [**Aikido Local Scanning for Windows**](https://help.aikido.dev/code-scanning/local-code-scanning/windows-setup-for-local-code-scanning)
+* [**Aikido Local Scanning for Linux**](https://help.aikido.dev/code-scanning/local-code-scanning/linux-setup-for-local-code-scanning)
+* [**Aikido Local Scanning in a Self-Managed GitLab Project**](https://help.aikido.dev/code-scanning/local-code-scanning/gitlab-self-managed-setup-for-local-code-scanning)
+* [**Aikido Local Scanning in Azure DevOps Server**](https://help.aikido.dev/code-scanning/local-code-scanning/azure-devops-server-setup-for-local-code-scanning)
+* [**Aikido Local Scanning for Jenkins**](https://help.aikido.dev/code-scanning/local-code-scanning/jenkins-setup-for-local-code-scanning)
+* [**Aikido Local Scanning for Circle CI**](https://help.aikido.dev/code-scanning/local-code-scanning/circleci-setup-for-local-code-scanning)
+* [**Aikido Local Scanning for GitHub Actions**](https://help.aikido.dev/code-scanning/local-code-scanning/github-action-setup-for-local-code-scanning)
+* [**Aikido Local Scanning for Bitbucket Pipelines**](https://help.aikido.dev/code-scanning/local-code-scanning/bitbucket-pipeline-setup-for-local-code-scanning)

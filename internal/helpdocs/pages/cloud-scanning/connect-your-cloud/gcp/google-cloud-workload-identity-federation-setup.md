@@ -1,7 +1,5 @@
 # Google Cloud Workload Identity Federation Setup
 
-This page explains how to use Workload Identity Federation to grant Aikido access to your GCP projects. The other alternative is using a service account.
-
 Google Cloud Workload Identity Federation (WIF) enables you to let Aikido scan your Google Cloud projects without service account keys or any other secrets.
 
 You configure a Workload Identity Federation pool and provider that allow Aikido to exchange its specific credentials for credentials valid in your GCP environment. These are short-lived and not stored anywhere, making this approach much safer and compliant with various compliance requirements.
@@ -87,4 +85,4 @@ Yes, though direct access is simpler. Use impersonation if your organization man
 
 * **Do you have a Terraform module for this?**
 
-Yes! It is available here: <https://github.com/AikidoSec/gcp-onboarding-terraform-module>. It has two variants: project and organization onboarding.
+Yes! It is available here: [https://github.com/AikidoSec/gcp-onboarding-terraform-module](https://github.com/AikidoSec/gcp-onboarding-terraform-module). It has two variants: project and organization onboarding.

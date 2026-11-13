@@ -77,7 +77,7 @@ To link additional workspaces to the same Microsoft Team, click the button "Link
 
 <summary>How can I receive alerts in a private channel?</summary>
 
-This is not easily possible due to restrictions imposed by Microsoft. We recommend creating a private Team with a public channel instead. But we describe a [workaround on this page](/getting-started/chat-and-alerts/send-alerts-to-private-microsoft-teams-channels.md).
+This is not easily possible due to restrictions imposed by Microsoft. We recommend creating a private Team with a public channel instead. But we describe a [workaround on this page](https://help.aikido.dev/getting-started/chat-and-alerts/send-alerts-to-private-microsoft-teams-channels).
 
 </details>
 

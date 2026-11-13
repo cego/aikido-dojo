@@ -13,6 +13,18 @@ The easiest way to send diagnostics is directly from the app. Aikido will automa
 5. Leave your email if you'd like us to follow up (optional)
 6. Click **Submit Report**
 
+### Collect logs from the Aikido dashboard (admins)
+
+Admins can request diagnostics logs from a user's device in Aikido, without the user having to do anything.
+
+1. Go to the Device Protection [device list](https://app.aikido.dev/endpoint-protection/devices?regionRedirect=1)
+2. Click the `⋮` menu next to the device
+3. Click **Collect Logs**
+
+[image: Device actions menu with Collect Logs, Pause Protection, and Remove Device]
+
+The logs are sent to Aikido Support. If the device is offline, the request is queued and runs the next time the device comes online. Mention the device in your support ticket so we can find the logs. See [Device actions](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/connecting-and-managing-devices#device-actions) for more.
+
 ### Run the diagnostics command (fallback)
 
 If the app is not accessible, run this command and attach the diagnostics logs. We only keep this data for as long as we need it to fix the problem.
@@ -20,31 +32,25 @@ If the app is not accessible, run this command and attach the diagnostics logs. 
 {% tabs %}
 {% tab title="macOS" %}
 {% code overflow="wrap" %}
-
 ```bash
 sudo /Applications/Aikido\ Endpoint\ Protection.app/Contents/Resources/scripts/submit_diagnostics
 ```
-
 {% endcode %}
 {% endtab %}
 
 {% tab title="Windows" %}
 {% code overflow="wrap" %}
-
 ```powershell
 & "C:\Program Files\AikidoSecurity\EndpointProtection\scripts\SubmitDiagnostics.ps1"
 ```
-
 {% endcode %}
 {% endtab %}
 
 {% tab title="Linux" %}
 {% code overflow="wrap" %}
-
 ```bash
 sudo aikidoctl diagnostics
 ```
-
 {% endcode %}
 {% endtab %}
 {% endtabs %}
@@ -53,8 +59,8 @@ sudo aikidoctl diagnostics
 
 If the report or the diagnostics command can't reach Aikido, the zip is still saved on the device. Attach it to your email or support ticket manually.
 
-| Platform | Location                                                                                                |
-| -------- | ------------------------------------------------------------------------------------------------------- |
-| macOS    | `/Library/Logs/AikidoSecurity/EndpointProtection/aikido-endpoint-protection-logs-<timestamp>.zip`       |
+| Platform | Location |
+| -------- | ---------------------------------------------------------------------------------------------- |
+| macOS    | `/Library/Logs/AikidoSecurity/EndpointProtection/aikido-endpoint-protection-logs-<timestamp>.zip` |
 | Windows  | `C:\ProgramData\AikidoSecurity\EndpointProtection\logs\aikido-endpoint-protection-logs-<timestamp>.zip` |
-| Linux    | `/var/log/aikidosecurity/endpoint-protection/aikido-endpoint-protection-logs-<timestamp>.zip`           |
+| Linux    | `/var/log/aikidosecurity/endpoint-protection/aikido-endpoint-protection-logs-<timestamp>.zip` |

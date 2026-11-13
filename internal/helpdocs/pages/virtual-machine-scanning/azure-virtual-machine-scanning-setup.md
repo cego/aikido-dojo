@@ -18,21 +18,18 @@ Aikido uses a custom Azure role scoped to the minimum permissions needed to scan
 
 {% stepper %}
 {% step %}
-
 ### Go to Access control (IAM)
 
 Navigate to **Subscriptions** (or your **management group**), find the relevant scope for your virtual machines, and click **Access control (IAM)**.
 {% endstep %}
 
 {% step %}
-
 ### Add a custom role
 
 Click **Add**, then **Add custom role**.
 {% endstep %}
 
 {% step %}
-
 ### Choose your scope
 
 Decide whether the role should be assignable at **subscription level** or **management group level**:
@@ -46,7 +43,6 @@ For management group scope, you don't need to look up a separate ID. Use your **
 {% endstep %}
 
 {% step %}
-
 ### Paste the role JSON
 
 Go to the **JSON** tab and click **Edit**. Paste the role definition below.
@@ -106,7 +102,6 @@ Click **Save**.
 {% endstep %}
 
 {% step %}
-
 ### Review and create
 
 At the bottom, click **Review + assign**, then **Create**.
@@ -117,28 +112,24 @@ At the bottom, click **Review + assign**, then **Create**.
 
 {% stepper %}
 {% step %}
-
 ### Go back to Access control (IAM)
 
 Navigate to the same scope (subscription or management group) and click **Access control (IAM)**.
 {% endstep %}
 
 {% step %}
-
 ### Add a role assignment
 
 Go to the **Role assignments** tab, click **Add**, then **Add role assignment**.
 {% endstep %}
 
 {% step %}
-
 ### Select the custom role
 
 In the **Role** tab, search for and select the **Aikido VM Scanner** role, then click **Next**.
 {% endstep %}
 
 {% step %}
-
 ### Assign it to your app registration
 
 Leave **Assign access to** on its default value. Click **Select members**, search for your app registration name (e.g. "AikidoSecurity"), and select it. Click **Select**, then **Review + assign** twice.

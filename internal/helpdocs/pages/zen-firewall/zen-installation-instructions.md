@@ -2,34 +2,34 @@
 
 ## Installation & Configuration
 
-{% content-ref url="/pages/PGU530T4tv0gQArVXvQW" %}
-[Zen Firewall for Dotnet](/zen-firewall/zen-installation-instructions/zen-firewall-for-dotnet.md)
+{% content-ref url="zen-firewall-for-dotnet/" %}
+[zen-firewall-for-dotnet](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-dotnet)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/JpYyaQV4qT6myTf6HoxA" %}
-[Zen Firewall for Golang](/zen-firewall/zen-installation-instructions/zen-firewall-for-golang.md)
+{% content-ref url="zen-firewall-for-golang/" %}
+[zen-firewall-for-golang](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-golang)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/U3NXiaiu47dPVDvDGZBj" %}
-[Zen Firewall for Java, Kotlin and Groovy](/zen-firewall/zen-installation-instructions/zen-firewall-for-java-kotlin-and-groovy.md)
+{% content-ref url="zen-firewall-for-java-kotlin-and-groovy/" %}
+[zen-firewall-for-java-kotlin-and-groovy](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-java-kotlin-and-groovy)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/6rSfBBDh6moma3SIwuzO" %}
-[Zen Firewall for Nodejs (JavaScript & TypeScript)](/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript.md)
+{% content-ref url="zen-firewall-for-nodejs-javascript-and-typescript/" %}
+[zen-firewall-for-nodejs-javascript-and-typescript](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/KEge3gQ0oYzXULx4gy6x" %}
-[Zen Firewall for PHP](/zen-firewall/zen-installation-instructions/zen-firewall-for-php.md)
+{% content-ref url="zen-firewall-for-php/" %}
+[zen-firewall-for-php](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-php)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/vulpJth7PiMhsiLjzUDa" %}
-[Zen Firewall for Python](/zen-firewall/zen-installation-instructions/zen-firewall-for-python.md)
+{% content-ref url="zen-firewall-for-python/" %}
+[zen-firewall-for-python](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-python)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/W7MsJ9vfVaxBsT7HgULB" %}
-[Zen Firewall for Ruby](/zen-firewall/zen-installation-instructions/zen-firewall-for-ruby.md)
+{% content-ref url="zen-firewall-for-ruby/" %}
+[zen-firewall-for-ruby](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-ruby)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/YDScbVTOsriuA3oTySSY" %}
-[Zen Firewall for Serverless Environments](/zen-firewall/zen-installation-instructions/setup-and-installation-of-zen-firewall-for-serverless-environments.md)
+{% content-ref url="setup-and-installation-of-zen-firewall-for-serverless-environments.md" %}
+[setup-and-installation-of-zen-firewall-for-serverless-environments.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/setup-and-installation-of-zen-firewall-for-serverless-environments)
 {% endcontent-ref %}

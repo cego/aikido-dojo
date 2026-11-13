@@ -16,7 +16,7 @@ In the top-right corner, click 'Generate token' and fill out the settings as bel
 
 [image: Generate Token window for creating a scoped user access token with custom settings.]
 
-**Step 2:** Enter the collected data in Aikido (direct link: <https://app.aikido.dev/settings/container-image-registry/add/artifactory>)
+**Step 2:** Enter the collected data in Aikido (direct link: [https://app.aikido.dev/settings/container-image-registry/add/artifactory](https://app.aikido.dev/settings/container-image-registry/add/artifactory?regionRedirect=1))
 
 [image: Form for connecting to JFrog Artifactory container image registry using credentials and URL.]
 

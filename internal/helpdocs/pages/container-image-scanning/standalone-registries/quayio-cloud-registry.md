@@ -23,7 +23,7 @@ Follow the simple steps below to activate this feature:
 
 [image: OAuth 2 Access Token permissions selection for user "aikidodev" in a repository management interface.]
 
-**Step 6:** Enter the collected data in Aikido (direct link: <https://app.aikido.dev/settings/container-image-registry/add/quay>)
+**Step 6:** Enter the collected data in Aikido (direct link: [https://app.aikido.dev/settings/container-image-registry/add/quay](https://app.aikido.dev/settings/container-image-registry/add/quay?regionRedirect=1))
 
 Copy the organization name from the top of the page in Quay.
 

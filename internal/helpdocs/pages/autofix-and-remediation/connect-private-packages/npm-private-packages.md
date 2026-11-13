@@ -9,7 +9,7 @@ For repositories using NPM or PNPM, access to private packages is managed throug
 You can either:
 
 * include an `.npmrc` file in your repository, referencing an [environment variable](https://help.aikido.dev/~/revisions/KY3QqEqZPV6ifxqjwoLa/aikido-autofix/connect-private-packages/custom-config-private-packages) for the token.
-* provide the `.npmrc` configuration directly in the Aikido interface, [here](#configuration-in-aikido).
+* provide the `.npmrc` configuration directly in the Aikido interface, [here](https://help.aikido.dev/autofix-and-remediation/connect-private-packages/npm-private-packages#configuration-in-aikido).
 
 If your private package names look like this: `@pied-piper/***` and are hosted on GitHub's npm registry, your file should look something like this:
 
@@ -26,10 +26,10 @@ You can find more info about `.npmrc` from NPM [here](https://docs.npmjs.com/cli
 
 To allow repositories using private packages to be updated, provide your private registry configuration in the Aikido UI. Aikido stores the credentials encrypted and credentials cannot be retrieved through the Aikido UI or API.
 
-1. Go to *Autofix* > *Settings* in Aikido, [here](https://app.aikido.dev/issues/fix/settings).
-2. Click on "*Connect Registry*", and the selection modal will now be shown.
+1. Go to _Autofix_ > _Settings_ in Aikido, [here](https://app.aikido.dev/issues/fix/settings?regionRedirect=1).
+2. Click on "_Connect Registry_", and the selection modal will now be shown.
 
 3. Select NPM to input your `.npmrc` file.
 
 4. Fill in the contents of the `.npmrc` file. The example shows a configuration for a scoped package (`@pied-piper`) hosted on GitHub Packages.
-5. Click "*Connect Registry*" to save the configuration.
+5. Click "_Connect Registry_" to save the configuration.

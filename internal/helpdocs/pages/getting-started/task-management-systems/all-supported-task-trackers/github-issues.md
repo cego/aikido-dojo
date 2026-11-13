@@ -1,6 +1,6 @@
 # GitHub Issues
 
-This one-time setup *per workspace* allows everyone in your Aikido organization to create issues directly in GitHub Issues
+This one-time setup _per workspace_ allows everyone in your Aikido organization to create issues directly in GitHub Issues
 
 Following use cases are supported :
 
@@ -12,7 +12,7 @@ All issues will be automatically created in the respective repo. If you wish to 
 {% endhint %}
 
 {% hint style="info" %}
-This integration is for GitHub.com. If you are on a GitHub Enterprise Cloud with data residency tenant (`SUBDOMAIN.ghe.com`), use the [GitHub Enterprise Cloud Issues](/getting-started/task-management-systems/all-supported-task-trackers/github-enterprise-cloud-issues.md) integration instead.
+This integration is for GitHub.com. If you are on a GitHub Enterprise Cloud with data residency tenant (`SUBDOMAIN.ghe.com`), use the [GitHub Enterprise Cloud Issues](https://help.aikido.dev/getting-started/task-management-systems/all-supported-task-trackers/github-enterprise-cloud-issues) integration instead.
 {% endhint %}
 
 ### Prerequisites <a href="#prerequisites" id="prerequisites"></a>
@@ -22,27 +22,27 @@ This integration is for GitHub.com. If you are on a GitHub Enterprise Cloud with
 
 ### Connecting the Aikido App to GitHub Issues <a href="#connecting-the-aikido-app-to-github-issues" id="connecting-the-aikido-app-to-github-issues"></a>
 
-1. Navigate to [Integration Settings](https://app.aikido.dev/settings/integrations) within the Aikido app.
+1. Navigate to [Integration Settings](https://app.aikido.dev/settings/integrations?regionRedirect=1) within the Aikido app.
 2. In the 'Task Trackers' section, select 'GitHub Issues'
-3. **Install the Issues App inside your organisation** ([Install Link](https://github.com/apps/aikido-issues/installations/new)). This is needed in order to select your organisation.\
-   ​
+3.  **Install the Issues App inside your organisation** ([Install Link](https://github.com/apps/aikido-issues/installations/new)). This is needed in order to select your organisation.\
+    ​
 
-   [image: GitHub issue-tracking integration setup requires authorization and organization configuration.]
-4. Select your organisation and repos\
-   ​
+    [image: GitHub issue-tracking integration setup requires authorization and organization configuration.]
+4.  Select your organisation and repos\
+    ​
 
-   [image: Aikido Issues installation prompt with user selection interface.]
-5. When installed succesfully, you will get a notification on top of the page in GitHub. **Return to Aikido.**\
-   ​
+    [image: Aikido Issues installation prompt with user selection interface.]
+5.  When installed succesfully, you will get a notification on top of the page in GitHub. **Return to Aikido.**\
+    ​
 
-   [image: Notification confirming "Aikido Issues" was updated for the specified user account.]
-6. **Select your organisation** in the modal.\
-   ​
+    [image: Notification confirming "Aikido Issues" was updated for the specified user account.]
+6.  **Select your organisation** in the modal.\
+    ​
 
-   [image: Dropdown menu for selecting an organization in settings.]
-7. **Click Save.** The status will now change to **Connected.**
+    [image: Dropdown menu for selecting an organization in settings.]
+7.  **Click Save.** The status will now change to **Connected.**
 
-   [image: GitHub issue-tracking integration successfully connected and ready for use.]
+    [image: GitHub issue-tracking integration successfully connected and ready for use.]
 8. Close the modal & open the GitHub Issues Integration page. By default all issues will be synced to the 'Default Repo'. **Contact us** if you'd like to have autosyncing issues to the respective repo.
 
 You can set a Default Label that will be send for all Aikido Issues. These will be synced and appear in GitHub.​\
@@ -59,21 +59,21 @@ There are two different options to create new tasks from Aikido into GitHub Issu
 
 ### Manual Task Creation <a href="#manual-task-creation" id="manual-task-creation"></a>
 
-1. Hover over any issue in your feed and click the ***+*** in the **assignee column.**\
-   ​
+1.  Hover over any issue in your feed and click the _**+**_ in the **assignee column.**\
+    ​
 
-   [image: Task management interface showing "Assignee" column with add and options buttons.]
+    [image: Task management interface showing "Assignee" column with add and options buttons.]
 
-   Alternatively, you can click the triple dots in the last columns to open up the action menu. If you have grouped issues, the triple dot action menu is available on every subissue.\
-   ​
+    Alternatively, you can click the triple dots in the last columns to open up the action menu. If you have grouped issues, the triple dot action menu is available on every subissue.\
+    ​
 
-   [image: Dropdown menu with task management actions: create, snooze, ignore, copy link, adjust severity.]
-2. Fill in the required details in the popup modal.\
-   ​
+    [image: Dropdown menu with task management actions: create, snooze, ignore, copy link, adjust severity.]
+2.  Fill in the required details in the popup modal.\
+    ​
 
-   [image: Form for creating a new GitHub issue task with project, assignee, and description fields.]
+    [image: Form for creating a new GitHub issue task with project, assignee, and description fields.]
 
-   ​
+    ​
 3. The newly created task in GitHub Issues will be linked in the Aikido Issue Detail under the 'Tasks' tab (sidepanel).
 
 [image: Task management dashboard showing a low-priority AWS SDK PHP upgrade task.]
@@ -84,7 +84,7 @@ There are two different options to create new tasks from Aikido into GitHub Issu
 Aikido will automatically create tasks **every hour in bulk.** There is at the moment no option to trigger this manually.
 {% endhint %}
 
-1. Go to the [GitHub Integration](https://app.aikido.dev/settings/integrations/tasktracker) settings page
+1. Go to the [GitHub Integration](https://app.aikido.dev/settings/integrations/tasktracker?regionRedirect=1) settings page
 2. Make sure to enable '**Autocreation**' by clicking the toggle to **On.**
 3. Define the criteria for automatic task creation.
 

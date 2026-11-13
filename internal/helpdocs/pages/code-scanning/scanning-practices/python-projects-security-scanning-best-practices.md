@@ -1,4 +1,4 @@
-# Python Projects: Security Scanning Best Practices
+# Python projects: Security scanning best practices
 
 Aikido can find known vulnerabilities (CVEs) in your Python dependencies and flag risky or unwanted licenses used by those dependencies.
 
@@ -12,8 +12,8 @@ Out of the box, Aikido supports the following files for dependency scanning:
 * `Pipfile.lock`
 * `poetry.lock`
 * `pdm.lock`
-* `requirements.txt` *(fallback only when no lockfile is present)*
-* `requirements.yml` *(fallback only when no lockfile is present)*
+* `requirements.txt` _(fallback only when no lockfile is present)_
+* `requirements.yml` _(fallback only when no lockfile is present)_
 
 If your project only includes a `requirements.txt`, Aikido might not detect the full dependency tree.
 
@@ -32,15 +32,15 @@ For complete and reliable scans, we recommend using uv, a modern Python package 
 
 ### UV
 
-To get started, [install uv](mailto:undefined) and [set up your project with a pyproject.toml](https://docs.astral.sh/uv/guides/projects/#creating-a-new-project) if it doesn’t already have one.
+To get started, [install uv](https://app.gitbook.com/u/YtGC6vBEHQUXgsipkxva6f5GDpC2) and [set up your project with a pyproject.toml](https://docs.astral.sh/uv/guides/projects/#creating-a-new-project) if it doesn’t already have one.&#x20;
 
-From there, you can [define your dependencies and let uv generate a uv.lock file](mailto:undefined) that pins exact versions for every dependency and subdependency.
+From there, you can [define your dependencies and let uv generate a uv.lock file](https://app.gitbook.com/u/YtGC6vBEHQUXgsipkxva6f5GDpC2) that pins exact versions for every dependency and subdependency.&#x20;
 
 Both pyproject.toml and uv.lock should be committed to your repository, and you should avoid editing the lockfile manually.
 
-If your project currently uses a requirements.txt, [uv can import those dependencies directly and create a lockfile for you](mailto:undefined). This ensures Aikido can detect your full dependency tree with complete version accuracy.
+If your project currently uses a requirements.txt, [uv can import those dependencies directly and create a lockfile for you](https://app.gitbook.com/u/YtGC6vBEHQUXgsipkxva6f5GDpC2). This ensures Aikido can detect your full dependency tree with complete version accuracy.
 
-You can find detailed steps for project setup, dependency management, and migration in the [uv documentation](https://help.aikido.dev/).
+You can find detailed steps for project setup, dependency management, and migration in the [uv documentation](https://app.gitbook.com/o/oTW7Zd89fMQc3dhXv6A7/s/yKbzcQGrx7UtrG0nPZZ7/).
 
 ### Poetry
 

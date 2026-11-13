@@ -2,7 +2,7 @@
 
 Aikido's checks on Access Controls offers robust security by informing about critical access control practices. This way, you can ensure that only authorized and verified changes are made to your codebase. Some examples of checks are multi-factor authentication, restricting default access rights, and requiring mandatory code reviews.
 
-> All Access Controls checks [can be found here](https://app.aikido.dev/repositories/access_control).
+> All Access Controls checks [can be found here](https://app.aikido.dev/repositories/access_control?regionRedirect=1).
 
 ### Prerequisite <a href="#prerequisite" id="prerequisite"></a>
 
@@ -20,6 +20,6 @@ Aikido's checks on Access Controls offers robust security by informing about cri
 
 [image: Installing Aikido GitHub Config Scanner with repository and organization read access.]
 
-**Step 3.** After connecting, Aikido will do a scan for [checks mentioned here. ](https://app.aikido.dev/repositories/access_control)After a couple of minutes, you will be able to view them in the Aikido feed. The sidebar will give more information about which repos need configuration adjustments.
+**Step 3.** After connecting, Aikido will do a scan for [checks mentioned here. ](https://app.aikido.dev/repositories/access_control?regionRedirect=1)After a couple of minutes, you will be able to view them in the Aikido feed. The sidebar will give more information about which repos need configuration adjustments.
 
 [image: Access control security issues listed by severity and estimated fix time.]

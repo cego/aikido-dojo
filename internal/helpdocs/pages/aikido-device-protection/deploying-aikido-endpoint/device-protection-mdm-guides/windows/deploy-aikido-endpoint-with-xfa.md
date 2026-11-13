@@ -17,13 +17,12 @@ Your organization must have XFA verification at sign-in set up for its identity 
 
 * An XFA organization with verification at sign-in set up for your identity provider. See the [XFA docs](https://docs.xfa.tech).
 * The XFA app on the devices you want to cover. Users who don't have it yet are prompted to install it at their first sign-in.
-* Your Device Protection enrollment token. In the [Device Protection devices page](https://app.aikido.dev/endpoint-protection/devices), click **Connect Device** and copy the token from the installation instructions. It starts with `AIK_`.
+* Your Device Protection enrollment token. In the [Device Protection devices page](https://app.aikido.dev/endpoint-protection/devices?regionRedirect=1), click **Connect Device** and copy the token from the installation instructions. It starts with `AIK_`.
 
 ## Set up Device Protection with XFA
 
 {% stepper %}
 {% step %}
-
 ### Add your Aikido token to XFA
 
 1. In XFA, go to **Integrations** → **Aikido**.
@@ -34,7 +33,6 @@ XFA uses this token to enroll each device in your Aikido workspace during instal
 {% endstep %}
 
 {% step %}
-
 ### Add the Aikido check to your policy
 
 1. In XFA, go to **Policies** and open the policy that applies to your target users or groups.
@@ -50,11 +48,10 @@ Enforcement levels:
 Start with **Warn** for a few days so users can install Aikido at a convenient moment, then switch to **Block**. You can also apply the policy to a small group first.
 {% endhint %}
 
-If you also use [Safe Chain](/code-scanning/aikido-malware-scanning.md), enable the **Aikido Safe Chain** check in the same policy.
+If you also use [Safe Chain](https://help.aikido.dev/code-scanning/aikido-malware-scanning), enable the **Aikido Safe Chain** check in the same policy.
 {% endstep %}
 
 {% step %}
-
 ### Let users install Device Protection at sign-in
 
 No further action is needed from you. The next time a user in scope signs in:
@@ -68,21 +65,20 @@ XFA requests administrator rights on demand, only when an installation needs the
 {% endstep %}
 
 {% step %}
-
 ### Verify the deployment
 
 On a test device, confirm:
 
 1. The Aikido check shows as passing for the device in XFA under **Devices**.
-2. The device appears with an *Active* status on the [Device Protection devices page](https://app.aikido.dev/endpoint-protection/devices).
+2. The device appears with an _Active_ status on the [Device Protection devices page](https://app.aikido.dev/endpoint-protection/devices?regionRedirect=1).
 3. Opening [device-protection.aikido.help](https://device-protection.aikido.help/) on the device shows that Device Protection is active.
-   {% endstep %}
-   {% endstepper %}
+{% endstep %}
+{% endstepper %}
 
 ## Troubleshooting
 
-| Problem                                                             | Fix                                                                                                |
-| ------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Problem | Fix |
+| --- | --- |
 | Aikido is installed but the device doesn't appear in the Aikido app | Check that the token saved in XFA matches the one in your Aikido workspace and hasn't been revoked |
-| The XFA check still fails after installation                        | Restart the device so the agent fully activates, then sign in again                                |
-| You want users to install Aikido without being blocked yet          | Set the Aikido check to **Warn** in the XFA policy                                                 |
+| The XFA check still fails after installation | Restart the device so the agent fully activates, then sign in again |
+| You want users to install Aikido without being blocked yet | Set the Aikido check to **Warn** in the XFA policy |

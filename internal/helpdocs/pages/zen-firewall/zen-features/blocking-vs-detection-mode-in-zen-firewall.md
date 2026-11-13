@@ -2,7 +2,7 @@
 
 Zen Firewall by Aikido offers two operational modes for handling attack patterns: **Detection Mode** and **Blocking Mode**. These modes specifically apply to application-level attacks like SQL injection, shell injection, path traversal, and SSRF.
 
-Other security features like [user blocking](/zen-firewall/zen-features/blocking-users-with-zen-firewall.md), [bot protection](/zen-firewall/zen-features/blocking-bot-traffic-with-zen-firewall.md), [tor blocking](/zen-firewall/zen-features/blocking-tor-traffic-with-zen-firewall.md) and [country blocking](/zen-firewall/zen-features/blocking-traffic-by-country-with-zen-firewall.md) are managed separately through their respective settings.
+Other security features like [user blocking](https://help.aikido.dev/zen-firewall/zen-features/blocking-users-with-zen-firewall), [bot protection](https://help.aikido.dev/zen-firewall/zen-features/blocking-bot-traffic-with-zen-firewall), [tor blocking](https://help.aikido.dev/zen-firewall/zen-features/blocking-tor-traffic-with-zen-firewall) and [country blocking](https://help.aikido.dev/zen-firewall/zen-features/blocking-traffic-by-country-with-zen-firewall) are managed separately through their respective settings.
 
 ## Understanding the Modes <a href="#understanding-the-modes" id="understanding-the-modes"></a>
 

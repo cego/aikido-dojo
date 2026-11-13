@@ -2,8 +2,8 @@
 
 **Table of contents:**
 
-* [Use Cases](#use-cases)
-* [Adding multiple branches](#adding-multiple-branches)
+* [Use Cases](https://help.aikido.dev/code-scanning/miscellaneous/support-for-multi-branch-scanning#use-cases)
+* [Adding multiple branches](https://help.aikido.dev/code-scanning/miscellaneous/support-for-multi-branch-scanning#adding-multiple-branches)
 
 ## Support for Multi-Branch Scanning
 
@@ -14,7 +14,7 @@ Multi-branch scanning in Aikido allows developers to scan multiple legacy branch
 * You have old legacy branches that needs daily scanning (eg branch V3, branch V4), that live in parallel, and you want to scan both as separate projects, even though they are in the same repository.
 * You want to continuously monitor your staging and production environments
 
-> In case you are looking to scan feature branches that get merged within a couple of days or weeks, we suggest looking into our [CI gating functionality](/pr-and-release-gating/aikido-ci-gating-functionality.md).
+> In case you are looking to scan feature branches that get merged within a couple of days or weeks, we suggest looking into our [CI gating functionality](https://help.aikido.dev/pr-and-release-gating/aikido-ci-gating-functionality).
 
 ### Adding multiple branches <a href="#adding-multiple-branches" id="adding-multiple-branches"></a>
 

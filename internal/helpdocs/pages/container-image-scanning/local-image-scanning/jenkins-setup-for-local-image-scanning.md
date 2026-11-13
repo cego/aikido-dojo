@@ -6,7 +6,7 @@ The Aikido Security Local Scanner is a tool that enables you to perform Aikido S
 
 ### 1. Get your authentication token <a href="#id-1-get-your-authentication-token" id="id-1-get-your-authentication-token"></a>
 
-1. Go to the [Local Scanner Image setup page](https://app.aikido.dev/settings/container-image-registry/add/localscan)
+1. Go to the [Local Scanner Image setup page](https://app.aikido.dev/settings/container-image-registry/add/localscan?regionRedirect=1)
 2. Generate an authentication token and copy. Note that you will only be able to view this token once.
 3. Add this token as argument `--apikey` when running the Local Scanner in your project .
 4. Store this token in your Jenkins. To do this, navigate to the "Credentials" page in the Jenkins settings.
@@ -21,7 +21,7 @@ Download the local scanner binary from the Aikido UI. In Jenkins, add it on your
 
 Now all that is left to run the scanner on your repository.\
 ​\
-Make sure that the local scanner is only triggered for your default branch. By default, Aikido supports scanning one branch in your repository for dependency and code issues, typically the main or master branch. Therefore, we recommend running the local scanner exclusively on that branch to avoid mixing scan results on the Aikido platform. If you use git, you can specify this in the *Branches to build* section.
+Make sure that the local scanner is only triggered for your default branch. By default, Aikido supports scanning one branch in your repository for dependency and code issues, typically the main or master branch. Therefore, we recommend running the local scanner exclusively on that branch to avoid mixing scan results on the Aikido platform. If you use git, you can specify this in the _Branches to build_ section.
 
 [image: Configuring Jenkins to build only the 'main' branch.]
 

@@ -1,7 +1,5 @@
 # Understand Repository Scan Results
 
-Read category scores, track trends, browse open findings, and use the file scatter plot.
-
 Once a repository scan completes, results appear on the **Repositories** tab and on the repository detail page. These results reflect **existing code**: open quality issues across the full codebase, not just recent PR changes.
 
 This guide covers how to read scores, triage findings, and spot hotspots.
@@ -17,7 +15,7 @@ The **Repositories** tab lists every connected repository with a score in four c
 
 Each cell shows a rating label, a color indicator, and a number. The label reflects the worst-severity open finding in that category; the number is the total count of open findings there.
 
-The **PR checks** column shows whether [PR checks](/code-quality/code-quality-setup.md) are enabled for that repository (**ON** / **OFF**). PR checks cover **new code** on pull requests; repository scans cover **existing code** in the full repo. The two are independent, so you can enable either or both.
+The **PR checks** column shows whether [PR checks](https://help.aikido.dev/code-quality/code-quality-setup) are enabled for that repository (**ON** / **OFF**). PR checks cover **new code** on pull requests; repository scans cover **existing code** in the full repo. The two are independent, so you can enable either or both.
 
 <div data-with-frame="true">[image: Code Quality repositories table with category scores]</div>
 
@@ -63,9 +61,9 @@ Click a row to open the detail sidebar. From there you can:
 
 ### Fix findings with AutoFix
 
-Aikido can generate the change for you. [AutoFix](/autofix-and-remediation/overview-aikido-autofix.md) produces a fix for the finding and can open a pull request with the change, so you review and merge it.
+Aikido can generate the change for you. [AutoFix](https://help.aikido.dev/autofix-and-remediation/overview-aikido-autofix) produces a fix for the finding and can open a pull request with the change, so you review and merge it.
 
-To have Aikido open those pull requests on a daily schedule, turn on automatic creation for **Code Quality Issues**. It covers critical and high severity findings on default checks. See [Automatic Creation of Pull Requests](/autofix-and-remediation/automation-and-merging/automatic-creation-of-pull-requests.md).
+To have Aikido open those pull requests on a daily schedule, turn on automatic creation for **Code Quality Issues**. It covers critical and high severity findings on default checks. See [Automatic Creation of Pull Requests](https://help.aikido.dev/autofix-and-remediation/automation-and-merging/automatic-creation-of-pull-requests).
 
 ## File scatter plot
 
@@ -81,5 +79,5 @@ Each dot represents one file in the repository:
 Files in the **top-right** of the chart are your hotspots: high activity combined with low quality. Prioritize these when planning refactors or cleanup work.
 
 {% hint style="info" %}
-The scatter plot requires **both** modes enabled for the same repository: [PR checks](/code-quality/code-quality-setup.md) for **new code** activity data, and repository scans for **existing code** finding counts.
+The scatter plot requires **both** modes enabled for the same repository: [PR checks](https://help.aikido.dev/code-quality/code-quality-setup) for **new code** activity data, and repository scans for **existing code** finding counts.
 {% endhint %}

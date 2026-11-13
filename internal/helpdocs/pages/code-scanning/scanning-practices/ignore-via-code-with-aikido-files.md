@@ -52,7 +52,7 @@ ignore:
 
 **Ignore SAST via code comments**
 
-It's also possible to ignore [SAST findings using comments within your code](/code-scanning/scanning-practices/excluding-sast-findings-using-comments.md).
+It's also possible to ignore [SAST findings using comments within your code](https://help.aikido.dev/code-scanning/scanning-practices/excluding-sast-findings-using-comments).
 
 ### Other .aikido use cases
 
@@ -60,4 +60,4 @@ The `.aikido` file can also configure repository-specific AutoFix behavior.
 
 Use this to define settings like a custom branch prefix or a single AutoFix PR for the whole repository.
 
-See [AutoFix PR Configuration](/autofix-and-remediation/configure/autofix-pr-configuration.md) for the supported `autofix` settings and examples.
+See [AutoFix PR Configuration](https://help.aikido.dev/autofix-and-remediation/configure/autofix-pr-configuration) for the supported `autofix` settings and examples.

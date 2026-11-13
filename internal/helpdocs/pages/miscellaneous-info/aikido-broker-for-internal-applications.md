@@ -10,7 +10,7 @@ Use the broker with any Aikido scan on applications or services that only exists
 
 * Code scanning on on-prem GitLab or other local code platforms
 * Container scanning on private or on-prem container registries
-* AI pentesting on internal applications. See [Set Up a Pentest with the Broker](/pentests/configure-a-pentest/pentesting-with-the-broker.md).
+* AI pentesting on internal applications. See [Set Up a Pentest with the Broker](https://help.aikido.dev/pentests/configure-a-pentest/pentesting-with-the-broker).
 * Front-end and API testing scans on internal domains or services
 
 ## Requirements
@@ -29,7 +29,7 @@ To run the Aikido Broker you need:
 {% step %}
 **Generate and set a broker client token**
 
-Go to [Broker Clients page](https://app.aikido.dev/settings/integrations/broker/clients) and create a new broker client secret. Save the Client Secret for next step.
+Go to [Broker Clients page](https://app.aikido.dev/settings/integrations/broker/clients?regionRedirect=1) and create a new broker client secret. Save the Client Secret for next step.
 
 {% hint style="info" %}
 If you're unable to access this page, reach out to support in the Aikido dashboard
@@ -43,9 +43,9 @@ Define which internal URLs Aikido is allowed to access through the broker.
 
 These are the applications and APIs you want Aikido to scan, for example:
 
-* <https://api.internal.corp.local>
-* <http://service-a.internal:8080>
-* <https://10.0.5.20>
+* https://api.internal.corp.local
+* http://service-a.internal:8080
+* https://10.0.5.20
 
 You can manage these resources in the Aikido UI by selecting an existing broker from the list or by creating a new one.
 
@@ -60,7 +60,6 @@ Bring up the broker service on a machine with access to the internal application
 
 {% tabs %}
 {% tab title="Docker" %}
-
 ```shellscript
 docker run -d \
   --name aikido-broker \
@@ -114,7 +113,7 @@ You can control which Aikido region the broker connects to, how it reaches your 
 
 The Aikido region the broker connects to. It defaults to the EU region, so if your workspace runs in another region you have to set this or the broker never registers.
 
-| Your Aikido URL              | BROKER\_TARGET\_URL                  |
+| Your Aikido URL              | BROKER\_TARGET\_URL                 |
 | ---------------------------- | ------------------------------------ |
 | app.aikido.dev (EU, default) | `https://broker.aikidobroker.com`    |
 | app.us.aikido.dev (US)       | `https://broker.us.aikidobroker.com` |
@@ -262,8 +261,8 @@ When configuring a Domains and API scan (front-end scan), use the Broker URL ins
 
 For example:
 
-* Do not use <http://my-internal-app.test:8000>
-* Use the generated broker URL, such as: <https://4948_c562ddc641.aikidobroker.com>
+* Do not use [http://my-internal-app.test:8000](http://my-internal-app.test:8000)
+* Use the generated broker URL, such as: [https://4948\_c562ddc641.aikidobroker.com](https://4948_c562ddc641.aikidobroker.com)
 
 ## Troubleshooting
 
@@ -273,19 +272,15 @@ Run this command first. It runs a quick health check on your broker setup (DNS, 
 
 {% tabs %}
 {% tab title="Docker" %}
-
 ```bash
 docker exec -it aikido-broker node /app/diagnostics.cjs
 ```
-
 {% endtab %}
 
 {% tab title="Kubernetes" %}
-
 ```bash
 kubectl exec <pod> -c broker-client -- node /app/diagnostics.cjs
 ```
-
 {% endtab %}
 {% endtabs %}
 
@@ -295,19 +290,15 @@ Check the Docker logs for warning messages and errors:
 
 {% tabs %}
 {% tab title="Docker" %}
-
 ```bash
 docker logs aikido-broker
 ```
-
 {% endtab %}
 
 {% tab title="Kubernetes" %}
-
 ```
 kubectl logs -n aikido -l app.kubernetes.io/name=broker-client
 ```
-
 {% endtab %}
 {% endtabs %}
 
@@ -323,7 +314,6 @@ Then stop and remove the broker:
 
 {% tabs %}
 {% tab title="Docker" %}
-
 ```bash
 docker stop aikido-broker
 docker rm aikido-broker
@@ -334,7 +324,6 @@ If you mounted certificates or a config folder into the container, those files s
 {% endtab %}
 
 {% tab title="Kubernetes" %}
-
 ```bash
 helm uninstall broker-client --namespace aikido
 ```
@@ -344,8 +333,7 @@ If the namespace was created for the broker only, you can remove it as well:
 ```bash
 kubectl delete namespace aikido
 ```
-
 {% endtab %}
 {% endtabs %}
 
-Finally, go to the [Broker Clients page](https://app.aikido.dev/settings/integrations/broker/clients) and delete the client. This revokes the client secret and removes its resources and Broker URLs.
+Finally, go to the [Broker Clients page](https://app.aikido.dev/settings/integrations/broker/clients?regionRedirect=1) and delete the client. This revokes the client secret and removes its resources and Broker URLs.

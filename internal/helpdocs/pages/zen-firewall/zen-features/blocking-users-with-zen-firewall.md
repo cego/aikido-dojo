@@ -11,8 +11,8 @@ Zen Firewall by Aikido provides a way to identify and block users who are unwant
 
 **Step 1:** Configure the Aikido middleware using the provided installation instructions.
 
-{% content-ref url="/pages/XPYb4z9jJ7YgjpJ9DBmC" %}
-[Installing Zen Firewall](/zen-firewall/zen-installation-instructions.md)
+{% content-ref url="../zen-installation-instructions/" %}
+[zen-installation-instructions](https://help.aikido.dev/zen-firewall/zen-installation-instructions)
 {% endcontent-ref %}
 
 **Step 2:** Use the `setUser` function to specify the current user in your application's context.

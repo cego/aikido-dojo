@@ -12,7 +12,7 @@ Aikido syncs repositories and vulnerabilities to Sprinto every 24 hours.
 {% step %}
 **Add the integration**
 
-To activate the Sprinto integration, in Aikido: Go to [Settings > Integrations > Sprinto](https://app.aikido.dev/settings/integrations/compliance/sprinto) and click 'Add Sprinto integration'.
+To activate the Sprinto integration, in Aikido: Go to [Settings > Integrations > Sprinto](https://app.aikido.dev/settings/integrations/compliance/sprinto?regionRedirect=1) and click 'Add Sprinto integration'.
 {% endstep %}
 
 {% step %}
@@ -36,6 +36,6 @@ Back in Aikido, paste the API Key, select your region and click 'Save'.
 
 Aikido will now sync repositories and vulnerabilities to Sprinto every 24 hours.
 
-[image: Sprinto integration connected and ready to sync vulnerability data from Aikido.]%20\(4\).png?alt=media)
+[image: Sprinto integration connected and ready to sync vulnerability data from Aikido.]
 {% endstep %}
 {% endstepper %}

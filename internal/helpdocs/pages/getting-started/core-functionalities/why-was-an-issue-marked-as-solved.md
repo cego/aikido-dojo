@@ -18,9 +18,9 @@ If you're scanning a **different branch**, Aikido will:
 
 * Close issues tied to the old branch
 * Open any issues found on the new one
-* 💡You can verify which branch is being scanned via the tag on the [repository page](https://app.aikido.dev/repositories)
+*   💡You can verify which branch is being scanned via the tag on the [repository page](https://app.aikido.dev/repositories?regionRedirect=1)
 
-  [image: Highlighted "master" branch in the about-github repository navigation menu.]
+    [image: Highlighted "master" branch in the about-github repository navigation menu.]
 
 ***
 
@@ -51,7 +51,7 @@ If a vulnerable package is moved from a production dependency to a dev-dependenc
 
 * Mark the original issue as solved (since the dependency type changed)
 * Not longer report the issue as dev-dependencies are **by default** not scanned.
-* 💡 You can enable scanning of dev-dependencies on a **per-repository** basis. [More information in this doc](/code-scanning/scanning-practices/scanning-dev-dependencies-for-cves.md)
+* 💡 You can enable scanning of dev-dependencies on a **per-repository** basis. [More information in this doc](https://help.aikido.dev/code-scanning/scanning-practices/scanning-dev-dependencies-for-cves)
 
 ***
 

@@ -12,7 +12,7 @@ Aikido VM Scanner is a single-package that installs on your system, automaticall
 
 ### Installation and Upgrade
 
-Start PowerShell in admin mode, replace `AIKIDO_TOKEN` with [valid token from Local VM scanning page in Aikido](https://app.aikido.dev/settings/integrations/vm-scan-agent). You can also specify the following optional parameters:
+Start PowerShell in admin mode, replace `AIKIDO_TOKEN` with [valid token from Local VM scanning page in Aikido](https://app.aikido.dev/settings/integrations/vm-scan-agent?regionRedirect=1). You can also specify the following optional parameters:
 
 * `VM_TYPE` as one of: `production`, `staging` or `development`.
 * `OUTPUT` as one of: `stdout`, `stderr` or `none`.
@@ -28,7 +28,7 @@ msiexec /i AikidoVmScanner.msi /qn /norestart AIKIDO_TOKEN=REPLACE_ME VM_TYPE=pr
 
 If you have an automated process for installation and you always want to be on the latest version, you can use the following link:
 
-* <https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/latest/AikidoVmScanner.msi>
+* https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/latest/AikidoVmScanner.msi
 
 The VM Scanner Agent runs once a day, at a random time between **4:00 AM - 8:00 AM** (machine time).
 

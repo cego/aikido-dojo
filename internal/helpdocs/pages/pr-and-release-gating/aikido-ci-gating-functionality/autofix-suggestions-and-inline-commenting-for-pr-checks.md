@@ -1,4 +1,4 @@
-# AutoFix Suggestions and Inline Commenting for PR Checks
+# PR Comments and AutoFix Suggestions
 
 Aikido posts inline feedback on your pull requests, so you can resolve issues without leaving your review workflow.
 
@@ -38,10 +38,8 @@ Configure comments for each repository in the PR Check settings modal. When avai
 When a later scan or review confirms that you fixed an issue, Aikido resolves the related inline comment.
 
 {% hint style="info" %}
-
 ### GitHub permission exception
-
-With [AutoFix](/autofix-and-remediation/overview-aikido-autofix.md) enabled, Aikido resolves the comment thread. It remains in GitHub as a resolved conversation, preserving the discussion history. GitHub requires **Contents** write permission for this, even when an app already has Pull requests write permission. [GitHub has confirmed this requirement publicly](https://github.com/github/gh-aw/issues/35726).
+With [AutoFix](https://help.aikido.dev/autofix-and-remediation/overview-aikido-autofix) enabled, Aikido resolves the comment thread. It remains in GitHub as a resolved conversation, preserving the discussion history. GitHub requires **Contents** write permission for this, even when an app already has Pull requests write permission. [GitHub has confirmed this requirement publicly](https://github.com/github/gh-aw/issues/35726).
 
 Without AutoFix, Aikido follows the principle of least privilege and doesn't request **Contents** write permission solely to resolve comments. GitHub then prevents Aikido from resolving the thread, so Aikido deletes the comment after confirming the issue is fixed.
 {% endhint %}

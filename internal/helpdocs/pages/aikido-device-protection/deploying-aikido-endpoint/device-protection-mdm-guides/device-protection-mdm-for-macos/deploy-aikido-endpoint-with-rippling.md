@@ -1,4 +1,4 @@
-# Deploy Device Protection with Rippling
+# Deploy Aikido Device Protection with Rippling on macOS
 
 Use Rippling to deploy Aikido Device Protection across your managed macOS fleet with the required permissions in place.
 
@@ -14,10 +14,10 @@ All devices must be enrolled in Rippling MDM before you begin.
 
 Before starting, make sure you have the following from the Aikido Device Protection dashboard:
 
-* The **Aikido Device Protection `.mobileconfig`** (downloaded from the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices))
+* The **Aikido Device Protection `.mobileconfig`** (downloaded from the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices?regionRedirect=1))
 * The **Aikido Device Protection installer** (`.pkg` file, downloaded from the dashboard)
 
-If you're missing any of these, go back to the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices), click **Connect Device**, and complete the pre-flight steps.
+If you're missing any of these, go back to the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices?regionRedirect=1), click **Connect Device**, and complete the pre-flight steps.
 {% endstep %}
 
 {% step %}
@@ -44,7 +44,7 @@ This profile allows the Aikido Device Protection system extension to load silent
 2. Find the profile you just created.
 3. Click the **three-dot menu** on the right and select **Deploy**.
 4. Select the target employees or devices and click **Save**.
-   {% endstep %}
+{% endstep %}
 
 {% step %}
 **Upload the Aikido Device Protection installer**
@@ -57,8 +57,8 @@ This profile allows the Aikido Device Protection system extension to load silent
    * **Description:** Aikido Device Protection
 4. Under **Upload Installer File**, drop or select the Aikido Device Protection `.pkg` file.
 5. Click **Submit**.
-6. Click **Add** on the newly created software item, then click **Finished Selecting**.
-   {% endstep %}
+7. Click **Add** on the newly created software item, then click **Finished Selecting**.
+{% endstep %}
 
 {% step %}
 **Deploy to your devices**
@@ -85,16 +85,16 @@ The agent fully activates on the next boot.
 
 On a test device, confirm:
 
-1. The system extension is activated:
+1.  The system extension is activated:
 
-   ```bash
-   systemextensionsctl list | grep aikido
-   ```
+    ```bash
+    systemextensionsctl list | grep aikido
+    ```
 
-   Expect to see the extension marked `[activated enabled]`.
+    Expect to see the extension marked `[activated enabled]`.
 2. Open **System Settings** → **General** → **Login Items & Extensions** and confirm the Aikido Device Protection entries cannot be toggled off.
-   {% endstep %}
-   {% endstepper %}
+{% endstep %}
+{% endstepper %}
 
 ## Troubleshooting
 

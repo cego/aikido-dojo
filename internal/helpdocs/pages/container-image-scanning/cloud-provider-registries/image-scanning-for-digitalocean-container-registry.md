@@ -6,11 +6,11 @@ Follow the simple steps below to activate this feature:
 
 **Step 1:** Log into your DigitalOcean account to gather some data.
 
-We'll have to gather only a Personal Access Token (PAT). Direct URL: <https://cloud.digitalocean.com/account/api/tokens> (see screenshot below)
+We'll have to gather only a Personal Access Token (PAT). Direct URL: [https://cloud.digitalocean.com/account/api/tokens](https://cloud.digitalocean.com/account/api/tokens) (see screenshot below)
 
 [image: Form to create a new personal access token with scope and expiration options.]
 
-**Step 2:** Enter the collected data in Aikido (direct link: <https://app.aikido.dev/settings/container-image-registry/add/digitalocean>)
+**Step 2:** Enter the collected data in Aikido (direct link: [https://app.aikido.dev/settings/container-image-registry/add/digitalocean](https://app.aikido.dev/settings/container-image-registry/add/digitalocean?regionRedirect=1))
 
 [image: Form to connect DigitalOcean container image registry with nickname and access token.]
 

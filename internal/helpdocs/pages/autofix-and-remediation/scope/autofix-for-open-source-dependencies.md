@@ -16,7 +16,7 @@ AutoFix can fix vulnerabilities in two ways:
 * **Update Dependencies** pins the vulnerable sub-dependency to a specific patched version. This is useful when the top-level dependency can't be upgraded yet, for example because a major version bump would be breaking.
 
 {% hint style="info" %}
-There is a third option, by using **Aikido Libraries** drop-in replacements. [More info here](/autofix-and-remediation/aikido-libraries-overview.md).
+There is a third option, by using **Aikido Libraries** drop-in replacements. [More info here](https://help.aikido.dev/autofix-and-remediation/aikido-libraries-overview).
 {% endhint %}
 
 When using **Update Dependencies** to fix multiple vulnerabilities at once, the **All available fixes** dropdown lets you control which packages are included:

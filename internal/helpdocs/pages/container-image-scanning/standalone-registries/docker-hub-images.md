@@ -1,4 +1,4 @@
-# Docker Hub images
+# Docker Hub Images
 
 You can now integrate your Docker Hub with Aikido to scan your containers for known vulnerabilities.
 
@@ -8,7 +8,7 @@ Follow the simple steps below to activate this feature:
 
 **Step 2:** Create an access token with scope 'Read-only'.
 
-**Step 3:** Back in Aikido, go to settings, then [containers](https://app.aikido.dev/settings/container-image-registry). Click 'Connect registry' and pick Docker Hub. Enter your organization namespace and your username, in case you want to scan your personal repositories and the access token from the previous step.\
+**Step 3:** Back in Aikido, go to settings, then [containers](https://app.aikido.dev/settings/container-image-registry?regionRedirect=1). Click 'Connect registry' and pick Docker Hub. Enter your organization namespace and your username, in case you want to scan your personal repositories and the access token from the previous step.\
 ​\
 You can find your username by clicking your avatar in the top navigation on the right, your username will then be shown underneath the avatar image. In our case it's `aikidotestaccount`.
 

@@ -4,7 +4,7 @@
 Malware is **always** blocked, no matter its age or which version was requested. The behavior below only applies to packages that are not identified as malware.
 {% endhint %}
 
-The [Minimum Package Age](/aikido-device-protection/using-aikido-endpoint/configuring-installation-policies.md#minimum-package-age) policy sets how long a version must have existed before it can be installed. For example, with a minimum age of 24 hours, any version published less than 24 hours ago is considered **too new**.
+The [Minimum Package Age](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/configuring-installation-policies#minimum-package-age) policy sets how long a version must have existed before it can be installed. For example, with a minimum age of 24 hours, any version published less than 24 hours ago is considered **too new**.
 
 What happens when a version is too new depends on how the install was requested: for a **specific version** or for the **latest** version.
 
@@ -63,5 +63,5 @@ flowchart TD
 ```
 
 {% hint style="info" %}
-Need a specific new version that the minimum age policy is holding back? Add an exception and set its age limit to **Allow all versions (no age limit)**. See [Configuring Installation Policies](/aikido-device-protection/using-aikido-endpoint/configuring-installation-policies.md#exceptions).
+Need a specific new version that the minimum age policy is holding back? Add an exception and set its age limit to **Allow all versions (no age limit)**. See [Configuring Installation Policies](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/configuring-installation-policies#exceptions).
 {% endhint %}

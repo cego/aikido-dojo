@@ -4,7 +4,7 @@ When Aikido updates dependencies in repositories that use private packages, it n
 
 ## Prerequisites <a href="#prerequisites" id="prerequisites"></a>
 
-Bun can use either `.npmrc` or `bunfig.toml`. See the [NPM documentation](/autofix-and-remediation/connect-private-packages/npm-private-packages.md) for more information about `.npmrc`.
+Bun can use either `.npmrc` or `bunfig.toml`. See the [NPM documentation](https://help.aikido.dev/autofix-and-remediation/connect-private-packages/npm-private-packages) for more information about `.npmrc`.
 
 ### **Configuring `bunfig.toml`**
 
@@ -16,10 +16,10 @@ If a `bunfig.toml` file is set in Aikido, we write the `bunfig.toml` file next t
 
 To allow repositories using private packages to be updated, provide your private registry configuration in the Aikido UI. Aikido stores the credentials encrypted and credentials cannot be retrieved through the Aikido UI or API.
 
-1. Go to *Autofix* > *Settings* in Aikido, [here](https://app.aikido.dev/issues/fix/settings).
-2. Click on "*Connect Registry*", and the selection modal will now be shown.
+1. Go to _Autofix_ > _Settings_ in Aikido, [here](https://app.aikido.dev/issues/fix/settings?regionRedirect=1).
+2. Click on "_Connect Registry_", and the selection modal will now be shown.
 
 3. Select Bun to input your `bunfig.toml` file. (Note that for `.npmrc`, you will need to select NPM.)
 
 4. Fill in the contents of the `bunfig.toml` file. The example shows a configuration for a scoped package (`@piedpiper`) hosted on GitHub Packages.
-5. Click "*Connect Registry*" to save the configuration.
+5. Click "_Connect Registry_" to save the configuration.

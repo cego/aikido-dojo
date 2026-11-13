@@ -29,5 +29,5 @@ During the scan, Aikido checks for:
 Results appear inline in your editor and in the Scan Results panel, grouped by category. You can hover over each finding for more details or open it in Aikido for deeper triage.
 
 {% hint style="warning" %}
-The workspace scan does not run automatically. You’ll need to start a new scan manually whenever you want updated results.
+The workspace scan does not run automatically. You’ll need to start a new scan manually whenever you want updated results.&#x20;
 {% endhint %}

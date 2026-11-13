@@ -8,7 +8,7 @@ This gives security and IT teams a live inventory of AI usage across the organiz
 Blocking applies to tools today. The ability to block models and MCP servers is coming soon.
 {% endhint %}
 
-Go to [Device Protection and open the AI Usage tab](https://app.aikido.dev/endpoint-protection/ai-usage). Use the **MCP Servers**, **Models**, and **Tools** filters to switch between the three views.
+Go to [Device Protection and open the AI Usage tab](https://app.aikido.dev/endpoint-protection/ai-usage?regionRedirect=1). Use the **MCP Servers**, **Models**, and **Tools** filters to switch between the three views.
 
 ## What to look for
 
@@ -47,7 +47,7 @@ Each row is a tool called from a device, for example a file-read tool or a datab
 
 ### Allow or block a tool
 
-1. Go to [Device Protection and open the AI Usage tab](https://app.aikido.dev/endpoint-protection/ai-usage), then select the **Tools** filter.
+1. Go to [Device Protection and open the AI Usage tab](https://app.aikido.dev/endpoint-protection/ai-usage?regionRedirect=1), then select the **Tools** filter.
 2. Find the tool you want to change. Expand a group to see the individual tools inside it.
 3. Select the dropdown in the **Permissions** column and choose **Allow** or **Block**.
 

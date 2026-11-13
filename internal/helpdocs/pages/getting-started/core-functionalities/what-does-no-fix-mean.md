@@ -20,7 +20,7 @@ This is common in old Linux distributions used in container base images, such as
 
 ### Why Does Aikido Ignore These CVEs?
 
-We don’t *fully* ignore them. Instead, we collapse them into a higher-level issue that’s actually fixable:
+We don’t _fully_ ignore them. Instead, we collapse them into a higher-level issue that’s actually fixable:
 
 Instead of flooding your dashboard with hundreds of Critical CVEs that can’t be fixed, Aikido points to the real solution: replacing the EOL base image.
 
@@ -28,7 +28,7 @@ Instead of flooding your dashboard with hundreds of Critical CVEs that can’t b
 
 #### **Debian**
 
-Debian Security Team often marks issues for end-of-life releases as *“not covered”* or *“no DSA”*. For supported releases they may mark *“no-dsa”* (that is, they won’t issue an advisory) when risk is low or impact is limited. This effectively means no patch will be shipped via security updates and the distro relies on regular point releases or upstream-only fixes.
+Debian Security Team often marks issues for end-of-life releases as _“not covered”_ or _“no DSA”_. For supported releases they may mark _“no-dsa”_ (that is, they won’t issue an advisory) when risk is low or impact is limited. This effectively means no patch will be shipped via security updates and the distro relies on regular point releases or upstream-only fixes.
 
 #### Alpine
 
@@ -42,7 +42,7 @@ Projects using the abandoned or unmaintained libraries might show as no fix avai
 
 ✅ **Clearer Priorities**: You won’t waste time triaging vulnerabilities that have no resolution path.
 
-✅ **Less Noise**: By compressing unfixable issues, Aikido helps you focus on what you *can* fix.
+✅ **Less Noise**: By compressing unfixable issues, Aikido helps you focus on what you _can_ fix.
 
 ✅ **Real Fixes**: We highlight the only practical solution: upgrade the container base image to a supported version.
 
@@ -73,5 +73,5 @@ We **never** suppress vulnerabilities that:
 
 If you must continue using older software, Aikido offers:
 
-* 🔧[ Auto-upgrading containers](/autofix-and-remediation/scope/ai-autofix-for-containers.md)
-* 🔐 [Aikido Images: zero-CVE base images with backported patches](/autofix-and-remediation/aikido-images/autofix-for-containers-using-aikido-images.md)
+* 🔧[ Auto-upgrading containers](https://help.aikido.dev/autofix-and-remediation/scope/ai-autofix-for-containers)
+* 🔐 [Aikido Images: zero-CVE base images with backported patches](https://help.aikido.dev/autofix-and-remediation/aikido-images/autofix-for-containers-using-aikido-images)

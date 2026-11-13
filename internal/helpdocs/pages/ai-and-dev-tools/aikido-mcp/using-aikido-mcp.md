@@ -1,7 +1,5 @@
 # Using Aikido MCP
 
-The tools the Aikido MCP server exposes, and example prompts for asking your agent to use them.
-
 Once the MCP server is installed, you don't call these tools yourself. You ask in plain language and your agent picks the right one.
 
 ## Available tools
@@ -28,6 +26,33 @@ Scans dependency manifests and lockfiles that are saved on disk for vulnerable, 
 * Set `root` to the workspace or repository root so findings are reported relative to it
 * Optionally pass `repository_name` when the files come from a repository
 
+### aikido\_deep\_review
+
+Starts a [Deep Review](https://help.aikido.dev/deep-review/how-deep-review-works) of your local git changes. Deep Review is an AI security review that traces data flows, auth boundaries, and business logic across the full repository, not only the diff.
+
+* By default it reviews all changes on your branch: commits that aren't on the default branch yet, plus your uncommitted edits
+* Set `directory` to the absolute path of the local git repository (required)
+* Optionally set `base_ref` to the git ref to diff against, for example `origin/main`. It defaults to the remote default branch
+* Optionally set `scope`: `all` (default), `committed` for only commits since the merge-base, or `uncommitted` for only staged and unstaged edits on top of a pushed `HEAD`
+* Untracked files are skipped and listed in `skipped_untracked_files`. Set `include_untracked` to review them too. It's not allowed with scope `committed`
+
+A review usually takes 2 to 4 minutes. The call returns an `agent_id` while the review is still running, and the agent then fetches the result with `aikido_deep_review_status`. See [Run Deep Review Locally](https://help.aikido.dev/deep-review/run-deep-review-locally) for how to use it.
+
+{% hint style="info" %}
+Every call starts a new scan and costs 1 credit, also for a branch that was reviewed before. See [Deep Review credits](https://help.aikido.dev/deep-review/configure-deep-review#credits).
+{% endhint %}
+
+### aikido\_deep\_review\_status
+
+Gets the result of a Deep Review started with `aikido_deep_review`. Requires the `agent_id` it returned.
+
+Each call waits up to about 50 seconds, then returns one of these statuses:
+
+* `completed`: the review finished and the findings are included
+* `skipped`: the diff only changed files Deep Review ignores, such as lockfiles or generated or vendored code. The credit was refunded
+* `failed`: the review could not run. The credit was refunded
+* `running`: the review isn't done yet, so the agent calls the tool again. This doesn't start a new scan or use credits
+
 ### aikido\_issues\_list
 
 Fetches security issues from your Aikido feed.
@@ -36,7 +61,7 @@ Fetches security issues from your Aikido feed.
 * Optionally narrow a repo scope to a single branch with `repo_branch_name`
 * Pick one or more issue types: `sast`, `leaked_secret`, `iac`, `open_source`, `cloud`, `cloud_instance`, `docker_container`, `malware`, `eol`, `mobile`, `surface_monitoring`, `scm_security`, `license`, `ai_pentest`, `ai_code_analysis`
 * Filter by `labels` to only return issues on repositories or container images carrying any of the given labels
-* Filter by `severity` to only return issues of a certain severity or above a given threshold
+* Filter by `severity` to only return issues with one or more of the given severities: `low`, `medium`, `high`, `critical`
 * Page through results with `page` (zero-based)
 * Filter on SLA by choosing the following filters: `out_of_sla` or `sla_due_soon`
 * Returns each issue with title, type, severity, and remediation steps
@@ -63,7 +88,10 @@ Unignores a previously ignored issue. Requires `issue_id` and a `reason`.
 
 ### aikido\_snooze\_issue
 
-Temporarily hides a security issue in the feed. Requires `issue_id`, a `reason` and a `duration`: `1_day`, `1_week`, `1_month`, `3_months`, `6_months` or `1_year`.
+Temporarily hides a security issue in the feed. Requires `issue_id` and a `reason`, plus exactly one of:
+
+* `duration`: `1_day`, `1_week`, `1_month`, `3_months`, `6_months` or `1_year`
+* `snooze_until_date`: an ISO 8601 date in the future, for example `2026-12-01`. The snooze ends at the start of that day in your local timezone
 
 ### aikido\_unsnooze\_issue
 
@@ -81,7 +109,7 @@ Starts the Aikido sign-in flow; returns sign-in URL or confirms you're already s
 * Use `force_reauth` to switch accounts or sign in again
 
 {% hint style="info" %}
-Not all MCP tools are enabled by default. Admins can enable them on the [permissions page](https://app.aikido.dev/settings/integrations/ide/mcp/permissions) for everyone
+Not all MCP tools are enabled by default. Admins can enable them on the [permissions page](https://app.aikido.dev/settings/integrations/ide/mcp/permissions?regionRedirect=1) for everyone
 {% endhint %}
 
 ## Example prompts
@@ -91,6 +119,12 @@ Not all MCP tools are enabled by default. Admins can enable them on the [permiss
 * "Use Aikido to scan this file for security issues"
 * "Run an Aikido scan on my staged changes to check for secrets before I commit"
 * "Scan the files I just edited with Aikido and link them to the `payments-api` repo"
+
+### Deep Review of local changes
+
+* "Run an Aikido Deep Review on the changes in my current branch"
+* "Deep Review only my uncommitted changes with Aikido"
+* "Run an Aikido Deep Review on my branch and include the new files I haven't added to git yet"
 
 ### Reviewing issues by repo
 

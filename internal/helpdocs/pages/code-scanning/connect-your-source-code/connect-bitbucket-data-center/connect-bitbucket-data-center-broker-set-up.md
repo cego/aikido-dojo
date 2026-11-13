@@ -12,7 +12,7 @@ Aikido lets you connect a self-managed Bitbucket instance to scan and secure you
 {% step %}
 **Create an Aikido account**
 
-To connect your Bitbucket Data Center instance, first sign up or log in to Aikido using Google or Microsoft. On the [signup screen](https://app.aikido.dev/login), click **Google / Microsoft**.
+To connect your Bitbucket Data Center instance, first sign up or log in to Aikido using Google or Microsoft. On the [signup screen](https://app.aikido.dev/login?regionRedirect=1), click **Google / Microsoft**.
 {% endstep %}
 
 {% step %}
@@ -34,8 +34,8 @@ Enable the **Aikido broker** by clicking the toggle in the "Advanced Connection 
 
 Configure the Broker using the guide below. After you deploy it, return here to finish the GitLab setup.
 
-{% content-ref url="/pages/h0JtJS4MeX5E8efcCvRF" %}
-[Aikido Broker for Internal Applications](/miscellaneous-info/aikido-broker-for-internal-applications.md)
+{% content-ref url="../../../miscellaneous-info/aikido-broker-for-internal-applications.md" %}
+[aikido-broker-for-internal-applications.md](https://help.aikido.dev/miscellaneous-info/aikido-broker-for-internal-applications)
 {% endcontent-ref %}
 
 {% endstep %}

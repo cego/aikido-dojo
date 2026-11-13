@@ -1,10 +1,10 @@
 # SAST/IaC: Supported Languages and Security Focus
 
-SAST (static analysis) checks your source code for known dangerous patterns, such as untrusted input reaching a database query. It runs continuously on connected repositories and on pull requests through [PR gating](/pr-and-release-gating/aikido-ci-gating-functionality.md). It does not need a running app.
+SAST (static analysis) checks your source code for known dangerous patterns, such as untrusted input reaching a database query. It runs continuously on connected repositories and on pull requests through [PR gating](https://help.aikido.dev/pr-and-release-gating/aikido-ci-gating-functionality). It does not need a running app.
 
-SAST will not catch a logic or authorization bug that does not look like a known pattern. For the impact of a pull request, use [Deep Review](/deep-review/how-deep-review-works.md). For existing source, use [AI Code Analysis](/ai-code-analysis/ai-code-analysis.md). The quality counterpart to SAST is [Code Quality](/code-quality/code-quality-overview.md).
+SAST will not catch a logic or authorization bug that does not look like a known pattern. For the impact of a pull request, use [Deep Review](https://help.aikido.dev/deep-review/how-deep-review-works). For existing source, use [AI Code Analysis](https://help.aikido.dev/ai-code-analysis/ai-code-analysis). The quality counterpart to SAST is [Code Quality](https://help.aikido.dev/code-quality/code-quality-overview).
 
-See [Which Aikido product should I use?](/getting-started/which-aikido-product-should-i-use.md).
+See [Which Aikido product should I use?](https://help.aikido.dev/getting-started/which-aikido-product-should-i-use).
 
 ### How Aikido SAST currently works <a href="#how-aikido-sast-currently-works" id="how-aikido-sast-currently-works"></a>
 
@@ -18,7 +18,7 @@ Aikido SAST engine is based on our **custom risk categorisation model**. Some of
 
 Our SAST engine also leverage some of the best open-source engines out there, which we have significantly customized and fine-tuned to provide you sharper, relevant results over the years.
 
-To view all individual rules that are active per language, check out our [SAST Checks](https://app.aikido.dev/repositories/sast) or [Infrastructure as Code](https://app.aikido.dev/repositories/iac) checks to view the rules per language.
+To view all individual rules that are active per language, check out our [SAST Checks](https://app.aikido.dev/repositories/sast?regionRedirect=1) or [Infrastructure as Code](https://app.aikido.dev/repositories/iac?regionRedirect=1) checks to view the rules per language.
 
 ### Language support <a href="#language-support" id="language-support"></a>
 

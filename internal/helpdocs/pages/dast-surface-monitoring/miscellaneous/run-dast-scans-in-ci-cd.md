@@ -4,32 +4,30 @@ Scan your staging environment with Aikido DAST on every deploy, and fail the bui
 
 ## Prerequisites
 
-* A staging or test environment that your pipeline deploys to, reachable from the [Aikido scanning IP addresses](/dast-surface-monitoring/miscellaneous/allowing-ip-addresses-for-dast-surface-monitoring.md).
-* API client credentials with the `domains:read`, `domains:write`, and `issues:read` scopes. A workspace admin creates them on the [REST API integration page](https://app.aikido.dev/settings/integrations/api/aikido/rest).
+* A staging or test environment that your pipeline deploys to, reachable from the [Aikido scanning IP addresses](https://help.aikido.dev/dast-surface-monitoring/miscellaneous/allowing-ip-addresses-for-dast-surface-monitoring).
+* API client credentials with the `domains:read`, `domains:write`, and `issues:read` scopes. A workspace admin creates them on the [REST API integration page](https://app.aikido.dev/settings/integrations/api/aikido/rest?regionRedirect=1).
 * `curl` and `jq` on the CI runner.
 
 ## How it works
 
 The pipeline calls 3 endpoints of the [Aikido public API](https://apidocs.aikido.dev/reference/authorization):
 
-| Step              | Endpoint                                                                     | Purpose                                                                     |
-| ----------------- | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| Start the scan    | [`POST /domains/scan`](https://apidocs.aikido.dev/reference/startdomainscan) | Queues a full scan for the domain.                                          |
-| Wait for the scan | [`GET /domains`](https://apidocs.aikido.dev/reference/listdomains)           | Polls `last_scanned_at` until it is later than the moment the scan started. |
-| Check the results | [`GET /issues/export`](https://apidocs.aikido.dev/reference/exportissues)    | Lists open issues for the domain with `filter_domain_id`.                   |
+| Step | Endpoint | Purpose |
+| --- | --- | --- |
+| Start the scan | [`POST /domains/scan`](https://apidocs.aikido.dev/reference/startdomainscan) | Queues a full scan for the domain. |
+| Wait for the scan | [`GET /domains`](https://apidocs.aikido.dev/reference/listdomains) | Polls `last_scanned_at` until it is later than the moment the scan started. |
+| Check the results | [`GET /issues/export`](https://apidocs.aikido.dev/reference/exportissues) | Lists open issues for the domain with `filter_domain_id`. |
 
 ## Set up DAST in your pipeline
 
 {% stepper %}
 {% step %}
-
 ### Add the staging domain
 
-Add the staging or CI/CD endpoint as a domain in Aikido. Pick the scan type that fits it: [front-end](/dast-surface-monitoring/front-end-scanning/scan-front-end-app-domains-with-aikido.md), [REST API](/dast-surface-monitoring/api-scanning/rest-api-scanning.md), or [GraphQL API](/dast-surface-monitoring/api-scanning/graphql-api-scanning.md). Configure [authentication](/dast-surface-monitoring/api-scanning/authenticated-api-scanning-for-rest-graphql.md) if the app needs a login.
+Add the staging or CI/CD endpoint as a domain in Aikido. Pick the scan type that fits it: [front-end](https://help.aikido.dev/dast-surface-monitoring/front-end-scanning/scan-front-end-app-domains-with-aikido), [REST API](https://help.aikido.dev/dast-surface-monitoring/api-scanning/rest-api-scanning), or [GraphQL API](https://help.aikido.dev/dast-surface-monitoring/api-scanning/graphql-api-scanning). Configure [authentication](https://help.aikido.dev/dast-surface-monitoring/api-scanning/authenticated-api-scanning-for-rest-graphql) if the app needs a login.
 {% endstep %}
 
 {% step %}
-
 ### Set the scanning frequency to on demand
 
 Open the domain's settings page, go to **Scanning Frequency**, select **Only on demand**, and click **Save Scanning Frequency**. Aikido then only scans the domain when your pipeline asks for it, so scheduled scans don't hit the environment while it is being redeployed.
@@ -38,14 +36,12 @@ Open the domain's settings page, go to **Scanning Frequency**, select **Only on 
 {% endstep %}
 
 {% step %}
-
 ### Find the domain ID
 
 The script needs the numeric ID of the domain. Open the domain in the Aikido app and copy the number from the URL. For `https://app.aikido.dev/domain/50866/settings`, the domain ID is `50866`.
 {% endstep %}
 
 {% step %}
-
 ### Store the credentials in your CI/CD
 
 Add these to your pipeline:
@@ -57,7 +53,6 @@ The script reads all 3 from environment variables. GitLab CI and Bitbucket Pipel
 {% endstep %}
 
 {% step %}
-
 ### Add the scan script to your pipeline
 
 Commit the script below to your repository and run it after the deploy to staging has finished.
@@ -71,7 +66,6 @@ The script starts a scan, waits until `last_scanned_at` is later than the start 
 If your workspace is not in the EU region, change `AIKIDO_URL` to `https://app.us.aikido.dev`, `https://app.au.aikido.dev`, or `https://app.me.aikido.dev`.
 
 {% code title="aikido-dast-scan.sh" %}
-
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -147,7 +141,6 @@ fi
 
 echo "No open issues with severity $SEVERITIES"
 ```
-
 {% endcode %}
 
 {% hint style="info" %}
@@ -161,7 +154,6 @@ This workflow runs the scan after your staging deploy job. It assumes the script
 Add `AIKIDO_CLIENT_ID` and `AIKIDO_CLIENT_SECRET` under **Settings** → **Secrets and variables** → **Actions** → **Secrets**, and `AIKIDO_DOMAIN_ID` under the **Variables** tab.
 
 {% code title=".github/workflows/aikido-dast.yml" %}
-
 ```yaml
 name: Deploy staging and run DAST
 
@@ -192,23 +184,22 @@ jobs:
           # Uncomment if your workspace is not in the EU region
           # AIKIDO_URL: https://app.us.aikido.dev
 ```
-
 {% endcode %}
 
 `timeout-minutes` is set above the script's 60-minute `TIMEOUT_SECONDS`, so the script reports the timeout before GitHub cancels the job. Raise both if your scans take longer.
 
 ## Troubleshooting
 
-* **The script times out.** Check the domain in the Aikido app. If the scan failed because Aikido could not reach the environment, allowlist the [scanning IP addresses](/dast-surface-monitoring/miscellaneous/allowing-ip-addresses-for-dast-surface-monitoring.md).
+* **The script times out.** Check the domain in the Aikido app. If the scan failed because Aikido could not reach the environment, allowlist the [scanning IP addresses](https://help.aikido.dev/dast-surface-monitoring/miscellaneous/allowing-ip-addresses-for-dast-surface-monitoring).
 * **`curl` returns 401 or 403.** The access token is missing a scope. Check that the API client has `domains:read`, `domains:write`, and `issues:read`.
 * **`curl` returns 404 on `/domains/scan`.** The `AIKIDO_DOMAIN_ID` does not match a domain in this workspace, or `AIKIDO_URL` points at the wrong region.
 
 ## Related
 
-{% content-ref url="/pages/omv5AOwmFHmKiGovLhvo" %}
-[REST API & Web App Scanning](/dast-surface-monitoring/api-scanning/rest-api-scanning.md)
+{% content-ref url="../api-scanning/rest-api-scanning.md" %}
+[rest-api-scanning.md](https://help.aikido.dev/dast-surface-monitoring/api-scanning/rest-api-scanning)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/B7xrPFEdxBj6ntboMpAB" %}
-[IP Addresses for Domain Scanning](/dast-surface-monitoring/miscellaneous/allowing-ip-addresses-for-dast-surface-monitoring.md)
+{% content-ref url="allowing-ip-addresses-for-dast-surface-monitoring.md" %}
+[allowing-ip-addresses-for-dast-surface-monitoring.md](https://help.aikido.dev/dast-surface-monitoring/miscellaneous/allowing-ip-addresses-for-dast-surface-monitoring)
 {% endcontent-ref %}

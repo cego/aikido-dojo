@@ -26,7 +26,7 @@ There are two ways to get a lockfile into your repo:
 
 **Option 1: Let Aikido create it for you (recommended)**
 
-If your repository contains a `build.gradle` or `build.gradle.kts` without a corresponding `gradle.lockfile`, Aikido detects this automatically and **can open a pull request** to generate it for you. *Note:* [*AutoFix*](https://help.aikido.dev/aikido-autofix/overview-aikido-autofix) *needs to be enabled for this option.*
+If your repository contains a `build.gradle` or `build.gradle.kts` without a corresponding `gradle.lockfile`, Aikido detects this automatically and **can open a pull request** to generate it for you. _Note:_ [_AutoFix_](https://help.aikido.dev/autofix-and-remediation/overview-aikido-autofix) _needs to be enabled for this option._
 
 **Step 1.** Go to the respective repository that is missing the lockfile
 

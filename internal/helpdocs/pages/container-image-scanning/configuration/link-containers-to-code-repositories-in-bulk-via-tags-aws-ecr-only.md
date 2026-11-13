@@ -16,7 +16,7 @@ Set the tag value to the full URL of the code repository you want to link.
 
 Example:
 
-<table><thead><tr><th width="177.1796875">Key</th><th>Value</th></tr></thead><tbody><tr><td><code>aik:repository</code></td><td><code>https://github.com/AikidoSec/demo-app-1</code></td></tr></tbody></table>
+<table><thead><tr><th width="177.1796875">Key</th><th>Value</th></tr></thead><tbody><tr><td><code>aik:repository</code></td><td> <code>https://github.com/AikidoSec/demo-app-1</code></td></tr></tbody></table>
 
 {% hint style="info" %}
 This must be a tag on the **ECR repository**. It is not an image tag.

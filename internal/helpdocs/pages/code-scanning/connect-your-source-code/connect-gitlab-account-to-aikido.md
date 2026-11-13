@@ -1,10 +1,10 @@
-# Connect GitLab Cloud
+# Connect GitLab Account
 
 Aikido requests read-only access to your GitLab group to analyze your projects. After analysis, your code is always wiped from the system.
 
-***Important before you start***
+_**Important before you start**_
 
-* If your GitLab is behind a firewall, we have a [list of Static IPs](https://help.aikido.dev/en/articles/8731261-allowing-ip-addresses-for-code-scanning) you can allowlist.
+* If your GitLab is behind a firewall, we have a [list of Static IPs](https://help.aikido.dev/code-scanning/miscellaneous/allowing-ip-addresses-for-code-container-scanning) you can allowlist.
 * The person who sets up the account needs to have access rights both to the GitLab instance **and** GitLab group.
 
 {% hint style="info" %}
@@ -12,10 +12,9 @@ Important that the user direct member of the subgroup. Inherited membership is n
 {% endhint %}
 
 {% hint style="warning" %}
-
 * Important that the user setting up the workspace is a direct member of each Gitlab (sub)group. Inherited membership alone is not sufficient.
 * An Aikido workspace maps by default to a single GitLab group. We recommend to connect Aikido to a top-level GitLab group (i.e. root group) that contains all subgroups. If that's not possible and you need to connect multiple groups to the same Aikido workspace, please follow the specific instructions for [Connecting multiple top-level GitLab groups to a single workspace](https://help.aikido.dev/code-scanning/connect-your-source-code/connect-gitlab-account-to-aikido/connecting-multiple-top-level-gitlab-groups-to-a-single-workspace).
-  {% endhint %}
+{% endhint %}
 
 {% hint style="success" %}
 **Repositories not linked to a group**, but linked to just your user can currently not be scanned. If you do have personal repositories which you'd like to have scanned, we recommend to create a personal group, or transfer them to a group you own.
@@ -23,7 +22,7 @@ Important that the user direct member of the subgroup. Inherited membership is n
 
 #### Step 1. Logging in using GitLab <a href="#step-1-logging-in-using-gitlab" id="step-1-logging-in-using-gitlab"></a>
 
-To get started, navigate to <https://app.aikido.dev> and log in with GitLab. This will look like the screenshot below. Here, Aikido only requests access to your identity on GitLab and the associated email address.
+To get started, navigate to [https://app.aikido.dev](https://app.aikido.dev/?regionRedirect=1) and log in with GitLab. This will look like the screenshot below. Here, Aikido only requests access to your identity on GitLab and the associated email address.
 
 [image: Aikido Security requests access to read personal information from a GitLab account.]
 
@@ -41,7 +40,7 @@ On this page you can do one of 3 things:
 
 If you would like to create a new workspace, Aikido will need **read-only access** to your projects and groups. We will therefore redirect you back to GitLab so you can authorize Aikido.
 
-**Note.** This does *not* give access to the actual repos yet. Selecting which ones you want to have scanned is in the step after this one.
+**Note.** This does _not_ give access to the actual repos yet. Selecting which ones you want to have scanned is in the step after this one.
 
 [image: Aikido Security requests GitLab read access and user information authorization.]
 

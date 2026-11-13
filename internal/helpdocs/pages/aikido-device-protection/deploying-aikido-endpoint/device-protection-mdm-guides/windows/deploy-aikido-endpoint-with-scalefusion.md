@@ -1,4 +1,4 @@
-# Deploy Device Protection with Scalefusion
+# Deploy Aikido Device Protection with Scalefusion on Windows
 
 Use Scalefusion to deploy Aikido Device Protection across your managed Windows fleet with the required permissions in place.
 
@@ -16,7 +16,7 @@ Before starting, make sure you have the following from the Aikido Device Protect
 
 * Your **PowerShell install command** (copied from the user group selector on the dashboard, includes token + installer download)
 
-If you're missing it, go back to the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices), click **Connect Device**.
+If you're missing it, go back to the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices?regionRedirect=1), click **Connect Device**.
 {% endstep %}
 
 {% step %}
@@ -42,22 +42,22 @@ Block uninstallation of the Aikido Device Protection application by deploying an
 
 1. In the Scalefusion Dashboard, go to **Device Profiles & Policies** → **Device Profiles** and edit the target Windows Device Profile.
 2. Go to **Settings** → **Advanced Configurations** to open the payload editor.
-3. Enter a SyncML payload that pushes an AppLocker XML policy denying the Aikido uninstaller:
+3.  Enter a SyncML payload that pushes an AppLocker XML policy denying the Aikido uninstaller:
 
-   ```xml
-   <Add>
-       <CmdID>1</CmdID>
-       <Item>
-           <Target>
-               <LocURI>./Vendor/MSFT/AppLocker/ApplicationLaunchRestrictions/Aikido/MSI/Policy</LocURI>
-           </Target>
-           <Meta>
-               <Format xmlns="syncml:metinf">chr</Format>
-           </Meta>
-           <Data>ESCAPED_APPLOCKER_XML_HERE</Data>
-       </Item>
-   </Add>
-   ```
+    ```xml
+    <Add>
+        <CmdID>1</CmdID>
+        <Item>
+            <Target>
+                <LocURI>./Vendor/MSFT/AppLocker/ApplicationLaunchRestrictions/Aikido/MSI/Policy</LocURI>
+            </Target>
+            <Meta>
+                <Format xmlns="syncml:metinf">chr</Format>
+            </Meta>
+            <Data>ESCAPED_APPLOCKER_XML_HERE</Data>
+        </Item>
+    </Add>
+    ```
 4. Replace `ESCAPED_APPLOCKER_XML_HERE` with the contents of [aikido-applocker-deny-mdm.xml](https://raw.githubusercontent.com/AikidoSec/safechain-internals/refs/heads/main/docs/aikido-applocker-deny-mdm.xml) (open the link and copy the full XML text), with the XML special characters escaped so the policy is valid inside the `<Data>` element: replace every `&` with `&amp;`, every `<` with `&lt;`, and every `>` with `&gt;`.
 5. Click **VALIDATE** and confirm the green checkmark.
 6. Click **SAVE** to apply the payload to the same Windows Device Profile.
@@ -79,10 +79,10 @@ The agent fully activates on the next boot.
 
 ## Troubleshooting
 
-| Problem                                                      | Fix                                                                                                                                                                             |
-| ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Device doesn't appear in the dashboard after the script runs | Reboot the device; the agent fully registers on the next boot                                                                                                                   |
-| Script exits with an error in the MDM console                | Run the script manually as SYSTEM on a test host to see the full error; confirm the device has internet access to download the installer                                        |
-| Agent service is not running                                 | Reboot the device; if the service is still absent, re-run the install script                                                                                                    |
-| Script is blocked by execution policy                        | Scripts run via MDM execute as SYSTEM and bypass user-level execution policy restrictions; confirm the MDM is not applying an additional policy that restricts script execution |
-| Device shows as inactive after installation                  | The agent needs a reboot to fully activate; check back after rebooting                                                                                                          |
+| Problem | Fix |
+| ------- | --- |
+| Device doesn't appear in the dashboard after the script runs | Reboot the device; the agent fully registers on the next boot |
+| Script exits with an error in the MDM console | Run the script manually as SYSTEM on a test host to see the full error; confirm the device has internet access to download the installer |
+| Agent service is not running | Reboot the device; if the service is still absent, re-run the install script |
+| Script is blocked by execution policy | Scripts run via MDM execute as SYSTEM and bypass user-level execution policy restrictions; confirm the MDM is not applying an additional policy that restricts script execution |
+| Device shows as inactive after installation | The agent needs a reboot to fully activate; check back after rebooting |

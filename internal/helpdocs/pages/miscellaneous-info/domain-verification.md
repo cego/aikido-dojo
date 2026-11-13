@@ -33,13 +33,13 @@ You add a TXT record to your domain’s DNS configuration.
 ### Option 3: TXT file on the domain (AI Pentest only)
 
 {% hint style="warning" %}
-The TXT file is accessed from the [Code and Container scanning IPs](/code-scanning/miscellaneous/allowing-ip-addresses-for-code-container-scanning.md). Make sure these IPs are allowlisted, or domain verification will fail.
+The TXT file is accessed from the [Code and Container scanning IPs](https://help.aikido.dev/code-scanning/miscellaneous/allowing-ip-addresses-for-code-container-scanning). Make sure these IPs are allowlisted, or domain verification will fail.
 {% endhint %}
 
 You upload a TXT file to a root path on your domain.
 
 * Aikido provides a filename and verification token
 * You host the file at the required URL
-* Aikido confirms the file is publicly accessible from the [Allowing IP Addresses for Code and Container Scanning](/code-scanning/miscellaneous/allowing-ip-addresses-for-code-container-scanning.md), make sure to add these for validation to succeed
+* Aikido confirms the file is publicly accessible from the [allowing-ip-addresses-for-code-container-scanning.md](https://help.aikido.dev/code-scanning/miscellaneous/allowing-ip-addresses-for-code-container-scanning "mention"), make sure to add these for validation to succeed
 
 This option is useful when you do not control DNS but can deploy files to the domain.

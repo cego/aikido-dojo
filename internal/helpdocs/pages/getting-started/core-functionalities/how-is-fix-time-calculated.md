@@ -33,5 +33,5 @@ Similar logic as SAST: static values per issue type, multiplied by count.
 One fixed estimate per issue (e.g., rotate a key = 5–10 minutes).
 
 {% hint style="success" %}
-When there's an [Aikido AutoFix ](/autofix-and-remediation/overview-aikido-autofix.md)available, the actual fix time will be lower
+When there's an [Aikido AutoFix ](https://help.aikido.dev/autofix-and-remediation/overview-aikido-autofix)available, the actual fix time will be lower
 {% endhint %}

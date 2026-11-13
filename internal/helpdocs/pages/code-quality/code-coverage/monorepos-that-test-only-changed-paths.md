@@ -1,7 +1,5 @@
 # Monorepos That Test Only Changed Paths
 
-Run and upload coverage for every app in a monorepo. Skip unchanged apps only when you still upload their latest reports.
-
 Run coverage for every app and upload every report on each run. This is the simple setup. One test run and one upload stay correct as apps are added, renamed, or removed, without a store of old reports to maintain.
 
 {% hint style="warning" %}
@@ -25,7 +23,6 @@ Run coverage for every app once on the main branch before you start skipping unc
 ## GitHub Actions
 
 {% code title=".github/workflows/coverage.yml" overflow="wrap" %}
-
 ```yaml
 name: Coverage
 
@@ -94,7 +91,6 @@ jobs:
             coverage-reports/coverage-web/lcov.info
             coverage-reports/coverage-api/lcov.info
 ```
-
 {% endcode %}
 
 Each test job either creates a new `lcov.info` or downloads the one saved on main. The upload job sends both. `actions/download-artifact` puts each artifact in a folder of the same name.
@@ -103,14 +99,14 @@ Name the workflow file `coverage.yml`. On a pull request, download the saved rep
 
 ## Other CI platforms
 
-GitLab CI, Bitbucket Pipelines, and Azure DevOps can use the same optimization. Publish each app's report, restore the reports this pipeline did not regenerate, and upload every report together. [Upload a coverage report](/code-quality/code-coverage.md#upload-a-coverage-report) shows the upload step for each platform.
+GitLab CI, Bitbucket Pipelines, and Azure DevOps can use the same optimization. Publish each app's report, restore the reports this pipeline did not regenerate, and upload every report together. [Upload a coverage report](https://help.aikido.dev/code-quality/code-coverage#upload-a-coverage-report) shows the upload step for each platform.
 
 ## Related
 
-{% content-ref url="/pages/tlSdjHfgkHkVdfbFV5fb" %}
-[Code Coverage](/code-quality/code-coverage.md)
+{% content-ref url="./" %}
+[.](https://help.aikido.dev/code-quality/code-coverage)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/ejEAOR4kBk0qpdGBxobg" %}
-[PR Gating on Code Coverage](/code-quality/code-coverage/pr-gating-on-code-coverage.md)
+{% content-ref url="pr-gating-on-code-coverage.md" %}
+[pr-gating-on-code-coverage.md](https://help.aikido.dev/code-quality/code-coverage/pr-gating-on-code-coverage)
 {% endcontent-ref %}

@@ -2,7 +2,7 @@
 
 Aikido evidences the technical controls of SOC 2 and ISO 27001:2022. For each covered control, Aikido runs named checks against your repositories, cloud accounts, containers, and domains. It reports each control as 'complying', 'failing', or 'unknown'.
 
-Organizational controls such as the control environment, user access reviews, physical security, and incident response fall outside Aikido's scope and are listed under [What Aikido does not cover](#what-aikido-does-not-cover) so your auditor knows where other evidence is needed.
+Organizational controls such as the control environment, user access reviews, physical security, and incident response fall outside Aikido's scope and are listed under [What Aikido does not cover](https://help.aikido.dev/compliance-and-reporting/soc-2-and-iso-27001-audit-evidence#what-aikido-does-not-cover) so your auditor knows where other evidence is needed.
 
 Go to **Reports** → **Compliance** in the Aikido app to open the reports described here.
 
@@ -53,8 +53,8 @@ The mapping is the same for every Aikido workspace, but the results can differ b
 
 The approval and remediation path is the same for every control.
 
-* **Approval owner.** Users with ignore or snooze permission dismiss a finding directly. There is no mandatory second approver. Admins can turn on ignore requests under [Triage settings](https://app.aikido.dev/settings/advanced), after which users without the permission submit a request with a reason, and a reviewer approves or rejects it in the [Approval Inbox](/getting-started/core-functionalities/approval-inbox-for-ignored-issues.md). Each request records who asked, why, who decided, and when. See [Setting Roles and Permissions](/getting-started/automated-user-management/setting-roles-and-permissions.md) for which roles hold these permissions.
-* **Remediation deadline.** [SLAs](/getting-started/core-functionalities/enable-slas-in-aikido.md) are set per severity in calendar days and start when Aikido first detects an issue. The check "Does not have any issues outside of their SLA" evidences CC7.1, A.8.8, and A.8.28.
+* **Approval owner.** Users with ignore or snooze permission dismiss a finding directly. There is no mandatory second approver. Admins can turn on ignore requests under [Triage settings](https://app.aikido.dev/settings/advanced?regionRedirect=1), after which users without the permission submit a request with a reason, and a reviewer approves or rejects it in the [Approval Inbox](https://help.aikido.dev/getting-started/core-functionalities/approval-inbox-for-ignored-issues). Each request records who asked, why, who decided, and when. See [Setting Roles and Permissions](https://help.aikido.dev/getting-started/automated-user-management/setting-roles-and-permissions) for which roles hold these permissions.
+* **Remediation deadline.** [SLAs](https://help.aikido.dev/getting-started/core-functionalities/enable-slas-in-aikido) are set per severity in calendar days and start when Aikido first detects an issue. The check "Does not have any issues outside of their SLA" evidences CC7.1, A.8.8, and A.8.28.
 * **Remediation action.** Findings flow into your issue tracker, which evidences CC8.1 and A.8.32. AutoFix pull requests are recorded in the activity log.
 * **Snooze.** A finding can be snoozed for a day, a week, a month, a year, or a custom period, with a reason.
 
@@ -80,7 +80,7 @@ Yes, for the technical controls: 23 SOC 2 control objectives across 9 criteria a
 
 ### Can Aikido help satisfy customer security reviews?
 
-Yes. The [Security Audit Report](/compliance-and-reporting/reports/security-audit-report.md) is built for customers, auditors, and leadership. You choose its sections, for example SLA compliance, scan history, and compliance frameworks.
+Yes. The [Security Audit Report](https://help.aikido.dev/compliance-and-reporting/reports/security-audit-report) is built for customers, auditors, and leadership. You choose its sections, for example SLA compliance, scan history, and compliance frameworks.
 
 ### Does Aikido keep an audit trail of accepted risks and suppressed findings?
 
@@ -88,8 +88,8 @@ Yes. Every ignore, snooze, re-open, close, and severity change is logged with th
 
 ### Does Aikido replace a compliance platform like Vanta or Drata?
 
-No. Aikido evidences the technical controls and pushes its results to compliance platforms such as [Drata](/compliance-and-reporting/iso-27001-and-soc-2-compliance-overview/drata-compliance-integration.md), [Sprinto](/compliance-and-reporting/iso-27001-and-soc-2-compliance-overview/sprinto-compliance-integration.md), and [Thoropass](/compliance-and-reporting/iso-27001-and-soc-2-compliance-overview/thoropass-compliance-integration.md).
+No. Aikido evidences the technical controls and pushes its results to compliance platforms such as [Drata](https://help.aikido.dev/compliance-and-reporting/iso-27001-and-soc-2-compliance-overview/drata-compliance-integration), [Sprinto](https://help.aikido.dev/compliance-and-reporting/iso-27001-and-soc-2-compliance-overview/sprinto-compliance-integration), and [Thoropass](https://help.aikido.dev/compliance-and-reporting/iso-27001-and-soc-2-compliance-overview/thoropass-compliance-integration).
 
 ### Which compliance frameworks does Aikido report on?
 
-ISO 27001:2022, SOC 2, CIS v8.1, CIS AWS Benchmark, NIS2, NIST 800-53, PCI DSS v4.0, HIPAA, DORA, HITRUST, GDPR, ENS, and UK Cyber Essentials. See [Compliance Reporting](/compliance-and-reporting/reports/compliance-reporting.md) for the full list of report pages.
+ISO 27001:2022, SOC 2, CIS v8.1, CIS AWS Benchmark, NIS2, NIST 800-53, PCI DSS v4.0, HIPAA, DORA, HITRUST, GDPR, ENS, and UK Cyber Essentials. See [Compliance Reporting](https://help.aikido.dev/compliance-and-reporting/reports/compliance-reporting) for the full list of report pages.

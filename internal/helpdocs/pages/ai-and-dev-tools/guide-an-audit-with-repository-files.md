@@ -1,7 +1,5 @@
 # Guide Agents with Repository Files
 
-Commit markdown in the repository so Aikido agents can follow your architecture, trust boundaries, and accepted risks.
-
 Aikido agents read markdown in your repositories. This applies to all AI features, such as pentests, Code Quality, Deep Review, and AI Code Analysis. Use the files to explain how the system is built, which behavior is intentional, and which risks you already accept.
 
 Commit that guidance in the repository when it should apply every time Aikido reviews the code. Use notes on a single run when the context is missing from the source and only applies to that run.
@@ -21,7 +19,6 @@ Keep `AGENTS.md` at the repository root. `README.md`, `ARCHITECTURE.md`, and `SE
 On **Exclude Paths**, exclude unrelated applications or services. Leave documentation included so Aikido can read it.
 
 {% code title="AGENTS.md" overflow="wrap" %}
-
 ```markdown
 # Security context
 
@@ -37,7 +34,6 @@ End-user requests are authenticated at the gateway. This service trusts the `X-U
 
 `scripts/migrations/` is one-off operational code. Do not report missing error handling there.
 ```
-
 {% endcode %}
 
 ## Write instructions agents can follow
@@ -78,38 +74,38 @@ Aikido checks `AGENTS.md`, `CLAUDE.md`, `.claude/`, and `.cursor/` for accepted 
 
 ### Do these files replace rules and ignores?
 
-These files guide the agents. [Static application security testing (SAST)](/code-scanning/scanning-practices/sast-by-aikido-supported-languages-and-security-focus.md) rules, [custom code rules](/code-quality/add-custom-code-rules.md), and [`.aikido` ignores](/code-scanning/scanning-practices/ignore-via-code-with-aikido-files.md) still apply on their own.
+These files guide the agents. [Static application security testing (SAST)](https://help.aikido.dev/code-scanning/scanning-practices/sast-by-aikido-supported-languages-and-security-focus) rules, [custom code rules](https://help.aikido.dev/code-quality/add-custom-code-rules), and [`.aikido` ignores](https://help.aikido.dev/code-scanning/scanning-practices/ignore-via-code-with-aikido-files) still apply on their own.
 
 ## Related
 
-{% content-ref url="/pages/SyJGqW86Wtsj6J1NqIZi" %}
-[Leveraging Code and Documentation](/pentests/configure-a-pentest/leveraging-code-and-documentation.md)
+{% content-ref url="../pentests/configure-a-pentest/leveraging-code-and-documentation.md" %}
+[leveraging-code-and-documentation.md](https://help.aikido.dev/pentests/configure-a-pentest/leveraging-code-and-documentation)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/QRM3zrTTGojbe4vdVAdr" %}
-[Add Extra Code Context](/code-quality/add-extra-code-context.md)
+{% content-ref url="../code-quality/add-extra-code-context.md" %}
+[add-extra-code-context.md](https://help.aikido.dev/code-quality/add-extra-code-context)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/E9vBfs3IrTAjX523NzzS" %}
-[How Deep Review Works](/deep-review/how-deep-review-works.md)
+{% content-ref url="../deep-review/how-deep-review-works.md" %}
+[how-deep-review-works.md](https://help.aikido.dev/deep-review/how-deep-review-works)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/64GGpVtiCGGThzz1y8B7" %}
-[AI Code Analysis](/ai-code-analysis/ai-code-analysis.md)
+{% content-ref url="../ai-code-analysis/ai-code-analysis.md" %}
+[ai-code-analysis.md](https://help.aikido.dev/ai-code-analysis/ai-code-analysis)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/X4yc23Inhvx1gPKx2AwE" %}
-[Create a Code Security Audit](/ai-code-analysis/ai-code-audit-overview/create-an-ai-code-audit.md)
+{% content-ref url="../ai-code-analysis/ai-code-audit-overview/create-an-ai-code-audit.md" %}
+[create-an-ai-code-audit.md](https://help.aikido.dev/ai-code-analysis/ai-code-audit-overview/create-an-ai-code-audit)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/PMTdILmc0ylkVweiJGtU" %}
-[Run a Data Exposure Audit](/ai-code-analysis/what-is-dspm/data-exposure-audit.md)
+{% content-ref url="../ai-code-analysis/what-is-dspm/data-exposure-audit.md" %}
+[data-exposure-audit.md](https://help.aikido.dev/ai-code-analysis/what-is-dspm/data-exposure-audit)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/sU44cPzbmeqn9z1n9Y1a" %}
-[Run a Cloud Security Audit](/ai-code-analysis/cloud-security-audit/run-a-cloud-security-audit.md)
+{% content-ref url="../ai-code-analysis/cloud-security-audit/run-a-cloud-security-audit.md" %}
+[run-a-cloud-security-audit.md](https://help.aikido.dev/ai-code-analysis/cloud-security-audit/run-a-cloud-security-audit)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/rpzhJqLOk9BfP8JQGOSq" %}
-[Run a Smart Contract Audit](/ai-code-analysis/smart-contract-audit/run-a-smart-contract-audit.md)
+{% content-ref url="../ai-code-analysis/smart-contract-audit/run-a-smart-contract-audit.md" %}
+[run-a-smart-contract-audit.md](https://help.aikido.dev/ai-code-analysis/smart-contract-audit/run-a-smart-contract-audit)
 {% endcontent-ref %}

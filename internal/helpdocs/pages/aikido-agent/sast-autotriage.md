@@ -1,6 +1,6 @@
 # SAST AutoTriage
 
-SAST AutoTriage is how [Aikido Agent](/aikido-agent/aikido-agent.md) reduces noise from static analysis so you can focus on issues that are actual security threats. It first tries to rule out exploitability, then (only when needed) ranks remaining findings by (1) exploitability, and (2) severity if exploited. It primarily operates on SAST findings and plugs into familiar workflows like your local IDE, PR checks, and scheduled re-scans.
+SAST AutoTriage is how [Aikido Agent](https://help.aikido.dev/aikido-agent/aikido-agent) reduces noise from static analysis so you can focus on issues that are actual security threats. It first tries to rule out exploitability, then (only when needed) ranks remaining findings by (1) exploitability, and (2) severity if exploited. It primarily operates on SAST findings and plugs into familiar workflows like your local IDE, PR checks, and scheduled re-scans.
 
 {% hint style="info" %}
 AutoTriage primarily targets SAST. A small number of cloud and container checks are also supported where context allows similar upgrade/downgrade decisions.
@@ -8,7 +8,7 @@ AutoTriage primarily targets SAST. A small number of cloud and container checks 
 
 ## What AutoTriage is (and isn’t)
 
-AutoTriage isn't itself a scanner. It sits downstream of your scans and makes determinations about ***exploitability*** and ***severity*** based on the code and its context.
+AutoTriage isn't itself a scanner. It sits downstream of your scans and makes determinations about _**exploitability**_ and _**severity**_ based on the code and its context.
 
 For the majority of SAST issues, Aikido performs triage based on Aikido-defined rules. For some more complex cases, Aikido uses reasoning models to interpret more nuanced control and data flows. This will include constructing a relevant code snippet by calculating the call tree and incorporating any called functions that reference variables passed to the vulnerability sink.
 
@@ -18,7 +18,7 @@ In Aikido's internal evaluations this approach detects roughly twice as many fal
 
 #### False positive filtering before triage
 
-**Before AutoTriage uses an LLM to look at your code**, Aikido’s [reachability](/getting-started/reachability-analysis/reachability-engine-to-remove-false-positives.md) engine filters out false positives by checking whether vulnerable code paths are even reachable in your application. That may include:
+**Before AutoTriage uses an LLM to look at your code**, Aikido’s [reachability](https://help.aikido.dev/getting-started/reachability-analysis/reachability-engine-to-remove-false-positives) engine filters out false positives by checking whether vulnerable code paths are even reachable in your application. That may include:
 
 * Verifying you actually call the affected function
 * Tracing whether a vulnerable dependency is only used in tools versus in production
@@ -37,12 +37,12 @@ When an issue remains possibly exploitable, AutoTriage sets the priority by asse
 
 > **Examples:**
 >
-> * An SQL injection report might be safely ***downgraded*** if the input variable originates from a trusted source such as a database that’s already validated upstream
-> * A login endpoint with a NoSQL injection risk can be ***upgraded*** to “very high priority to fix” because the attack is trivial and directly impacts authentication, as shown below
+> * An SQL injection report might be safely _**downgraded**_ if the input variable originates from a trusted source such as a database that’s already validated upstream
+> * A login endpoint with a NoSQL injection risk can be _**upgraded**_ to “very high priority to fix” because the attack is trivial and directly impacts authentication, as shown below
 
 #### If true positive, then AutoFix
 
-For triaged true positives, Aikido can generate a recommended patch through [AutoFix](/autofix-and-remediation/overview-aikido-autofix.md) and open a pull request for review. AutoFix focuses on the reported vulnerability only and is available in PR checks in GitHub, GitLab, Bitbucket, Azure DevOps, as well as in your local IDE.
+For triaged true positives, Aikido can generate a recommended patch through [AutoFix](https://help.aikido.dev/autofix-and-remediation/overview-aikido-autofix) and open a pull request for review. AutoFix focuses on the reported vulnerability only and is available in PR checks in GitHub, GitLab, Bitbucket, Azure DevOps, as well as in your local IDE.
 
 ### Signals AutoTriage considers
 
@@ -55,4 +55,4 @@ AutoTriage is **context‑hungry** by design. In practice, it considers things l
 
 ## Ask Aikido
 
-Click **Ask Aikido** in the **Recommendation** panel to chat with [Aikido Agent](/aikido-agent/ask-aikido.md) about the vulnerability, for example why it was flagged, how the vulnerable code is reached, or anything else you want to know.
+Click **Ask Aikido** in the **Recommendation** panel to chat with [Aikido Agent](https://help.aikido.dev/aikido-agent/ask-aikido) about the vulnerability, for example why it was flagged, how the vulnerable code is reached, or anything else you want to know.

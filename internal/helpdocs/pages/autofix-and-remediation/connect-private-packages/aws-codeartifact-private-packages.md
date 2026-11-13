@@ -8,7 +8,7 @@ Aikido provides a CloudFormation template that creates a new role in your AWS ac
 
 After creation of the role, Aikido only needs the specific ARN to get started, no access keys nor secrets.
 
-In the [Aikido UI](https://app.aikido.dev/issues/fix/settings), go to AutoFix > Settings > Connect Registry,
+In the [Aikido UI](https://app.aikido.dev/issues/fix/settings?regionRedirect=1), go to AutoFix > Settings > Connect Registry,
 
 follow the instructions in the modal:
 
@@ -63,7 +63,6 @@ By setting `UV_INDEX_[INDEX]_USERNAME` to `aws` , AutoFix will automatically pop
 After setting up the AWS CodeArtifact connection, you can use the `CODEARTIFACT_AUTH_TOKEN` environment variable in `settings.xml` . The settings.xml file can be set in the Maven Private Registry configuration, eg:
 
 {% code title="settings.xml" %}
-
 ```
 <servers>
     <server>
@@ -73,7 +72,6 @@ After setting up the AWS CodeArtifact connection, you can use the `CODEARTIFACT_
     </server>
 </servers>
 ```
-
 {% endcode %}
 
 ## How to check your configuration
@@ -98,4 +96,4 @@ To enable the connection with AWS CodeArtifact, you need to provide the followin
 
 When these 4 environment variables are set, Aikido AutoFix will set a `CODEARTIFACT_AUTH_TOKEN` environment variable during the process. This environment variable can then be used by the package manager to authenticate with the CodeArtifact registry. See below for registry specific config which is required.
 
-These environment variables can be set in Autofix > Settings > Connect Registry > [Set Environment variables](/autofix-and-remediation/connect-private-packages/custom-config-private-packages.md).
+These environment variables can be set in Autofix > Settings > Connect Registry > [Set Environment variables](https://help.aikido.dev/autofix-and-remediation/connect-private-packages/custom-config-private-packages).
