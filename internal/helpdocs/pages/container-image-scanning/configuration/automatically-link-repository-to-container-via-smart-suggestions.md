@@ -18,7 +18,7 @@ This functionality helps you automatically connect your containers to the correc
 
 {% stepper %}
 {% step %}
-**Open**[ **Container Settings**](https://app.aikido.dev/settings/container-image-registry)
+**Open**[ **Container Settings**](https://app.aikido.dev/settings/container-image-registry?regionRedirect=1)
 
 If Smart Suggestions are available, a banner will appear at the top of the page.
 

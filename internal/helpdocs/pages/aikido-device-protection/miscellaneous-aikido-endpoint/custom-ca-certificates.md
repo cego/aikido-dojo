@@ -8,7 +8,7 @@ That matters if your organization runs its own CA, for example a corporate proxy
 
 Adopt a CA when, after Device Protection is installed, your tools fail to reach an internal host or a registry behind TLS inspection. The errors typically mention a self-signed certificate, an unknown or untrusted issuer, or a certificate that could not be verified.
 
-If the failing certificate is Aikido's own CA rather than your organization's, see [Fixing SSL/TLS Certificate Errors](/aikido-device-protection/miscellaneous-aikido-endpoint/ssl-certificate-errors.md) instead.
+If the failing certificate is Aikido's own CA rather than your organization's, see [Fixing SSL/TLS Certificate Errors](https://help.aikido.dev/aikido-device-protection/miscellaneous-aikido-endpoint/ssl-certificate-errors) instead.
 
 ## Before you start
 
@@ -19,11 +19,9 @@ If the failing certificate is Aikido's own CA rather than your organization's, s
 
 {% tabs %}
 {% tab title="macOS / Linux" %}
-
 ```bash
 sudo aikidoctl certconfig adopt /path/to/corporate-ca.pem
 ```
-
 {% endtab %}
 
 {% tab title="Windows" %}
@@ -32,7 +30,6 @@ Run from an elevated Command Prompt or PowerShell:
 ```
 aikidoctl.exe certconfig adopt C:\path\to\corporate-ca.pem
 ```
-
 {% endtab %}
 {% endtabs %}
 
@@ -44,17 +41,17 @@ Shells and services that were already running keep their old environment. Open a
 
 ## What adopting does and doesn't change
 
-* It covers every CA bundle Aikido builds. See [Fixing SSL/TLS Certificate Errors](/aikido-device-protection/miscellaneous-aikido-endpoint/ssl-certificate-errors.md) for the tools Device Protection configures at install.
+* It covers every CA bundle Aikido builds. See [Fixing SSL/TLS Certificate Errors](https://help.aikido.dev/aikido-device-protection/miscellaneous-aikido-endpoint/ssl-certificate-errors) for the tools Device Protection configures at install.
 * The CA survives Aikido's automatic drift repair, so it stays trusted when a rule is reinstalled.
 * It does not change the macOS System Keychain or the Windows Certificate Store. Tools that read the operating system trust store keep using whatever your MDM installed there.
-* It does not register a registry domain for inspection. To have Device Protection scan packages coming from your own registry, add it under [Custom Registries](/aikido-device-protection/using-aikido-endpoint/custom-registries.md).
+* It does not register a registry domain for inspection. To have Device Protection scan packages coming from your own registry, add it under [Custom Registries](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/custom-registries).
 
 ## Related pages
 
-{% content-ref url="/pages/aqSzOzkyVOAcDF4MxAnb" %}
-[Fixing SSL/TLS Certificate Errors](/aikido-device-protection/miscellaneous-aikido-endpoint/ssl-certificate-errors.md)
+{% content-ref url="ssl-certificate-errors.md" %}
+[ssl-certificate-errors.md](https://help.aikido.dev/aikido-device-protection/miscellaneous-aikido-endpoint/ssl-certificate-errors)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/w1tOir0a3TK3dYnQtikz" %}
-[The aikidoctl CLI](/aikido-device-protection/miscellaneous-aikido-endpoint/aikidoctl-cli.md)
+{% content-ref url="aikidoctl-cli/" %}
+[aikidoctl-cli](https://help.aikido.dev/aikido-device-protection/miscellaneous-aikido-endpoint/aikidoctl-cli)
 {% endcontent-ref %}

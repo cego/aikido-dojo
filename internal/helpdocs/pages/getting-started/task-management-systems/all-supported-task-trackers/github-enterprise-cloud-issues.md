@@ -1,6 +1,6 @@
 # GitHub Enterprise Cloud Issues
 
-This one-time setup *per workspace* allows everyone in your Aikido organization to create issues directly in a GitHub Enterprise Cloud **data residency** tenant (`SUBDOMAIN.ghe.com`).
+This one-time setup _per workspace_ allows everyone in your Aikido organization to create issues directly in a GitHub Enterprise Cloud **data residency** tenant (`SUBDOMAIN.ghe.com`).
 
 Following use cases are supported:
 
@@ -8,12 +8,12 @@ Following use cases are supported:
 * **Automated Ticket Creation**: Automatically create and push tickets to specified GitHub Issue repos.
 
 {% hint style="info" %}
-This integration is for **GitHub Enterprise Cloud with data residency** tenants (`SUBDOMAIN.ghe.com`). If you are on GitHub.com, use the [GitHub Issues](/getting-started/task-management-systems/all-supported-task-trackers/github-issues.md) integration instead.
+This integration is for **GitHub Enterprise Cloud with data residency** tenants (`SUBDOMAIN.ghe.com`). If you are on GitHub.com, use the [GitHub Issues](https://help.aikido.dev/getting-started/task-management-systems/all-supported-task-trackers/github-issues) integration instead.
 {% endhint %}
 
 Unlike GitHub.com, GitHub Enterprise Cloud data-residency tenants require you to register your own OAuth app directly on your tenant. Setup therefore has two parts: first register the OAuth app on your tenant, then connect it in Aikido.
 
-{% embed url="<https://www.youtube.com/watch?v=6lvyiBRTctU>" %}
+{% embed url="https://www.youtube.com/watch?v=6lvyiBRTctU" %}
 
 ### Prerequisites <a href="#prerequisites" id="prerequisites"></a>
 
@@ -45,7 +45,7 @@ Copy the client secret right away. GitHub only displays it once and you won't be
 
 ### Step 3: Connect the Aikido App to GitHub Enterprise Cloud
 
-1. Navigate to [Integration Settings](https://app.aikido.dev/settings/integrations) within the Aikido app.
+1. Navigate to [Integration Settings](https://app.aikido.dev/settings/integrations?regionRedirect=1) within the Aikido app.
 2. In the 'Task Trackers' section, select **GitHub Enterprise Cloud issues**.
 3. In the modal, fill in:
    * **Tenant Subdomain**: the `SUBDOMAIN` part of your `SUBDOMAIN.ghe.com` tenant.
@@ -68,7 +68,7 @@ There are two different options to create new tasks from Aikido into GitHub Issu
 
 ### Manual Task Creation
 
-1. Hover over any issue in your feed and click the ***+*** in the **assignee column.** Alternatively, click the triple dots in the last column to open the action menu. If you have grouped issues, the triple dot action menu is available on every subissue.
+1. Hover over any issue in your feed and click the _**+**_ in the **assignee column.** Alternatively, click the triple dots in the last column to open the action menu. If you have grouped issues, the triple dot action menu is available on every subissue.
 2. Fill in the required details in the popup modal.
 3. The newly created task in GitHub Issues will be linked in the Aikido Issue Detail under the 'Tasks' tab (sidepanel).
 
@@ -78,7 +78,7 @@ There are two different options to create new tasks from Aikido into GitHub Issu
 Aikido will automatically create tasks **every hour in bulk.** There is at the moment no option to trigger this manually.
 {% endhint %}
 
-1. Go to the [GitHub Integration](https://app.aikido.dev/settings/integrations/tasktracker) settings page
+1. Go to the [GitHub Integration](https://app.aikido.dev/settings/integrations/tasktracker?regionRedirect=1) settings page
 2. Make sure to enable '**Autocreation**' by clicking the toggle to **On.**
 3. Define the criteria for automatic task creation.
 

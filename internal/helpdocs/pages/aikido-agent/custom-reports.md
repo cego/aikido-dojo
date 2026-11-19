@@ -1,8 +1,6 @@
 # Custom Reports Creation
 
-Create custom security reports with Aikido Agent using natural language, then save and share them across your workspace.
-
-**Custom Reports** lets you ask [Aikido Agent](/aikido-agent/aikido-agent.md) questions about your security data in plain language. The Agent builds charts and tables from your findings, and you can refine the report in chat before saving it for your workspace.
+**Custom Reports** lets you ask [Aikido Agent](https://help.aikido.dev/aikido-agent/aikido-agent) questions about your security data in plain language. The Agent builds charts and tables from your findings, and you can refine the report in chat before saving it for your workspace.
 
 {% hint style="info" %}
 Custom Reports is available on paid plans and during a pro trial. It is not available to team-only users.
@@ -25,21 +23,18 @@ Custom Reports only use real data from your workspace. If Aikido Agent cannot ac
 
 {% stepper %}
 {% step %}
-
 ### Open Custom Reports
 
-Go to [**Reports**](https://app.aikido.dev/reports) and open **Custom Reports**, or go directly to [Custom Reports](https://app.aikido.dev/reports/custom).
+Go to [**Reports**](https://app.aikido.dev/reports?regionRedirect=1) and open **Custom Reports**, or go directly to [Custom Reports](https://app.aikido.dev/reports/custom?regionRedirect=1).
 {% endstep %}
 
 {% step %}
-
 ### Describe what you need
 
 Click **Create Custom Report**. Enter a description of the insights you want, or pick one of the suggested prompts.
 {% endstep %}
 
 {% step %}
-
 ### Review and refine
 
 The Agent builds widgets based on your request. Use the chat panel to iterate. For example, ask to group by team, filter to a severity, or switch from a table to a chart.
@@ -49,7 +44,6 @@ Your previous reports appear in the **Previous Chats** sidebar so you can reopen
 {% endstep %}
 
 {% step %}
-
 ### Save to your workspace
 
 When the report looks right, click **Add to Workspace Reports**. Saved reports are shared with your workspace. Until you save, the report stays private to you.
@@ -66,7 +60,7 @@ When you're ready to share the report:
 2. Click **Add to Workspace Reports**.
 3. Aikido publishes the report to the shared **Custom Reports** list for your workspace.
 
-Admins and default users in your workspace can then open the report from [Custom Reports](https://app.aikido.dev/reports/custom). Only admins can create reports or save them to the workspace.
+Admins and default users in your workspace can then open the report from [Custom Reports](https://app.aikido.dev/reports/custom?regionRedirect=1). Only admins can create reports or save them to the workspace.
 
 ## Naming Reports
 
@@ -74,7 +68,7 @@ When Aikido Agent builds your report, it also assigns a **report name** based on
 
 To rename a report saved to your workspace:
 
-1. Go to [Custom Reports](https://app.aikido.dev/reports/custom).
+1. Go to [Custom Reports](https://app.aikido.dev/reports/custom?regionRedirect=1).
 2. Open the **Actions** menu on the report row.
 3. Click **Rename report**.
 4. Enter the new **Report Name** and click **Save**.

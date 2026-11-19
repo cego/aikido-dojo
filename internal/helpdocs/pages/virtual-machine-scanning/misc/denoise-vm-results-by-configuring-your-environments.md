@@ -8,7 +8,7 @@ If the purpose of your connected cloud is set to **"mixed,"** you need to config
 
 ### How to configure your VM environments <a href="#how-to-configure-your-vm-environments" id="how-to-configure-your-vm-environments"></a>
 
-**Step 1:** Navigate to the [**Virtual Machines** page](https://app.aikido.dev/virtual-machines)
+**Step 1:** Navigate to the [**Virtual Machines** page](https://app.aikido.dev/virtual-machines?regionRedirect=1)
 
 **Step 2:** Click the **triple dots** menu for the VM you want to configure, and select **Edit Configuration**.
 

@@ -27,7 +27,7 @@ We support the majority of Jetbrain IDEs
 
 **Step 1.** Head over to the [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/24993-aikido-security) and click **Get.** After installation, you will be asked to add your personal access token (step 2).
 
-**Step 2.** In Aikido, go to the [JetBrains IDE Integration Screen](https://app.aikido.dev/settings/integrations/ide/jetbrains) and create your token.
+**Step 2.** In Aikido, go to the [JetBrains IDE Integration Screen](https://app.aikido.dev/settings/integrations/ide/jetbrains?regionRedirect=1) and create your token.
 
 [image: JetBrains IDE Plugin user access and activity log with token generation options.]
 
@@ -35,10 +35,10 @@ We support the majority of Jetbrain IDEs
 
 ## Troubleshooting
 
-{% content-ref url="/pages/c6y7HYvl2fY0rM3QArnn" %}
-[JetBrains Plugin - Access Token Not Stored](/ai-and-dev-tools/ide-plugins-overview/troubleshooting/jetbrains-plugin-access-token-not-stored.md)
+{% content-ref url="troubleshooting/jetbrains-plugin-access-token-not-stored.md" %}
+[jetbrains-plugin-access-token-not-stored.md](https://help.aikido.dev/ai-and-dev-tools/ide-plugins-overview/troubleshooting/jetbrains-plugin-access-token-not-stored)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/NAH7p1hgS3B4GR19LQ48" %}
-[Jetbrains - Information for Support](/ai-and-dev-tools/ide-plugins-overview/troubleshooting/jetbrains-information-for-support.md)
+{% content-ref url="troubleshooting/jetbrains-information-for-support.md" %}
+[jetbrains-information-for-support.md](https://help.aikido.dev/ai-and-dev-tools/ide-plugins-overview/troubleshooting/jetbrains-information-for-support)
 {% endcontent-ref %}

@@ -10,7 +10,7 @@ With virtual machine scanning, Aikido scans the disks of your virtual machines f
 
 ### Getting started <a href="#getting-started" id="getting-started"></a>
 
-To enable the scanning of your Amazon EC2 instances, you should first start by connecting your AWS account to Aikido. To do this you can follow the steps outlined in [this article](/cloud-scanning/connect-your-cloud/aws/connect-aws-account-to-aikido.md).
+To enable the scanning of your Amazon EC2 instances, you should first start by connecting your AWS account to Aikido. To do this you can follow the steps outlined in [this article](https://help.aikido.dev/cloud-scanning/connect-your-cloud/aws/connect-aws-account-to-aikido).
 
 Once your cloud is connected, you'll see a tab appear on the detail page called 'Virtual Machines'.
 
@@ -62,11 +62,11 @@ EBS snapshots are incremental, so keeping the last snapshot makes the next scan'
 
 On top of the tags Aikido adds automatically, you can configure your own custom tags to apply to the EBS snapshots Aikido creates during scanning. This is useful for cost allocation, compliance, or any other tagging policy your organization needs to enforce.
 
-To manage these, go to the [**Virtual Machines** settings page](https://app.aikido.dev/virtual-machines/settings), then click **Edit** under **AWS snapshot tags** to add, update, or remove key-value pairs. New tags apply to snapshots created from that point onward.
+To manage these, go to the [**Virtual Machines** settings page](https://app.aikido.dev/virtual-machines/settings?regionRedirect=1), then click **Edit** under **AWS snapshot tags** to add, update, or remove key-value pairs. New tags apply to snapshots created from that point onward.
 
 ### Managing which VMs are scanned <a href="#managing-which-vms-are-scanned" id="managing-which-vms-are-scanned"></a>
 
-Aikido supports [an inclusion and exclusion model for VM scanning](/virtual-machine-scanning/aws/managing-which-vms-are-scanned.md).
+Aikido supports [an inclusion and exclusion model for VM scanning](https://help.aikido.dev/virtual-machine-scanning/aws/managing-which-vms-are-scanned).
 
 ### Scanning Frequency
 

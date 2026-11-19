@@ -12,7 +12,7 @@ Aikido VM Scanner is a single-package that installs on your system, automaticall
 
 ### Installation and Upgrade
 
-Start PowerShell in admin mode, replace `AIKIDO_TOKEN` with [valid token from Local VM scanning page in Aikido](https://app.aikido.dev/settings/integrations/vm-scan-agent). You can also specify the following optional parameters:
+Start PowerShell in admin mode, replace `AIKIDO_TOKEN` with [valid token from Local VM scanning page in Aikido](https://app.aikido.dev/settings/integrations/vm-scan-agent?regionRedirect=1). You can also specify the following optional parameters:
 
 * `VM_TYPE` as one of: `production`, `staging` or `development`.
 * `OUTPUT` as one of: `stdout`, `stderr` or `none`.
@@ -20,15 +20,15 @@ Start PowerShell in admin mode, replace `AIKIDO_TOKEN` with [valid token from Lo
 
 ```
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-Invoke-WebRequest -Uri "https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/v1.5.2/AikidoVmScanner.msi" -OutFile "AikidoVmScanner.msi"
+Invoke-WebRequest -Uri "https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/v1.5.3/AikidoVmScanner.msi" -OutFile "AikidoVmScanner.msi"
 msiexec /i AikidoVmScanner.msi /qn /norestart AIKIDO_TOKEN=REPLACE_ME VM_TYPE=production OUTPUT=stdout INITIAL_SCAN=1
 ```
 
-<table><thead><tr><th width="99.64453125">Hash</th><th>AikidoVmScanner.msi</th></tr></thead><tbody><tr><td>MD5</td><td>e3f54b633687383fd8c65ab0a9719e97</td></tr><tr><td>SHA256</td><td>bf88e1a8ffb9084c8bd9826ab92133ea6c0905b34406720abecba313b51e2c45</td></tr></tbody></table>
+<table><thead><tr><th width="99.64453125">Hash</th><th>AikidoVmScanner.msi</th></tr></thead><tbody><tr><td>MD5</td><td>3e039accaf1abbfa7fb8c5400a603976</td></tr><tr><td>SHA256</td><td>006fdd2fa6907e21a7ffae1a92b1a7ef7b02fcee24d1c70410c177aa1b976124</td></tr></tbody></table>
 
 If you have an automated process for installation and you always want to be on the latest version, you can use the following link:
 
-* <https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/latest/AikidoVmScanner.msi>
+* https://aikido-vm-agent.s3.eu-west-1.amazonaws.com/latest/AikidoVmScanner.msi
 
 The VM Scanner Agent runs once a day, at a random time between **4:00 AM - 8:00 AM** (machine time).
 
@@ -94,3 +94,11 @@ msiexec.exe /x (Get-WmiObject -Class Win32_Product | Where-Object { $_.Name -lik
 ### Logs
 
 Logs are available here, along with the last generated SBOM: `C:\ProgramData\AikidoVmScanner\Logs`
+
+### Scans that take too long
+
+If a scan on this machine is slow or doesn't finish, the scanner logs where its time went. You can also run it once in diagnostic mode for more detail:
+
+{% content-ref url="../../virtual-machine-scanning/local-vm-scanning/diagnosing-a-slow-vm-scan.md" %}
+[diagnosing-a-slow-vm-scan.md](https://help.aikido.dev/virtual-machine-scanning/local-vm-scanning/diagnosing-a-slow-vm-scan)
+{% endcontent-ref %}

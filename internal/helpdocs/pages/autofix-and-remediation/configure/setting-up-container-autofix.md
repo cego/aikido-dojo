@@ -4,7 +4,7 @@ AutoFix fixes container issues by making changes to the Dockerfile. It rebuilds 
 
 ## Repository & Dockerfile
 
-AutoFix automatically detects the repository and Dockerfile. In case this automatic detection fails, it can be configured manually on the [AutoFix > Cloud > Container page](https://app.aikido.dev/issues/fix/container), by clicking `Container Settings` in the action menu:
+AutoFix automatically detects the repository and Dockerfile. In case this automatic detection fails, it can be configured manually on the [AutoFix > Cloud > Container page](https://app.aikido.dev/issues/fix/container?regionRedirect=1), by clicking `Container Settings` in the action menu:
 
 The Container Setting modal allows you to select a repository and Dockerfile:
 
@@ -18,7 +18,7 @@ The `AIKIDO_TOKEN` used for Aikido images will be provided automatically as a bu
 
 Container AutoFix can automatically create pull requests for base image upgrades. These jobs run daily and a pull request is created when a newer base images solves open container issues.
 
-The Automated Container AutoFixes can be configured on [AutoFix > Settings](https://app.aikido.dev/issues/fix/settings), by clicking `Docker containers` under Automated PRs:
+The Automated Container AutoFixes can be configured on [AutoFix > Settings](https://app.aikido.dev/issues/fix/settings?regionRedirect=1), by clicking `Docker containers` under Automated PRs:
 
 Under advanced you will find the following options:
 

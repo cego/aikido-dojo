@@ -2,9 +2,9 @@
 
 **Table of contents:**
 
-* [1. Missing permissions](#1-missing-permissions)
-* [2. Repository not active in Aikido](#2-repository-not-active-in-aikido)
-* [3. Setup for multiple Gits](#3-setup-for-multiple-gits)
+* [1. Missing permissions](https://help.aikido.dev/miscellaneous-integrations/aikido-forge-integration-troubleshooting#1-missing-permissions)
+* [2. Repository not active in Aikido](https://help.aikido.dev/miscellaneous-integrations/aikido-forge-integration-troubleshooting#2-repository-not-active-in-aikido)
+* [3. Setup for multiple Gits](https://help.aikido.dev/miscellaneous-integrations/aikido-forge-integration-troubleshooting#3-setup-for-multiple-gits)
 
 ## Aikido - Forge Integration: Troubleshooting
 
@@ -16,15 +16,15 @@ All permissions for Aikido can be managed inside your source code manager. This 
 
 **Steps to give permissions and activate repos**
 
-* Go to the [Repository Settings page ](https://app.aikido.dev/settings/integrations/repositories)and click **Add Repo**. This will open up the respective source code manager
-* Select repos you want to Aikido to have access to
+* Go to the [Repository Settings page ](https://app.aikido.dev/settings/integrations/repositories?regionRedirect=1)and click **Add Repo**. This will open up the respective source code manager
+*   Select repos you want to Aikido to have access to
 
-  [image: Repository access settings: choose all or specific repositories for permissions.]
-* Select which repos Aikido should **activate** and scan
+    [image: Repository access settings: choose all or specific repositories for permissions.]
+*   Select which repos Aikido should **activate** and scan
 
-  > This is important so Aikido can scan for vulnerabilities and send information to Forge.
+    > This is important so Aikido can scan for vulnerabilities and send information to Forge.
 
-  [image: Aikido interface for selecting repositories to scan for vulnerabilities.]
+    [image: Aikido interface for selecting repositories to scan for vulnerabilities.]
 
 #### 2. Repository not active in Aikido <a href="#id-2-repository-not-active-in-aikido" id="id-2-repository-not-active-in-aikido"></a>
 
@@ -34,12 +34,12 @@ It is possible that you have granted permission to Aikido to all repositories, b
 
 **Steps to activate a single repository in Aikido**
 
-* Go to the [Repository Settings page](https://app.aikido.dev/settings/integrations/repositories)
-* Go to the repository that you want to activate and click the triple dots on the right. In the action menu, select 'Activate'.
+* Go to the [Repository Settings page](https://app.aikido.dev/settings/integrations/repositories?regionRedirect=1)
+*   Go to the repository that you want to activate and click the triple dots on the right. In the action menu, select 'Activate'.
 
-  [image: Dropdown menu showing "Configure" and "Activate" actions for a Javaspringvulny entry.]
+    [image: Dropdown menu showing "Configure" and "Activate" actions for a Javaspringvulny entry.]
 
-If you need to enable a big number of repos at once, you can click 'add repo' which will take you back through the [initial setup](https://app.aikido.dev/onboarding/github/connect-repositories) page. There you can multiselect which repos you would like to be scanned / activated.
+If you need to enable a big number of repos at once, you can click 'add repo' which will take you back through the [initial setup](https://app.aikido.dev/onboarding/github/connect-repositories?regionRedirect=1) page. There you can multiselect which repos you would like to be scanned / activated.
 
 [image: Select repositories to scan for vulnerabilities using Aikido's platform.]
 
@@ -47,7 +47,7 @@ If you need to enable a big number of repos at once, you can click 'add repo' wh
 
 > A user has a workspace, but the repository is not in that workspace. This can be the case when a repository is another GitHub organisation.
 
-Aikido supports [connecting multiple Gits](/getting-started/setting-up-your-account/account-setup-with-multiple-gits.md) (e.g., GitHub combined with Bitbucket) or different organisations within the same Git. If you want to connect a new GitHub organisation to an existing account, **you will need to create a new workspace.**
+Aikido supports [connecting multiple Gits](https://help.aikido.dev/getting-started/setting-up-your-account/account-setup-with-multiple-gits) (e.g., GitHub combined with Bitbucket) or different organisations within the same Git. If you want to connect a new GitHub organisation to an existing account, **you will need to create a new workspace.**
 
 **Steps to setup a new workspace**
 

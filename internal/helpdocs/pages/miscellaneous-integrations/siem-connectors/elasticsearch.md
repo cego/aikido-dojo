@@ -22,7 +22,6 @@ You'll pick one option from each of the last two groups when connecting, giving 
 
 {% stepper %}
 {% step %}
-
 #### Get your Elasticsearch credentials
 
 Log in to your [Elastic Cloud console](https://cloud.elastic.co/home) and gather the details for the connection type you plan to use:
@@ -32,10 +31,9 @@ Log in to your [Elastic Cloud console](https://cloud.elastic.co/home) and gather
 * **API Key** - generate one from **Stack Management > API Keys**.
 * **Username and Password** - use an existing user, or create one with permissions to write to your index.
 * **Index Name** - the index you want Aikido to write to. If it doesn't already exist, Elasticsearch creates it automatically the first time data is sent.
-  {% endstep %}
+{% endstep %}
 
 {% step %}
-
 #### Connect a SIEM
 
 Go to **Settings > Integrations** in the Aikido app and add a new SIEM integration. In the **Connect a SIEM** dialog, select **Elasticsearch** and fill in:
@@ -59,7 +57,6 @@ Click **Test connection** to confirm Aikido can reach Elasticsearch, then **Save
 {% endstep %}
 
 {% step %}
-
 #### Configure which issues sync
 
 On the Elasticsearch integration page, under **Issue input settings**, configure which Aikido issues are synced to your SIEM:

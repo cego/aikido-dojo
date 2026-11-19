@@ -38,4 +38,3 @@ Where `*.aikido.dev` is not accepted, the wildcard expands to a small, fixed set
 | `ide.aikido.dev` and `app.aikido.dev` | EU region (default) |
 | `app.us.aikido.dev`                   | US region           |
 | `app.au.aikido.dev`                   | Australia region    |
-| `app.me.aikido.dev`                   | Middle East region  |

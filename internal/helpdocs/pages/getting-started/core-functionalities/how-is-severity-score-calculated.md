@@ -6,11 +6,11 @@ Aikido provides a contextual, risk-based severity score from 0 to 100, offering 
 
 ### 1. Multiple Vulnerability Data Sources
 
-We continuously monitor a variety of vulnerability feeds and databases, that provide baseline severity information and help establish initial severity scores. Databases include:
+We continuously monitor a variety of vulnerability feeds and databases, that  provide baseline severity information and help establish initial severity scores. Databases include:
 
 * Public vulnerability databases (e.g., NVD, GHSA,... | [See full list](https://help.aikido.dev/code-scanning/scanning-practices/external-vulnerability-databases-used-in-our-sca-engine))
 * Operating system and vendor-specific advisories
-* Our own Aikido Intel: <https://intel.aikido.dev/>
+* Our own Aikido Intel: [https://intel.aikido.dev/](https://intel.aikido.dev/)
 
 ### 2. Contextual Severity Adjustments
 
@@ -35,11 +35,11 @@ Severity is adjusted based on the importance of the affected asset. Some example
 
 You can further refine issue scoring by adding contextual information to your project
 
-* Learn how you can improve the risk score for repositories and containers [here](/code-scanning/miscellaneous/improve-risk-scoring-for-repositories-and-containers.md)
+* Learn how you can improve the risk score for repositories and containers [here](https://help.aikido.dev/code-scanning/miscellaneous/improve-risk-scoring-for-repositories-and-containers)
 
 #### Exploit Prediction (EPSS)
 
-Aikido also supports EPSS-based prioritization to automatically downgrade or ignore vulnerabilities that are unlikely to be exploited in the next 30 days. This is optional and turned off by default, more info here: [Exploit Intelligence with KEV and EPSS](/code-scanning/miscellaneous/use-epss-values-to-further-reduce-noise.md)
+Aikido also supports EPSS-based prioritization to automatically downgrade or ignore vulnerabilities that are unlikely to be exploited in the next 30 days. This is optional and turned off by default, more info here: [use-epss-values-to-further-reduce-noise.md](https://help.aikido.dev/code-scanning/miscellaneous/use-epss-values-to-further-reduce-noise "mention")
 
 {% hint style="success" %}
 You can click the score to view a detailed breakdown of why this issue received this severity rating

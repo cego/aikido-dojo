@@ -1,7 +1,5 @@
 # Custom CVE Vulnerabilities
 
-Define vulnerabilities for internal or private packages that are not in public CVE databases.
-
 Aikido lets workspace admins define Custom CVEs for internal or private packages. When a scan finds a matching package and version, Aikido creates an open-source issue with a `CUSTOM-CVE-{id}` identifier.
 
 {% hint style="info" %}
@@ -16,7 +14,7 @@ This feature needs to be enabled on workspace level. Contact us to enable.
 
 #### Add a Custom CVE
 
-**Step 1.** Go to [**CVE Database**](https://app.aikido.dev/reports/cve) **Report** → **Manage Custom CVEs**<br>
+**Step 1.** Go to [**CVE Database**](https://app.aikido.dev/reports/cve?regionRedirect=1) **Report** → **Manage Custom CVEs**<br>
 
 **Step 2.** Click **Add Custom CVE**.
 
@@ -65,4 +63,4 @@ A Custom CVE issue may not appear if:
 * the package is a dev dependency and dev dependency scanning is off
 * the feature is not enabled for your workspace
 
-If the affected package is a dev dependency, enable dev dependency CVE scanning first. See [Scanning Dev Dependencies for CVEs](/code-scanning/scanning-practices/scanning-dev-dependencies-for-cves.md).
+If the affected package is a dev dependency, enable dev dependency CVE scanning first. See [Scanning Dev Dependencies for CVEs](https://help.aikido.dev/code-scanning/scanning-practices/scanning-dev-dependencies-for-cves).

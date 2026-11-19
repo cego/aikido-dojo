@@ -8,11 +8,11 @@ Task creation inside Aikido can fail, **particularly when the issue types that h
 
 **Step 2: Add a New Issue Type**
 
-Click *Add Issue Type*. Name it something indicative like **Security Fix**, and ensure it does not mandate any field that previously hindered Aikido task creation. This issue type must not include any required fields that Aikido cannot sync.
+Click _Add Issue Type_. Name it something indicative like **Security Fix**, and ensure it does not mandate any field that previously hindered Aikido task creation. This issue type must not include any required fields that Aikido cannot sync.
 
 ### 2. Configuring Aikido to Use the New Issue Type <a href="#id-2-configuring-aikido-to-use-the-new-issue-type" id="id-2-configuring-aikido-to-use-the-new-issue-type"></a>
 
-**Step 1:** Go to [**JIRA Integration Settings**](https://app.aikido.dev/settings/integrations/tasktracker) in Aikido
+**Step 1:** Go to [**JIRA Integration Settings**](https://app.aikido.dev/settings/integrations/tasktracker?regionRedirect=1) in Aikido
 
 **Step 2: Input the New Issue Type Name** in the default task type entry.
 

@@ -4,9 +4,9 @@ The Aikido Security CI client allows you to integrate Aikido Security scans into
 
 ## 1. Get API token <a href="#id-1-get-api-token" id="id-1-get-api-token"></a>
 
-1. Go to the [Continuous Integration Settings page](https://app.aikido.dev/settings/integrations/continuous-integration).
+1. Go to the [Continuous Integration Settings page](https://app.aikido.dev/settings/integrations/continuous-integration?regionRedirect=1).
 2. Generate a token and copy. Note that you will only be able to view this token once.
-3. Save this token as *AIKIDO\_CLIENT\_API\_KEY* in your GitHub Secrets by going to Settings > Secrets and variables > Actions.
+3. Save this token as _AIKIDO\_CLIENT\_API\_KEY_ in your GitHub Secrets by going to Settings > Secrets and variables > Actions.
 
 ## 2. Create a new GitHub Action workflow <a href="#id-2-create-a-new-github-action-workflow" id="id-2-create-a-new-github-action-workflow"></a>
 

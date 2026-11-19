@@ -1,17 +1,17 @@
 # Reachability Analysis
 
-{% content-ref url="/pages/aor4m48Yw3ao4PrdFMAG" %}
-[Introduction to Reachability Analysis](/getting-started/reachability-analysis/introduction-to-reachability-analysis.md)
+{% content-ref url="introduction-to-reachability-analysis.md" %}
+[introduction-to-reachability-analysis.md](https://help.aikido.dev/getting-started/reachability-analysis/introduction-to-reachability-analysis)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/khpdkI8K2Pw3DeLpOX06" %}
-[Reachability Analysis Examples in Aikido](/getting-started/reachability-analysis/reachability-engine-to-remove-false-positives.md)
+{% content-ref url="reachability-engine-to-remove-false-positives.md" %}
+[reachability-engine-to-remove-false-positives.md](https://help.aikido.dev/getting-started/reachability-analysis/reachability-engine-to-remove-false-positives)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/7m8m0PZ4neFDumcRTs9j" %}
-[Container Reachability Analysis](/container-image-scanning/container-reachability-analysis.md)
+{% content-ref url="../../container-image-scanning/container-reachability-analysis.md" %}
+[container-reachability-analysis.md](https://help.aikido.dev/container-image-scanning/container-reachability-analysis)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/UNv1RVacVk2u3H469uUj" %}
-[Virtual Machine Reachability Analysis](/virtual-machine-scanning/misc/virtual-machine-reachability-analysis.md)
+{% content-ref url="../../virtual-machine-scanning/misc/virtual-machine-reachability-analysis.md" %}
+[virtual-machine-reachability-analysis.md](https://help.aikido.dev/virtual-machine-scanning/misc/virtual-machine-reachability-analysis)
 {% endcontent-ref %}

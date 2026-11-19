@@ -6,34 +6,38 @@ Use the pages below to see what Aikido supports in each area.
 
 ### Open source dependencies
 
-{% content-ref url="/pages/yyitfPlRmCv2gQbkN4n2" %}
-[AutoFix for Open Source Dependencies](/autofix-and-remediation/scope/autofix-for-open-source-dependencies.md)
+{% content-ref url="autofix-for-open-source-dependencies.md" %}
+[autofix-for-open-source-dependencies.md](https://help.aikido.dev/autofix-and-remediation/scope/autofix-for-open-source-dependencies)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/QTGjfucgWUkQE5cS0MDL" %}
-[Aikido Libraries](/autofix-and-remediation/aikido-libraries-overview.md)
+{% content-ref url="../aikido-libraries-overview/" %}
+[aikido-libraries-overview](https://help.aikido.dev/autofix-and-remediation/aikido-libraries-overview)
 {% endcontent-ref %}
 
 ### Code
 
-{% content-ref url="/pages/9ixKiDRWzvb1KBVcQ0un" %}
-[AutoFix for SAST](/autofix-and-remediation/scope/ai-autofix-for-sast-and-iac-issues.md)
+{% content-ref url="ai-autofix-for-sast-and-iac-issues.md" %}
+[ai-autofix-for-sast-and-iac-issues.md](https://help.aikido.dev/autofix-and-remediation/scope/ai-autofix-for-sast-and-iac-issues)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/0kEwB3ghCmMXMO32wFAd" %}
-[AutoFix for Pentest and AI Code Analysis](/autofix-and-remediation/scope/autofix-for-pentest-and-ai-code-analysis.md)
+{% content-ref url="autofix-for-ai-code-analysis.md" %}
+[autofix-for-ai-code-analysis.md](https://help.aikido.dev/autofix-and-remediation/scope/autofix-for-ai-code-analysis)
+{% endcontent-ref %}
+
+{% content-ref url="autofix-for-pentest.md" %}
+[autofix-for-pentest.md](https://help.aikido.dev/autofix-and-remediation/scope/autofix-for-pentest)
 {% endcontent-ref %}
 
 ### Cloud
 
-{% content-ref url="/pages/fDDWKusLkxhrS4Qx9cBs" %}
-[AutoFix for Infrastructure as Code](/autofix-and-remediation/scope/autofix-for-infrastructure-as-code.md)
+{% content-ref url="autofix-for-infrastructure-as-code.md" %}
+[autofix-for-infrastructure-as-code.md](https://help.aikido.dev/autofix-and-remediation/scope/autofix-for-infrastructure-as-code)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/EoYN3dnzRmRNca3sD6Ro" %}
-[AutoFix for Containers](/autofix-and-remediation/scope/ai-autofix-for-containers.md)
+{% content-ref url="ai-autofix-for-containers.md" %}
+[ai-autofix-for-containers.md](https://help.aikido.dev/autofix-and-remediation/scope/ai-autofix-for-containers)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/NgYUbx12E86BLPyg3v58" %}
-[AutoFix for Containers: Aikido Images](/autofix-and-remediation/aikido-images/autofix-for-containers-using-aikido-images.md)
+{% content-ref url="../aikido-images/autofix-for-containers-using-aikido-images.md" %}
+[autofix-for-containers-using-aikido-images.md](https://help.aikido.dev/autofix-and-remediation/aikido-images/autofix-for-containers-using-aikido-images)
 {% endcontent-ref %}

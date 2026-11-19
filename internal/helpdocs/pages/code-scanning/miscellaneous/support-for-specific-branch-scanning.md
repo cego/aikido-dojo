@@ -6,7 +6,7 @@ Utilize Aikido's manual scanning feature to directly compare a branch with your 
 
 This functionality allows you compare a specific branch / pull request / tag with the current state in Aikido, highlighting the changes with the main branch. Scanning takes typically **1-2mins** so no need to leave the UI.
 
-**Note.** In case you have old legacy branches that needs daily scanning (eg branch V3, branch V4), check out our [Multi-Branch Scanning Feature](https://help.aikido.dev/en/articles/8979512-how-to-set-up-multi-branch-scanning).
+**Note.** In case you have old legacy branches that needs daily scanning (eg branch V3, branch V4), check out our [Multi-Branch Scanning Feature](https://help.aikido.dev/code-scanning/miscellaneous/support-for-multi-branch-scanning).
 
 ### How to scan a specific branch <a href="#how-to-scan-a-specific-branch" id="how-to-scan-a-specific-branch"></a>
 

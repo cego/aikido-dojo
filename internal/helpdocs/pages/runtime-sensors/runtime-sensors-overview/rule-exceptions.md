@@ -18,21 +18,18 @@ Go to **Runtime Sensors** → **Rule exceptions** to see each exception with its
 
 {% stepper %}
 {% step %}
-
 ### Open the form
 
 Go to **Runtime Sensors** → **Rule exceptions** and click **Add Rule Exception**. You can also open a detection and click **Actions** → **Add Rule Exception**. Aikido then fills in the name and conditions from the detection, which you can change.
 {% endstep %}
 
 {% step %}
-
 ### Name the exception
 
 Enter a name that explains why the exception exists.
 {% endstep %}
 
 {% step %}
-
 ### Define the conditions
 
 Select a field, an operator, and a value. Click **Add Condition** to add more.
@@ -41,14 +38,12 @@ All conditions in one exception must match for the exception to apply. To match 
 {% endstep %}
 
 {% step %}
-
 ### Pick the rules
 
 In **Rules to Apply to**, search for and select one or more rules. The exception applies to each selected rule.
 {% endstep %}
 
 {% step %}
-
 ### Save the exception
 
 Click **Save**.
@@ -98,10 +93,10 @@ Check that the exception lists the rule in **Rules to Apply to**, and that every
 
 ## Related
 
-{% content-ref url="/pages/KZiqfv3WtFIfhwAFAdAq" %}
-[Runtime Sensors Overview](/runtime-sensors/runtime-sensors-overview.md)
+{% content-ref url="./" %}
+[.](https://help.aikido.dev/runtime-sensors/runtime-sensors-overview)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/LeGgY6ZX0hQgT1470phu" %}
-[Detection Rules](/runtime-sensors/runtime-sensors-overview/detection-rules.md)
+{% content-ref url="detection-rules.md" %}
+[detection-rules.md](https://help.aikido.dev/runtime-sensors/runtime-sensors-overview/detection-rules)
 {% endcontent-ref %}

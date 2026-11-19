@@ -1,14 +1,28 @@
 # Aikido Libraries
 
-Secured, drop-in replacements for vulnerable packages. No upgrades. No breaking changes.
-
 Upgrading a vulnerable dependency means using a version you haven't tested, risking breaking changes, and coordinating deploying that upgrade across your team. Transitioning to Aikido Libraries removes that tradeoff. It patches the exact version already in use - same package, same version, same API, same behavior - so you get the security fix without touching your application code.
 
-Aikido has **11,500+** secured libraries across JavaScript, Java, Python, PHP, Go, .NET, Ruby, and Rust. Aikido Libraries is most useful when:
+Aikido has **12,000+** secured libraries across JavaScript, Java, Python, PHP, Go, .NET, Ruby, and Rust (see [supported ecosystems](https://help.aikido.dev/autofix-and-remediation/aikido-libraries-overview/aikido-libraries-supported-ecosystems)). Aikido Libraries is most useful when:
 
 * A CVE has no safe upstream fix yet
 * The upstream fix requires a major version bump you cannot take
 * A package is no longer maintained
+
+### How patches are created
+
+Aikido builds every patched library from source. The catalog reflects the libraries that customers have needed so far, not the limit of what Aikido can deliver.
+
+When you enroll a repository, Aikido scans it daily. Each library from a [supported ecosystem](https://help.aikido.dev/autofix-and-remediation/aikido-libraries-overview/aikido-libraries-supported-ecosystems) with a new CVE is sent to Aikido's patching pipeline. If the exact package and version isn't in the catalog yet, Aikido creates it. This means you can get an Aikido Library for any package your repositories use, within the supported ecosystems. New CVEs follow the [patch creation SLA](https://help.aikido.dev/autofix-and-remediation/aikido-libraries-overview/patch-creation-sla).
+
+### How to use Aikido Libraries
+
+You don't configure npm, pip, Go, or any other package manager yourself. Aikido hosts the patched packages in its package registry, and you consume them through AutoFix. AutoFix opens a daily PR that updates your lockfiles to point to the Aikido Libraries variant. It's the same package and version, with an `.aikido` suffix.
+
+### Provenance and signatures
+
+Every Aikido Library is built in a governed process and signed. Security and compliance teams ask for this evidence so they can verify where a dependency came from and that nobody changed it after it was built.
+
+Every Aikido Library has a provenance file and a Sigstore bundle. Download them for any library from the Aikido app.
 
 ### Roll out Aikido Libraries to one or more repositories
 
@@ -64,9 +78,9 @@ Version `1.2.16` contains these critical issues:
 
 The Aikido Libraries variant of `log4j 1.2.16` fixes these CVEs without forcing a migration to `2.x`.
 
-You can safely transition from your existing log4j\@1.2.16 library to the respective Aikido version of it using AutoFix.
+You can safely transition from your existing log4j@1.2.16 library to the respective Aikido version of it using AutoFix.
 
-AutoFix proposes a transition to an Aikido Libraries variant when one is available. You can review this in the [AutoFix dependency overview](https://app.aikido.dev/issues/fix).
+AutoFix proposes a transition to an Aikido Libraries variant when one is available. You can review this in the [AutoFix dependency overview](https://app.aikido.dev/issues/fix?regionRedirect=1).
 
 To transition to the Aikido Libraries variant, select this option in the AutoFix creation modal.
 

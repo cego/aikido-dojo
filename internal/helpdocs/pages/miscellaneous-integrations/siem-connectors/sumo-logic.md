@@ -19,7 +19,6 @@ Before connecting, you need one of the following from Sumo Logic:
 
 {% stepper %}
 {% step %}
-
 #### Get your Sumo Logic credentials
 
 Pick one of the two connection methods:
@@ -36,10 +35,9 @@ Pick one of the two connection methods:
 
 1. In Sumo Logic, [generate an Access ID and Access Key](https://help.sumologic.com/docs/manage/security/access-keys/) with permissions to create collectors and sources.
 2. Aikido will automatically create and manage a hosted collector and HTTP source for you the first time it connects, and reuse them on subsequent connections.
-   {% endstep %}
+{% endstep %}
 
 {% step %}
-
 #### Connect a SIEM
 
 Go to **Settings > Integrations** in the Aikido app and add a new SIEM integration. In the **Connect a SIEM** dialog, select **Sumo Logic** and fill in either:
@@ -51,7 +49,6 @@ Click **Test connection** to confirm Aikido can reach Sumo Logic, then **Save ch
 {% endstep %}
 
 {% step %}
-
 #### Configure which issues sync
 
 On the Sumo Logic integration page, under **Issue input settings**, configure which Aikido issues are synced to your SIEM:

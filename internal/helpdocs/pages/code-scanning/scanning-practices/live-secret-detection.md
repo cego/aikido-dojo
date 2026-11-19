@@ -11,7 +11,7 @@ Our Live Secret Detection feature checks if exposed secrets are still active and
 
 ## How Live Secret Detection Works <a href="#how-live-secret-detection-works" id="how-live-secret-detection-works"></a>
 
-**Identify and Verify**
+**Identify and Verify**&#x20;
 
 Aikido sends the exposed secret to a secure endpoint to check whether it is still active. As a result, you may notice IPs in your logs that are coming from Aikido. Below the list of Aikido IPs:
 
@@ -55,4 +55,4 @@ If you encounter a false positive:
 2. Verify if the secret is active using the relevant API or other methods
 3. If confirmed as a false positive, you can ignore the issue to prevent future alerts
 
-You can [ignore issues in the UI](/getting-started/core-functionalities/ignore-issues-to-remove-issues-from-main-feed.md) or [ignore secrets by using code comments](/code-scanning/scanning-practices/ignoring-secrets-via-code-comments.md).
+You can [ignore issues in the UI](https://help.aikido.dev/getting-started/core-functionalities/ignore-issues-to-remove-issues-from-main-feed) or [ignore secrets by using code comments](https://help.aikido.dev/code-scanning/scanning-practices/ignoring-secrets-via-code-comments).

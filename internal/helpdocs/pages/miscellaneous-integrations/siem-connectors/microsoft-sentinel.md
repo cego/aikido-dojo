@@ -25,7 +25,6 @@ An onboarded Log Analytics workspace with at least contributor rights is require
 
 {% stepper %}
 {% step %}
-
 #### Set up your Azure prerequisites
 
 1. Create a Microsoft Entra application and note the Tenant ID, Client ID, and a Client Secret.
@@ -37,10 +36,9 @@ An onboarded Log Analytics workspace with at least contributor rights is require
    * **Manual** - you manage a single DCR yourself. Find its Rule ID under **Monitor > Data Collection Rules**, select your DCR, then **JSON View > immutableId**.
    * **Managed** - Aikido scales DCRs for you automatically for higher throughput. Find the DCR Resource ID the same way, using the top-level `id` field instead.
 7. Find your Stream Name under the DCR's `properties.streamDeclarations` (it follows the pattern `Custom-[TableName]_CL`).
-   {% endstep %}
+{% endstep %}
 
 {% step %}
-
 #### Connect a SIEM
 
 Go to **Settings > Integrations** in the Aikido app and add a new SIEM integration. In the **Connect a SIEM** dialog, select **Microsoft Azure Sentinel** and fill in:
@@ -52,8 +50,8 @@ Go to **Settings > Integrations** in the Aikido app and add a new SIEM integrati
 * **DCR Configuration** - choose the DCR Mode:
   * **Manual** - ingest into a single DCR you provide.
   * **Managed** - Aikido clones your DCR to scale ingestion for higher throughput.
-* **DCR Resource ID** *(managed mode)* - the full ARM resource ID of your DCR, in the form `/subscriptions/<sub>/resourceGroups/<rg>/providers/Microsoft.Insights/dataCollectionRules/<name>`. Aikido clones this to create a pod-local DCR.
-* **Rule ID** *(manual mode)* - the immutable ID of your DCR.
+* **DCR Resource ID** _(managed mode)_ - the full ARM resource ID of your DCR, in the form `/subscriptions/<sub>/resourceGroups/<rg>/providers/Microsoft.Insights/dataCollectionRules/<name>`. Aikido clones this to create a pod-local DCR.
+* **Rule ID** _(manual mode)_ - the immutable ID of your DCR.
 
 **Authentication**
 
@@ -65,7 +63,6 @@ Click **Test connection** to confirm Aikido can reach Sentinel, then **Save chan
 {% endstep %}
 
 {% step %}
-
 #### Configure which issues sync
 
 On the Sentinel integration page, under **Issue input settings**, configure which Aikido issues are synced to your SIEM:

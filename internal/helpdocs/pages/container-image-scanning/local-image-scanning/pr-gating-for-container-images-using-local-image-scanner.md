@@ -7,7 +7,7 @@ PR gating ensures that new code meets your security standards before it is merge
 This prevents new vulnerabilities from being introduced while allowing existing findings to be addressed separately.
 
 {% hint style="info" %}
-We also support [release gating](/container-image-scanning/local-image-scanning/release-gating-for-container-images-using-local-image-scanner.md) for teams that want to enforce checks at release time.
+We also support [release gating](https://help.aikido.dev/container-image-scanning/local-image-scanning/release-gating-for-container-images-using-local-image-scanner) for teams that want to enforce checks at release time.
 {% endhint %}
 
 To enable PR gating, add the `--fail-on <severity>` option to select your preferred severity level. Then, add the `--gating-mode pr` option to signify that you wish to perform PR gating. You must also specify the base (`--base-commit-id <commit-id>`) and head commit (`--head-commit-id <commit-id>`). If there a scan was previously performed on the base commit id, the scan results will be compared to those. If not, the results will be compared to the most recent scan on your image.
@@ -22,7 +22,7 @@ Example PR gating command:
 
 #### GitHub <a href="#github" id="github"></a>
 
-For general information about setting up the Local Scanner in a GitHub environment, check out [this article](https://help.aikido.dev/code-scanning/local-code-scanning/github-action-setup-for-local-code-scanning).
+For general information about setting up the Local Scanner in a GitHub environment, check out [this article](https://help.aikido.dev/code-scanning/local-code-scanning/github-action-setup-for-local-code-scanning).&#x20;
 
 Example `.github/workflows/aikido-scan.yml` for PR gating:
 

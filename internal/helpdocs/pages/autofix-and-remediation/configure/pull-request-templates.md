@@ -6,10 +6,10 @@ AutoFix checks these template locations:
 
 * `pull_request_template.md`
 * `PULL_REQUEST_TEMPLATE.md`
-* `pull_request_template.txt`
+* `pull_request_template.txt`&#x20;
 * `docs/pull_request_template.md`
 * `docs/PULL_REQUEST_TEMPLATE.md`
-* `docs/pull_request_template.txt`
+* `docs/pull_request_template.txt`&#x20;
 * `.github/PULL_REQUEST_TEMPLATE.md`
 * `.github/pull_request_template.md`
 * `.gitlab/merge_request_templates/Default.md`
@@ -20,8 +20,7 @@ AutoFix checks these template locations:
 
 Example pull request template:
 
-{% code title="PULL\_REQUEST\_TEMPLATE.md" %}
-
+{% code title="PULL_REQUEST_TEMPLATE.md" %}
 ```
 # Summary
 
@@ -49,5 +48,4 @@ Example pull request template:
 - [ ] Verified the fix does not introduce regressions
 - [ ] Approved for merge
 ```
-
 {% endcode %}

@@ -68,7 +68,7 @@ Identifies insecure or weak TLS configurations
 Identifies Supabase instances for which a misconfigured Row Level Security (RLS) policy results in a potential data breach. It works in the following steps:
 
 1. **Key discovery**: Crawl deployed frontend JavaScript assets to extract the Supabase client anon key.
-2. **Project identification**: Determine the Supabase project endpoint (e.g., https\://\<project>.[supabase.co](http://supabase.co/)) from the JWT token or code references.
+2. **Project identification**: Determine the Supabase project endpoint (e.g., https://\<project>.[supabase.co](http://supabase.co/)) from the JWT token or code references.
 3. **Credential validation**: Establish a connection to the project to verify that the extracted anon key is valid.
 4. **Surface enumeration**: Enumerate tables within the public schema that are addressable through the client context.
 5. **Permission testing**: Attempt read and write operations on each table using only the anon key to identify gaps caused by missing or misconfigured RLS.
@@ -94,7 +94,7 @@ Validates the leaked credentials identified in previous steps to verify whether 
 
 ## How to Set-up
 
-**Step 1:** Click **Add Domain** in the [Domain Overview](https://app.aikido.dev/domains) and select **Attack Surface Scan**
+**Step 1:** Click **Add Domain** in the [Domain Overview](https://app.aikido.dev/domains?regionRedirect=1) and select **Attack Surface Scan**
 
 [image: Choose scan type modal with Quick Scan, Attack Surface Scan and Agentic Scan options.]
 
@@ -116,4 +116,4 @@ All requests coming from Aikido Attack surface scans will have:
 
 * the `User-Agent` set to `aikido-surface-agent/1.0`
 * the following header `aikido-surface-test` set to value `1` in the request
-* [will come from the IP's documented here](/dast-surface-monitoring/miscellaneous/allowing-ip-addresses-for-dast-surface-monitoring.md)
+* [will come from the IP's documented here](https://help.aikido.dev/dast-surface-monitoring/miscellaneous/allowing-ip-addresses-for-dast-surface-monitoring)

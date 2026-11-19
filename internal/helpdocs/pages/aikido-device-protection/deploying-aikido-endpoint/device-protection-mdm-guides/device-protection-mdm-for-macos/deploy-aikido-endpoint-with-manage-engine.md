@@ -1,4 +1,4 @@
-# Deploy Device Protection with ManageEngine
+# Deploy Aikido Device Protection with ManageEngine
 
 Use ManageEngine Endpoint Central to deploy Aikido Device Protection across your managed macOS fleet with the required permissions in place.
 
@@ -10,10 +10,10 @@ Use ManageEngine Endpoint Central to deploy Aikido Device Protection across your
 
 Before starting, make sure you have the following from the Aikido Device Protection dashboard:
 
-* The **Aikido Device Protection `.mobileconfig`** (downloaded from the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices))
+* The **Aikido Device Protection `.mobileconfig`** (downloaded from the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices?regionRedirect=1))
 * The **Aikido Device Protection installer** (`.pkg` file, downloaded from the dashboard)
 
-If you're missing any of these, go back to the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices), click **Connect Device**, and complete the pre-flight steps.
+If you're missing any of these, go back to the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices?regionRedirect=1), click **Connect Device**, and complete the pre-flight steps.
 {% endstep %}
 
 {% step %}
@@ -33,7 +33,7 @@ This profile allows the Aikido Device Protection system extension to load silent
 1. In Endpoint Central, go to **Software Deployment** → **Package Creation** → **Packages** → **Add Package** → **Mac**.
 2. Upload the Aikido Device Protection `.pkg` file and fill in the package details.
 3. Save the package.
-   {% endstep %}
+{% endstep %}
 
 {% step %}
 **Create the install deployment**
@@ -54,7 +54,7 @@ Enabling **Apply this configuration during every Refresh Cycle** makes Endpoint 
 
 1. Verify the **Aikido Device Protection** configuration profile has reached all target devices. Check status under **Configurations** → **Configuration Summary**.
 2. Deploy the **Aikido Device Protection** install task.
-   {% endstep %}
+{% endstep %}
 
 {% step %}
 **Reboot devices after installation**
@@ -71,15 +71,15 @@ The agent fully activates on the next boot.
 
 On a test device, confirm:
 
-1. The system extension is activated:
+1.  The system extension is activated:
 
-   ```bash
-   systemextensionsctl list | grep aikido
-   ```
+    ```bash
+    systemextensionsctl list | grep aikido
+    ```
 
-   Expect to see the extension marked `[activated enabled]`.
+    Expect to see the extension marked `[activated enabled]`.
 2. Open **System Settings** → **General** → **Login Items & Extensions** and confirm the Aikido Device Protection entries cannot be toggled off.
-   {% endstep %}
-   {% endstepper %}
+{% endstep %}
+{% endstepper %}
 
 ## Troubleshooting

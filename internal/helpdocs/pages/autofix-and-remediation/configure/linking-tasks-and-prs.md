@@ -13,15 +13,15 @@ In order to keep your task tracker in sync with the open Pull Requests, AutoFix 
 1. Linking tasks created for issues with Pull Requests
 2. Creating a new task for each opened Pull Request
 
-For 1, you need to setup [automatic task creation](https://help.aikido.dev/getting-started/task-management-systems) for issues. For 2, you need to enable `Create task for PR` in the [AutoFix PR configuration](/autofix-and-remediation/configure/autofix-pr-configuration.md). Depending on your workflow you can enable 1 and/or 2.
+For 1, you need to setup [automatic task creation](https://help.aikido.dev/getting-started/task-management-systems) for issues. For 2, you need to enable `Create task for PR` in the [AutoFix PR configuration](https://help.aikido.dev/autofix-and-remediation/configure/autofix-pr-configuration). Depending on your workflow you can enable 1 and/or 2.
 
-The task reference placeholder (`$TASK_REF` ) can be used in the following [Pull Request Configuration](/autofix-and-remediation/configure/autofix-pr-configuration.md#pull-request-configuration) fields: branch prefix, commit message and PR title.
+The task reference placeholder (`$TASK_REF` ) can be used in the following [Pull Request Configuration](https://help.aikido.dev/autofix-and-remediation/configure/autofix-pr-configuration#pull-request-configuration) fields: branch prefix, commit message and PR title.
 
 The `$TASK_REF` will be populated with task linked to the issues solved in the PR and the new task that was created for the PR if the `Create task for PR` option is enabled.
 
 ## Creating a new task for each opened Pull Request
 
-Creating a task for each AutoFix PR can be used to assign people to review and merge the AutoFix PRs. Enable "*Create task for PR*" in your [AutoFix configuration](/autofix-and-remediation/configure/autofix-pr-configuration.md). A task will be created for each AutoFix PR whether it is linked with existing tasks or not.
+Creating a task for each AutoFix PR can be used to assign people to review and merge the AutoFix PRs. Enable "_Create task for PR_" in your [AutoFix configuration](https://help.aikido.dev/autofix-and-remediation/configure/autofix-pr-configuration). A task will be created for each AutoFix PR whether it is linked with existing tasks or not.
 
 Supported task trackers:
 

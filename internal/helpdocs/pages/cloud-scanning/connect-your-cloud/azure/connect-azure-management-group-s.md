@@ -1,7 +1,5 @@
 # Connect Azure Management Group(s)
 
-This page describes Aikido's support for automatically and continuously connecting Azure subscriptions within the same Azure management group(s).
-
 {% hint style="info" %}
 This functionality is available only for **Pro** and **Advanced** plans. **Contact us** via chat for more information.
 {% endhint %}
@@ -28,7 +26,7 @@ Connecting entire Azure Management Groups provides the following benefits:
 * On step 3, select the "Management Groups" option.
 * Provide the ID of the subscription that will act as a "management cloud" in Aikido. This is simply the subscription holding the connection details. There are no setup differences between this and the rest of the subscriptions. We recommend choosing one that you intend to keep for the foreseeable future.
 * The other fields are optional. **If left empty, all Azure subscriptions from your tenant will be automatically connected.**
-* Next, you will need to configure RBAC/IAM access to your Azure environment.
+* Next, you will need to configure RBAC/IAM access to your Azure environment.&#x20;
 
 {% hint style="info" %}
 You must grant access at a management group level. Granting access at the tenant root management group will automatically propagate to all management groups and subscriptions.

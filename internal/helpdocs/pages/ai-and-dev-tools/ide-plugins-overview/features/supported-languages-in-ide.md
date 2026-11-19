@@ -2,7 +2,7 @@
 
 ## Secrets
 
-Secret scanning can analyze any file that stores its content as text, including code, configuration files, logs, and documentation.
+Secret scanning can analyze any file that stores its content as text, including code, configuration files, logs, and documentation.&#x20;
 
 ## Code Issues (SAST) Language Support
 
@@ -30,6 +30,6 @@ Secret scanning can analyze any file that stores its content as text, including 
 
 Same as Aikido platform scans
 
-{% content-ref url="/pages/E5ENgfMdszxSZ3Wiv6vc" %}
-[Support for Dependency Scanning by Language (SCA)](/code-scanning/scanning-practices/support-for-dependency-scanning-by-language.md)
+{% content-ref url="../../../code-scanning/scanning-practices/support-for-dependency-scanning-by-language.md" %}
+[support-for-dependency-scanning-by-language.md](https://help.aikido.dev/code-scanning/scanning-practices/support-for-dependency-scanning-by-language)
 {% endcontent-ref %}

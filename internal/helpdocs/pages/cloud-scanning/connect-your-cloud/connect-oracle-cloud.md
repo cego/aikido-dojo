@@ -6,14 +6,14 @@ Securing your cloud infrastructure is crucial to protecting your user data. You 
 
 #### **Main use cases**
 
-* Aikido surfaces IAM misconfigurations that could expose your OCI tenancy to attackers, like console users without MFA, stale API keys older than 90 days, and users with multiple active API keys. All configuration checks can be found [here.](https://app.aikido.dev/clouds/checks)
+* Aikido surfaces IAM misconfigurations that could expose your OCI tenancy to attackers, like console users without MFA, stale API keys older than 90 days, and users with multiple active API keys. All configuration checks can be found [here.](https://app.aikido.dev/clouds/checks?regionRedirect=1)
 * Aikido continuously monitors your Oracle Cloud tenancy for new risks as your setup evolves.
 
 Aikido performs daily compliance scans on the above.
 
 ### Getting started
 
-To get started, head to the [cloud overview page](https://app.aikido.dev/clouds) on Aikido and click **"Connect Cloud"**. Select **Oracle Cloud Infrastructure** from the list and follow the step-by-step setup wizard.
+To get started, head to the [cloud overview page](https://app.aikido.dev/clouds?regionRedirect=1) on Aikido and click **"Connect Cloud"**. Select **Oracle Cloud Infrastructure** from the list and follow the step-by-step setup wizard.
 
 To connect your account, you'll need a few values from your OCI configuration file: your **Tenancy OCID**, **home region**, **User OCID**, **private key fingerprint**, and **private key**. The steps below walk you through creating a dedicated read-only user in OCI and grabbing those values.
 
@@ -29,7 +29,7 @@ Go to the [Oracle Cloud Console](https://cloud.oracle.com/) and sign in. Navigat
 
 Under **User Management**, click **Create User**. Fill in the details (e.g. `aikido-security`) and click **Create**.
 
-*We recommend creating a dedicated user so it's easy to audit Aikido's access later.*
+_We recommend creating a dedicated user so it's easy to audit Aikido's access later._
 {% endstep %}
 
 {% step %}
@@ -56,7 +56,6 @@ Allow group aikido-security-readonly to inspect all-resources in tenancy
 Allow group aikido-security-readonly to read all-resources in tenancy
 Allow group aikido-security-readonly to read audit-events in tenancy
 ```
-
 {% endstep %}
 
 {% step %}

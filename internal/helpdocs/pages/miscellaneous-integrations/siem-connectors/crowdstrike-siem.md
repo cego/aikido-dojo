@@ -19,7 +19,6 @@ Before connecting, you need:
 
 {% stepper %}
 {% step %}
-
 #### Set up the Monad connector in CrowdStrike
 
 1. Log in to your CrowdStrike console, open the main menu, and go to **Next-Gen SIEM > Data onboarding**.
@@ -33,10 +32,9 @@ Before connecting, you need:
 5. Accept the terms and click **Save**.
 6. Once the connector finishes initializing, look for the **Generate API key** option in the banner and click it.
 7. Copy and securely store both the generated **API key** and the **API URL**, you'll paste these into Aikido next.
-   {% endstep %}
+{% endstep %}
 
 {% step %}
-
 #### Connect a SIEM
 
 Go to **Settings > Integrations** in the Aikido app and add a new SIEM integration. In the **Connect a SIEM** dialog, select **CrowdStrike Falcon Next-Gen SIEM** and fill in:
@@ -53,7 +51,6 @@ Click **Test connection** to confirm Aikido can reach CrowdStrike, then **Save c
 {% endstep %}
 
 {% step %}
-
 #### Configure which issues sync
 
 On the CrowdStrike integration page, under **Issue input settings**, configure which Aikido issues are synced:

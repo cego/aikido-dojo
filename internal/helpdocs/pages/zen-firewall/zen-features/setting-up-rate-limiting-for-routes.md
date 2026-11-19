@@ -12,7 +12,7 @@ Rate limiting is not available in lambda or serverless environments
 
 * Set rate limiting on specific routes
 * Set rate limiting on multiple routes by adding a wildcard\* route
-* Set rate limiting on IP address or [user ID](https://help.aikido.dev/doc/block-users-with-zen/docbO6Nm6Zb1#how-to-identify-and-block-users), or a [custom group ID](#how-it-works) (e.g. company ID for B2B SaaS)
+* Set rate limiting on IP address or [user ID](https://help.aikido.dev/doc/block-users-with-zen/docbO6Nm6Zb1#how-to-identify-and-block-users), or a [custom group ID](https://help.aikido.dev/zen-firewall/zen-features/setting-up-rate-limiting-for-routes#how-it-works) (e.g. company ID for B2B SaaS)
 * Disable protection for a specific route instead disabling protection for your entire app.
 * [Localhost](http://localhost) or 127.0.0.1 is never rate limited
 
@@ -90,4 +90,4 @@ Available for:
 
 ## Exceptions
 
-* [To remove rate limits for a specific user, you can disable rate limiting.](/zen-firewall/zen-features/blocking-users-with-zen-firewall.md#remove-rate-limiting) This will cause all rate limits to be bypassed for that user.
+* [To remove rate limits for a specific user, you can disable rate limiting.](https://help.aikido.dev/zen-firewall/zen-features/blocking-users-with-zen-firewall#remove-rate-limiting) This will cause all rate limits to be bypassed for that user.

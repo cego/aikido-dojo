@@ -34,15 +34,16 @@ If you want to do a quick test, go to the local Netskope client, click Configura
 
 ## Domains to Exclude
 
-These are the domains Aikido Device Protection intercepts. Package registries and developer tool marketplaces are always intercepted. AI provider domains are only intercepted when [AI Usage](/aikido-device-protection/using-aikido-endpoint/ai-monitoring.md) monitoring is enabled.
+These are the domains Aikido Device Protection intercepts. Package registries and developer tool marketplaces are always intercepted. AI provider domains are only intercepted when [AI Usage](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/ai-monitoring) monitoring is enabled.
 
 {% tabs %}
 {% tab title="Package registries & marketplaces" %}
-
 ```
 api.nuget.org
 app.aikido.dev
 endpoint-server.aikido.dev
+endpoint-server.us.aikido.dev
+endpoint-server.au.aikido.dev
 aikido-endpoint-binaries.s3.eu-west-1.amazonaws.com
 central.maven.org
 chromewebstore.google.com
@@ -54,8 +55,10 @@ index.crates.io
 static.crates.io
 device-protection.aikido.help
 files.pythonhosted.org
+formulae.brew.sh
 gallery.vsassets.io
 gallerycdn.vsassets.io
+ghcr.io
 github.com
 globalcdn.nuget.org
 marketplace.cursorapi.com
@@ -64,6 +67,7 @@ open-vsx.org
 proxy.golang.org
 pypi.org
 pypi.python.org
+raw.githubusercontent.com
 registry.npmjs.com
 registry.npmjs.org
 registry.yarnpkg.com
@@ -77,7 +81,6 @@ sum.golang.org
 update.googleapis.com
 www.nuget.org
 ```
-
 {% endtab %}
 
 {% tab title="AI providers" %}
@@ -223,6 +226,5 @@ tokenhub.tencentmaas.com
 www.xpersona.co
 zenmux.ai
 ```
-
 {% endtab %}
 {% endtabs %}

@@ -4,10 +4,6 @@ Updating to the latest version of a base image can be difficult because it may r
 
 Aikido Images is a registry of zero-CVE base images: drop-in replacements that carry patched versions of libraries with reported **CRITICAL** or **HIGH** severity security issues. When you accept an AutoFix suggestion to use an Aikido Image, the image from the Aikido registry replaces the existing base image in your Dockerfile.
 
-{% hint style="info" %}
-Aikido Images cover OS-level CVEs under a defined [patch creation SLA](/autofix-and-remediation/aikido-libraries-overview/patch-creation-sla.md). Application-level package vulnerabilities (Python, npm, Java, Go, etc.) are also fixed, but on a best-effort basis with no guaranteed SLA. For guaranteed application-level coverage, see [Aikido Libraries](/autofix-and-remediation/aikido-libraries-overview.md).
-{% endhint %}
-
 For example, [CVE-2025-4373](https://security-tracker.debian.org/tracker/CVE-2025-4373) is fixed by Debian in Trixie and Sid but not in Bookworm. The Aikido Images variant of `debian:bookworm` contains a patched version of `glib2.0` that fixes this vulnerability. Using this image avoids breaking changes while maintaining a good security posture.
 
 Aikido Images are continuously rebuilt as new CVEs are reported, so the base images you depend on stay up to date, with AutoFix surfacing updates as appropriate.
@@ -24,11 +20,11 @@ In this example we see a Dockerfile using a `node:20-bookworm` base image. Switc
 
 ### Using Aikido Images with the Local Scanner
 
-Aikido Images are also available when you scan images with the [Aikido Local Scanner](/container-image-scanning/local-image-scanning/setting-up-image-scanning-with-local-scanner.md). Because the Local Scanner is used when Aikido does not have access to your source code, AutoFix cannot open a pull request against your Dockerfile. Instead, Aikido shows the suggested Aikido Image in the UI and you apply the change yourself by following the [Manually changing the base image](#manually-changing-the-base-image) steps below.
+Aikido Images are also available when you scan images with the [Aikido Local Scanner](https://help.aikido.dev/container-image-scanning/local-image-scanning/setting-up-image-scanning-with-local-scanner). Because the Local Scanner is used when Aikido does not have access to your source code, AutoFix cannot open a pull request against your Dockerfile. Instead, Aikido shows the suggested Aikido Image in the UI and you apply the change yourself by following the [Manually changing the base image](https://help.aikido.dev/autofix-and-remediation/aikido-images/autofix-for-containers-using-aikido-images#manually-changing-the-base-image) steps below.
 
 ## Aikido Images availability
 
-In Aikido, you can view the available base images on [**AutoFix** > **Cloud** > **Containers** > **Aikido Images**](https://app.aikido.dev/issues/aikido-images).
+In Aikido, you can view the available base images on [**AutoFix** > **Cloud** > **Containers** > **Aikido Images**](https://app.aikido.dev/issues/aikido-images?regionRedirect=1).
 
 All images are available for both `amd64` and `arm64` architectures.
 

@@ -71,6 +71,6 @@ Poor candidates:
 
 Use the Secret Keyword Filter for **repeated, workspace-wide false positives**.
 
-Use [code comments](/code-scanning/scanning-practices/ignoring-secrets-via-code-comments.md) when you want to suppress a **single known-safe line** in code.
+Use [code comments](https://help.aikido.dev/code-scanning/scanning-practices/ignoring-secrets-via-code-comments) when you want to suppress a **single known-safe line** in code.
 
-Use [.aikido file exclusions](/code-scanning/scanning-practices/ignore-via-code-with-aikido-files.md) when you want to exclude **specific files or paths** from scanning.
+Use [.aikido file exclusions](https://help.aikido.dev/code-scanning/scanning-practices/ignore-via-code-with-aikido-files) when you want to exclude **specific files or paths** from scanning.

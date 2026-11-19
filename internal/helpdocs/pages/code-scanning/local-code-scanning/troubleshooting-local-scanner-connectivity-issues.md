@@ -19,7 +19,7 @@ Optional
 
 Where `*.aikido.dev` and `*.aikido.io` are not accepted, each wildcard expands to a small, fixed set of hosts:
 
-<table><thead><tr><th width="264.83984375">Host</th><th>When</th></tr></thead><tbody><tr><td><code>app.aikido.dev</code></td><td>EU region (default)</td></tr><tr><td><code>app.us.aikido.dev</code></td><td>US region</td></tr><tr><td><code>app.au.aikido.dev</code></td><td>Australia</td></tr><tr><td><code>app.me.aikido.dev</code></td><td>Middle East</td></tr><tr><td><code>static-cve.aikido.dev</code></td><td>With <code>--enable-aikido-hosted-dependencies-db</code></td></tr><tr><td><code>static-maven.aikido.io</code></td><td>With <code>--enable-aikido-maven-cache</code></td></tr></tbody></table>
+<table><thead><tr><th width="264.83984375">Host</th><th>When</th></tr></thead><tbody><tr><td><code>app.aikido.dev</code></td><td>EU region (default)</td></tr><tr><td><code>app.us.aikido.dev</code></td><td>US region</td></tr><tr><td><code>app.au.aikido.dev</code></td><td>Australia</td></tr><tr><td><code>static-cve.aikido.dev</code></td><td>With <code>--enable-aikido-hosted-dependencies-db</code></td></tr><tr><td><code>static-maven.aikido.io</code></td><td>With <code>--enable-aikido-maven-cache</code></td></tr></tbody></table>
 
 #### Using `--enable-proxy`
 

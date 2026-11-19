@@ -1,4 +1,4 @@
-# Alternative Token Authentication
+# Token Authentication
 
 Token authentication is the alternative to the default browser-based login flow. Use it when:
 
@@ -10,7 +10,7 @@ For interactive use on a local machine, the browser-based login flow is simpler 
 
 ## Creating a token
 
-In Aikido, go to [Settings → Integrations → IDE → MCP](https://app.aikido.dev/settings/integrations/ide/mcp) and create a Personal Access Token (PAT). Copy it to a secure location.
+In Aikido, go to [Settings → Integrations → IDE → MCP](https://app.aikido.dev/settings/integrations/ide/mcp?regionRedirect=1) and create a Personal Access Token (PAT). Copy it to a secure location.
 
 ## Setup by agent
 
@@ -28,21 +28,17 @@ Alternatively, set `AIKIDO_API_KEY` in your environment before starting Claude C
 
 {% tabs %}
 {% tab title="macOS / Linux" %}
-
 ```shellscript
 export AIKIDO_API_KEY=your-token-here
 claude
 ```
-
 {% endtab %}
 
 {% tab title="Windows PowerShell" %}
-
 ```powershell
 $env:AIKIDO_API_KEY="your-token-here"
 claude
 ```
-
 {% endtab %}
 {% endtabs %}
 

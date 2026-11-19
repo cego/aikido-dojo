@@ -6,29 +6,29 @@ Pick the setup that matches your provider and authentication method.
 
 ### Github
 
-* [Required permissions for Aikido AutoFix Github App](/autofix-and-remediation/configure/required-permissions-for-aikido-autofix-github-app.md)
+* [Required permissions for Aikido AutoFix Github App](https://help.aikido.dev/autofix-and-remediation/configure/required-permissions-for-aikido-autofix-github-app)
 
 ### Gitlab
 
-* [AutoFix For Gitlab Cloud with Group Access Token](/autofix-and-remediation/configure/autofix-for-gitlab-cloud-with-group-access-token.md)
-* [AutoFix for Gitlab with Deploy Keys](/autofix-and-remediation/configure/autofix-for-gitlab-with-deploy-keys.md)
-* [AutoFix for GitLab Self Managed](/autofix-and-remediation/configure/autofix-for-gitlab-self-managed.md)
+* [AutoFix For Gitlab Cloud with Group Access Token](https://help.aikido.dev/autofix-and-remediation/configure/autofix-for-gitlab-cloud-with-group-access-token)
+* [AutoFix for Gitlab with Deploy Keys](https://help.aikido.dev/autofix-and-remediation/configure/autofix-for-gitlab-with-deploy-keys)
+* [AutoFix for GitLab Self Managed](https://help.aikido.dev/autofix-and-remediation/configure/autofix-for-gitlab-self-managed)
 
 ### Azure DevOps
 
-* [AutoFix for Azure DevOps with Personal Access Token](/autofix-and-remediation/configure/autofix-for-azure-devops-with-personal-access-token.md)
-* [AutoFix for Azure DevOps with an Entra Service Principal](/autofix-and-remediation/configure/autofix-for-azure-devops-with-entra-service-principal.md)
-* [AutoFix for Azure DevOps using OAuth](/autofix-and-remediation/configure/autofix-for-azure-devops.md)
+* [AutoFix for Azure DevOps with Personal Access Token](https://help.aikido.dev/autofix-and-remediation/configure/autofix-for-azure-devops-with-personal-access-token)
+* [AutoFix for Azure DevOps with an Entra Service Principal](https://help.aikido.dev/autofix-and-remediation/configure/autofix-for-azure-devops-with-entra-service-principal)
+* [AutoFix for Azure DevOps using OAuth](https://help.aikido.dev/autofix-and-remediation/configure/autofix-for-azure-devops)
 
 ### BitBucket
 
-* [AutoFix for Bitbucket with Workspace Access Token](/autofix-and-remediation/configure/autofix-for-bitbucket-with-workspace-access-token.md)
+* [AutoFix for Bitbucket with Workspace Access Token](https://help.aikido.dev/autofix-and-remediation/configure/autofix-for-bitbucket-with-workspace-access-token)
 
 ### Additional configuration
 
-* [AutoFix PR Configuration](/autofix-and-remediation/configure/autofix-pr-configuration.md)
-* [Linking Tasks and PRs](/autofix-and-remediation/configure/linking-tasks-and-prs.md)
-* [Signed Commits](/autofix-and-remediation/configure/signed-commits.md)
-* [Pull request templates](/autofix-and-remediation/configure/pull-request-templates.md)
-* [Setting up Container AutoFix](/autofix-and-remediation/configure/setting-up-container-autofix.md)
-* [Container AutoFix for Docker Hardened Images](/autofix-and-remediation/configure/container-autofix-for-docker-hardened-images.md)
+* [AutoFix PR Configuration](https://help.aikido.dev/autofix-and-remediation/configure/autofix-pr-configuration)
+* [Linking Tasks and PRs](https://help.aikido.dev/autofix-and-remediation/configure/linking-tasks-and-prs)
+* [Signed Commits](https://help.aikido.dev/autofix-and-remediation/configure/signed-commits)
+* [Pull request templates](https://help.aikido.dev/autofix-and-remediation/configure/pull-request-templates)
+* [Setting up Container AutoFix](https://help.aikido.dev/autofix-and-remediation/configure/setting-up-container-autofix)
+* [Container AutoFix for Docker Hardened Images](https://help.aikido.dev/autofix-and-remediation/configure/container-autofix-for-docker-hardened-images)

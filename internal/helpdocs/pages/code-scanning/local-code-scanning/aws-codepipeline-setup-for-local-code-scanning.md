@@ -4,7 +4,7 @@ The Aikido Security Local Scanner is a tool that enables you to perform Aikido S
 
 ## How to set up Local Scanning <a href="#how-to-set-up-local-scanning" id="how-to-set-up-local-scanning"></a>
 
-**Prerequisite**: make sure to have created an account that allows for Local Scanning. [More information on creating a Local Scanning Account](https://help.aikido.dev/en/articles/9070345-how-to-create-an-account-for-local-scanning-on-aikido).
+**Prerequisite**: make sure to have created an account that allows for Local Scanning. [More information on creating a Local Scanning Account](https://help.aikido.dev/code-scanning/local-code-scanning/account-creation-for-local-scanning-on-aikido).
 
 In this guide, we’ll create a CI pipeline in AWS using AWS CodePipeline and AWS CodeBuild. The pipeline will run a security scan using the Aikido Security local scanner inside a container image.
 
@@ -21,29 +21,29 @@ Navigate to CodeBuild
 #### Create an `aikido-security-scan` project.
 
 * Source: Select `No Source`. The source will be provided by the CodePipeline.
-* Environment:
+*   Environment:
 
-  * Image: Custom Image
-  * Compute: EC2
-  * Environment type: Linux Container
-  * Image registry: Other Registry
-  * External registry URL: public.ecr.aws/z1o3v2w5/aikidosecurity/local-scanner:latest
+    * Image: Custom Image
+    * Compute: EC2
+    * Environment type: Linux Container
+    * Image registry: Other Registry
+    * External registry URL: public.ecr.aws/z1o3v2w5/aikidosecurity/local-scanner:latest
 
-  
-* Buildspec:
+    
+*   Buildspec:
 
-  ```
-  version: 0.2
+    ```
+    version: 0.2
 
-  phases:
-    build:
-      commands:
-        - aikido-local-scanner scan . --apikey $AIKIDO_API_KEY --repositoryname MyRepo --branchname myDefaultBranch
-  ```
+    phases:
+      build:
+        commands:
+          - aikido-local-scanner scan . --apikey $AIKIDO_API_KEY --repositoryname MyRepo --branchname myDefaultBranch
+    ```
 
 #### Adding your API key to the CodeBuild Project
 
-* Go to the [Local Scanner setup page](https://app.aikido.dev/settings/integrations/localscan)
+* Go to the [Local Scanner setup page](https://app.aikido.dev/settings/integrations/localscan?regionRedirect=1)
 * Generate an authentication token and copy. Note that you will only be able to view this token once.
 * Add this token to AWS Secrets Manager with key AIKIDO\_API\_KEY and give the it a name like aikido/local-scanner-api-key. Note the full secret ARN; you'll need it shortly.
 * Your CodeBuild project runs with an IAM service role. This role needs permission to read the secret. Add the following policy, replacing the ARN with your secret's ARN

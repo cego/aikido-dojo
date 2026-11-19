@@ -23,7 +23,7 @@ The main difference between the two is that team-only users only have access to 
 | **Add Domains**                                                                      | ✅             | Connected to repos only. No standalone.               |
 | **Export Issues**                                                                    | ✅             | ❌                                                     |
 | **Pentest Issues**                                                                   | ✅             | ✅ if all linked repos are in their teams              |
-| **AI Code Analysis Issues**                                                          | ✅             | ✅ if all linked repos are in their teams              |
+| **AI Scans Issues**                                                                  | ✅             | ✅ if all linked repos are in their teams              |
 | **Code Quality**                                                                     | ✅             | ❌                                                     |
 | **Zen Firewall**                                                                     | ✅             | ❌                                                     |
 | **Access to Settings**                                                               | All settings  | General Settings **Only**                             |
@@ -35,11 +35,11 @@ Aikido has an extra layer of permissions that can be enabled or disabled (both f
 
 **Configurable for Default and Team-Only**
 
-* **Can ignore issues**: Ability to permanently ignore findings. When [ignore requests are enabled](/getting-started/core-functionalities/approval-inbox-for-ignored-issues.md#enabling-ignore-requests), users without this permission can request to ignore individual issues via the [approval inbox](/getting-started/core-functionalities/approval-inbox-for-ignored-issues.md).
+* **Can ignore issues**: Ability to permanently ignore findings and exclude paths from scanning. When [ignore requests are enabled](https://help.aikido.dev/getting-started/core-functionalities/approval-inbox-for-ignored-issues#enabling-ignore-requests), users without this permission can request to ignore individual issues via the [approval inbox](https://help.aikido.dev/getting-started/core-functionalities/approval-inbox-for-ignored-issues).
 * **Can snooze issues**: Ability to temporarily snooze findings. When ignore requests are enabled, users without this permission can request to snooze individual issues via the same inbox.
 * **Change Issue Severity**: Ability to modify the severity level of issues.
 * **Can export data:** Ability to export csv reports of vulnerability issues.
-* **Can manage repositories:** Ability to change branch, set multi-branch scanning and manage custom SAST rules.
+* **Can manage repositories:** Ability to change the scanned branch, set up [multi-branch scanning](https://help.aikido.dev/code-scanning/miscellaneous/support-for-multi-branch-scanning), and edit labels. Default users can also manage custom SAST rules.
 
 **Limited to Default Users**
 
@@ -47,7 +47,7 @@ Aikido has an extra layer of permissions that can be enabled or disabled (both f
 * **Manage Clouds:** Ability to add and configure clouds
 * **Manage Containers:** Ability to add and configure containers
 * **Manage Domains:** Ability to add and configure domains
-* **Manage Pentests and AI Code Analysis:** Ability to create, run, and configure pentests.
+* **Manage Pentests and AI Scans:** Ability to create, run, and configure pentests and AI scans.
 * **Manage Code Quality:** Ability to run and configure code quality
 * **Manage Device Protection:** Ability to add devies and configure rules
 

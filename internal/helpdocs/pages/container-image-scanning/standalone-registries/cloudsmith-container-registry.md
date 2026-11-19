@@ -8,7 +8,7 @@ Follow the simple steps below to activate this feature:
 
 See screenshot below.
 
-We'll have to gather an API Key. Direct URL: <https://cloudsmith.io/user/settings/api/>
+We'll have to gather an API Key. Direct URL: [https://cloudsmith.io/user/settings/api/](https://cloudsmith.io/user/settings/api/)
 
 [image: User account dropdown menu displaying settings, documentation links, and logout option.]
 
@@ -16,7 +16,7 @@ You can copy the API key directly from this screen:
 
 [image: API key management and restriction settings for Cloudsmith account integration and security.]
 
-**Step 2:** Enter the collected data in Aikido (direct link: <https://app.aikido.dev/settings/container-image-registry/add/cloudsmith>)
+**Step 2:** Enter the collected data in Aikido (direct link: [https://app.aikido.dev/settings/container-image-registry/add/cloudsmith](https://app.aikido.dev/settings/container-image-registry/add/cloudsmith?regionRedirect=1))
 
 [image: Form to connect and authenticate a Cloudsmith container image registry account.]
 

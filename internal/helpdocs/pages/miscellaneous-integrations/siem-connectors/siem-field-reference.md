@@ -2,74 +2,74 @@
 
 This page describes the fields included in each Aikido issue and each activity log entry when they're sent to your connected SIEM.
 
-For how to connect a specific SIEM, see [SIEM Connectors](/miscellaneous-integrations/siem-connectors.md).
+For how to connect a specific SIEM, see [SIEM Connectors](https://help.aikido.dev/miscellaneous-integrations/siem-connectors).
 
 ### Payload format
 
-Each sync sends a JSON array, with one object per issue that matches your [issue input settings](/miscellaneous-integrations/siem-connectors.md). If you enable activity logs, each sync also sends one object per new activity log entry. The fields are the same across every SIEM connector.
+Each sync sends a JSON array, with one object per issue that matches your [issue input settings](https://help.aikido.dev/miscellaneous-integrations/siem-connectors). If you enable activity logs, each sync also sends one object per new activity log entry. The fields are the same across every SIEM connector.
 
 Activity log entries have `data_type` set to `activity_log`. Issue objects don't have a `data_type` field, so use it to tell the two apart in your SIEM. For the activity log fields, see [Activity log fields](#activity-log-fields).
 
 ### Core fields
 
-| Field                  | Type           | Description                                                                                                                                                                                                         |
-| ---------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `id`                   | integer        | The individual issue's ID.                                                                                                                                                                                          |
-| `group_id`             | integer        | The ID of the issue group this issue belongs to. Aikido groups related occurrences of the same underlying issue together.                                                                                           |
-| `attack_surface`       | string         | One of `frontend`, `backend`, `docker_container`, `cloud`, `cloud_instance`.                                                                                                                                        |
-| `status`               | string         | One of `open`, `ignored`, `snoozed`, `closed`.                                                                                                                                                                      |
-| `severity`             | string         | One of `critical`, `high`, `medium`, `low`.                                                                                                                                                                         |
-| `severity_score`       | integer        | Aikido's priority score for the issue, from 1 to 100.                                                                                                                                                               |
-| `type`                 | string         | One of `open_source`, `leaked_secret`, `cloud`, `cloud_instance`, `docker_container`, `iac`, `sast`, `surface_monitoring`, `malware`, `eol`, `scm_security`, `ai_pentest`, `ai_code_analysis`, `mobile`, `license`. |
-| `rule`                 | string or null | The rule title, for SAST, IaC, cloud, and surface monitoring issues. Null for other types.                                                                                                                          |
-| `programming_language` | string or null | Detected from the affected file path, for example `JS`, `PHP`, `PY`, `Java`.                                                                                                                                        |
-| `how_to_fix`           | string or null | Aikido's remediation guidance for the issue, if available.                                                                                                                                                          |
+| Field | Type | Description |
+|---|---|---|
+| `id` | integer | The individual issue's ID. |
+| `group_id` | integer | The ID of the issue group this issue belongs to. Aikido groups related occurrences of the same underlying issue together. |
+| `attack_surface` | string | One of `frontend`, `backend`, `docker_container`, `cloud`, `cloud_instance`. |
+| `status` | string | One of `open`, `ignored`, `snoozed`, `closed`. |
+| `severity` | string | One of `critical`, `high`, `medium`, `low`. |
+| `severity_score` | integer | Aikido's priority score for the issue, from 1 to 100. |
+| `type` | string | One of `open_source`, `leaked_secret`, `cloud`, `cloud_instance`, `docker_container`, `iac`, `sast`, `surface_monitoring`, `malware`, `eol`, `scm_security`, `ai_pentest`, `ai_code_analysis`, `mobile`, `license`. |
+| `rule` | string or null | The rule title, for SAST, IaC, cloud, and surface monitoring issues. Null for other types. |
+| `programming_language` | string or null | Detected from the affected file path, for example `JS`, `PHP`, `PY`, `Java`. |
+| `how_to_fix` | string or null | Aikido's remediation guidance for the issue, if available. |
 
 ### Vulnerability fields
 
-| Field              | Type           | Description                                                                                         |
-| ------------------ | -------------- | --------------------------------------------------------------------------------------------------- |
-| `cve_id`           | string or null | The CVE ID, or an internal Aikido CVE ID (for example `AIKIDO-2020-123`) when no public CVE exists. |
-| `cve_id_alias`     | string or null | The related public CVE, when `cve_id` is an internal Aikido CVE ID.                                 |
-| `affected_package` | string or null | The affected package name, if any.                                                                  |
-| `affected_file`    | string or null | The affected file or target path, if any.                                                           |
+| Field | Type | Description |
+|---|---|---|
+| `cve_id` | string or null | The CVE ID, or an internal Aikido CVE ID (for example `AIKIDO-2020-123`) when no public CVE exists. |
+| `cve_id_alias` | string or null | The related public CVE, when `cve_id` is an internal Aikido CVE ID. |
+| `affected_package` | string or null | The affected package name, if any. |
+| `affected_file` | string or null | The affected file or target path, if any. |
 
 ### Location fields
 
 Only the field group matching where the issue was found is populated; the rest are null.
 
-| Field                                        | Type                            | Description                                     |
-| -------------------------------------------- | ------------------------------- | ----------------------------------------------- |
-| `code_repo_id`, `code_repo_name`             | integer or null, string or null | The code repository, for source-code issues.    |
-| `container_repo_id`, `container_repo_name`   | integer or null, string or null | The container repository, for container issues. |
-| `cloud_id`, `cloud_name`                     | integer or null, string or null | The cloud account, for cloud issues.            |
-| `domain_id`, `domain_name`                   | integer or null, string or null | The domain, for surface monitoring issues.      |
-| `virtual_machine_id`, `virtual_machine_name` | integer or null, string or null | The VM, for VM issues.                          |
+| Field | Type | Description |
+|---|---|---|
+| `code_repo_id`, `code_repo_name` | integer or null, string or null | The code repository, for source-code issues. |
+| `container_repo_id`, `container_repo_name` | integer or null, string or null | The container repository, for container issues. |
+| `cloud_id`, `cloud_name` | integer or null, string or null | The cloud account, for cloud issues. |
+| `domain_id`, `domain_name` | integer or null, string or null | The domain, for surface monitoring issues. |
+| `virtual_machine_id`, `virtual_machine_name` | integer or null, string or null | The VM, for VM issues. |
 
 ### Status and timing fields
 
-| Field               | Type                   | Description                                                                                                                                                                |
-| ------------------- | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `first_detected_at` | unix timestamp         | When the issue was first created.                                                                                                                                          |
-| `ignored_at`        | unix timestamp or null | When the issue was ignored, if it has been.                                                                                                                                |
-| `closed_at`         | unix timestamp or null | When the issue was closed, if it has been.                                                                                                                                 |
-| `sla_remediate_by`  | unix timestamp or null | The SLA deadline for remediation, if one applies.                                                                                                                          |
-| `snooze_until`      | unix timestamp or null | When a snooze expires, if the issue is snoozed.                                                                                                                            |
-| `snooze_reason`     | string                 | Why the issue is snoozed. Empty string if it isn't.                                                                                                                        |
-| `ignore_reasons`    | array                  | Why the issue is ignored. Empty array if it isn't. Each entry has a `kind` (`manual_ignore`, `auto_ignore`, `rule_ignore`, or `api_ignore`) and a human-readable `reason`. |
+| Field | Type | Description |
+|---|---|---|
+| `first_detected_at` | unix timestamp | When the issue was first created. |
+| `ignored_at` | unix timestamp or null | When the issue was ignored, if it has been. |
+| `closed_at` | unix timestamp or null | When the issue was closed, if it has been. |
+| `sla_remediate_by` | unix timestamp or null | The SLA deadline for remediation, if one applies. |
+| `snooze_until` | unix timestamp or null | When a snooze expires, if the issue is snoozed. |
+| `snooze_reason` | string | Why the issue is snoozed. Empty string if it isn't. |
+| `ignore_reasons` | array | Why the issue is ignored. Empty array if it isn't. Each entry has a `kind` (`manual_ignore`, `auto_ignore`, `rule_ignore`, or `api_ignore`) and a human-readable `reason`. |
 
 ### Issue type metadata
 
 `issue_type_metadata` is an object that's only included for some issue types, with at most one of the following keys set, matching the issue's `type`:
 
-| Key                  | Fields                                                                                               |
-| -------------------- | ---------------------------------------------------------------------------------------------------- |
-| `sast`               | `start_line`, `end_line`                                                                             |
-| `cloud`              | `resource_id`, `resource_name`, `resource_kind`                                                      |
+| Key | Fields |
+|---|---|
+| `sast` | `start_line`, `end_line` |
+| `cloud` | `resource_id`, `resource_name`, `resource_kind` |
 | `surface_monitoring` | `cve_id`, `package_name`, `package_version`, `evidence`, `evidence_description`, `domain_target_url` |
-| `open_source`        | `installed_version`, `patched_versions` (array)                                                      |
-| `eol`                | `eol_since` (unix timestamp or null), `affected_version`                                             |
-| `leaked_secret`      | `commit`, `line`                                                                                     |
+| `open_source` | `installed_version`, `patched_versions` (array) |
+| `eol` | `eol_since` (unix timestamp or null), `affected_version` |
+| `leaked_secret` | `commit`, `line` |
 
 ### Example
 
@@ -121,34 +121,34 @@ Only the field group matching where the issue was found is populated; the rest a
 
 Each activity log entry records an action taken on an issue or setting in Aikido, such as ignoring an issue or changing a setting. Aikido sends new entries in the order they happened and doesn't resend entries it already pushed.
 
-| Field              | Type            | Description                                                                                                |
-| ------------------ | --------------- | ---------------------------------------------------------------------------------------------------------- |
-| `data_type`        | string          | Always `activity_log`.                                                                                     |
-| `id`               | integer         | The activity log entry's ID.                                                                               |
-| `timestamp`        | unix timestamp  | When the action happened.                                                                                  |
-| `comment`          | string          | A human-readable description of the action.                                                                |
-| `source`           | string          | What triggered the action. One of `manual`, `checklist`, `rule`, `auto`, `api`.                            |
-| `action`           | string          | The action that was taken, for example `ignored`, `snoozed`, `closed`, `re_open`, or `autofix_pr_created`. |
-| `user_id`          | integer or null | The ID of the user who took the action. Null when `source` is `auto` or `api`.                             |
-| `user_name`        | string or null  | The name of the user who took the action. Null when `source` is `auto` or `api`.                           |
-| `issue_id`         | integer         | The ID of the individual issue the action applies to.                                                      |
-| `grouped_issue_id` | integer         | The ID of the issue group the action applies to.                                                           |
+| Field | Type | Description |
+|---|---|---|
+| `data_type` | string | Always `activity_log`. |
+| `id` | integer | The activity log entry's ID. |
+| `timestamp` | unix timestamp | When the action happened. |
+| `comment` | string | A human-readable description of the action. |
+| `source` | string | What triggered the action. One of `manual`, `checklist`, `rule`, `auto`, `api`. |
+| `action` | string | The action that was taken, for example `ignored`, `snoozed`, `closed`, `re_open`, or `autofix_pr_created`. |
+| `user_id` | integer or null | The ID of the user who took the action. Null when `source` is `auto` or `api`. |
+| `user_name` | string or null | The name of the user who took the action. Null when `source` is `auto` or `api`. |
+| `issue_id` | integer | The ID of the individual issue the action applies to. |
+| `grouped_issue_id` | integer | The ID of the issue group the action applies to. |
 
 ### Activity log actions
 
 `action` is one of the following:
 
-| Category                    | Values                                                                                                                                                      |
-| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Issue status                | `snoozed`, `unsnoozed`, `ignored`, `auto_ignored`, `closed`, `re_open`, `adjust_severity`, `sla_dates_reset`                                                |
-| Issue remediation           | `autofix_pr_created`, `overwrite_license_type`, `license_score_contested`                                                                                   |
-| Compliance pushes           | `drata_push`, `sprinto_push`, `thoropass_push`                                                                                                              |
-| Exports                     | `issues_exported`, `subdomains_exported`                                                                                                                    |
-| Repositories and containers | `repo_activated`, `repo_deactivated`, `container_activated`, `container_deactivated`, `container_registry_activated`, `container_registry_deactivated`      |
-| Settings                    | `autofix_settings_changed`, `autoship_settings_changed`, `autodeploy_repo_settings_changed`, `autodeploy_global_settings_changed`, `spending_limit_changed` |
-| AI pentest                  | `pentest_paused`, `pentest_resumed`                                                                                                                         |
-| Code quality                | `code_quality_finding_ignored`, `code_quality_finding_unignored`                                                                                            |
-| Endpoint protection         | `protection_paused`, `protection_paused_all_devices`, `protection_resumed_all_devices`                                                                      |
+| Category | Values |
+|---|---|
+| Issue status | `snoozed`, `unsnoozed`, `ignored`, `auto_ignored`, `closed`, `re_open`, `adjust_severity`, `sla_dates_reset` |
+| Issue remediation | `autofix_pr_created`, `overwrite_license_type`, `license_score_contested` |
+| Compliance pushes | `drata_push`, `sprinto_push`, `thoropass_push` |
+| Exports | `issues_exported`, `subdomains_exported` |
+| Repositories and containers | `repo_activated`, `repo_deactivated`, `container_activated`, `container_deactivated`, `container_registry_activated`, `container_registry_deactivated` |
+| Settings | `autofix_settings_changed`, `autoship_settings_changed`, `autodeploy_repo_settings_changed`, `autodeploy_global_settings_changed`, `spending_limit_changed` |
+| AI pentest | `pentest_paused`, `pentest_resumed` |
+| Code quality | `code_quality_finding_ignored`, `code_quality_finding_unignored` |
+| Endpoint protection | `protection_paused`, `protection_paused_all_devices`, `protection_resumed_all_devices` |
 
 ### Activity log example
 

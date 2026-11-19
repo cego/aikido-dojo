@@ -13,7 +13,7 @@ This works across environments. Aikido matches your container images to their de
 
 ### Where to find it
 
-In [Containers](https://app.aikido.dev/containers), you'll see a reachability icon on each container. Hover over a container and select **"View Container Reachability"** to open the diagram.
+In [Containers](https://app.aikido.dev/containers?regionRedirect=1), you'll see a reachability icon on each container. Hover over a container and select **"View Container Reachability"** to open the diagram.
 
 Once you open the reachability view, you'll see an interactive diagram showing the network path to your container. Here's what you can do:
 
@@ -23,5 +23,5 @@ Once you open the reachability view, you'll see an interactive diagram showing t
 * **Browse multiple deployments:** If the same image is deployed in more than one place, each deployment appears as a separate entry. For example, an image running on three Lambda functions will show three paths, each with its own reachability status: some may be internet-facing, others may not.
 
 {% hint style="info" %}
-**Connected your AWS account before March 30th, 2026?** You may need to update your CloudFormation stack. See [Update AWS CloudFormation Stack](/cloud-scanning/connect-your-cloud/aws/connect-aws-account-to-aikido/update-aws-cloudformation-stack.md).
+**Connected your AWS account before March 30th, 2026?** You may need to update your CloudFormation stack. See [Update AWS CloudFormation Stack](https://help.aikido.dev/cloud-scanning/connect-your-cloud/aws/connect-aws-account-to-aikido/update-aws-cloudformation-stack).
 {% endhint %}

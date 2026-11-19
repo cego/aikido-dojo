@@ -1,4 +1,4 @@
-# Kaniko Image Scanning with Local Scanner
+# Kaniko image scanning with Local Scanner
 
 When performing image scans using the Aikido Local Scanner, the Docker daemon is used to find the image to perform the scan on. Since [Kaniko](https://github.com/GoogleContainerTools/kaniko) does not depend on a Docker daemon, an alternative approach is needed. That approach is to create a tarball and perform the scan on that tarball.
 

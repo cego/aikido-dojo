@@ -6,7 +6,7 @@ When using AWS Customer Managed Keys (CMK) for encryption with your EC2 instance
 
 * You have EC2 instances encrypted with CMK.
 * You have access to the key used for EBS encryption in AWS KMS.
-* You have [enabled EC2 scanning in Aikido](/virtual-machine-scanning/aws/aws-ec2-virtual-machine-scanning-setup.md#getting-started). You will need the role ARN.
+* You have [enabled EC2 scanning in Aikido](https://help.aikido.dev/virtual-machine-scanning/aws/aws-ec2-virtual-machine-scanning-setup#getting-started). You will need the role ARN.
 
 ## Steps to Grant Access <a href="#steps-to-grant-access" id="steps-to-grant-access"></a>
 
@@ -21,7 +21,7 @@ When using AWS Customer Managed Keys (CMK) for encryption with your EC2 instance
 
 ### JSON Policy <a href="#json-policy" id="json-policy"></a>
 
-Alternatively, if you manage your KMS keys using infrastructure as code, add the following statements to the JSON policy of the key used for EBS encryption, replacing `arn:aws:iam::112233445566:role/aikido-security-ec2` with your Aikido VM scanning role ARN:
+Alternatively, if you manage your KMS keys using infrastructure as code, add the following statements to the JSON policy of the key used for EBS encryption, replacing  `arn:aws:iam::112233445566:role/aikido-security-ec2` with your Aikido VM scanning role ARN:
 
 ```json
 {
@@ -75,7 +75,7 @@ If you encounter scanning issues with CMK-encrypted instances, verify that:
 
 ## Managing which VMs are scanned <a href="#managing-which-vms-are-scanned" id="managing-which-vms-are-scanned"></a>
 
-Aikido supports [an inclusion and exclusion model for VM scanning](/virtual-machine-scanning/aws/managing-which-vms-are-scanned.md).
+Aikido supports [an inclusion and exclusion model for VM scanning](https://help.aikido.dev/virtual-machine-scanning/aws/managing-which-vms-are-scanned).&#x20;
 
 ## Scanning Frequency
 

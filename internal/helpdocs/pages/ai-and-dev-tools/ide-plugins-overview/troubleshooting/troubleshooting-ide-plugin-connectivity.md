@@ -24,12 +24,12 @@ ide.aikido.dev
 
 More details on domains per IDE:
 
-{% content-ref url="/pages/RovfGwV8By5yZpZWD9rB" %}
-[JetBrains - domains](/ai-and-dev-tools/ide-plugins-overview/troubleshooting/troubleshooting-ide-plugin-connectivity/jetbrains-domains.md)
+{% content-ref url="jetbrains-domains.md" %}
+[jetbrains-domains.md](https://help.aikido.dev/ai-and-dev-tools/ide-plugins-overview/troubleshooting/troubleshooting-ide-plugin-connectivity/jetbrains-domains)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/8naZI06ZynRXUwbAlc7B" %}
-[VS Code - domains](/ai-and-dev-tools/ide-plugins-overview/troubleshooting/troubleshooting-ide-plugin-connectivity/vs-code-domains.md)
+{% content-ref url="vs-code-domains.md" %}
+[vs-code-domains.md](https://help.aikido.dev/ai-and-dev-tools/ide-plugins-overview/troubleshooting/troubleshooting-ide-plugin-connectivity/vs-code-domains)
 {% endcontent-ref %}
 
 ## Troubleshooting
@@ -70,16 +70,16 @@ Test-NetConnection ide.aikido.dev -Port 443
 * If you’re using a VPN, try disabling it temporarily to see if it affects connectivity.
 * Confirm no SSL interception or certificate pinning issues are blocking access.
 
-[Follow this guide for more information about configuring proxy and CA within your IDE.](/ai-and-dev-tools/ide-plugins-overview/troubleshooting/ide-plugin-proxy-and-ca-settings.md)
+[Follow this guide for more information about configuring proxy and CA within your IDE.](https://help.aikido.dev/ai-and-dev-tools/ide-plugins-overview/troubleshooting/ide-plugin-proxy-and-ca-settings)
 
 ### 3. Still having issues?
 
 If all tests fail or you receive timeouts, please share the command output with the Aikido team so we can help diagnose further.
 
-{% content-ref url="/pages/jLKPaQyzd9YFiTyIsyzg" %}
-[Visual Studio - Information for Support](/ai-and-dev-tools/ide-plugins-overview/troubleshooting/visual-studio-information-for-support.md)
+{% content-ref url="../visual-studio-information-for-support.md" %}
+[visual-studio-information-for-support.md](https://help.aikido.dev/ai-and-dev-tools/ide-plugins-overview/troubleshooting/visual-studio-information-for-support)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/NAH7p1hgS3B4GR19LQ48" %}
-[Jetbrains - Information for Support](/ai-and-dev-tools/ide-plugins-overview/troubleshooting/jetbrains-information-for-support.md)
+{% content-ref url="../jetbrains-information-for-support.md" %}
+[jetbrains-information-for-support.md](https://help.aikido.dev/ai-and-dev-tools/ide-plugins-overview/troubleshooting/jetbrains-information-for-support)
 {% endcontent-ref %}
