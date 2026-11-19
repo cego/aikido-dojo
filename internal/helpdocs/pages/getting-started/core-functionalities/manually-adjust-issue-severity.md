@@ -8,13 +8,11 @@ If for some reason, you believe a vulnerability has been given a wrong severity,
 
 You can either adjust a **single issue's severity**, or the **severity of a whole group** of issues, in which case they will all get the same severity, regardless of their previous severity.
 
+For an Aikido Pentest finding, change that finding's severity. Aikido reviews the reason before applying it. See [Change Pentest Finding Severity](https://help.aikido.dev/pentests/coverage-and-findings/change-pentest-finding-severity).
+
 ### Adjust severity of a single issue <a href="#adjust-severity-of-a-single-issue" id="adjust-severity-of-a-single-issue"></a>
 
 A single issue's severity can be adjusted via the issue's action menu found in the sidebar, as shown in the image below.
-
-{% hint style="warning" %}
-Severity adjustments are not available for **pentest issues** for compliance reasons. If you believe the priority of a pentest finding is incorrect, please flag it to us so we can discuss it together.
-{% endhint %}
 
 ### Adjust severity of a whole issue group <a href="#adjust-severity-of-a-whole-issue-group" id="adjust-severity-of-a-whole-issue-group"></a>
 

@@ -1,4 +1,4 @@
-# Ignoring Secrets via Code Comments
+# Ignoring secrets via code comments
 
 While you can use the Aikido UI to snooze or ignore secrets, you may also mark secrets as safe via code comments.
 

@@ -8,11 +8,10 @@ Code and container scanning traffic comes from the region where **your Aikido wo
 
 | Aikido URL                                     | Region  | IP list               |
 | ---------------------------------------------- | ------- | --------------------- |
-| [app.aikido.dev](https://app.aikido.dev)       | EU      | EU-based IP addresses |
+| [app.aikido.dev](https://app.aikido.dev/?regionRedirect=1)       | EU      | EU-based IP addresses |
 | [app.us.aikido.dev](https://app.us.aikido.dev) | US      | US-based IP addresses |
 | [app.aikidogov.us](https://app.aikidogov.us)   | FedRAMP | FedRAMP IP addresses  |
 | [app.au.aikido.dev](https://app.au.aikido.dev) | AU      | AU-based IP addresses |
-| [app.me.aikido.dev](https://app.me.aikido.dev) | ME      | ME-based IP addresses |
 
 {% hint style="warning" %}
 If you log in at `app.aikido.dev`, scanning uses **EU** IPs, even when your Git provider or registry is hosted in the US. Allowlisting only US IPs in that case will cause scans to fail.
@@ -43,12 +42,6 @@ If you log in at `app.aikidogov.us`, scanning uses FedRAMP IPs. Commercial US IP
 * 16.64.88.75
 * 18.252.60.10
 * 16.64.93.238
-
-### ME-based IP addresses (`app.me.aikido.dev`)
-
-* 3.29.13.194
-* 40.172.18.244
-* 40.172.67.79
 
 ### AU-based IP addresses (`app.au.aikido.dev`)
 

@@ -4,11 +4,11 @@ A device is any computer connected to Device Protection through an installed age
 
 ## Connecting a device
 
-1. Go to [Device Protection and open the Devices](https://app.aikido.dev/endpoint-protection/devices) tab.
+1. Go to [Device Protection and open the Devices](https://app.aikido.dev/endpoint-protection/devices?regionRedirect=1) tab.
 2. Click **Connect Device** in the top right.
 3. Follow the setup instructions to install the agent on the device.
 
-Once the agent is installed, the [device will appear in your device list](https://app.aikido.dev/endpoint-protection/devices) with an Active status.
+Once the agent is installed, the [device will appear in your device list](https://app.aikido.dev/endpoint-protection/devices?regionRedirect=1) with an Active status.
 
 ## Device list
 
@@ -21,15 +21,17 @@ The device list shows every connected device. Each row shows:
 * Last seen: How recently the device checked in
 * Agent Status: Whether the agent is currently active or offline and if Device Protection is up to date
 
+Click a device to open its details. The **Containers** tab lists the Docker containers and WSL2 distros it protects. See [Containers and WSL2 Distros](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/containers-and-wsl2-distros).
+
 ### Device status
 
 Aikido sets a device's status based on how long it has been since the agent's last heartbeat. The agent sends a heartbeat every 10 minutes.
 
-| Status                             | Rule                                                                                                                                                                                                                          |
-| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Archived                           | No heartbeat for 30 days or more.                                                                                                                                                                                             |
-| Offline                            | No heartbeat for more than 60 minutes.                                                                                                                                                                                        |
-| Not protected / Update / Protected | Heartbeat within the last 60 minutes. Which one shows depends on whether setup is complete and the agent version is current. A device shows Update when a newer agent version is available (see [Auto-update](#auto-update)). |
+| Status                                 | Rule                                                                                                                       |
+| -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| Archived                               | No heartbeat for 30 days or more.                                                                                          |
+| Offline                                | No heartbeat for more than 60 minutes.                                                                                     |
+| Not protected / Update / Protected     | Heartbeat within the last 60 minutes. Which one shows depends on whether setup is complete and the agent version is current. A device shows Update when a newer agent version is available (see [Auto-update](#auto-update)). |
 
 ## Auto-update
 
@@ -44,7 +46,7 @@ Keep auto-update on so devices get bug fixes and new features as soon as they sh
 
 To change the policy:
 
-1. Go to the [Devices](https://app.aikido.dev/endpoint-protection/devices) page.
+1. Go to the [Devices](https://app.aikido.dev/endpoint-protection/devices?regionRedirect=1) page.
 2. Click **Auto-Update**.
 3. Under **Update Policy**, select a policy.
 4. Click **Save Changes**.
@@ -53,19 +55,29 @@ To change the policy:
 
 ## User groups
 
-{% content-ref url="/pages/l6Jr0yFrUmsVezoR1yoV" %}
-[User Groups for Device Protection](/aikido-device-protection/deploying-aikido-endpoint/user-groups-for-aikido-endpoint.md)
+{% content-ref url="user-groups-for-aikido-endpoint.md" %}
+[user-groups-for-aikido-endpoint.md](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/user-groups-for-aikido-endpoint)
 {% endcontent-ref %}
 
 ## Device actions
 
 Click the `⋮` menu next to a device to view device actions.
 
+[image: Device actions menu with Collect Logs, Pause Protection, and Remove Device]
+
+### Collecting logs from a device
+
+Collect Logs requests diagnostics logs from a device and sends them to Aikido Support, without the user having to do anything. It sends the same data as the in-app [Report A Problem](https://help.aikido.dev/aikido-device-protection/miscellaneous-aikido-endpoint/endpoint-information-for-support) flow.
+
+If the device is offline, the request is queued and runs the next time the device comes online.
+
+After you collect logs, contact Aikido Support and mention which device you collected them from.
+
 ### Pausing protection on a device
 
 Pause Protection temporarily turns off Device Protection on a specific device, without uninstalling the agent. The device stays connected, and you turn protection back on from the same menu when you're done.
 
-Use it as an exception, not a routine step. For anything that needs to happen regularly, adjust your [installation policies](/aikido-device-protection/using-aikido-endpoint/configuring-installation-policies.md) or [user groups](/aikido-device-protection/deploying-aikido-endpoint/user-groups-for-aikido-endpoint.md) instead.
+Use it as an exception, not a routine step. For anything that needs to happen regularly, adjust your [installation policies](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/configuring-installation-policies) or [user groups](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/user-groups-for-aikido-endpoint) instead.
 
 Reasons to pause protection:
 
@@ -89,5 +101,5 @@ Remove a device when:
 * It was connected by mistake or for testing and doesn't need to be tracked
 
 {% hint style="warning" %}
-Removing a device only removes it from Aikido. To fully stop Device Protection from running, [uninstall the agent](/aikido-device-protection/deploying-aikido-endpoint/uninstall-aikido-endpoint.md) from the device.
+Removing a device only removes it from Aikido. To fully stop Device Protection from running, [uninstall the agent](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/uninstall-aikido-endpoint) from the device.
 {% endhint %}

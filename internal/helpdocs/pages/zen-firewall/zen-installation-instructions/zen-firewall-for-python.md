@@ -2,26 +2,26 @@
 
 [Zen Firewall by Aikido](https://www.aikido.dev/zen) helps protect your application by blocking common attacks and unsafe behavior at runtime, with controls you can tune per app and environment. Use the guides below to install and set it up.
 
-{% content-ref url="/pages/ChuLEUCold6BH0eiAIaW" %}
-[Python (Django)](/zen-firewall/zen-installation-instructions/zen-firewall-for-python/django.md)
+{% content-ref url="django.md" %}
+[django.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-python/django)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/veHCEDhcA4pCRKwxxNIL" %}
-[Python (Gunicorn)](/zen-firewall/zen-installation-instructions/zen-firewall-for-python/gunicorn.md)
+{% content-ref url="gunicorn.md" %}
+[gunicorn.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-python/gunicorn)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/B7cqrCDbLKJBGcYLjmBU" %}
-[Python (Starlette)](/zen-firewall/zen-installation-instructions/zen-firewall-for-python/starlette.md)
+{% content-ref url="starlette.md" %}
+[starlette.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-python/starlette)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/rKhj4usw4m45d9qRZWjZ" %}
-[Python (Quart)](/zen-firewall/zen-installation-instructions/zen-firewall-for-python/quart.md)
+{% content-ref url="quart.md" %}
+[quart.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-python/quart)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/99TUyWUQtUtWY9KX3OcP" %}
-[Python (FastAPI)](/zen-firewall/zen-installation-instructions/zen-firewall-for-python/fastapi.md)
+{% content-ref url="fastapi.md" %}
+[fastapi.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-python/fastapi)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/Iy6ls7o6IcolobigcbsJ" %}
-[Python (Flask)](/zen-firewall/zen-installation-instructions/zen-firewall-for-python/flask.md)
+{% content-ref url="flask.md" %}
+[flask.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-python/flask)
 {% endcontent-ref %}

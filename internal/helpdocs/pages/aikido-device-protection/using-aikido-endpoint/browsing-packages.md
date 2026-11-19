@@ -4,11 +4,11 @@ The Packages tab gives you a full inventory of every software package detected a
 
 ## Viewing your packages
 
-Go to [Device Protection and open the Packages](https://app.aikido.dev/endpoint-protection/packages) tab. You will see a list of all detected packages, sorted by name.
+Go to [Device Protection and open the Packages](https://app.aikido.dev/endpoint-protection/packages?regionRedirect=1) tab. You will see a list of all detected packages, sorted by name.
 
 Each entry shows:
 
-* **Package** - The package name and version (e.g. "axios\@1.6.7")
+* **Package** - The package name and version (e.g. "axios@1.6.7")
 * **Devices** - How many connected devices have this package installed
 * **First seen** - The date and time the package was first detected
 

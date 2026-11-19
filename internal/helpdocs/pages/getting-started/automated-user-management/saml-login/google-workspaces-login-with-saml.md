@@ -1,14 +1,14 @@
 # Google Workspaces: Login with SAML
 
 {% hint style="info" %}
-This feature is only available on a **paying** plan and is not enabled by default. **Pro plans and up** can enable SAML [via this link](https://app.aikido.dev/settings/saml/enable).
+This feature is available on all **paid** plans and is not enabled by default. You can enable SAML [via this link](https://app.aikido.dev/settings/saml/enable?regionRedirect=1).
 {% endhint %}
 
-> If you switch to SAML Login instead of auto-onboarding via your Git provider, team import from GitHub, Bitbucket, or Azure DevOps will no longer work. You will need to manage your teams manually moving forward, either through the Aikido UI or [Access Profiles.](/getting-started/automated-user-management/saml-login/saml-user-rights-access-profiles-recommended.md)
+> If you switch to SAML Login instead of auto-onboarding via your Git provider, team import from GitHub, Bitbucket, or Azure DevOps will no longer work. You will need to manage your teams manually moving forward, either through the Aikido UI or [Access Profiles.](https://help.aikido.dev/getting-started/automated-user-management/saml-login/saml-user-rights-access-profiles-recommended)
 
 ### Setting up SAML in your account <a href="#setting-up-saml-in-your-account" id="setting-up-saml-in-your-account"></a>
 
-**Step 1.** Go to [**General Settings**](https://app.aikido.dev/settings/account) and click '**Enable SAML Authentication'**
+**Step 1.** Go to [**General Settings**](https://app.aikido.dev/settings/account?regionRedirect=1) and click '**Enable SAML Authentication'**
 
 [image: Workspace info page showing option to enable SAML authentication.]
 

@@ -2,13 +2,13 @@
 
 **Table of contents:**
 
-* [Requirements](#requirements)
-* [Temporary folder​](#temporary-folder)
-* [How to set up Local Scanning](#how-to-set-up-local-scanning)
-  * [1. Get your authentication token](#1-get-your-authentication-token)
-  * [2. Adding the Local Scanner to your project](#2-adding-the-local-scanner-to-your-project)
-  * [3. Running the Local Scanner](#3-running-the-local-scanner)
-  * [4. Check your scanning results](#4-check-your-scanning-results)
+* [Requirements](https://help.aikido.dev/code-scanning/local-code-scanning/mac-setup-for-local-code-scanning#requirements)
+* [Temporary folder​](https://help.aikido.dev/code-scanning/local-code-scanning/mac-setup-for-local-code-scanning#temporary-folder)
+* [How to set up Local Scanning](https://help.aikido.dev/code-scanning/local-code-scanning/mac-setup-for-local-code-scanning#how-to-set-up-local-scanning)
+  * [1. Get your authentication token](https://help.aikido.dev/code-scanning/local-code-scanning/mac-setup-for-local-code-scanning#1-get-your-authentication-token)
+  * [2. Adding the Local Scanner to your project](https://help.aikido.dev/code-scanning/local-code-scanning/mac-setup-for-local-code-scanning#2-adding-the-local-scanner-to-your-project)
+  * [3. Running the Local Scanner](https://help.aikido.dev/code-scanning/local-code-scanning/mac-setup-for-local-code-scanning#3-running-the-local-scanner)
+  * [4. Check your scanning results](https://help.aikido.dev/code-scanning/local-code-scanning/mac-setup-for-local-code-scanning#4-check-your-scanning-results)
 
 ## Mac Setup for Local Code Scanning
 
@@ -33,7 +33,7 @@ In addition, some files are copied to the temporary operating directory. Ensure 
 
 #### 1. Get your authentication token <a href="#id-1-get-your-authentication-token" id="id-1-get-your-authentication-token"></a>
 
-1. Go to the [Local Scanner setup page](https://app.aikido.dev/settings/integrations/localscan)
+1. Go to the [Local Scanner setup page](https://app.aikido.dev/settings/integrations/localscan?regionRedirect=1)
 2. Generate an authentication token and copy. Note that you will only be able to view this token once.
 3. Add this token as argument `--apikey` when running the Local Scanner in your project .
 

@@ -20,13 +20,13 @@ We'll have to gather your username (see screenshot)
 
 **Step 3:** Under profile settings, developer settings, Personal access tokens, Tokens (classic), generate a new classic token for Aikido
 
-(direct link: <https://github.com/settings/tokens>).
+(direct link: [https://github.com/settings/tokens](https://github.com/settings/tokens)).
 
 the scope includes: `read:packages`
 
 [image: GitHub token creation: No expiration, read package access scope selected.]
 
-**Step 4:** Enter the collected data in Aikido (direct link: <https://app.aikido.dev/settings/container-image-registry/add/github>)
+**Step 4:** Enter the collected data in Aikido (direct link: [https://app.aikido.dev/settings/container-image-registry/add/github](https://app.aikido.dev/settings/container-image-registry/add/github?regionRedirect=1))
 
 [image: Form to connect and authenticate a GitHub container image registry.]
 

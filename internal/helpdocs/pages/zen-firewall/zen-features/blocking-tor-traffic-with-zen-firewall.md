@@ -2,7 +2,7 @@
 
 Zen Firewall by Aikido helps you identify and block users who are accessing your application through the [Tor network](https://www.torproject.org/). This feature enhances your security measures by providing visibility and control over [Tor-based traffic](https://www.torproject.org/).
 
-> **Important**: Tor blocking operates independently of the global "[Blocking/Detection Mode](/zen-firewall/zen-features/blocking-vs-detection-mode-in-zen-firewall.md)" setting. When you enable tor blocking, it will always be enforced, even if Zen is in Detection Mode.
+> **Important**: Tor blocking operates independently of the global "[Blocking/Detection Mode](https://help.aikido.dev/zen-firewall/zen-features/blocking-vs-detection-mode-in-zen-firewall)" setting. When you enable tor blocking, it will always be enforced, even if Zen is in Detection Mode.
 
 ## Use Cases <a href="#use-cases" id="use-cases"></a>
 

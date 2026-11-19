@@ -10,7 +10,7 @@ Aikido’s Custom CSPM Rules let you define cloud misconfiguration rules in natu
 
 ### **Create a Custom CSPM Rule**
 
-**Step 1.** Go to the [**Cloud Assets**](https://app.aikido.dev/clouds/assets) page in Aikido.
+**Step 1.** Go to the [**Cloud Assets**](https://app.aikido.dev/clouds/assets?regionRedirect=1) page in Aikido.
 
 **Step 2.** Click on **Custom CSPM Rules**
 

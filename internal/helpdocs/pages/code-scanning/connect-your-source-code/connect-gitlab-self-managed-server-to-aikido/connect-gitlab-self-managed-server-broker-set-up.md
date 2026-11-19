@@ -18,7 +18,7 @@ We recommend connecting Aikido to a top-level (root) group that contains all sub
 {% step %}
 **Create an Aikido account**
 
-To connect your GitLab server, first sign up or log in to Aikido using Google or Microsoft. On the [signup screen](https://app.aikido.dev/login), click **Google / Microsoft**.
+To connect your GitLab server, first sign up or log in to Aikido using Google or Microsoft. On the [signup screen](https://app.aikido.dev/login?regionRedirect=1), click **Google / Microsoft**.
 {% endstep %}
 
 {% step %}
@@ -42,8 +42,8 @@ Click **Create Group** to continue.
 
 Configure the Broker using the guide below. After you deploy it, return here to finish the GitLab setup.
 
-{% content-ref url="/pages/h0JtJS4MeX5E8efcCvRF" %}
-[Aikido Broker for Internal Applications](/miscellaneous-info/aikido-broker-for-internal-applications.md)
+{% content-ref url="../../../miscellaneous-info/aikido-broker-for-internal-applications.md" %}
+[aikido-broker-for-internal-applications.md](https://help.aikido.dev/miscellaneous-info/aikido-broker-for-internal-applications)
 {% endcontent-ref %}
 
 {% endstep %}
@@ -112,5 +112,5 @@ In the final step, select the repositories you want Aikido to monitor.
 {% endstepper %}
 
 {% hint style="info" %}
-Also scanning your GitLab container registry through the Broker? The registry usually runs on its own host that needs a separate Broker resource. See [GitLab Self Managed Container Registry](/container-image-scanning/standalone-registries/gitlab-self-managed-container-registry.md#connect-a-registry-on-an-internal-network-broker).
+Also scanning your GitLab container registry through the Broker? The registry usually runs on its own host that needs a separate Broker resource. See [GitLab Self Managed Container Registry](https://help.aikido.dev/container-image-scanning/standalone-registries/gitlab-self-managed-container-registry#connect-a-registry-on-an-internal-network-broker).
 {% endhint %}

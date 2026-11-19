@@ -1,7 +1,5 @@
 # Drata Integration
 
-The Drata integration automatically pushes Evidence to Drata for SOC2 and ISO27001:2022. Activate Drata from the Aikido Integrations page.
-
 ### API Key <a href="#api-key" id="api-key"></a>
 
 You'll need to create a Drata API Key. You can generate such key in Drata via [Username > Settings > API Keys > Create API Key](https://app.drata.com/account-settings/api-keys/add).
@@ -18,19 +16,19 @@ The access for the scopes can be set to 'Custom' with at least following scopes.
 
 **Controls:**
 
-* **List controls:** *Read*
-* **Create control:** *Write*
-* **Map external evidence:** *Read, Write*
-* **Delete mapped external evidence:** *Write*
+* **List controls:** _Read_
+* **Create control:** _Write_
+* **Map external evidence:** _Read, Write_
+* **Delete mapped external evidence:** _Write_
 
 **Workspaces:**
 
-* **List workspaces:** *Read*
+* **List workspaces:** _Read_
 
 **Frameworks:**
 
-* **List frameworks:** *Read*
-* **List framework requirements:** *Read*
+* **List frameworks:** _Read_
+* **List framework requirements:** _Read_
 
 [image: User permissions matrix for controls, workspaces, and frameworks management.]
 

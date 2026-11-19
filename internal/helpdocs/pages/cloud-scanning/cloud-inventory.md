@@ -8,7 +8,7 @@ Cloud environments change constantly, and it's easy to lose track of what's actu
 
 ## What it is
 
-After you [connect a cloud account](/cloud-scanning/connect-your-cloud.md), Aikido pulls in your resources (like EC2 instances, S3 buckets, IAM roles, Lambda functions, and containers running in the cloud) and keeps this list in sync automatically.
+After you [connect a cloud account](https://help.aikido.dev/cloud-scanning/connect-your-cloud), Aikido pulls in your resources (like EC2 instances, S3 buckets, IAM roles, Lambda functions, and containers running in the cloud) and keeps this list in sync automatically.
 
 {% hint style="info" %}
 Aikido also enriches each asset with security context, like vulnerabilities and end of life issues found on VMs and containers. This means the inventory isn't just a list of resources, it's a list of resources with their risk attached.
@@ -18,21 +18,18 @@ Aikido also enriches each asset with security context, like vulnerabilities and 
 
 {% stepper %}
 {% step %}
-
 ### Go to Clouds
 
 From the left navigation, under Assets, click **Clouds**.
 {% endstep %}
 
 {% step %}
-
 ### Open a cloud account
 
 Click into the specific cloud account you want to inspect (for example, an AWS account).
 {% endstep %}
 
 {% step %}
-
 ### Open the Inventory tab
 
 On the cloud account page, click the **Inventory** tab.

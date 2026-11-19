@@ -26,7 +26,7 @@ LOG_LEVEL=debug npx -y @aikidosec/mcp@latest
 
 This starts the MCP server outside of any AI tool and triggers the browser login flow if you are not yet authenticated. It outputs debug-level logs directly in your terminal.
 
-If you are using [token authentication](/ai-and-dev-tools/aikido-mcp/token-authentication.md), pass the token directly instead:
+If you are using [token authentication](https://help.aikido.dev/ai-and-dev-tools/aikido-mcp/token-authentication), pass the token directly instead:
 
 ```bash
 AIKIDO_API_KEY=your_api_key_here LOG_LEVEL=debug npx -y @aikidosec/mcp@latest

@@ -18,16 +18,16 @@ If users, roles, or repository access change in Azure DevOps, Aikido syncs those
 If you have multiple workspaces, you need to setup Trusted Domains in each workspace.
 {% endhint %}
 
-1. Go to [General Settings](https://app.aikido.dev/settings/account) in your workspace
-2. In workspace info, click 'Add Trusted Domain'
+1. Go to [General Settings](https://app.aikido.dev/settings/account?regionRedirect=1) in your workspace
+2.  In workspace info, click 'Add Trusted Domain'
 
-   [image: Azure DevOps Server: Update token and add trusted domains for security.]
-3. Fill in the trusted domain in the modal
+    [image: Azure DevOps Server: Update token and add trusted domains for security.]
+3.  Fill in the trusted domain in the modal
 
-   [image: Add a trusted domain for Azure DevOps user auto-enrollment and verification.]
+    [image: Add a trusted domain for Azure DevOps user auto-enrollment and verification.]
 
 {% hint style="info" %}
-For security reasons, Aikido only allows you to add trusted domains that are the same as the current logged in user. This means that <user@aikido.dev> can only add [aikido.dev](http://aikido.dev) as trusted domain.
+For security reasons, Aikido only allows you to add trusted domains that are the same as the current logged in user. This means that [user@aikido.dev](mailto:user@aikido.dev) can only add [aikido.dev](http://aikido.dev) as trusted domain.
 {% endhint %}
 
 ### Manually Inviting Users <a href="#manually-inviting-users" id="manually-inviting-users"></a>

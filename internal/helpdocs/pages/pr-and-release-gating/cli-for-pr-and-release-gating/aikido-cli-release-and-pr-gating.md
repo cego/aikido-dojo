@@ -20,7 +20,7 @@ $ yarn global add @aikidosec/ci-api-client
 
 **Step 2**: Configure your Aikido API key
 
-1. Obtain the API key from the [Continuous Integration Settings page](https://app.aikido.dev/settings/integrations/continuous-integration).
+1. Obtain the API key from the [Continuous Integration Settings page](https://app.aikido.dev/settings/integrations/continuous-integration?regionRedirect=1).
 2. Set the API key globally:
 
 ```

@@ -1,0 +1,43 @@
+# Track Progress and Findings
+
+Once you've started an analysis, Aikido takes you to the assessment detail page. From there, you can watch progress and read findings as they land.
+
+## Tracking progress
+
+Open an assessment from the **AI Scans** home to see its detail page. Every assessment has an **Overview** tab and an **Issues** tab. The **Issues** tab shows a badge when there are open issues.
+
+* **AI Code scan** and **AI Smart Contract scan** also have a **Threat Model** tab. See [Threat Model](https://help.aikido.dev/pentests/coverage-and-findings/threat-model).
+* **AI Data Exposure scan** has a **Sensitive Data** tab instead of **Threat Model**.
+* **AI Cloud scan** has **Overview** and **Issues** only.
+
+While the analysis is running, the **Overview** tab shows the current status and the header shows elapsed time and an estimated time remaining.
+
+The **AI Scans Information** block lists who requested the analysis and when it started. **Code & Documentation** lists the repositories linked to the analysis. AI Cloud scans also list the cloud accounts.
+
+### Analysis statuses
+
+The status on the **Overview** tab reflects where the analysis is in its lifecycle:
+
+* **Pending:** The analysis is queued and waiting for agent capacity.
+* **Running:** Agents are actively reasoning over the selected code or cloud inventory. Findings can land in the **Issues** tab while this status is showing.
+* **Completed:** The analysis finished. All findings are in the **Issues** tab and in the Feed.
+* **Failed:** The analysis couldn't finish. Open the assessment for details, or [contact support](https://help.aikido.dev/miscellaneous-info/contact-support).
+* **Cancelled:** The analysis was stopped before it completed.
+
+## Reading findings
+
+Findings appear in the **Issues** tab on the assessment and in the Feed alongside other Aikido findings. They follow the standard Aikido finding lifecycle. See [Manage Findings](https://help.aikido.dev/getting-started/core-functionalities) for ignore, snooze, severity, and task-tracker integrations.
+
+Click **Attack Analysis** on any finding to open the standard Aikido finding modal, with sections for summary, description, risk, root cause, remediation, and more.
+
+The reproduction block is titled **Evidence**. On an AI Code, AI Data Exposure, or AI Smart Contract scan, it points at the files and logic behind the finding. On an AI Cloud scan, it points at the cloud resources, and at infrastructure as code files when you included repositories. Treat it as the justification for the finding, rather than a live HTTP exploit.
+
+After you push a fix, click **Re-test** on the finding. Aikido checks an AI Code, AI Data Exposure, or AI Smart Contract finding against your latest code.
+
+On an AI Cloud scan finding, **Re-test** checks that finding against your current cloud account state, so you don't need to run the whole scan again. After you change the account or the infrastructure as code, click **Re-test** on the finding.
+
+## Related
+
+{% content-ref url="../ai-code-analysis.md" %}
+[ai-code-analysis.md](https://help.aikido.dev/ai-scans/ai-code-analysis)
+{% endcontent-ref %}

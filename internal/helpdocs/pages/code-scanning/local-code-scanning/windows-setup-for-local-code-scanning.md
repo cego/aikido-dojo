@@ -2,11 +2,11 @@
 
 **Table of contents:**
 
-* [How to set up Local Scanning](#how-to-set-up-local-scanning)
-  * [1. Get your authentication token](#1-get-your-authentication-token)
-  * [2. Adding the Local Scanner to your project](#2-adding-the-local-scanner-to-your-project)
-  * [3. Running the Local Scanner](#3-running-the-local-scanner)
-  * [4. Check your scanning results](#4-check-your-scanning-results)
+* [How to set up Local Scanning](https://help.aikido.dev/code-scanning/local-code-scanning/windows-setup-for-local-code-scanning#how-to-set-up-local-scanning)
+  * [1. Get your authentication token](https://help.aikido.dev/code-scanning/local-code-scanning/windows-setup-for-local-code-scanning#1-get-your-authentication-token)
+  * [2. Adding the Local Scanner to your project](https://help.aikido.dev/code-scanning/local-code-scanning/windows-setup-for-local-code-scanning#2-adding-the-local-scanner-to-your-project)
+  * [3. Running the Local Scanner](https://help.aikido.dev/code-scanning/local-code-scanning/windows-setup-for-local-code-scanning#3-running-the-local-scanner)
+  * [4. Check your scanning results](https://help.aikido.dev/code-scanning/local-code-scanning/windows-setup-for-local-code-scanning#4-check-your-scanning-results)
 
 ## Windows Setup for Local Code Scanning
 
@@ -14,11 +14,11 @@ The Aikido Security Local Scanner is a tool that enables you to perform Aikido S
 
 ### How to set up Local Scanning <a href="#how-to-set-up-local-scanning" id="how-to-set-up-local-scanning"></a>
 
-**Prerequisite**: make sure to have created an account that allows for Local Scanning. [More information on creating a Local Scanning Account](https://help.aikido.dev/en/articles/9070345-how-to-create-an-account-for-local-scanning-on-aikido).
+**Prerequisite**: make sure to have created an account that allows for Local Scanning. [More information on creating a Local Scanning Account](https://help.aikido.dev/code-scanning/local-code-scanning/account-creation-for-local-scanning-on-aikido).
 
 #### 1. Get your authentication token <a href="#id-1-get-your-authentication-token" id="id-1-get-your-authentication-token"></a>
 
-1. Go to the [Local Scanner setup page](https://app.aikido.dev/settings/integrations/localscan).
+1. Go to the [Local Scanner setup page](https://app.aikido.dev/settings/integrations/localscan?regionRedirect=1).
 2. Generate an authentication token and copy. Note that you will only be able to view this token once.
 3. Add this token as argument `--apikey` when running the Local Scanner in your project .
 
@@ -48,7 +48,7 @@ If you are using Powershell:
 docker run --rm -v "${PWD}:/my-app" aikidosecurity/local-scanner scan /my-app --apikey AIK_CI_xxx --repositoryname RepoName --branchname main
 ```
 
-By default all scanners will be executed, if you'd like to run only a selection of scanners, you can do so by supplying the scanner names `--scanners` option. More information on CLI options can be found [here](https://help.aikido.dev/en/articles/9027526-local-scanner-cli-options).
+By default all scanners will be executed, if you'd like to run only a selection of scanners, you can do so by supplying the scanner names `--scanners` option. More information on CLI options can be found [here](https://help.aikido.dev/code-scanning/local-code-scanning/cli-options-for-local-scanner).
 
 #### 4. Check your scanning results <a href="#id-4-check-your-scanning-results" id="id-4-check-your-scanning-results"></a>
 

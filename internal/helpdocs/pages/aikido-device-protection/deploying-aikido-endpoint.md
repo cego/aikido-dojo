@@ -4,26 +4,26 @@ Deploy Aikido Device Protection across your organization using MDM or a manual i
 
 If you manage different teams, device types, or security requirements, you can create multiple groups. Groups let you apply different configurations, define exceptions, and roll out changes in stages before deploying them more broadly.
 
-{% content-ref url="/pages/l6Jr0yFrUmsVezoR1yoV" %}
-[User Groups for Device Protection](/aikido-device-protection/deploying-aikido-endpoint/user-groups-for-aikido-endpoint.md)
+{% content-ref url="user-groups-for-aikido-endpoint.md" %}
+[user-groups-for-aikido-endpoint.md](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/user-groups-for-aikido-endpoint)
 {% endcontent-ref %}
 
 ## Connecting and managing devices
 
-{% content-ref url="/pages/r04e4L9qMgNROnxbTfF5" %}
-[Connecting and Managing Devices](/aikido-device-protection/deploying-aikido-endpoint/connecting-and-managing-devices.md)
+{% content-ref url="connecting-and-managing-devices.md" %}
+[connecting-and-managing-devices.md](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/connecting-and-managing-devices)
 {% endcontent-ref %}
 
 ## Supported MDM solutions
 
-{% content-ref url="/pages/9p6PgSltmTbtpwYpOORm" %}
-[Deploying on macOS](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/device-protection-mdm-for-macos.md)
+{% content-ref url="device-protection-mdm-guides/device-protection-mdm-for-macos/" %}
+[device-protection-mdm-for-macos](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/device-protection-mdm-for-macos)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/U7E1ThQjZ7JeHSCeX5a2" %}
-[Deploying on Windows](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/windows.md)
+{% content-ref url="device-protection-mdm-guides/windows/" %}
+[windows](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/windows)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/YRIMwoHqSBQzW3EGOVK6" %}
-[Deploying on Linux](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux.md)
+{% content-ref url="device-protection-mdm-guides/linux/" %}
+[linux](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux)
 {% endcontent-ref %}

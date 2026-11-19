@@ -1,7 +1,5 @@
 # Connect Google Cloud Organization
 
-Connect your entire Google Cloud Organization to Aikido by onboarding one of your GCP projects. Automatically discover and connect all other projects, simplify setup, and ensure complete coverage.
-
 If you have multiple GCP projects part of the same Google Cloud organization, you can connect one of them, grant permission at the organization level, and let Aikido automatically connect the rest of them, including projects you will create in the future.
 
 ### Why Connect Your Google Cloud Organization? <a href="#why-connect-aws-organization" id="why-connect-aws-organization"></a>
@@ -20,7 +18,7 @@ By onboarding at the organization level, you benefit from:
 
 ### Getting Started <a href="#getting-started" id="getting-started"></a>
 
-To connect your Google Cloud organization, select the 'Full GCP Organization' option in the [GCP onboarding wizard](https://app.aikido.dev/clouds/add/gcp).
+To connect your Google Cloud organization, select the 'Full GCP Organization' option in the [GCP onboarding wizard](https://app.aikido.dev/clouds/add/gcp?regionRedirect=1).
 
 After you provide the ID and number of your "management" project, you will need to provide the following:
 
@@ -49,17 +47,17 @@ Folder ID format differs between the two fields above:
 
 * **Organization or Folder IDs**: `folders/123456, folders/789012`
 * **Excluded Folder IDs**: `123456, 987654`
-  {% endhint %}
+{% endhint %}
 
 {% hint style="warning" %}
-Narrowing the scope does not remove projects that were already connected. Any project that falls outside the new scope stays in Aikido until you manually delete it from the [clouds page](https://app.aikido.dev/clouds).
+Narrowing the scope does not remove projects that were already connected. Any project that falls outside the new scope stays in Aikido until you manually delete it from the [clouds page](https://app.aikido.dev/clouds?regionRedirect=1).
 {% endhint %}
 
 #### Terraform Module <a href="#terraform-module" id="terraform-module"></a>
 
 If you prefer Infrastructure as Code, you can use Aikido's Terraform module to set up the required Google Cloud IAM and Workload Identity Federation configuration for organization-level onboarding. The module supports both single-project and full-organization setups, optional Artifact Registry scanning, and optional VM scanning permissions.
 
-<https://github.com/AikidoSec/gcp-onboarding-terraform-module>
+[https://github.com/AikidoSec/gcp-onboarding-terraform-module](https://github.com/AikidoSec/gcp-onboarding-terraform-module)
 
 Use the modules/org module for organization-level onboarding, then upload the generated `credential_config_json` to Aikido during the cloud connection flow.
 
@@ -91,4 +89,4 @@ If Aikido scanned your GCP "management" project (you can manually scan it) and t
 
 * **What happens if I shut down a GCP project or move it to another org?**
 
-Aikido will detect that the project is no longer active or part of the organization and will mark the corresponding cloud as "not reachable". You will see this on the [clouds page](https://app.aikido.dev/clouds).
+Aikido will detect that the project is no longer active or part of the organization and will mark the corresponding cloud as "not reachable". You will see this on the [clouds page](https://app.aikido.dev/clouds?regionRedirect=1).

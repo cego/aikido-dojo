@@ -1,7 +1,5 @@
 # Breaking changes & upgrade impact analysis
 
-Assess breaking changes in dependency upgrades and their impact on your codebase.
-
 ## Breaking changes
 
 Aikido makes an assessment on whether a version upgrade contains breaking changes by looking at the library changelogs.

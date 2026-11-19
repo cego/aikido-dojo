@@ -12,12 +12,12 @@ Alternatively use the [Command Palette](https://code.visualstudio.com/docs/getst
 
 ### Pre-commit Hook
 
-The secrets pre-commit hook checks your code for hardcoded secrets before you commit. It prevents accidental leaks and runs locally without configuration. Read more on [Secrets Pre-Commit Hook](/ai-and-dev-tools/aikido-secrets-pre-commit-hook.md)
+The secrets pre-commit hook checks your code for hardcoded secrets before you commit. It prevents accidental leaks and runs locally without configuration. Read more on [aikido-secrets-pre-commit-hook.md](https://help.aikido.dev/ai-and-dev-tools/aikido-secrets-pre-commit-hook "mention")
 
 ### Safe Chain
 
-Safe Chain protects your environment from malicious packages. It adds a safety layer around your package manager and prevents installation of known malware. Read more on [Safe Chain: Prevent Malware Installs](/code-scanning/aikido-malware-scanning.md)
+Safe Chain protects your environment from malicious packages. It adds a safety layer around your package manager and prevents installation of known malware. Read more on [aikido-malware-scanning.md](https://help.aikido.dev/code-scanning/aikido-malware-scanning "mention")
 
 ### Aikido MCP
 
-The Aikido MCP Server brings Aikido's security scanning capabilities directly into your AI coding workflow. Read more on [AI Coding Assistants (MCP)](/ai-and-dev-tools/aikido-mcp.md)
+The Aikido MCP Server brings Aikido's security scanning capabilities directly into your AI coding workflow. Read more on [aikido-mcp](https://help.aikido.dev/ai-and-dev-tools/aikido-mcp "mention")

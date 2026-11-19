@@ -7,12 +7,12 @@ It uses LLM to parse your source code to find routes, parameters and body inform
 Aikido will regularly rescan your code to keep the OpenAPI specification up to date.
 
 {% hint style="success" %}
-Aikido recommends using [Zen Firewall](/zen-firewall/getting-started-with-zen-firewall.md) whenever possible as it will give more accurate results because it's based on the actual traffic to your API.
+Aikido recommends using [Zen Firewall](https://help.aikido.dev/zen-firewall/getting-started-with-zen-firewall) whenever possible as it will give more accurate results because it's based on the actual traffic to your API.
 {% endhint %}
 
 ### How to use
 
-Follow the [Setting up REST API Scanning](/dast-surface-monitoring/api-scanning/rest-api-scanning.md#setting-up-rest-api-scanning) guide and choose the **Aikido AI** option.
+Follow the [Setting up REST API Scanning](https://help.aikido.dev/dast-surface-monitoring/api-scanning/rest-api-scanning#setting-up-rest-api-scanning) guide and choose the **Aikido AI** option.
 
 ### Supported Programming Languages
 

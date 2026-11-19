@@ -2,14 +2,14 @@
 
 Device Protection can run inside a Linux container image, so package installs in CI jobs, build containers, and containerized dev environments get inspected the same way they do on a workstation. You install the agent while the image is built and let the agent's container entrypoint start it when the container runs.
 
-To protect running containers on a developer machine without changing their images, turn on **Protect Containers** instead. See [Device Protection in Docker Containers](/aikido-device-protection/deploying-aikido-endpoint/device-protection-in-docker-containers.md).
+To protect running containers on a developer machine without changing their images, turn on **Protect Containers** instead. See [Device Protection in Docker Containers](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-in-docker-containers).
 
-Read [Install Device Protection for Linux](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/install-device-protection-for-linux.md) first for the token and the packages that every method uses. The [Linux Rollout Reference](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/linux-rollout-reference.md) covers token handling and device identity across all of them.
+Read [Install Device Protection for Linux](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/install-device-protection-for-linux) first for the token and the packages that every method uses. The [Linux Rollout Reference](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/linux-rollout-reference) covers token handling and device identity across all of them.
 
 {% hint style="info" %}
-Container images always install with `--container`. Without it the agent waits for a desktop user to finish setup, its proxy never starts, and the container exits before your command runs. See [What `--container` changes](#what-container-changes).
+Container images always install with `--container`. Without it the agent waits for a desktop user to finish setup, its proxy never starts, and the container exits before your command runs. See [What `--container` changes](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/device-protection-in-containers#what-container-changes).
 
-`--container` is for the agent running *inside* a container, or on a hosted CI runner that is thrown away after the job. A Docker, Kubernetes, or Jenkins host that builds and runs those containers is a server, so install it there with `--headless` instead. See [Install Device Protection for Linux](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/install-device-protection-for-linux.md#choose-the-install-flavor).
+`--container` is for the agent running _inside_ a container, or on a hosted CI runner that is thrown away after the job. A Docker, Kubernetes, or Jenkins host that builds and runs those containers is a server, so install it there with `--headless` instead. See [Install Device Protection for Linux](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/install-device-protection-for-linux#choose-the-install-flavor).
 {% endhint %}
 
 ## Add Device Protection to an image
@@ -21,7 +21,6 @@ The build has to run as root, and the agent's own installer expects `curl` and `
 The install script picks the package for the image's distribution and architecture, verifies its checksum, and installs it. It needs the token at build time.
 
 {% code title="Dockerfile" overflow="wrap" %}
-
 ```dockerfile
 FROM node:20-bookworm-slim
 
@@ -41,18 +40,15 @@ ENTRYPOINT ["aikido-endpoint-protection-container-entrypoint"]
 CMD ["curl", "-sS", "-o", "/dev/null", "-w", "%{http_code}\n", "--max-time", "15", \
      "https://registry.npmjs.org/safe-chain-test/-/safe-chain-test-0.0.1-security.tgz"]
 ```
-
 {% endcode %}
 
 Then build and run it:
 
 {% code overflow="wrap" %}
-
 ```bash
 docker build -t my-app --build-arg AIKIDO_TOKEN=<your-token> .
 docker run --rm --init my-app
 ```
-
 {% endcode %}
 
 `--build-arg AIKIDO_TOKEN=<your-token>` is not optional: the build cannot see your shell environment, and the installer stops with an error when the token is empty. To pass a variable you already have, give Docker the bare name instead, `--build-arg AIKIDO_TOKEN`.
@@ -62,7 +58,6 @@ docker run --rm --init my-app
 Installing the package yourself lets you pin a version, install from an internal mirror, and build an image that has no token in it at all. Set the container-mode variables in the environment of the package manager, and set `AIKIDO_TOKEN` only if you want the token baked in.
 
 {% code title="Dockerfile" overflow="wrap" %}
-
 ```dockerfile
 FROM node:20-bookworm-slim
 
@@ -79,23 +74,20 @@ ENTRYPOINT ["aikido-endpoint-protection-container-entrypoint"]
 CMD ["curl", "-sS", "-o", "/dev/null", "-w", "%{http_code}\n", "--max-time", "15", \
      "https://registry.npmjs.org/safe-chain-test/-/safe-chain-test-0.0.1-security.tgz"]
 ```
-
 {% endcode %}
 
 Then build the image and pass the token when you run it:
 
 {% code overflow="wrap" %}
-
 ```bash
 docker build -t my-app .
 docker run --rm --init -e AIKIDO_TOKEN=<your-token> my-app
 ```
-
 {% endcode %}
 
 Set both variable names. `AIKIDO_CONTAINER` is the current one, and `AIKIDO_CI_CD` is the older name that packages up to 1.8.2 read, so setting both works whichever package you install.
 
-Use the package that matches the image, not your laptop: `EndpointProtection-arm64.deb` for arm64 images, and the `el9` or `el10` RPM for Red Hat-family base images. [Install Device Protection for Linux](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/install-device-protection-for-linux.md#manual-install) lists all of them.
+Use the package that matches the image, not your laptop: `EndpointProtection-arm64.deb` for arm64 images, and the `el9` or `el10` RPM for Red Hat-family base images. [Install Device Protection for Linux](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/install-device-protection-for-linux#manual-install) lists all of them.
 {% endtab %}
 {% endtabs %}
 
@@ -119,11 +111,9 @@ The agent inspects HTTPS with a local CA. Tools that read the system trust store
 Source every file the agent drops before your command runs:
 
 {% code title="Dockerfile" overflow="wrap" %}
-
 ```dockerfile
 CMD ["sh", "-c", "for f in /etc/profile.d/aikido-*.sh; do . \"$f\"; done; exec npm ci"]
 ```
-
 {% endcode %}
 
 The agent writes those files while it starts, so read them at run time rather than copying the paths into `ENV` at build time.
@@ -133,13 +123,11 @@ The agent writes those files while it starts, so read them at run time rather th
 The agent only runs while the container runs, so a `RUN npm ci` in your Dockerfile downloads packages uninspected. To cover the build too, start the agent inside the `RUN` step:
 
 {% code title="Dockerfile" overflow="wrap" %}
-
 ```dockerfile
 RUN aikido-endpoint-protection-start --wait-for-healthy \
  && for f in /etc/profile.d/aikido-*.sh; do . "$f"; done \
  && npm ci
 ```
-
 {% endcode %}
 
 The agent needs a token while it runs, so this only works in an image built with the token baked in.
@@ -149,7 +137,6 @@ The agent needs a token while it runs, so this only works in an image built with
 `jobs.<id>.container` replaces the image's `ENTRYPOINT`, so the entrypoint never runs. Start the agent in the job's first step instead:
 
 {% code title=".github/workflows/build.yml" overflow="wrap" %}
-
 ```yaml
 jobs:
   build:
@@ -167,7 +154,6 @@ jobs:
           for f in /etc/profile.d/aikido-*.sh; do . "$f"; done
           npm ci
 ```
-
 {% endcode %}
 
 Each step runs in its own shell, so source `/etc/profile.d/aikido-*.sh` in every step that installs packages.
@@ -223,4 +209,4 @@ Inside a running container, `aikidoctl version` reports the installed version an
 | Downloads are not inspected at all                                                       | Your command bypassed the entrypoint, for example a `docker run` that overrides it or a job container that replaces it. Start the agent explicitly with `aikido-endpoint-protection-start --wait-for-healthy` |
 | `docker stop` takes the full grace period and kills the container                        | Something between the entrypoint and your process is swallowing `SIGTERM`. Run the image without a shell wrapper, or add `--init`                                                                             |
 
-For anything that is not container-specific, such as picking the right package for a Red Hat-family base image, see the table on [Install Device Protection for Linux](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/install-device-protection-for-linux.md#troubleshooting).
+For anything that is not container-specific, such as picking the right package for a Red Hat-family base image, see the table on [Install Device Protection for Linux](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/install-device-protection-for-linux#troubleshooting).

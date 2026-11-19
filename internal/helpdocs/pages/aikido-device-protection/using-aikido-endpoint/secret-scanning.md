@@ -4,10 +4,10 @@ Secret Scanning finds hardcoded secrets that have been left behind in local file
 
 The scan runs entirely on the device. It surfaces every finding so a developer can review it and remediate it directly on their own machine.
 
-It doesn't crawl the whole disk. It only looks at the places secrets tend to pile up, such as history files and credential files. See [What gets scanned](#what-gets-scanned) for the full list.
+It doesn't crawl the whole disk. It only looks at the places secrets tend to pile up, such as history files and credential files. See [What gets scanned](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/secret-scanning#what-gets-scanned) for the full list.
 
 {% hint style="info" %}
-Secret Scanning is part of Aikido Device Protection. If you haven't deployed the agent yet, see [Deploying Device Protection](/aikido-device-protection/deploying-aikido-endpoint.md).
+Secret Scanning is part of Aikido Device Protection. If you haven't deployed the agent yet, see [Deploying Device Protection](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint).
 {% endhint %}
 
 ## How it works
@@ -16,7 +16,7 @@ Secret Scanning is designed so that your secret values stay on the device.
 
 * **Scanning is fully local.** The agent reads and inspects files on the device itself. File contents are never uploaded to Aikido.
 * **Secret values stay on the device.** The full value of a detected secret is never transmitted. In the desktop client it is shown masked (for example `[AIK********...]`) so you can recognize it without exposing it.
-* **Only the secret type and a few characters are reported.** Aikido receives the *type* of secret that was found (for example "authorization token") and a few characters of the value, enough for you to recognize the finding. The full secret is never sent. This gives your organization visibility into what kinds of secrets are being exposed, without handing over the secrets themselves.
+* **Only the secret type and a few characters are reported.** Aikido receives the _type_ of secret that was found (for example "authorization token") and a few characters of the value, enough for you to recognize the finding. The full secret is never sent. This gives your organization visibility into what kinds of secrets are being exposed, without handing over the secrets themselves.
 
 ```mermaid
 flowchart LR
@@ -51,7 +51,7 @@ You can remediate secrets one at a time or in bulk.
 
 Cleaning removes the secret from the file on the device.
 
-Cleanup is only available for the rewritable categories, shell history and AI agent sessions. Findings in credential files, cloud credentials, and AI tool credentials are reported but left untouched, so remediate those by rotating the credential and updating the config file yourself. To stop those credentials from landing back in plaintext, see [Storing Secrets Safely](/aikido-device-protection/using-aikido-endpoint/storing-secrets-safely.md).
+Cleanup is only available for the rewritable categories, shell history and AI agent sessions. Findings in credential files, cloud credentials, and AI tool credentials are reported but left untouched, so remediate those by rotating the credential and updating the config file yourself. To stop those credentials from landing back in plaintext, see [Storing Secrets Safely](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/storing-secrets-safely).
 
 {% hint style="warning" %}
 Cleaning a secret only removes it from the local file. If the secret is still valid, rotate or revoke it at its source so it can no longer be used.

@@ -17,4 +17,4 @@ If your organization uses GitLab self-managed, it's not possible to authenticate
 
 * All users will need to have their 'public email' field exposed. Currently, GitLab does not allow yet to force this upon all users ([more info](https://gitlab.com/gitlab-org/gitlab/-/issues/9828)).
 * The email used for login and the email in the 'public email' field need to be exactly the same. Aliases are currently not supported.
-  {% endhint %}
+{% endhint %}

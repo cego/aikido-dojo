@@ -2,7 +2,7 @@
 
 Zen Firewall by Aikido helps you identify and block various types of automated traffic accessing your application. This feature enhances your security measures by providing control over unwanted bot activity.
 
-> **Important**: Bot blocking operates independently of the global "[Blocking/Detection Mode](/zen-firewall/zen-features/blocking-vs-detection-mode-in-zen-firewall.md)" setting. When you enable bot blocking, it will always be enforced, even if Zen is in Detection Mode.
+> **Important**: Bot blocking operates independently of the global "[Blocking/Detection Mode](https://help.aikido.dev/zen-firewall/zen-features/blocking-vs-detection-mode-in-zen-firewall)" setting. When you enable bot blocking, it will always be enforced, even if Zen is in Detection Mode.
 
 ## Use Cases <a href="#use-cases" id="use-cases"></a>
 
@@ -13,7 +13,7 @@ Zen Firewall by Aikido helps you identify and block various types of automated t
 
 ## Bot Categories We Detect <a href="#bot-categories-we-detect" id="bot-categories-we-detect"></a>
 
-Aikido groups automated traffic into clear categories so you can decide what to block, allow, or monitor. A full list of specific user agents is available on the [dedicated bot list page](/zen-firewall/miscellaneous/bot-protection-details.md).
+Aikido groups automated traffic into clear categories so you can decide what to block, allow, or monitor. A full list of specific user agents is available on the [dedicated bot list page](https://help.aikido.dev/zen-firewall/miscellaneous/bot-protection-details).
 
 Examples of the types of categories available:
 
@@ -36,7 +36,7 @@ Select a specific app and continue to the **Firewall** tab. Click the "**Manage 
 
 [image: Firewall settings interface displaying attack, Tor traffic, and bot blocking options for a demo app.]
 
-Use the **Bots** view to select the bot types you want to ignore, monitor or block and click on "**Update bots**" when you're finished.
+Use the **Bots** view to select the bot types you want to ignore, monitor or block and click on "**Update bots**" when you're finished.&#x20;
 
 [image: Interface for selecting and blocking specific bots from accessing your app.]
 

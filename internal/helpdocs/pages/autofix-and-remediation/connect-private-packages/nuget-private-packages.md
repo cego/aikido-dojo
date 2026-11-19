@@ -41,7 +41,7 @@ Take a look at the following docs for more information on authenticating with pr
 
 Once the prerequisites are fulfilled, you can configure Aikido to authenticate with your private NuGet registry when updating the dependencies by following the steps below:
 
-1. Go to your account's settings page for the Autofix in Aikido, [here](https://app.aikido.dev/issues/fix/settings).
+1. Go to your account's settings page for the Autofix in Aikido, [here](https://app.aikido.dev/issues/fix/settings?regionRedirect=1).
 2. Click on "Connect Registry", the private registry modal will now be shown
 
 <div data-with-frame="true"></div>
@@ -57,7 +57,7 @@ Once the prerequisites are fulfilled, you can configure Aikido to authenticate w
 
 For the CLI config, Aikido needs to have the registry's URL, username and password which can be used to authenticate with the private registry. Once you have this information, you can configure it following the steps below:
 
-1. Go to your account's settings page for the Autofix in Aikido, [here](https://app.aikido.dev/issues/fix/settings).
+1. Go to your account's settings page for the Autofix in Aikido, [here](https://app.aikido.dev/issues/fix/settings?regionRedirect=1).
 2. Click on "Connect Registry", the configuration modal will now be shown
 3. Select "Nuget" as package manager and then select the "NuGet CLI Registry" option
 
@@ -71,7 +71,7 @@ For NuGet, you can also provide credentials through an environment variable in A
 
 This requires a `nuget.config` file in your repository that defines the private feed. The feed name in the environment variable must match the feed name in `nuget.config`.
 
-1. Go to your account's settings page for Autofix in Aikido, [here](https://app.aikido.dev/issues/fix/settings).
+1. Go to your account's settings page for Autofix in Aikido, [here](https://app.aikido.dev/issues/fix/settings?regionRedirect=1).
 2. Add the following environment variable:
    1. Key: `NuGetPackageSourceCredentials_my-private-feed`
    2. Value: `Username=user;Password=secret-pat`

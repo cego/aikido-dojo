@@ -1,6 +1,6 @@
 # Custom Code Context for SAST Rules
 
-Custom Code Context lets you add plain-language guidance to a specific SAST rule. Aikido uses that guidance during [SAST AutoTriage](/aikido-agent/sast-autotriage.md) to make better true and false positive decisions. You can add context globally or at the repository level.
+Custom Code Context lets you add plain-language guidance to a specific SAST rule. Aikido uses that guidance during [SAST AutoTriage](https://help.aikido.dev/aikido-agent/sast-autotriage) to make better true and false positive decisions. You can add context globally or at the repository level.
 
 It does **not** change what the rule detects. It helps Aikido interpret findings more accurately.
 
@@ -21,31 +21,25 @@ Use Custom Code Context when a rule needs codebase-specific knowledge, such as:
 **Trusted sanitization library**
 
 {% code overflow="wrap" %}
-
 ```
 We often use the public library <L> for sanitization. Every variable returned by a function from this library is considered trusted.
 ```
-
 {% endcode %}
 
 **Internal validation helper**
 
 {% code overflow="wrap" %}
-
 ```
 For this rule, values returned by validateAndNormalizeUserInput() are considered sanitized. This helper rejects invalid characters and enforces a strict allowlist.
 ```
-
 {% endcode %}
 
 **Safe wrapper around a risky API**
 
 {% code overflow="wrap" %}
-
 ```
 For this rule, calls made through safeRedirect() are expected. This wrapper only allows redirects to URLs from our approved domain allowlist.
 ```
-
 {% endcode %}
 
 </details>
@@ -56,7 +50,7 @@ For this rule, calls made through safeRedirect() are expected. This wrapper only
 Custom Code Context is only available for SAST rules that support AutoTriage.
 {% endhint %}
 
-**Step 1.** Open the Repositories Checks page and select '[View SAST Rules](https://app.aikido.dev/repositories/sast)'.
+**Step 1.** Open the Repositories Checks page and select '[View SAST Rules](https://app.aikido.dev/repositories/sast?regionRedirect=1)'.
 
 **Step 2.** Find the relevant SAST rule & open the action menu and select **Custom Code Context**.<br>
 
@@ -91,21 +85,17 @@ Avoid:
 **Good example**
 
 {% code overflow="wrap" %}
-
 ```
 For this SQL injection rule, values returned by buildSafeQuery() are trusted. That helper only creates parameterized queries and never concatenates raw user input.
 ```
-
 {% endcode %}
 
 **Weak example**
 
 {% code overflow="wrap" %}
-
 ```
 Our team is careful with SQL queries, so these findings are often false positives.
 ```
-
 {% endcode %}
 
 </details>
@@ -114,7 +104,7 @@ Our team is careful with SQL queries, so these findings are often false positive
 
 Use Custom Code Context when you want to improve triage for an existing rule.
 
-Use [custom SAST rules](/code-scanning/scanning-practices/add-custom-sast-iac-rules.md) when you need to detect a new pattern in your codebase.
+Use [custom SAST rules](https://help.aikido.dev/code-scanning/scanning-practices/add-custom-sast-iac-rules) when you need to detect a new pattern in your codebase.
 
 In short:
 

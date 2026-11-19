@@ -1,4 +1,4 @@
-# Using 2FA in Front-End and API Scans
+# Using 2FA in Front end and API scans
 
 If your application login requires a TOTP code, Aikido can log in during scans as long as you provide the otpauth URL for that 2FA token.
 
@@ -8,7 +8,7 @@ This allows Aikido to generate the same 6 digit codes your authenticator app wou
 
 An otpauth URL contains the TOTP secret and configuration needed to produce time based codes.
 
-It looks like this:
+It looks like this:&#x20;
 
 ```
 otpauth://totp/MyApp:user@example.com?secret=JBSWY3DPEHPK3PXP&issuer=MyApp

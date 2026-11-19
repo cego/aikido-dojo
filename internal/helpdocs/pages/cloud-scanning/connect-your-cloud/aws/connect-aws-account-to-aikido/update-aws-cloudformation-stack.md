@@ -22,7 +22,7 @@ Aikido automatically masks sensitive values in your AWS resources before indexin
 {% step %}
 **Get the updated template from Aikido**
 
-Go to [Clouds → Add AWS](https://app.aikido.dev/clouds/add/aws). Select **"Single"** or **"Full Organization"** and copy the CloudFormation template link.
+Go to [Clouds → Add AWS](https://app.aikido.dev/clouds/add/aws?regionRedirect=1). Select **"Single"** or **"Full Organization"** and copy the CloudFormation template link.
 {% endstep %}
 
 {% step %}
@@ -40,7 +40,7 @@ Click **"Update stack"** and choose one of:
 
 * **Create a change set** (recommended) – lets you preview all changes before applying
 * **Make a direct update** – faster, but applies changes immediately
-  {% endstep %}
+{% endstep %}
 
 {% step %}
 **Replace the template**
@@ -49,7 +49,7 @@ Select **"Replace existing template"**, then either:
 
 * Paste the template URL from Aikido
 * or Upload the file if you downloaded it
-  {% endstep %}
+{% endstep %}
 
 {% step %}
 **Complete the deployment**

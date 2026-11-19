@@ -6,8 +6,8 @@ Aikido integrates with [Github Enterprise Cloud](https://docs.github.com/en/get-
 Please read the following requirements carefully before setting up the workspace:
 
 1. **GitHub Organization permissions**: Ensure that the user setting up the workspace has sufficient permissions in the GitHub organization to install the Aikido application. In most cases, this requires Organization Owner or Organization Administrator privileges.
-2. **Matching email addresses**: when signing up with Google or Microsoft (see step 1 below), ensure that the email address used for sign-in matches the email address associated with the user's GitHub account.
-   {% endhint %}
+2. **Matching email addresses**: when signing up with Google or Microsoft (see step 1 below), ensure that the email address used for sign-in matches the email address associated with the user's GitHub account.&#x20;
+{% endhint %}
 
 ### Installation
 
@@ -19,7 +19,7 @@ To create the GitHub app on your instance, follow the steps below.
 {% step %}
 **Create your account**
 
-To connect your GitHub Enterprise, first sign up or log in to Aikido using Google or Microsoft. On the [signup screen](https://app.aikido.dev/login), click **Google / Microsoft**.
+To connect your GitHub Enterprise, first sign up or log in to Aikido using Google or Microsoft. On the [signup screen](https://app.aikido.dev/login?regionRedirect=1), click **Google / Microsoft**.
 {% endstep %}
 
 {% step %}
@@ -34,7 +34,7 @@ Once you're authenticated, create a new workspace by clicking GitHub Server in t
 
 Enable the **Aikido broker** by clicking the toggle in the "Advanced Connection Options" section.
 
-Click **Next, Install App** and then switch to [https://app.aikido.dev](https://app.aikido.dev/) where a Local Scan workspace will be created.
+Click **Next, Install App** and then switch to [https://app.aikido.dev](https://app.aikido.dev/?regionRedirect=1) where a Local Scan workspace will be created.
 
 [image: Aikido onboarding: Enter GitHub Enterprise URL to authenticate]
 {% endstep %}
@@ -44,8 +44,8 @@ Click **Next, Install App** and then switch to [https://app.aikido.dev](https://
 
 Configure the Broker using the guide below through the Local Scan workspace. After you deploy it, return here to finish the GitHub Enterprise setup.
 
-{% content-ref url="/pages/h0JtJS4MeX5E8efcCvRF" %}
-[Aikido Broker for Internal Applications](/miscellaneous-info/aikido-broker-for-internal-applications.md)
+{% content-ref url="../../../miscellaneous-info/aikido-broker-for-internal-applications.md" %}
+[aikido-broker-for-internal-applications.md](https://help.aikido.dev/miscellaneous-info/aikido-broker-for-internal-applications)
 {% endcontent-ref %}
 
 {% endstep %}

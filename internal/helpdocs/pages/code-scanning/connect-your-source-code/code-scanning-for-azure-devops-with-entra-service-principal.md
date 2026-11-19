@@ -1,7 +1,5 @@
 # Code Scanning for Azure DevOps with an Entra Service Principal
 
-Let Aikido scan your Azure DevOps organization as a Microsoft Entra service principal instead of a personal access token.
-
 ## Code Scanning for Azure DevOps with an Entra Service Principal
 
 Instead of a personal access token (PAT), you can let Aikido scan your Azure DevOps organization as a Microsoft Entra service principal that you own. No token or secret is created or stored: for every scan, Aikido proves its identity to Microsoft Entra, which issues a short-lived access token for your service principal. Nothing expires and nothing needs rotating.
@@ -10,16 +8,16 @@ Instead of a personal access token (PAT), you can let Aikido scan your Azure Dev
 Your workspace must already be connected to Azure DevOps Services (dev.azure.com) with a PAT, and your Azure DevOps organization must be connected to a Microsoft Entra tenant (**Organization settings** → **Microsoft Entra**). You need to be able to register applications in that tenant and to add users to your Azure DevOps organization. Azure DevOps Server, the Aikido broker, and the local scanner keep using a PAT.
 {% endhint %}
 
-**First**, go to [General Settings](https://app.aikido.dev/settings/account), click **Update Personal Access Token** and, on the **Code Scanning** tab, click **Use An Entra Service Principal Instead**.
+**First**, go to [General Settings](https://app.aikido.dev/settings/account?regionRedirect=1), click **Update Personal Access Token** and, on the **Code Scanning** tab, click **Use An Entra Service Principal Instead**.
 
 [image: Code Scanning tab in Aikido with the personal access token card and the button to use an Entra service principal instead]
 
-You end up on the service principal management page, which can also be found at [Manage Azure DevOps Scanning service principal](https://app.aikido.dev/settings/integrations/azure-devops/scanning/service-principal). Keep this page open: it shows the **Issuer**, **Subject identifier**, and **Audience** you need in the next section.
+You end up on the service principal management page, which can also be found at [Manage Azure DevOps Scanning service principal](https://app.aikido.dev/settings/integrations/azure-devops/scanning/service-principal?regionRedirect=1). Keep this page open: it shows the **Issuer**, **Subject identifier**, and **Audience** you need in the next section.
 
 [image: Aikido page for the scanning service principal showing the issuer, subject identifier, and audience values]
 
 {% hint style="info" %}
-Create a separate application for code scanning, even if you already set up [AutoFix with an Entra service principal](/autofix-and-remediation/configure/autofix-for-azure-devops-with-entra-service-principal.md). The Issuer and Audience are the same, but the Subject identifier is different because scanning uses its own Aikido identity, and the AutoFix application has write access to your projects.
+Create a separate application for code scanning, even if you already set up [AutoFix with an Entra service principal](https://help.aikido.dev/autofix-and-remediation/configure/autofix-for-azure-devops-with-entra-service-principal). The Issuer and Audience are the same, but the Subject identifier is different because scanning uses its own Aikido identity, and the AutoFix application has write access to your projects.
 {% endhint %}
 
 **Next**, follow the instructions below to create the service principal in Microsoft Entra and give it read access in Azure DevOps.

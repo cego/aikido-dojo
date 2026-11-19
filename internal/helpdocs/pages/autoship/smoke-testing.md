@@ -1,7 +1,5 @@
 # Smoke testing
 
-AutoShip performs a smoke test on a live environment to verify the changes
-
 AutoShip validates the changes are not impacting the functionality of the application by running a smoke test on a live environment.
 
 Smoke tests are configured per respository and environment, for each environment you specify:

@@ -1,18 +1,16 @@
 # Kubernetes Cluster Scanning
 
-This page describes the scanning capabilities for your Kubernetes clusters. It applies to managed Kubernetes environments (e.g., EKS, AKS, and GKE) as well as self-managed/on-prem/OpenShift clusters.
-
 ## Why connect your Kubernetes clusters?
 
-While Aikido [scans your infrastructure as code files](https://help.aikido.dev/general-information/sast-by-aikido-supported-languages-and-security-focus), including Kubernetes manifests and Helm charts, connecting your cluster enables Aikido to perform more (and more powerful) checks, as well as validating your actual environments.
+While Aikido [scans your infrastructure as code files](https://help.aikido.dev/code-scanning/scanning-practices/sast-by-aikido-supported-languages-and-security-focus), including Kubernetes manifests and Helm charts, connecting your cluster enables Aikido to perform more (and more powerful) checks, as well as validating your actual environments.
 
-Aikido assesses your Kubernetes resources against [a set of rules](https://app.aikido.dev/clouds/checks?cloudCheckType=kubernetes), generating issues for any deviation. You can see the generated issues [in your feed](https://app.aikido.dev/queue?issue_type_filter=kubernetes), by sorting for "Kubernetes Configurations".
+Aikido assesses your Kubernetes resources against [a set of rules](https://app.aikido.dev/clouds/checks?cloudCheckType=kubernetes&regionRedirect=1), generating issues for any deviation. You can see the generated issues [in your feed](https://app.aikido.dev/queue?issue_type_filter=kubernetes&regionRedirect=1), by sorting for "Kubernetes Configurations".
 
-Moreover, Aikido can scan the images deployed in your cluster. More on this [below](#image-scanning).
+Moreover, Aikido can scan the images deployed in your cluster. More on this [below](https://help.aikido.dev/cloud-scanning/kubernetes-cluster-scanning#image-scanning).
 
 ## Getting Started
 
-Go to [the Clouds page](https://app.aikido.dev/clouds), click "Connect Cloud", and choose "Kubernetes". This applies to all Kubernetes environments, including AWS EKS, Azure Kubernetes Service, Google Kubernetes Engine, and other managed Kubernetes services, as well as self-managed on-premises or cloud-based deployments.
+Go to [the Clouds page](https://app.aikido.dev/clouds?regionRedirect=1), click "Connect Cloud", and choose "Kubernetes". This applies to all Kubernetes environments, including AWS EKS, Azure Kubernetes Service, Google Kubernetes Engine, and other managed Kubernetes services, as well as self-managed on-premises or cloud-based deployments.
 
 In the first step, you will provide the following:
 
@@ -43,7 +41,6 @@ helm upgrade aikido -n aikido \
   --reuse-values \
   --set sbomCollector.enabled=true # or false
 ```
-
 {% endhint %}
 
 ### Threat detection
@@ -51,7 +48,7 @@ helm upgrade aikido -n aikido \
 Runtime Sensors can monitor a connected cluster for threats. Turn on the threat detection toggle in the cluster's edit settings.
 
 {% hint style="warning" %}
-The toggle alone doesn't start threat detection. Run a Helm upgrade with `runtimeDetection.enabled=true`. For more information, see [Enable Runtime Sensors](/runtime-sensors/runtime-sensors-overview/enable-runtime-sensors.md).
+The toggle alone doesn't start threat detection. Run a Helm upgrade with `runtimeDetection.enabled=true`. For more information, see [Enable Runtime Sensors](https://help.aikido.dev/runtime-sensors/runtime-sensors-overview/enable-runtime-sensors).
 {% endhint %}
 
 ## OpenShift Support

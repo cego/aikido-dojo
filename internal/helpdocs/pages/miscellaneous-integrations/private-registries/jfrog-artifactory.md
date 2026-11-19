@@ -2,19 +2,17 @@
 
 Use Aikido Registry Proxy as the default upstream for Artifactory. The proxy blocks malware and enforces a minimum package age on every package your team installs.
 
-The same Artifactory setup also lets you install [Aikido Libraries](/autofix-and-remediation/aikido-libraries-overview.md).
+The same Artifactory setup also lets you install [Aikido Libraries](https://help.aikido.dev/autofix-and-remediation/aikido-libraries-overview).
 
 {% stepper %}
 {% step %}
-
 ### Get your Aikido proxy URL
 
-Go to [Settings > Registry Proxy](https://app.aikido.dev/issues/aikido-libraries/setup-instructions), select your ecosystem and copy the upstream proxy URL
+Go to [Settings > Registry Proxy](https://app.aikido.dev/issues/aikido-libraries/setup-instructions?regionRedirect=1), select your ecosystem and copy the upstream proxy URL
 
 {% endstep %}
 
 {% step %}
-
 ### Create a Remote Repository in Artifactory
 
 1. In Artifactory, go to **Administration > Repositories**.
@@ -30,7 +28,6 @@ If packages don't reflect the latest data from Aikido, set the **Metadata Cache 
 {% endstep %}
 
 {% step %}
-
 ### (Optional) Create a Virtual Repository
 
 If you also have internal packages stored in a local Artifactory repository, create a Virtual Repository that aggregates both:
@@ -44,7 +41,6 @@ This gives your team a single registry endpoint that serves both internal packag
 {% endstep %}
 
 {% step %}
-
 ### Configure Developer Machines to use Artifactory
 
 Point each developer's package manager at the Artifactory repository. See JFrog's documentation for the exact steps:
@@ -69,13 +65,12 @@ Point each developer's package manager at the Artifactory repository. See JFrog'
 {% endstep %}
 
 {% step %}
-
 ### (Optional) Block the public registry with Device Protection
 
 Once Artifactory is in place, developers can still bypass it by pointing their package manager directly at the public registry. Deploy Aikido Device Protection to enforce that all traffic goes through your private registry.
 
-{% content-ref url="/pages/sa7N9YXthBxZbm6WmKBq" %}
-[Block Public Package Registries](/aikido-device-protection/using-aikido-endpoint/block-public-package-registries.md)
+{% content-ref url="../../aikido-device-protection/using-aikido-endpoint/block-public-package-registries.md" %}
+[block-public-package-registries.md](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/block-public-package-registries)
 {% endcontent-ref %}
 {% endstep %}
 {% endstepper %}

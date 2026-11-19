@@ -23,7 +23,7 @@ Installing the Aikido Claude Code plugins can be done via Claude Code CLI.
   * `/plugin install aikido@claude-plugins-official`
 * After install, run `/reload-plugins` to activate the plugin.
 * A restart of Claude Code CLI is needed to load the skills. You can exit Claude Code CLI by typing `exit`.
-  {% endstep %}
+{% endstep %}
 
 {% step %}
 **Authenticate**
@@ -45,12 +45,12 @@ The Aikido Claude Plugin is now available in Claude Code.
 {% endstepper %}
 
 {% hint style="info" %}
-For CI/CD or headless setups where browser login is not possible, see [Token Authentication](/ai-and-dev-tools/aikido-mcp/token-authentication.md).
+For CI/CD or headless setups where browser login is not possible, see [Token Authentication](https://help.aikido.dev/ai-and-dev-tools/aikido-mcp/token-authentication).
 {% endhint %}
 
-The Aikido plugin comes with its own skills. To decide exactly which skills your developers get, and roll them out with nothing for them to configure, see [Bundle Aikido in your own Claude Code plugin](/ai-and-dev-tools/aikido-mcp/anthropic-claude-code-mcp/claude-code-internal-plugin.md).
+The Aikido plugin comes with its own skills. To decide exactly which skills your developers get, and roll them out with nothing for them to configure, see [Bundle Aikido in your own Claude Code plugin](https://help.aikido.dev/ai-and-dev-tools/aikido-mcp/anthropic-claude-code-mcp/claude-code-internal-plugin).
 
-For the full list of tools the MCP server exposes, see [Available tools](/ai-and-dev-tools/aikido-mcp/using-aikido-mcp.md#available-tools). For ways to ask your agent to use Aikido, see [Example prompts](/ai-and-dev-tools/aikido-mcp/using-aikido-mcp.md#example-prompts).
+For the full list of tools the MCP server exposes, see [Available tools](https://help.aikido.dev/ai-and-dev-tools/aikido-mcp/using-aikido-mcp#available-tools). For ways to ask your agent to use Aikido, see [Example prompts](https://help.aikido.dev/ai-and-dev-tools/aikido-mcp/using-aikido-mcp#example-prompts).
 
 ### Troubleshooting
 

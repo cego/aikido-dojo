@@ -10,7 +10,7 @@ AI assistants can review their own output, but that review is not perfect. Aikid
 * Immediate detection and remediation of vulnerabilities and hardcoded secrets in AI assisted workflows
 * Real time feedback, making AI driven development safer by default
 
-For the full list of tools the MCP server exposes, see [Available tools](/ai-and-dev-tools/aikido-mcp/using-aikido-mcp.md#available-tools).
+For the full list of tools the MCP server exposes, see [Available tools](https://help.aikido.dev/ai-and-dev-tools/aikido-mcp/using-aikido-mcp#available-tools).
 
 ## Installation
 
@@ -25,7 +25,6 @@ Or install manually using the steps below:
 ```shellscript
 codex mcp add aikido -- npx -y @aikidosec/mcp@latest
 ```
-
 {% endstep %}
 
 {% step %}
@@ -49,7 +48,6 @@ Download the Aikido rule and add it to `~/.codex/skills/aikido-rule.txt`.
 curl -fsSL "https://gist.githubusercontent.com/kidk/aa48cad6db80ba4a38493016aae67712/raw/3644397b7df43423e3da06434491b40bbb79dd47/aikido-rule.txt" \
   -o ~/.codex/skills/aikido-rule.txt
 ```
-
 {% endstep %}
 
 {% step %}
@@ -64,7 +62,7 @@ Restart Codex CLI if it was open.
 {% endstepper %}
 
 {% hint style="info" %}
-For CI/CD or headless setups where browser login is not possible, see [Token Authentication](/ai-and-dev-tools/aikido-mcp/token-authentication.md).
+For CI/CD or headless setups where browser login is not possible, see [Token Authentication](https://help.aikido.dev/ai-and-dev-tools/aikido-mcp/token-authentication).
 {% endhint %}
 
-For ways to ask your agent to use Aikido, see [Example prompts](/ai-and-dev-tools/aikido-mcp/using-aikido-mcp.md#example-prompts).
+For ways to ask your agent to use Aikido, see [Example prompts](https://help.aikido.dev/ai-and-dev-tools/aikido-mcp/using-aikido-mcp#example-prompts).

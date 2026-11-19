@@ -17,18 +17,18 @@ If you have multiple organizations across different source code managers (e.g. G
 
 **Steps to link**
 
-1. Open your [personal profile ](https://app.aikido.dev/my-profile)via the top right corner and select 'Link A Secondary User' in the Personal Profile Section.
-2. Select your accounts to link (add links for account 1 and account 2). Make sure these accounts use the same email address. If you are using Azure DevOps, select Microsoft or Google Login (depending on the account you have used).
+1. Open your [personal profile ](https://app.aikido.dev/my-profile?regionRedirect=1)via the top right corner and select 'Link A Secondary User' in the Personal Profile Section.
+2.  Select your accounts to link (add links for account 1 and account 2). Make sure these accounts use the same email address. If you are using Azure DevOps, select Microsoft or Google Login (depending on the account you have used).
 
-   [image: Link two accounts for seamless integration and easy switching between platforms.]
-3. Click 'Link Accounts'.\
-   ​
+    [image: Link two accounts for seamless integration and easy switching between platforms.]
+3.  Click 'Link Accounts'.\
+    ​
 
-   [image: Link GitHub and GitLab accounts for seamless integration and easy switching.]
-4. Log in with any of the linked accounts and you'll find the organizations of both users in the organization dropdown.\
-   ​
+    [image: Link GitHub and GitLab accounts for seamless integration and easy switching.]
+4.  Log in with any of the linked accounts and you'll find the organizations of both users in the organization dropdown.\
+    ​
 
-   [image: Workspace menu for Aikido Security with options to manage team and settings.]
+    [image: Workspace menu for Aikido Security with options to manage team and settings.]
 
 ### How to link 3 or more accounts <a href="#how-to-link-3-or-more-accounts" id="how-to-link-3-or-more-accounts"></a>
 
@@ -41,4 +41,4 @@ If you have already linked a GitLab and a Bitbucket workspace, and you want to a
 * Link the GitLab and GitHub workspaces
 * Link the Bitbucket and GitHub workspaces
 
-In order to link these, visit the merge logins screen directly via [this link](https://app.aikido.dev/merge-logins).
+In order to link these, visit the merge logins screen directly via [this link](https://app.aikido.dev/merge-logins?regionRedirect=1).

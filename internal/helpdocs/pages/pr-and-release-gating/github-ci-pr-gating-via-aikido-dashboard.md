@@ -10,7 +10,7 @@ You can easily configure GitHub PR Gating via the Aikido interface. This functio
 
 ### Setting up GitHub CI <a href="#setting-up-github-ci" id="setting-up-github-ci"></a>
 
-**Step 1.** Go to the [Integrations Page](https://app.aikido.dev/settings/integrations) and select GitHub in the CI gating section.
+**Step 1.** Go to the [Integrations Page](https://app.aikido.dev/settings/integrations?regionRedirect=1) and select GitHub in the CI gating section.
 
 <div data-with-frame="true">[image: Connect CI tools (GitHub, GitLab, Bitbucket, Azure) to block risky code merges.]</div>
 
@@ -18,7 +18,7 @@ You can easily configure GitHub PR Gating via the Aikido interface. This functio
 
 <div data-with-frame="true">[image: Aikido PR Checks installation prompt with logo and installation location query.]</div>
 
-**Step 3.** Aikido redirects you to the [GitHub CI page](https://app.aikido.dev/settings/integrations/github/checks) with an overview of your repos. You can start configuring your repos. We recommend starting out with 1 repo to make sure everything works well.
+**Step 3.** Aikido redirects you to the [GitHub CI page](https://app.aikido.dev/settings/integrations/github/checks?regionRedirect=1) with an overview of your repos. You can start configuring your repos. We recommend starting out with 1 repo to make sure everything works well.
 
 <div data-with-frame="true"></div>
 
@@ -35,7 +35,7 @@ To run the enabled scans without failing the GitHub PR check, select **Always Pa
 {% hint style="info" %}
 If you've added new repositories after the initial setup, you'll need to configure those repos as well.
 
-To apply a default configuration automatically, see [Default PR/MR gating configuration for new repositories](/pr-and-release-gating/aikido-ci-gating-functionality/default-pr-mr-gating-configuration-for-new-repositories.md).
+To apply a default configuration automatically, see [Default PR/MR gating configuration for new repositories](https://help.aikido.dev/pr-and-release-gating/aikido-ci-gating-functionality/default-pr-mr-gating-configuration-for-new-repositories).
 {% endhint %}
 
 ### Ignore issues directly from PR comments <a href="#ignore-issues-directly-from-pr-comments" id="ignore-issues-directly-from-pr-comments"></a>
