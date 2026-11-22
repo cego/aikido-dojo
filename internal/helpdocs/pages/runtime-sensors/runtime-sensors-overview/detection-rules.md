@@ -24,15 +24,15 @@ Use the search box to find a rule by name or description. Filter by severity, st
 Click the switch in the **Enabled** column. The change applies to your whole workspace, across all clusters and VMs. While a rule is off, Aikido doesn't store new detections for it. Detections already recorded stay in **Detections**.
 
 {% hint style="info" %}
-To silence a rule for specific activity only, for example one namespace, add a [rule exception](/runtime-sensors/runtime-sensors-overview/rule-exceptions.md) instead of turning the rule off. Exceptions apply across your whole workspace.
+To silence a rule for specific activity only, for example one namespace, add a [rule exception](https://help.aikido.dev/runtime-sensors/runtime-sensors-overview/rule-exceptions) instead of turning the rule off. Exceptions apply across your whole workspace.
 {% endhint %}
 
 ## Related
 
-{% content-ref url="/pages/KZiqfv3WtFIfhwAFAdAq" %}
-[Runtime Sensors Overview](/runtime-sensors/runtime-sensors-overview.md)
+{% content-ref url="./" %}
+[.](https://help.aikido.dev/runtime-sensors/runtime-sensors-overview)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/WqYU262B6J9GQcDOBAyW" %}
-[Rule Exceptions](/runtime-sensors/runtime-sensors-overview/rule-exceptions.md)
+{% content-ref url="rule-exceptions.md" %}
+[rule-exceptions.md](https://help.aikido.dev/runtime-sensors/runtime-sensors-overview/rule-exceptions)
 {% endcontent-ref %}

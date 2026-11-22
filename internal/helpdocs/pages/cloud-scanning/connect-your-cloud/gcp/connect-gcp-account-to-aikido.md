@@ -2,9 +2,9 @@
 
 Securing your cloud infrastructure is crucial to protecting your data. You can leverage Aikido's security checks to detect and address any misconfigurations in your infrastructure.
 
-To view the list of security checks performed by Aikido on your cloud environment, go to the 'checks' tab on the [cloud overview page](https://app.aikido.dev/clouds). Filter to GCP to see specific checks performed on your connected GCP project(s).
+To view the list of security checks performed by Aikido on your cloud environment, go to the 'checks' tab on the [cloud overview page](https://app.aikido.dev/clouds?regionRedirect=1). Filter to GCP to see specific checks performed on your connected GCP project(s).
 
-To get started, head to the [cloud overview page](https://app.aikido.dev/clouds) on Aikido and click 'Connect cloud.' Follow the step-by-step setup wizard to connect your GCP project with Aikido.
+To get started, head to the [cloud overview page](https://app.aikido.dev/clouds?regionRedirect=1) on Aikido and click 'Connect cloud.' Follow the step-by-step setup wizard to connect your GCP project with Aikido.
 
 First, you'll need to provide the project ID to help identify the correct project. Then, you'll be prompted to enable API access to specific GCP services. This is a critical step that enables Aikido to inspect the security of your cloud resources through API requests.
 
@@ -170,6 +170,6 @@ Within 1-2 minutes after connecting your account, Aikido will report misconfigur
 
 ### Advanced Rules
 
-Besides the checks mentioned above, Aikido offers a suite of complementary checks/rules that you can enable. We call these advanced cloud rules and you can find them [here](https://app.aikido.dev/clouds/checks?cloudCheckType=advanced). After enabling any of these rules, you can expect to see the results (as new issues in [the feed](https://app.aikido.dev/queue)) within a few seconds.
+Besides the checks mentioned above, Aikido offers a suite of complementary checks/rules that you can enable. We call these advanced cloud rules and you can find them [here](https://app.aikido.dev/clouds/checks?cloudCheckType=advanced&regionRedirect=1). After enabling any of these rules, you can expect to see the results (as new issues in [the feed](https://app.aikido.dev/queue?regionRedirect=1)) within a few seconds.
 
-Just like the standard checks, these are evaluated with each scan of your cloud environments. Moreover, they are mapped to the compliance reports. By default, the advanced rules will appear as *disabled* in the compliance reports, unless you activate them.
+Just like the standard checks, these are evaluated with each scan of your cloud environments. Moreover, they are mapped to the compliance reports. By default, the advanced rules will appear as _disabled_ in the compliance reports, unless you activate them.

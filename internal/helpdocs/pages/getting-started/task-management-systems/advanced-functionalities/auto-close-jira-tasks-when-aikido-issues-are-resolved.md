@@ -10,7 +10,7 @@ Aikido checks every **8 hours** to detect and update resolved issues. Updates ar
 
 ### **Setup**
 
-**Step 1.** Go to your [**Task Tracker Integration Settings**](https://app.aikido.dev/settings/integrations/tasktracker) in the Aikido dashboard.
+**Step 1.** Go to your [**Task Tracker Integration Settings**](https://app.aikido.dev/settings/integrations/tasktracker?regionRedirect=1) in the Aikido dashboard.
 
 **Step 2.** In the **Advanced** section, enable **Autoclose Tasks**.<br>
 

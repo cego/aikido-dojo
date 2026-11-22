@@ -2,10 +2,10 @@
 
 Aikido uses dedicated IP addresses to perform scanning of your domains (DAST). To prevent connectivity issues, rate limiting, or security blocks, add these IPs to your firewall’s allowlist or other security software. After this, rescan your domains to confirm connectivity.
 
-Looking for Aikido Pentest IP addresses? They are listed on [IP Addresses for Pentest](/pentests/prepare-a-pentest/ip-addresses-for-pentest.md).
+Looking for Aikido Pentest IP addresses? They are listed on [IP Addresses for Pentest](https://help.aikido.dev/pentests/prepare-a-pentest/ip-addresses-for-pentest).
 
 {% hint style="warning" %}
-To use 'Fetch OpenAPI by URL', you must also add the [Code & Container scanning IP addresses.](/code-scanning/miscellaneous/allowing-ip-addresses-for-code-container-scanning.md)
+To use 'Fetch OpenAPI by URL', you must also add the [Code & Container scanning IP addresses.](https://help.aikido.dev/code-scanning/miscellaneous/allowing-ip-addresses-for-code-container-scanning)
 {% endhint %}
 
 ## Which IPs should you allowlist?
@@ -14,11 +14,10 @@ Domain scanning traffic comes from the region where **your Aikido workspace** is
 
 | Aikido URL                                     | Region  | IP list               |
 | ---------------------------------------------- | ------- | --------------------- |
-| [app.aikido.dev](https://app.aikido.dev)       | EU      | EU-based IP addresses |
+| [app.aikido.dev](https://app.aikido.dev/?regionRedirect=1)       | EU      | EU-based IP addresses |
 | [app.us.aikido.dev](https://app.us.aikido.dev) | US      | US-based IP addresses |
 | [app.aikidogov.us](https://app.aikidogov.us)   | FedRAMP | FedRAMP IP addresses  |
 | [app.au.aikido.dev](https://app.au.aikido.dev) | AU      | AU-based IP addresses |
-| [app.me.aikido.dev](https://app.me.aikido.dev) | ME      | ME-based IP addresses |
 
 {% hint style="warning" %}
 If you log in at `app.aikido.dev`, scanning uses **EU** IPs, even when your endpoints are hosted in the US. Allowlisting only US IPs in that case will cause scans to fail.
@@ -54,12 +53,6 @@ If you log in at `app.aikidogov.us`, scanning uses FedRAMP IPs. Commercial US IP
 
 * 16.65.244.192
 * 16.65.77.60
-
-### ME-based IP addresses (`app.me.aikido.dev`)
-
-* 158.252.118.40
-* 158.252.52.197
-* 40.172.160.56
 
 ### AU-based IP addresses (`app.au.aikido.dev`)
 

@@ -2,12 +2,12 @@
 
 **Table of contents:**
 
-* [Setup](#setup)
-  * [Step 1: Set Up Aikido Integration with GCP](#step-1-set-up-aikido-integration-with-gcp)
-  * [Step 2: Enable Artifact Registry Scanning in GCP](#step-2-enable-artifact-registry-scanning-in-gcp)
-  * [Step 3: Push the latest version of your images to artifact registry](#step-3-push-the-latest-version-of-your-images-to-artifact-registry)
-  * [Step 4: Start a scan in Aikido to process the results](#step-4-start-a-scan-in-aikido-to-process-the-results)
-  * [Step 5. Link Images](#step-5-link-images)
+* [Setup](https://help.aikido.dev/container-image-scanning/cloud-provider-registries/gcp-scanner-for-gcp-artifact-registry#setup)
+  * [Step 1: Set Up Aikido Integration with GCP](https://help.aikido.dev/container-image-scanning/cloud-provider-registries/gcp-scanner-for-gcp-artifact-registry#step-1-set-up-aikido-integration-with-gcp)
+  * [Step 2: Enable Artifact Registry Scanning in GCP](https://help.aikido.dev/container-image-scanning/cloud-provider-registries/gcp-scanner-for-gcp-artifact-registry#step-2-enable-artifact-registry-scanning-in-gcp)
+  * [Step 3: Push the latest version of your images to artifact registry](https://help.aikido.dev/container-image-scanning/cloud-provider-registries/gcp-scanner-for-gcp-artifact-registry#step-3-push-the-latest-version-of-your-images-to-artifact-registry)
+  * [Step 4: Start a scan in Aikido to process the results](https://help.aikido.dev/container-image-scanning/cloud-provider-registries/gcp-scanner-for-gcp-artifact-registry#step-4-start-a-scan-in-aikido-to-process-the-results)
+  * [Step 5. Link Images](https://help.aikido.dev/container-image-scanning/cloud-provider-registries/gcp-scanner-for-gcp-artifact-registry#step-5-link-images)
 
 ## GCP Scanner for GCP Artifact Registry
 
@@ -21,7 +21,7 @@ Aikido will use the findings reported by GCP Container Analysis and run them thr
 
 #### Step 1: Set Up Aikido Integration with GCP <a href="#step-1-set-up-aikido-integration-with-gcp" id="step-1-set-up-aikido-integration-with-gcp"></a>
 
-Before you begin, make sure your GCP cloud environment has been linked with Aikido. If you have not done this already, navigate to the[ cloud overview](https://app.aikido.dev/clouds) in Aikido. Click on "Connect cloud" and follow the steps to get set up. More information can be found in [this article](https://help.aikido.dev/cloud-scanning/connect-your-cloud/gcp/connect-gcp-account-to-aikido).
+Before you begin, make sure your GCP cloud environment has been linked with Aikido. If you have not done this already, navigate to the[ cloud overview](https://app.aikido.dev/clouds?regionRedirect=1) in Aikido. Click on "Connect cloud" and follow the steps to get set up. More information can be found in [this article](https://help.aikido.dev/cloud-scanning/connect-your-cloud/gcp/connect-gcp-account-to-aikido).
 
 #### Step 2: Enable Artifact Registry Scanning in GCP <a href="#step-2-enable-artifact-registry-scanning-in-gcp" id="step-2-enable-artifact-registry-scanning-in-gcp"></a>
 

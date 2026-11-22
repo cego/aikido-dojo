@@ -4,7 +4,7 @@ Aikido's Domain and API scans are intentionally opinionated. We don't report eve
 
 That means our results won't always line up with other scanners. This page explains the reasoning behind the decisions customers ask about most: issues we deliberately don't flag, and issues we rate higher than you might expect.
 
-If our rating doesn't fit your environment, you can [manually adjust the severity](/getting-started/core-functionalities/manually-adjust-issue-severity.md) of a single issue or a whole issue group.
+If our rating doesn't fit your environment, you can [manually adjust the severity](https://help.aikido.dev/getting-started/core-functionalities/manually-adjust-issue-severity) of a single issue or a whole issue group.
 
 ## Issues we don't flag
 
@@ -30,4 +30,4 @@ A Content Security Policy (CSP) is a header that tells the browser which sources
 
 We rate a missing CSP as high because of how much protection it buys. It's the strongest defense available against cross-site scripting (XSS, where an attacker gets their own JavaScript to run in your users' browsers), and it's a standard expectation on any public-facing app. There's no good reason to run without one.
 
-We don't wait for a confirmed XSS before flagging it. Our severity reflects [urgency to fix](/getting-started/core-functionalities/how-is-severity-score-calculated.md), not proof of an exploit today.
+We don't wait for a confirmed XSS before flagging it. Our severity reflects [urgency to fix](https://help.aikido.dev/getting-started/core-functionalities/how-is-severity-score-calculated), not proof of an exploit today.

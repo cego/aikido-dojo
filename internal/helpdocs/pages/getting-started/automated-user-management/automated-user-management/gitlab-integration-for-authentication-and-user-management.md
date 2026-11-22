@@ -15,4 +15,4 @@ By default, a new workspace will be created for every GitLab group. If you want 
 
 ### Inviting users to Aikido without an organisational GitLab account <a href="#inviting-users-to-aikido-without-an-organisational-gitlab-account" id="inviting-users-to-aikido-without-an-organisational-gitlab-account"></a>
 
-You can invite users via Google, Microsoft or using a personal GitLab Account. More information can be [found here.](/getting-started/automated-user-management/invite-users-to-aikido-without-a-git-account.md)
+You can invite users via Google, Microsoft or using a personal GitLab Account. More information can be [found here.](https://help.aikido.dev/getting-started/automated-user-management/invite-users-to-aikido-without-a-git-account)

@@ -24,10 +24,27 @@ Other configuration option for `auth.json` can be found [here](https://getcompos
 
 Once write access to the repos is set up, you can configure Aikido to authenticate with your private Composer registry by following the steps below:
 
-1. Go to your account's settings page for the Autofix in Aikido, [here](https://app.aikido.dev/issues/fix/settings).
-2. Click on "*Connect Registry*", the modal below will now be shown
+1. Go to your account's settings page for the Autofix in Aikido, [here](https://app.aikido.dev/issues/fix/settings?regionRedirect=1).
+2. Click on "_Connect Registry_", the modal below will now be shown
 
 3. Select "Composer" as package manager
 
 4. Fill in your auth.json with authentication information. Aikido securely encrypts your configuration file until just before they are used.
-5. Click "*Connect Registry*" to save the configuration
+5. Click "_Connect Registry_" to save the configuration
+
+## Test the connection
+
+Aikido tests your credentials against `https://<host>/packages.json`. If your registry is served under a path or its `packages.json` is public, add `aikido-test-url` to `auth.json` with a URL that does require authentication, for example a package download URL:
+
+{% code title="auth.json" %}
+```json
+{
+    "bearer": {
+        "repo.example.com": "<your-token>"
+    },
+    "aikido-test-url": "https://repo.example.com/composer/dist/<vendor>/<package>.zip"
+}
+```
+{% endcode %}
+
+The `aikido-test-url` is only used to test the connection, not during an actual AutoFix.

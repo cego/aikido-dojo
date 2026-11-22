@@ -4,10 +4,16 @@ Aikido VM Scanner is a single-package that installs on your system, automaticall
 
 To get started, select the Operating System type of the machine you would like to scan.
 
-{% content-ref url="/pages/VyefHQIbIxnLKH0qcmlZ" %}
-[Setting Up the Local VM Scanner on Linux](/virtual-machine-scanning/local-vm-scanning/setting-up-the-local-vm-scanner-linux.md)
+{% content-ref url="../../virtual-machine-scanning/local-vm-scanning/setting-up-the-local-vm-scanner-linux.md" %}
+[setting-up-the-local-vm-scanner-linux.md](https://help.aikido.dev/virtual-machine-scanning/local-vm-scanning/setting-up-the-local-vm-scanner-linux)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/hKcjoZ87EyLZAXvfVCzD" %}
-[Setting Up the Local VM Scanner on Windows](/virtual-machine-scanning/local-vm-scanning/setting-up-the-local-vm-scanner-windows.md)
+{% content-ref url="../../virtual-machine-scanning/local-vm-scanning/setting-up-the-local-vm-scanner-windows.md" %}
+[setting-up-the-local-vm-scanner-windows.md](https://help.aikido.dev/virtual-machine-scanning/local-vm-scanning/setting-up-the-local-vm-scanner-windows)
+{% endcontent-ref %}
+
+If a scan on one of your machines is taking longer than you expect, or doesn't finish:
+
+{% content-ref url="../../virtual-machine-scanning/local-vm-scanning/diagnosing-a-slow-vm-scan.md" %}
+[diagnosing-a-slow-vm-scan.md](https://help.aikido.dev/virtual-machine-scanning/local-vm-scanning/diagnosing-a-slow-vm-scan)
 {% endcontent-ref %}

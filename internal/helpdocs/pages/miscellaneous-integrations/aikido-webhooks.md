@@ -14,11 +14,11 @@ The webhook schema can be found in [our apidocs](https://apidocs.aikido.dev/refe
 
 ### Generating a webhook secret <a href="#generating-a-webhook-secret" id="generating-a-webhook-secret"></a>
 
-1. Go to the [webhooks integration page](https://app.aikido.dev/settings/integrations/api/webhooks)
-2. Create a secret by clicking on ‘Add secret’, right above the table on the right-hand side.\
-   ​
+1. Go to the [webhooks integration page](https://app.aikido.dev/settings/integrations/api/webhooks?regionRedirect=1)
+2.  Create a secret by clicking on ‘Add secret’, right above the table on the right-hand side.\
+    ​
 
-   [image: Empty webhooks dashboard prompting user to register a new webhook.]
+    [image: Empty webhooks dashboard prompting user to register a new webhook.]
 3. When the webhook secret is created, you’ll see a modal where you can copy the webhook secret and store it securely. It’s important that this secret is kept safe and not committed in any of your code repos
 
 ### Verifying a Webhook <a href="#verifying-a-webhook" id="verifying-a-webhook"></a>

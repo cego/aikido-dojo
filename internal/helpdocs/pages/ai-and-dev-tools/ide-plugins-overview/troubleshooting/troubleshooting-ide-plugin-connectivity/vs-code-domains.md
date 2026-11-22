@@ -3,7 +3,7 @@
 To function correctly, the Local Scanner must be able to access the following domains over HTTPS (port 443):
 
 * `*.aikido.dev`
-* Depending on `Download All Dependencies From Aikido Domain` in Settings
+* &#x20;Depending on `Download All Dependencies From Aikido Domain` in Settings
   * Disabled (default): `github.com`
   * Enabled: `static-binaries.aikido.dev`
 
@@ -44,4 +44,3 @@ Where `*.aikido.dev` is not accepted, the wildcard expands to a small, fixed set
 | `ide.aikido.dev` and `app.aikido.dev` | EU region (default) |
 | `app.us.aikido.dev`                   | US region           |
 | `app.au.aikido.dev`                   | Australia region    |
-| `app.me.aikido.dev`                   | Middle East region  |

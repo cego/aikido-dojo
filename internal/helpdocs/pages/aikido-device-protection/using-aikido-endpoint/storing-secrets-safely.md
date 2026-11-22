@@ -1,6 +1,6 @@
 # Storing Secrets Safely
 
-[Secret Scanning](/aikido-device-protection/using-aikido-endpoint/secret-scanning.md) shows you where credentials are sitting in plaintext on your device. Cleaning up the file is half the fix. This page is the other half: keeping the secret out of those files in the first place, by storing it in a secrets manager and fetching it when you need it.
+[Secret Scanning](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/secret-scanning) shows you where credentials are sitting in plaintext on your device. Cleaning up the file is half the fix. This page is the other half: keeping the secret out of those files in the first place, by storing it in a secrets manager and fetching it when you need it.
 
 ## How secrets end up in plaintext
 
@@ -122,8 +122,8 @@ Moving the credential into a manager doesn't undo the exposure. Finish the job:
 2. Remove the plaintext copy. Use the **Secrets** tab in the desktop client for shell history and AI agent sessions, and edit credential files yourself.
 3. Confirm the finding is gone from the **Secrets** tab.
 
-{% content-ref url="/pages/Uk7VvDDNYtvQt1fdvQYn" %}
-[Secret Scanning](/aikido-device-protection/using-aikido-endpoint/secret-scanning.md)
+{% content-ref url="secret-scanning.md" %}
+[secret-scanning.md](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/secret-scanning)
 {% endcontent-ref %}
 
-For secrets Aikido found in your code rather than on a device, see [Resolving Malware and Leaked Secret Issues](/getting-started/core-functionalities/resolving-malware-and-leaked-secret-issues.md).
+For secrets Aikido found in your code rather than on a device, see [Resolving Malware and Leaked Secret Issues](https://help.aikido.dev/getting-started/core-functionalities/resolving-malware-and-leaked-secret-issues).

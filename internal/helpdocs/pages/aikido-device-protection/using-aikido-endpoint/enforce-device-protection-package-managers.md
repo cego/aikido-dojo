@@ -13,21 +13,17 @@ Most package managers support lifecycle hooks or wrapper scripts that run before
 {% tabs %}
 {% tab title="macOS" %}
 {% code overflow="wrap" %}
-
 ```bash
 /Applications/Aikido\ Endpoint\ Protection.app/Contents/Resources/scripts/healthy
 ```
-
 {% endcode %}
 {% endtab %}
 
 {% tab title="Windows" %}
 {% code overflow="wrap" %}
-
 ```powershell
 & "C:\Program Files\AikidoSecurity\EndpointProtection\scripts\Healthy.ps1"
 ```
-
 {% endcode %}
 {% endtab %}
 {% endtabs %}
@@ -47,7 +43,6 @@ Add a `preinstall` script to `package.json`:
   }
 }
 ```
-
 {% endtab %}
 
 {% tab title="yarn / pnpm" %}
@@ -60,7 +55,6 @@ Both yarn and pnpm respect the `preinstall` script in `package.json`:
   }
 }
 ```
-
 {% endtab %}
 
 {% tab title="pip / uv" %}
@@ -101,7 +95,6 @@ Add the `exec-maven-plugin` to the `validate` phase in `pom.xml`. This runs befo
   </executions>
 </plugin>
 ```
-
 {% endtab %}
 
 {% tab title="NuGet" %}
@@ -120,7 +113,6 @@ Add a `.targets` file to your project (e.g. `CheckAikido.targets`) and import it
 <!-- YourProject.csproj -->
 <Import Project="CheckAikido.targets" />
 ```
-
 {% endtab %}
 {% endtabs %}
 

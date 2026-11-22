@@ -19,7 +19,6 @@ Before connecting, get these from RunReveal:
 
 {% stepper %}
 {% step %}
-
 #### Get your RunReveal webhook details
 
 1. In the RunReveal portal, go to **Sources > New Source** and choose **Generic Webhook** or **Structured Webhook**.
@@ -31,10 +30,9 @@ If you choose **Structured Webhook**, every record Aikido sends must match RunRe
 2. Give the source a name (for example, `Aikido`) and save it.
 3. Copy the **Webhook ID**, only the ID (the last part of the URL RunReveal shows), not the full URL.
 4. Copy the **Bearer Token**. This is required for Structured Webhooks, and optional for Generic Webhooks unless you've enabled auth on the source.
-   {% endstep %}
+{% endstep %}
 
 {% step %}
-
 #### Connect a SIEM
 
 Go to **Settings > Integrations** in the Aikido app and add a new SIEM integration. In the **Connect a SIEM** dialog, select **RunReveal** and fill in:
@@ -43,7 +41,7 @@ Go to **Settings > Integrations** in the Aikido app and add a new SIEM integrati
 
 * **Webhook ID** - the RunReveal webhook ID. Paste only the ID, not the full URL shown in the RunReveal UI.
 
-**Options** *(optional, sensible defaults are pre-filled)*
+**Options** _(optional, sensible defaults are pre-filled)_
 
 * **Batch Data Size** - maximum total size in bytes of records in a batch before sending, default `1048576` (1 MiB).
 * **Batch Record Count** - maximum number of records to accumulate before sending, default `100`.
@@ -59,7 +57,6 @@ Click **Test connection**, then **Save changes**.
 {% endstep %}
 
 {% step %}
-
 #### Configure which issues sync
 
 On the RunReveal integration page, under **Issue input settings**, configure which Aikido issues are synced to your SIEM:

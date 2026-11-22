@@ -2,8 +2,8 @@
 
 Aikido fully supports protecting workloads on Fly through specific integrations. A native integration may be added in the future, but you can already achieve full coverage by combining:<br>
 
-* [Code Scanning](/code-scanning/code-scanning-overview.md) for application code, dependencies and Dockerfiles
-* [Local Scanner](/code-scanning/local-code-scanning.md) for Fly container images
+* [Code Scanning](https://help.aikido.dev/code-scanning/code-scanning-overview) for application code, dependencies and Dockerfiles
+* [Local Scanner](https://help.aikido.dev/code-scanning/local-code-scanning) for Fly container images
 
 ## Features
 
@@ -11,7 +11,7 @@ Aikido fully supports protecting workloads on Fly through specific integrations.
 
 Fly’s registry doesn’t support listing all stored images/tags. Fly only exposes images once they’re referenced by a release, so we can’t enumerate the full registry contents through an API.
 
-As a workaround, we scan the images that are currently deployed (running) by retrieving their image references, pulling them locally, and scanning them on a daily schedule with the [Aikido Local Scanner](/code-scanning/local-code-scanning.md).
+As a workaround, we scan the images that are currently deployed (running) by retrieving their image references, pulling them locally, and scanning them on a daily schedule with the [Aikido Local Scanner](https://help.aikido.dev/code-scanning/local-code-scanning).
 
 ```bash
 export AIKIDO_API_KEY="AIK_CI_..."

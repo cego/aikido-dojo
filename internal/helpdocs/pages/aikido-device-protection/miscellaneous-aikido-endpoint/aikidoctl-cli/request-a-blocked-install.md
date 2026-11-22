@@ -2,7 +2,7 @@
 
 When a package is blocked because it needs admin approval, the desktop shows **Request Access**. On a machine without that desktop, `aikidoctl request` sends the same request. On Windows, run `aikidoctl.exe`. You do not need administrator rights.
 
-The block label is **Needs Admin Approval**, from **Force Requests for New Packages**. See [Configuring Installation Policies](/aikido-device-protection/using-aikido-endpoint/configuring-installation-policies.md). Admins review the request in the [Inbox](/aikido-device-protection/using-aikido-endpoint/reviewing-install-requests.md).
+The block label is **Needs Admin Approval**, from **Force Requests for New Packages**. See [Configuring Installation Policies](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/configuring-installation-policies). Admins review the request in the [Inbox](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/reviewing-install-requests).
 
 The list is one row per package name, newest first. Several versions of the same package are one request. A row already sent shows **Request Sent**, **Request Approved**, or **Request Rejected**, and is not sent again. Malware, **Block All Installs**, and minimum package age blocks are not listed.
 
@@ -12,7 +12,6 @@ Device Protection keeps this list in memory, and only the newest 500 blocks. Res
 
 {% tabs %}
 {% tab title="Terminal" %}
-
 ```shell
 aikidoctl request
 ```
@@ -33,7 +32,6 @@ aikidoctl request --event <event-id>
 {% endtab %}
 
 {% tab title="JSON" %}
-
 ```shell
 aikidoctl request --json
 ```

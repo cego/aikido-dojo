@@ -2,16 +2,16 @@
 
 ## Introduction <a href="#introduction" id="introduction"></a>
 
-Aikido lets you create teams, connect multiple repositories and clouds, and manage access using RBAC (Role-Based Access Control) for better security. This article focuses on Managing of User Access. If you are looking to use Teams to group your resources into Projects or Apps, please [**click here**](/getting-started/manage-teams-and-applications/manage-and-view-your-apps-and-projects-via-our-teams-feature.md).
+Aikido lets you create teams, connect multiple repositories and clouds, and manage access using RBAC (Role-Based Access Control) for better security. This article focuses on Managing of User Access. If you are looking to use Teams to group your resources into Projects or Apps, please [**click here**](https://help.aikido.dev/getting-started/manage-teams-and-applications/manage-and-view-your-apps-and-projects-via-our-teams-feature).
 
 ## Use Cases <a href="#use-cases" id="use-cases"></a>
 
 * **Selective Access Control:** Assign repository access exclusively to designated team members.
-* **Filter Repositories Quickly:** In companies with multiple teams, each team may have access to the entire codebase, but their primary responsibilities are often limited to specific repositories or projects. By creating teams in Aikido, team members **can have a focused overview** of only the repositories relevant to their tasks.\
-  ​
+*   **Filter Repositories Quickly:** In companies with multiple teams, each team may have access to the entire codebase, but their primary responsibilities are often limited to specific repositories or projects. By creating teams in Aikido, team members **can have a focused overview** of only the repositories relevant to their tasks.\
+    ​
 
-  
-* **Better overview when using a monorepo split.** You can assign team members to specific directories of your monorepo, improving their overview. More information on splitting monorepositories can be found [here](https://help.aikido.dev/en/articles/9026666-splitting-up-your-monorepo-per-directory).
+    
+* **Better overview when using a monorepo split.** You can assign team members to specific directories of your monorepo, improving their overview. More information on splitting monorepositories can be found [here](https://help.aikido.dev/code-scanning/miscellaneous/split-your-monorepo-per-path).
 
 ## How To Create Teams <a href="#how-to-create-teams" id="how-to-create-teams"></a>
 

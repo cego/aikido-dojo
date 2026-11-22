@@ -2,9 +2,9 @@
 
 #### Use Cases <a href="#introduction" id="introduction"></a>
 
-While Aikido boasts advanced detection capabilities with auto-ignore (see the [ignore criteria](https://app.aikido.dev/issues/ignored/criteria)), the occasional false positive may slip through, or an issue may be irrelevant to your specific context. The ignore functionality is designed to address this, ensuring your security overview remains accurate.
+While Aikido boasts advanced detection capabilities with auto-ignore (see the [ignore criteria](https://app.aikido.dev/issues/ignored/criteria?regionRedirect=1)), the occasional false positive may slip through, or an issue may be irrelevant to your specific context. The ignore functionality is designed to address this, ensuring your security overview remains accurate.
 
-Users without ignore permissions submit requests instead of ignoring directly. Reviewers with ignore permissions review those in the [Approval Inbox for Ignored Issues](/getting-started/core-functionalities/approval-inbox-for-ignored-issues.md).
+Users without ignore permissions submit requests instead of ignoring directly. Reviewers with ignore permissions review those in the [Approval Inbox for Ignored Issues](https://help.aikido.dev/getting-started/core-functionalities/approval-inbox-for-ignored-issues).
 
 #### How to ignore an issue group or subissue <a href="#how-to-ignore-an-issue-group-or-subissue" id="how-to-ignore-an-issue-group-or-subissue"></a>
 
@@ -19,16 +19,16 @@ You have a few options available to ignore the current and future issues. The op
 Below are all the ignore options listed that you might see
 
 * **Only this issue/only this issue group**\
-  This option will only ignore this subissue, or this issue group and all its sub issues, depending on the context. *Note. If you ignore an issue group, new future subissues will not be auto-ignored and will re-open the group containing this specific subissue.*\
+  This option will only ignore this subissue, or this issue group and all its sub issues, depending on the context. _Note. If you ignore an issue group, new future subissues will not be auto-ignored and will re-open the group containing this specific subissue._\
   ​
-* **Ignore by path**\
-  When choosing this option, you create an issue rule which will ignore all current and future file based issues (open source, SAST, IAC and exposed secrets) under a certain path. You can edit the path there for convenience to make the rule as specific as you'd like.\
-  ​\
-  This can be helpful when there are testing frameworks in a specific path that you do not want Aikido to scan.
+*   **Ignore by path**\
+    When choosing this option, you create an issue rule which will ignore all current and future file based issues (open source, SAST, IAC and exposed secrets) under a certain path. You can edit the path there for convenience to make the rule as specific as you'd like.\
+    ​\
+    This can be helpful when there are testing frameworks in a specific path that you do not want Aikido to scan.
 
-  
+    
 
-  ​
+    ​
 * **Ignore all findings related to CVE**\
   This option creates an issue rule which ignores all current and future open source dependencies linked to that CVE. This ignore rule is global and is applied to all repositories.\
   ​
@@ -39,4 +39,4 @@ Below are all the ignore options listed that you might see
 
 #### View all (auto-) ignored issues <a href="#check-out-all-auto--ignored-issues" id="check-out-all-auto--ignored-issues"></a>
 
-The [ignore view](https://app.aikido.dev/issues/ignored) consolidates all issues ignored by Aikido's triaging algorithm, as well as those manually ignored by users. Here, you can review the rationale behind each automatically ignored issue (see the [ignore criteria](https://app.aikido.dev/issues/ignored/criteria)). Your manually ignored issues will also be displayed here, providing a comprehensive overview of all exclusions made within Aikido.
+The [ignore view](https://app.aikido.dev/issues/ignored?regionRedirect=1) consolidates all issues ignored by Aikido's triaging algorithm, as well as those manually ignored by users. Here, you can review the rationale behind each automatically ignored issue (see the [ignore criteria](https://app.aikido.dev/issues/ignored/criteria?regionRedirect=1)). Your manually ignored issues will also be displayed here, providing a comprehensive overview of all exclusions made within Aikido.

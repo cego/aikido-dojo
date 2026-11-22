@@ -1,6 +1,6 @@
 # ClickUp
 
-This one-time setup *per workspace* allows everyone in your Aikido organization to create issues directly in ClickUp.
+This one-time setup _per workspace_ allows everyone in your Aikido organization to create issues directly in ClickUp.
 
 Following use cases are supported :
 
@@ -9,16 +9,16 @@ Following use cases are supported :
 
 ## Connecting the Aikido App to ClickUp <a href="#connecting-the-aikido-app-to-clickup" id="connecting-the-aikido-app-to-clickup"></a>
 
-1. Navigate to [Integration Settings](https://app.aikido.dev/settings/integrations) within the Aikido app.
+1. Navigate to [Integration Settings](https://app.aikido.dev/settings/integrations?regionRedirect=1) within the Aikido app.
 2. In the 'Task Trackers' section, select 'ClickUp'
-3. A prompt will request authorization for ClickUp.\
-   ​
+3.  A prompt will request authorization for ClickUp.\
+    ​
 
-   [image: ClickUp authorization prompt for issue-tracking; user currently unauthorized.]
+    [image: ClickUp authorization prompt for issue-tracking; user currently unauthorized.]
 4. Login into your ClickUp account
-5. Grant Aikido permission to access your ClickUp workspace
+5.  Grant Aikido permission to access your ClickUp workspace
 
-   [image: ClickUp workspace selection screen for connecting with Aikido Security integration.]
+    [image: ClickUp workspace selection screen for connecting with Aikido Security integration.]
 6. Once authorized, Aikido is successfully connected to ClickUp, enhancing your task management capabilities 🚀
 
 [image: Map repositories to ClickUp projects and enable automatic task creation with Aikido.]
@@ -32,19 +32,19 @@ There are two different options to create new tasks from Aikido into ClickUp.
 
 ## 1. Manual Task Creation <a href="#id-1-manual-task-creation" id="id-1-manual-task-creation"></a>
 
-1. Hover over any issue in your feed and click the ***+*** in the **assignee column.**\
-   ​
+1.  Hover over any issue in your feed and click the _**+**_ in the **assignee column.**\
+    ​
 
-   [image: Assignee section with options to add or manage task assignments.]
+    [image: Assignee section with options to add or manage task assignments.]
 
-   Alternatively, you can click the triple dots in the last columns to open up the action menu. If you have grouped issues, the triple dot action menu is available on every subissue.\
-   ​
+    Alternatively, you can click the triple dots in the last columns to open up the action menu. If you have grouped issues, the triple dot action menu is available on every subissue.\
+    ​
 
-   [image: Action menu with options: create task, snooze, ignore, copy link, adjust severity.]
-2. Fill in the required details in the popup modal.\
-   ​
+    [image: Action menu with options: create task, snooze, ignore, copy link, adjust severity.]
+2.  Fill in the required details in the popup modal.\
+    ​
 
-   [image: ClickUp task creation form for reporting high-severity XSS vulnerability findings.]
+    [image: ClickUp task creation form for reporting high-severity XSS vulnerability findings.]
 3. The newly created task in ClickUp will be linked in the Aikido Issue Detail under the 'Tasks' tab (sidepanel).
 
 [image: Task warning about high-risk XSS attacks from unescaped input, labeled as open.]
@@ -55,7 +55,7 @@ There are two different options to create new tasks from Aikido into ClickUp.
 Aikido will automatically create tasks **every hour in bulk.** There is at the moment no option to trigger this manually.
 {% endhint %}
 
-1. Go to the [ClickUp Integration](https://app.aikido.dev/settings/integrations/tasktracker) settings
+1. Go to the [ClickUp Integration](https://app.aikido.dev/settings/integrations/tasktracker?regionRedirect=1) settings
 2. Make sure to enable '**Autocreation**' by clicking the toggle to **On.**
 3. Define the criteria for automatic task creation.
 
@@ -76,22 +76,22 @@ Aikido can fill ClickUp custom fields on every task it creates. Use it to send s
 
 ### Supported field types
 
-| ClickUp field type    | Example value         |
-| --------------------- | --------------------- |
-| Text                  | `Severity: $SEVERITY` |
-| Text area (long text) | `$TLDR`               |
-| Website               | `$AIKIDO_LINK`        |
-| Number                | `$SEVERITY_SCORE`     |
-| Dropdown              | `$SEVERITY`           |
-| Labels                | `label 2, label 3`    |
-| Date                  | `$SLA_DATE`           |
-| Checkbox              | `true`                |
+| ClickUp field type | Example value |
+| --- | --- |
+| Text | `Severity: $SEVERITY` |
+| Text area (long text) | `$TLDR` |
+| Website | `$AIKIDO_LINK` |
+| Number | `$SEVERITY_SCORE` |
+| Dropdown | `$SEVERITY` |
+| Labels | `label 2, label 3` |
+| Date | `$SLA_DATE` |
+| Checkbox | `true` |
 
 For **Dropdown** and **Labels** fields, enter the option names exactly as they appear in ClickUp. You don't need option IDs.
 
 ### Configure field mappings
 
-1. Go to [**Integrations** → **ClickUp** → **Field Mapping**](https://app.aikido.dev/settings/integrations/tasktracker/fields/custom) and click **Add Field**.
+1. Go to [**Integrations** → **ClickUp** → **Field Mapping**](https://app.aikido.dev/settings/integrations/tasktracker/fields/custom?regionRedirect=1) and click **Add Field**.
 2. Enter the ClickUp custom field name in **Custom Field**, exactly as it appears in ClickUp.
 3. Enter an Aikido shortcode (e.g. `$SEVERITY`) or a fixed text value in **Aikido Value**.
 4. Click **Save Changes**.
@@ -102,7 +102,7 @@ The **Preview** column shows the value Aikido will send to ClickUp.
 
 **Fixed values:** Enter plain text to set the same value on every task. For example, `Security` fills that field with "Security" on every task Aikido creates.
 
-**Shortcodes:** Aikido replaces shortcodes with data from the issue when it creates the task. You can combine them with fixed text, such as `Issue: $TLDR` or `Detected on $FIRST_DETECTED_DATE`. For the full list of shortcodes, see [Map Aikido Data to Jira Custom Fields](/getting-started/task-management-systems/map-aikido-data-to-jira-custom-fields.md). The same shortcodes work for ClickUp.
+**Shortcodes:** Aikido replaces shortcodes with data from the issue when it creates the task. You can combine them with fixed text, such as `Issue: $TLDR` or `Detected on $FIRST_DETECTED_DATE`. For the full list of shortcodes, see [Map Aikido Data to Jira Custom Fields](https://help.aikido.dev/getting-started/task-management-systems/map-aikido-data-to-jira-custom-fields). The same shortcodes work for ClickUp.
 
 For ClickUp **Date** fields, use the `YYYY-MM-DD` format (e.g. `2024-10-23`) or the `_DATE` shortcodes, such as `$SLA_DATE`.
 

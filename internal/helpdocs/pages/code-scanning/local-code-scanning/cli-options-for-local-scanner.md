@@ -43,7 +43,7 @@ Options:
   -h, --help                               display help for command
 ```
 
-For image scanning CLI options, see [here](/container-image-scanning/local-image-scanning/cli-options-for-local-image-scanning.md).
+For image scanning CLI options, see [here](https://help.aikido.dev/container-image-scanning/local-image-scanning/cli-options-for-local-image-scanning).
 
 ## Common use cases <a href="#common-use-cases" id="common-use-cases"></a>
 
@@ -51,7 +51,7 @@ Below you can find some example configurations of common use cases.
 
 **I want to run a scan on a repository**
 
-> The api key can also be passed as an environment variable *AIKIDO\_API\_KEY*
+> The api key can also be passed as an environment variable _AIKIDO\_API\_KEY_
 
 ```shellscript
 aikido-local-scanner scan ./ 

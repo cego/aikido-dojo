@@ -1,9 +1,9 @@
 # Upload a Repository as a Zip
 
-When you cannot connect a git provider, upload a static `.zip` as a snapshot of the code. Aikido adds that snapshot as a repository so you can run AI Code Analysis, whitebox pentests, and other features that read the code. Actions that need a live git connection, such as an AutoFix pull request, are not available yet.
+When you cannot connect a git provider, upload a static `.zip` as a snapshot of the code. Aikido adds that snapshot as a repository so you can run AI Scans, whitebox pentests, and other features that read the code. Actions that need a live git connection, such as an AutoFix pull request, are not available yet.
 
 {% hint style="info" %}
-Zip upload is the exception to Aikido's usual rule of not keeping your code. Aikido stores this archive with the repository so the snapshot stays available for AI Code Analysis, whitebox pentests, and other features that read it. You can delete the repository at any time.
+Zip upload is the exception to Aikido's usual rule of not keeping your code. Aikido stores this archive with the repository so the snapshot stays available for AI Scans, whitebox pentests, and other features that read it. You can delete the repository at any time.
 {% endhint %}
 
 ## Prerequisites
@@ -22,7 +22,6 @@ Uploading a new version of an existing repository is not supported yet. Support 
 
 {% stepper %}
 {% step %}
-
 ### Create the zip
 
 From the repository root, run:
@@ -35,14 +34,12 @@ git archive --format=zip --output=my-app.zip HEAD
 {% endstep %}
 
 {% step %}
-
 ### Open repository settings
 
-Go to [Repository settings](https://app.aikido.dev/settings/integrations/repositories). From **Repositories**, click **Manage Repos**.
+Go to [Repository settings](https://app.aikido.dev/settings/integrations/repositories?regionRedirect=1). From **Repositories**, click **Manage Repos**.
 {% endstep %}
 
 {% step %}
-
 ### Choose upload source code
 
 Click **Add repo**. Select **Upload source code**, then click **Continue**.
@@ -51,24 +48,21 @@ Click **Add repo**. Select **Upload source code**, then click **Continue**.
 {% endstep %}
 
 {% step %}
-
 ### Name the repository and add the zip
 
 Enter a **Repository name**. Click the upload area, or drag the `.zip` onto it.
 {% endstep %}
 
 {% step %}
-
 ### Upload
 
 Click **Upload**. Aikido adds the repository, confirms with **Repository uploaded**, and starts the scan automatically.
 {% endstep %}
 
 {% step %}
-
 ### Select the repository in a setup flow
 
-Open [AI Code Analysis](/ai-code-analysis/ai-code-analysis.md) or [set up a pentest](/pentests/configure-a-pentest/starting-an-assessment.md). When the setup flow asks you to choose repositories, select this one. Other features that read repository code work the same way.
+Open [AI Scans](https://help.aikido.dev/ai-scans/ai-code-analysis) or [set up a pentest](https://help.aikido.dev/pentests/configure-a-pentest/starting-an-assessment). When the setup flow asks you to choose repositories, select this one. Other features that read repository code work the same way.
 {% endstep %}
 {% endstepper %}
 
@@ -87,14 +81,14 @@ Uploading a new version of an existing repository is not supported yet. Support 
 
 ### Which features are unavailable?
 
-The zip is a static snapshot, so anything that needs a live git connection is limited. Opening an AutoFix pull request is one example. AI Code Analysis, whitebox pentests, and other features that read the code can use the snapshot. Connect a git provider when you need the full set.
+The zip is a static snapshot, so anything that needs a live git connection is limited. Opening an AutoFix pull request is one example. AI Scans, whitebox pentests, and other features that read the code can use the snapshot. Connect a git provider when you need the full set.
 
 ## Related
 
-{% content-ref url="/pages/5VOmohZt3vDXzoKPHmDk" %}
-[Connect Your Repositories](/getting-started/setting-up-your-account/create-account-and-connect-your-repositories.md)
+{% content-ref url="../../getting-started/setting-up-your-account/create-account-and-connect-your-repositories.md" %}
+[create-account-and-connect-your-repositories.md](https://help.aikido.dev/getting-started/setting-up-your-account/create-account-and-connect-your-repositories)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/KVMq059PBtgOs1XY2NCO" %}
-[Local Code Scanning](/code-scanning/local-code-scanning.md)
+{% content-ref url="../local-code-scanning/" %}
+[local-code-scanning](https://help.aikido.dev/code-scanning/local-code-scanning)
 {% endcontent-ref %}

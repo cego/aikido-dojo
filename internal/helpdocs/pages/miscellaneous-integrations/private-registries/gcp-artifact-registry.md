@@ -8,15 +8,13 @@ Artifact Registry does not support NuGet, so NuGet packages cannot be routed thr
 
 {% stepper %}
 {% step %}
-
 ### Get your Aikido proxy URL
 
-Go to [Settings > Registry Proxy](https://app.aikido.dev/issues/aikido-libraries/setup-instructions), select your ecosystem and copy the upstream proxy URL
+Go to [Settings > Registry Proxy](https://app.aikido.dev/issues/aikido-libraries/setup-instructions?regionRedirect=1), select your ecosystem and copy the upstream proxy URL
 
 {% endstep %}
 
 {% step %}
-
 ### Create a Remote Repository in Artifact Registry
 
 1. In the Google Cloud Console, go to **Artifact Registry > Repositories**.
@@ -35,7 +33,6 @@ The **Custom repository URL** is immutable after creation. If you need to change
 {% endstep %}
 
 {% step %}
-
 ### (Optional) Create a Virtual Repository
 
 If you also publish internal packages to a Standard repository in Artifact Registry, create a Virtual Repository that aggregates both:
@@ -50,7 +47,6 @@ This gives your team a single registry endpoint that serves both internal packag
 {% endstep %}
 
 {% step %}
-
 ### Configure Developer Machines to use Artifact Registry
 
 Point each developer's package manager at the Artifact Registry repository (the Virtual Repository, if you created one). See Google Cloud's documentation for the exact steps:
@@ -71,13 +67,12 @@ Point each developer's package manager at the Artifact Registry repository (the 
 {% endstep %}
 
 {% step %}
-
 ### (Optional) Block the public registry with Device Protection
 
 Once Artifact Registry is in place, developers can still bypass it by pointing their package manager directly at the public registry. Deploy Aikido Device Protection to enforce that all traffic goes through your private registry.
 
-{% content-ref url="/pages/sa7N9YXthBxZbm6WmKBq" %}
-[Block Public Package Registries](/aikido-device-protection/using-aikido-endpoint/block-public-package-registries.md)
+{% content-ref url="../../aikido-device-protection/using-aikido-endpoint/block-public-package-registries.md" %}
+[block-public-package-registries.md](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/block-public-package-registries)
 {% endcontent-ref %}
 {% endstep %}
 {% endstepper %}

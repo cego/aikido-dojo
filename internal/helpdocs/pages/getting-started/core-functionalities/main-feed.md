@@ -8,16 +8,16 @@ The **Feed** is the central hub for monitoring and managing security issues. A s
 
 By default, Aikido enables the **Focus** view, containing all issues that are important to follow-up. By toggling to **All** we will also show issues that have been auto-triaged and ignored.
 
-*Status Column*
+_Status Column_
 
 Shows the status of the particular issue.
 
-* *New*: issues that have been around for less than 7 days
-* *To Do:* all other issues that are still unresolved
-* *Task Open:* only when a task manager is linked
-* *PR Open:* clicking will take you to PR / branch scan overview.<br>
+* _New_: issues that have been around for less than 7 days
+* _To Do:_ all other issues that are still unresolved
+* _Task Open:_ only when a task manager is linked
+*   _PR Open:_ clicking will take you to PR / branch scan overview.<br>
 
-  
+    
 
 ### Sidebar <a href="#sidebar" id="sidebar"></a>
 
@@ -41,7 +41,7 @@ You can easily adjust the view in order to filter on those issues that are most 
 
 * **Issue Type**
 * **Predefined filtered views**
-  * If you are using the [**SLA functionality**](https://help.aikido.dev/en/articles/8926339-enabling-slas-in-aikido), you will be able to see all upcoming and out of SLA issues
+  * If you are using the [**SLA functionality**](https://help.aikido.dev/getting-started/core-functionalities/enable-slas-in-aikido), you will be able to see all upcoming and out of SLA issues
 
 ### Export Issues to CSV or PDF <a href="#export-issues-to-csv-or-pdf" id="export-issues-to-csv-or-pdf"></a>
 
@@ -51,6 +51,6 @@ You can export a CSV or PDF of issues. You can configure which issues to export 
 
 ### Show issues per team or project <a href="#show-issues-per-team-or-project" id="show-issues-per-team-or-project"></a>
 
-**Aikido's Feed** features a **team filter** at the top of the page. This filter allows users to tailor the feed to display only the issues relevant to selected teams ([📖 Set Up Teams](https://help.aikido.dev/en/articles/9005606-using-teams-for-repository-and-user-management)).
+**Aikido's Feed** features a **team filter** at the top of the page. This filter allows users to tailor the feed to display only the issues relevant to selected teams ([📖 Set Up Teams](https://help.aikido.dev/getting-started/manage-teams-and-applications/managing-user-access-with-teams)).
 
 [image: Team selector dropdown with search and statistics on solved and new issues.]

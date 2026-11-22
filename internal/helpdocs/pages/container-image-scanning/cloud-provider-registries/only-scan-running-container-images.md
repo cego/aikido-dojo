@@ -25,7 +25,7 @@ If you're on AWS and connected your account before July 13th, 2026, also [update
 
 #### Enabling **Only Scan Running Images**
 
-* Navigate to [**Settings** > **Containers**](https://app.aikido.dev/settings/container-image-registry)
+* Navigate to [**Settings** > **Containers**](https://app.aikido.dev/settings/container-image-registry?regionRedirect=1)
 * Click the triple dots on the registry you want to configure, and click '**Edit Registry Configuration**'
 * In the **Registry Settings** modal, toggle on **Only scan running images**
 * Click **Save**

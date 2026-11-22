@@ -26,7 +26,7 @@ By connecting to your organization’s Git provider (GitHub, GitLab, Bitbucket),
 Automated off-boarding is **not available** for this option. You need to manually manage your users and deactivate them once access should be revoked.
 {% endhint %}
 
-This is especially useful for adding billing personnel, users with personal GitHub accounts, freelancers, and auditors requiring temporary access. Read the full article on how to [Invite Users to Aikido Without a Git Account](/getting-started/automated-user-management/invite-users-to-aikido-without-a-git-account.md).
+This is especially useful for adding billing personnel, users with personal GitHub accounts, freelancers, and auditors requiring temporary access. Read the full article on how to [Invite Users to Aikido Without a Git Account](https://help.aikido.dev/getting-started/automated-user-management/invite-users-to-aikido-without-a-git-account).
 
 **Choose the below login method in Aikido 👇**
 
@@ -34,7 +34,7 @@ This is especially useful for adding billing personnel, users with personal GitH
 
 ### More info on authentication & automated user management <a href="#more-info-on-authentication--automated-user-management" id="more-info-on-authentication--automated-user-management"></a>
 
-* [GitHub Integration](/getting-started/automated-user-management/automated-user-management/github-integration-for-authentication-and-user-management.md)
-* [GitLab Cloud Integration](/getting-started/automated-user-management/automated-user-management/gitlab-integration-for-authentication-and-user-management.md)
-* [GitLab Self-Managed Integration](/getting-started/automated-user-management/automated-user-management/gitlab-self-managed-integration-for-authentication-and-user-management.md)
-* [BitBucket Cloud Integration](/getting-started/automated-user-management/automated-user-management/bitbucket-cloud-integration-for-authentication-and-user-management.md)
+* [GitHub Integration](https://help.aikido.dev/getting-started/automated-user-management/automated-user-management/github-integration-for-authentication-and-user-management)
+* [GitLab Cloud Integration](https://help.aikido.dev/getting-started/automated-user-management/automated-user-management/gitlab-integration-for-authentication-and-user-management)
+* [GitLab Self-Managed Integration](https://help.aikido.dev/getting-started/automated-user-management/automated-user-management/gitlab-self-managed-integration-for-authentication-and-user-management)
+* [BitBucket Cloud Integration](https://help.aikido.dev/getting-started/automated-user-management/automated-user-management/bitbucket-cloud-integration-for-authentication-and-user-management)

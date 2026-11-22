@@ -4,13 +4,13 @@ This guide will walk you through installing and setting up Zen Firewall by Aikid
 
 If you encounter any issues or problems, don't hesitate reach out on support chat or Github issues
 
-<https://github.com/AikidoSec/firewall-php>
+[https://github.com/AikidoSec/firewall-php](https://github.com/AikidoSec/firewall-php)
 
 ## Requirements
 
 * FrankenPHP 8.2+ (tested up to FrankenPHP 8.5).
 * No framework / custom middleware.
-* [Aikido account](/getting-started/setting-up-your-account.md) & [Zen Firewall token](/zen-firewall/zen-installation-instructions/creating-an-aikido-zen-firewall-token.md)
+* [Aikido account](https://help.aikido.dev/getting-started/setting-up-your-account) & [Zen Firewall token](https://help.aikido.dev/zen-firewall/zen-installation-instructions/creating-an-aikido-zen-firewall-token)
 
 ## Installation & Configuration
 
@@ -50,36 +50,29 @@ For Debian-based arm64 / aarch64:
 curl -L -O https://github.com/AikidoSec/firewall-php/releases/latest/download/aikido-php-firewall.aarch64.deb
 dpkg -i -E ./aikido-php-firewall.aarch64.deb
 ```
-
 {% endstep %}
 
 {% step %}
 **Start Zen Firewall in dry / detection-only mode**
 
-Set the token as in your `Caddyfile` so the Aikido Zen agent can pick it up. If you don't have a token yet, follow [instructions here](/zen-firewall/zen-installation-instructions/creating-an-aikido-zen-firewall-token.md).
+Set the token as in your `Caddyfile` so the Aikido Zen agent can pick it up. If you don't have a token yet, follow [instructions here](https://help.aikido.dev/zen-firewall/zen-installation-instructions/creating-an-aikido-zen-firewall-token).
 
-{% @aikido-custom-code/code-highlight content="! Caddyfile
+```code-highlight
+! Caddyfile
 example.com {
-root \* /var/www/html/public
+    root * /var/www/html/public
 
-```
-php_server {
-```
-
-* ```
-     env AIKIDO_TOKEN "AIK_RUNTIME_...."
-  ```
-* ```
-     env AIKIDO_BLOCK "True"
-    worker {
-      // your worker parameters
+    php_server {
++        env AIKIDO_TOKEN "AIK_RUNTIME_...."
++        env AIKIDO_BLOCK "True"
+        worker {
+          // your worker parameters
+        }
     }
-  ```
 
-  }
-
-  file\_server
-  }" %}
+    file_server
+}
+```
 
 We recommend to start your app in dry mode to ensure it works as expected without blocking any requests. We advise running Zen Firewall in staging for two weeks to avoid false positives.
 
@@ -88,7 +81,7 @@ env AIKIDO_BLOCK "False"
 ```
 
 {% hint style="info" %}
-You can define an environment variable `AIKIDO_DEBUG=true` to enable debug mode for more detailed information about what the agent is doing. For more information about your environment variables: [Configuration via Environment Variables](/zen-firewall/zen-installation-instructions/configuration-via-environment-variables.md)
+You can define an environment variable `AIKIDO_DEBUG=true` to enable debug mode for more detailed information about what the agent is doing. For more information about your environment variables: [configuration-via-environment-variables.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/configuration-via-environment-variables "mention")
 {% endhint %}
 
 For example
@@ -106,66 +99,52 @@ Restart your FrankenPHP process manager/web server after changes.
 
 Call \aikido\worker\_rinit() and \aikido\worker\_rshutdown() in Octane worker script
 
-{% @aikido-custom-code/code-highlight language="php" content="\<?php
+```code-highlight language="php"
+<?php
 
-require **DIR** . '/../vendor/autoload.php';
-$app = require\_once **DIR** . '/../bootstrap/app.php';
+require __DIR__ . '/../vendor/autoload.php';
+$app = require_once __DIR__ . '/../bootstrap/app.php';
 
-while (frankenphp\_handle\_request(function () use ($app) {
+while (frankenphp_handle_request(function () use ($app) {
++    \aikido\worker_rinit();
 
-* \aikido\worker\_rinit();
-
+    // Your application logic
+    
++    \aikido\worker_rshutdown();
+})) {
+    // keep looping
+}
 ```
-// Your application logic
-```
-
-* \aikido\worker\_rshutdown();
-  })) {
-  // keep looping
-  }" %}
-  {% endstep %}
+{% endstep %}
 
 {% step %}
 **Enable Rate limiting and User blocking**
 
 Use `set_user` and `should_block_request` in your request pipeline:
 
-{% @aikido-custom-code/code-highlight language="php" content="+if (extension\_loaded('aikido')) {
-
-* \aikido\set\_user('123', 'John Doe');
-*
-* $decision = \aikido\should\_block\_request();
-*
-* if ($decision->block) {
-* ```
-    if ($decision->type === 'ratelimited') {
-  ```
-* ```
-        http_response_code(429);
-  ```
-* ```
-        header('Retry-After: ' . $decision->retry_after);
-  ```
-* ```
-        exit('You are rate limited by Zen.');
-  ```
-* ```
-    }
-  ```
-* ```
-    http_response_code(403);
-  ```
-* ```
-    exit('You are blocked by Zen.');
-  ```
-* }
-  +}" %}
-  {% endstep %}
+```code-highlight language="php"
++if (extension_loaded('aikido')) {
++   \aikido\set_user('123', 'John Doe');
++
++   $decision = \aikido\should_block_request();
++
++   if ($decision->block) {
++       if ($decision->type === 'ratelimited') {
++           http_response_code(429);
++           header('Retry-After: ' . $decision->retry_after);
++           exit('You are rate limited by Zen.');
++       }
++       http_response_code(403);
++       exit('You are blocked by Zen.');
++   }
++}
+```
+{% endstep %}
 
 {% step %}
 **Test your app**
 
-Browse to your application and perform a couple of actions or open a couple of pages. Zen will automatically discover the routes in your application.
+Browse to your application and perform a couple of actions or open a couple of pages. Zen will automatically discover the routes in your application.&#x20;
 
 {% hint style="info" %}
 Zen sends data back to Aikido every 10 minutes
@@ -200,7 +179,6 @@ Start your app and try to access the route you've rate limited 5 times within a 
 ```
 You are rate limited by Aikido firewall. (Your IP: 1.2.3.4)
 ```
-
 {% endstep %}
 
 {% step %}
@@ -210,18 +188,18 @@ Congrats you've successfully installed Zen Firewall. If you encountered any prob
 
 You can now go and explore the many features that Zen Firewall provides:
 
-* [Blocking Bot traffic with Zen Firewall](/zen-firewall/zen-features/blocking-bot-traffic-with-zen-firewall.md)
-* [Blocking or Monitoring Tor traffic with Zen Firewall](/zen-firewall/zen-features/blocking-tor-traffic-with-zen-firewall.md)
-* [Tracking Users with Zen Firewall](/zen-firewall/zen-features/blocking-users-with-zen-firewall.md)
-* [Blocking Known Threat Actors with Zen Firewall](/zen-firewall/zen-features/blocking-known-threat-actors-with-zen-firewall.md)
-* [Blocking Traffic by Country with Zen Firewall](/zen-firewall/zen-features/blocking-traffic-by-country-with-zen-firewall.md)
-* [Setting Up Rate Limiting for Routes](/zen-firewall/zen-features/setting-up-rate-limiting-for-routes.md)
-* [Monitor Outbound Domains](/zen-firewall/zen-features/monitor-outbound-domains.md)
+* [blocking-bot-traffic-with-zen-firewall.md](https://help.aikido.dev/zen-firewall/zen-features/blocking-bot-traffic-with-zen-firewall "mention")
+* [blocking-tor-traffic-with-zen-firewall.md](https://help.aikido.dev/zen-firewall/zen-features/blocking-tor-traffic-with-zen-firewall "mention")
+* [blocking-users-with-zen-firewall.md](https://help.aikido.dev/zen-firewall/zen-features/blocking-users-with-zen-firewall "mention")
+* [blocking-known-threat-actors-with-zen-firewall.md](https://help.aikido.dev/zen-firewall/zen-features/blocking-known-threat-actors-with-zen-firewall "mention")
+* [blocking-traffic-by-country-with-zen-firewall.md](https://help.aikido.dev/zen-firewall/zen-features/blocking-traffic-by-country-with-zen-firewall "mention")
+* [setting-up-rate-limiting-for-routes.md](https://help.aikido.dev/zen-firewall/zen-features/setting-up-rate-limiting-for-routes "mention")
+* [monitor-outbound-domains.md](https://help.aikido.dev/zen-firewall/zen-features/monitor-outbound-domains "mention")
 
 Additional information:
 
-* [Zen Performance & Reliability](/zen-firewall/miscellaneous/how-zen-works-performance-reliability.md)
-* [Blocking vs Detection Mode in Zen Firewall](/zen-firewall/zen-features/blocking-vs-detection-mode-in-zen-firewall.md)
-* [Understanding Your Zen Statistics](/zen-firewall/zen-features/understanding-your-zen-statistics.md)
-  {% endstep %}
-  {% endstepper %}
+* [how-zen-works-performance-reliability.md](https://help.aikido.dev/zen-firewall/miscellaneous/how-zen-works-performance-reliability "mention")
+* [blocking-vs-detection-mode-in-zen-firewall.md](https://help.aikido.dev/zen-firewall/zen-features/blocking-vs-detection-mode-in-zen-firewall "mention")
+* [understanding-your-zen-statistics.md](https://help.aikido.dev/zen-firewall/zen-features/understanding-your-zen-statistics "mention")
+{% endstep %}
+{% endstepper %}

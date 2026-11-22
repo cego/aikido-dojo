@@ -1,6 +1,6 @@
 # Webhooks
 
-In addition to Slack and Microsoft Teams notifications it's also possible to setup Webhooks for Zen events. To create or modify a Webhook, open the [Webhooks page](https://app.aikido.dev/settings/integrations/api/webhooks) .
+In addition to Slack and Microsoft Teams notifications it's also possible to setup Webhooks for Zen events. To create or modify a Webhook, open the [Webhooks page](https://app.aikido.dev/settings/integrations/api/webhooks?regionRedirect=1) .
 
 Aikido will attempt to re-submit the notification 5 times if the request is not successful. A request is deemed unsuccessful if HTTP status other than 200 is returned or if a timeout occurs. [This page](https://apidocs.aikido.dev/reference/verirfying-webhooks) describes how webhook events can be verified.
 
@@ -13,7 +13,6 @@ The following events are currently sent:
 <summary>Attack detected (Sample)</summary>
 
 {% code overflow="wrap" %}
-
 ```json
 {
    "event_type": "zen.attack",
@@ -51,7 +50,6 @@ The following events are currently sent:
    "workspace_id": 123
 }
 ```
-
 {% endcode %}
 
 </details>

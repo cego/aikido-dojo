@@ -1,4 +1,4 @@
-# Generic OCI-Compatible Registry
+# Generic OCI-compatible registry
 
 Use this guide to connect any Docker/OCI-compatible registry to Aikido for image scanning.<br>
 
@@ -7,9 +7,9 @@ Aikido only needs read (pull) access. We never push, modify, or delete images.
 ## Prerequisites
 
 * An OCI-compatible registry endpoint (e.g. registry.example.com).
-* A user with pull permissions for the repositories you want scanned.
+*   A user with pull permissions for the repositories you want scanned.
 
-  Scope it to the minimum set of repos or namespaces.
+    Scope it to the minimum set of repos or namespaces.
 * (Optional) If your registry is behind a firewall, allowlist Aikido’s egress IPs.
 
 ## Set-up

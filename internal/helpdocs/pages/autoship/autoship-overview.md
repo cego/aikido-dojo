@@ -1,7 +1,5 @@
 # AutoShip Overview
 
-AutoShip ships security fixes so you can focus on shipping features.
-
 Although AutoFix optimizes to create non-breaking pull requests, it is still required to test the changes in a live environment to ensure there are no unwanted runtime effects. Shipping pull requests created by AutoFix thus can take significant time. You need to:
 
 1. Check the CI/CD results
@@ -15,11 +13,11 @@ AutoShip integrates with all your runtime systems in order to automate this proc
 
 ## Getting started
 
-Go to [AutoShip](https://app.aikido.dev/autoship) in the Aikido UI and first configure the global settings: provide write access, the label to trigger on and your environments to deploy to. After connecting the CI/CD, Monitoring and Alerting integrations, you can start enabling AutoShip on your repositories. For each repository you need to configure which CI/CD they use and what environments AutoShip should deploy to. For each environment you can specify where the monitoring information can be found to detect regressions and how to smoke test that environment.
+Go to [AutoShip](https://app.aikido.dev/autoship?regionRedirect=1) in the Aikido UI and first configure the global settings: provide write access, the label to trigger on and your environments to deploy to. After connecting the CI/CD, Monitoring and Alerting integrations, you can start enabling AutoShip on your repositories. For each repository you need to configure which CI/CD they use and what environments AutoShip should deploy to. For each environment you can specify where the monitoring information can be found to detect regressions and how to smoke test that environment.
 
 ### Global Configuration
 
-On the [AutoShip > Integrations page](https://app.aikido.dev/autoship/settings) you can setup the integrations used by AutoShip:
+On the [AutoShip > Integrations page](https://app.aikido.dev/autoship/settings?regionRedirect=1) you can setup the integrations used by AutoShip:
 
 #### Write Access for AutoShip
 
@@ -35,11 +33,13 @@ AutoShip triggers on pull requests that have a designated label, the default lab
 
 Since BitBucket does not support labels, by default AutoShip will pick up pull requests that have `@autoship` in the PR description. If the label is changed, AutoShip will trigger on `@<label>` .
 
+Azure DevOps does not support labels either. To trigger AutoShip on an Azure DevOps pull request, add a comment on the pull request with `/` followed by the label, for example `/autoship`. The comment must contain only this command. If the label is changed, comment `/<label>`. Azure DevOps does not notify Aikido when a pull request description is edited, so mentioning the label in the description does not trigger AutoShip.
+
 #### CI/CD
 
 AutoShip connects to your CI/CD system to check whether the build is passing. When build problems arise, AutoShip will fix them and push the fix on the pull request branch.
 
-In the global configuration you connect your CI/CD system. In most cases this requires an API key, see the [CI/CD](/autoship/ci-cd.md) page for details per system. We current support:
+In the global configuration you connect your CI/CD system. In most cases this requires an API key, see the [CI/CD](https://help.aikido.dev/autoship/ci-cd) page for details per system. We current support:
 
 * GitHub Actions
 * GitLab CI
@@ -53,7 +53,7 @@ Additional configuration per repository can be provided when configuring the rep
 
 Once the deploy to an environment succeeded, AutoShip will look at the data from your monitoring system to verify there are no new errors. If a regression is detected, AutoShip will roll back the changes.
 
-In the global configuration you connect your monitoring systems. In most case this requires an API key, see the [Monitoring](/autoship/monitoring.md) page for details per system. We currently support:
+In the global configuration you connect your monitoring systems. In most case this requires an API key, see the [Monitoring](https://help.aikido.dev/autoship/monitoring) page for details per system. We currently support:
 
 * Sentry
 * CloudWatch
@@ -81,7 +81,7 @@ This can be configured per repository, for critical repositories you probably wa
 In the environment configuration you can specify:
 
 * **How AutoShip should deploy to this environment.** These are a free-text instructions, eg. `merge the PR branch into the staging branch`.
-* **How AutoShip should test the functionality.** Here you configure which domain should be tested, how to authenticate to the domain and provide free-text instructions on how to test, eg. `add a product to the basket and check it is present on the checkout page`. [More information about smoke testing.](/autoship/smoke-testing.md)
+* **How AutoShip should test the functionality.** Here you configure which domain should be tested, how to authenticate to the domain and provide free-text instructions on how to test, eg. `add a product to the basket and check it is present on the checkout page`. [More information about smoke testing.](https://help.aikido.dev/autoship/smoke-testing)
 * **How AutoShip should detect regressions.** Point AutoShip to the monitoring system used for this particular repository & environment. Eg. where to find the Cloudwatch logs for the service in staging.
 
 #### Alerting
@@ -97,9 +97,11 @@ Make sure your CI/CD and monitoring tools allow access from these IP addresses:
 * `52.214.244.18`
 * `18.202.209.180`
 * `52.50.198.227`
-* `52.51.98.186`
+*   `52.51.98.186`
 
-The IP addresses for Smoke Testing can be found [here](/autoship/smoke-testing.md).
+    &#x20;
+
+The IP addresses for Smoke Testing can be found [here](https://help.aikido.dev/autoship/smoke-testing).
 
 ### Try it!
 

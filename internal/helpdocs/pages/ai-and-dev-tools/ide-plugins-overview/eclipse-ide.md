@@ -12,7 +12,7 @@ When security issues are found, they're highlighted directly in your code and li
 {% step %}
 **Go to the** [**Eclipse marketplace**](https://marketplace.eclipse.org/content/aikido-security) **and install the Aikido Plugin**
 
-In Eclipse, go to `Help` > `Eclipse Marketplace...` and look for 'Aikid&#x6F;*'* in the search bar. Click 'Install'.
+In Eclipse, go to `Help` > `Eclipse Marketplace...` and look for 'Aikid&#x6F;_'_ in the search bar. Click 'Install'.
 
 After installation, restart Eclipse.
 {% endstep %}
@@ -20,7 +20,7 @@ After installation, restart Eclipse.
 {% step %}
 **Authenticate with Aikido**
 
-In Aikido, go to the [Eclipse Integration Screen](https://app.aikido.dev/settings/integrations/ide/eclipse) and create your token.
+In Aikido, go to the [Eclipse Integration Screen](https://app.aikido.dev/settings/integrations/ide/eclipse?regionRedirect=1) and create your token.
 
 After installation the Aikido Security View will open automatically in Eclipse. If this is not the case, go to `Window` > `Show View` > `Other...` > Look for Aikido and select the 'Aikido Security' view. In the Aikido Security view, click `Connect to Aikido` and enter your token.
 
@@ -90,7 +90,6 @@ public class UserServlet extends HttpServlet {
     }
 }
 ```
-
 {% endstep %}
 {% endstepper %}
 

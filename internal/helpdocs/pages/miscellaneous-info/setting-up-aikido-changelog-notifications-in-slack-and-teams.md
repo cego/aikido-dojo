@@ -10,7 +10,7 @@ Stay informed about the latest product updates, bug fixes, and new features by c
    * Authorize the app when prompted
 2. **Configure the RSS feed**:
    * In your Slack workspace and the channel where you want to receive the notifications, type\
-     `/feed subscribe https://aikido.help/changelog.xml`
+     `/feed subscribe https://aikido.help/changelog.xml`&#x20;
 3. **Verify the connection**:
 
 * Once configured, you should see a confirmation message in your Slack channel
@@ -25,7 +25,7 @@ Stay informed about the latest product updates, bug fixes, and new features by c
    * Search for “RSS” and click “Configure” on the RSS connector
 2. **Set up the RSS feed**:
    * In the configuration window, enter a name (e.g., “Aikido Product Changelog”)
-   * Paste our changelog RSS feed URL: `https://aikido.help/changelog.xml`
+   * Paste our changelog RSS feed URL: `https://aikido.help/changelog.xml`&#x20;
    * Select how often you want updates to be delivered
    * Click “Save”
 3. **Verify the connection**:

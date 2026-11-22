@@ -1,7 +1,5 @@
 # Configuring Registry Scan Scope
 
-Configure wildcard patterns to control which container images are scanned in your connected registries.
-
 Use wildcard patterns to control which container images Aikido scans in your connected registries. This helps you focus on relevant containers and avoid clutter when working with registries containing hundreds of images across multiple projects.
 
 #### How Scan Scope Works
@@ -17,13 +15,13 @@ You can configure scan scope in two ways:
 
 #### Setting Up Scan Scope
 
-1. Navigate to [**Settings** > **Containers**](https://app.aikido.dev/settings/container-image-registry)
-2. Click the triple dots on the registry you want to configure, and click '**Edit Registry Configuration**'<br>
+1. Navigate to [**Settings** > **Containers**](https://app.aikido.dev/settings/container-image-registry?regionRedirect=1)
+2.  Click the triple dots on the registry you want to configure, and click '**Edit Registry Configuration**'<br>
 
-   
-3. In the **Registry Settings** modal, scroll to the **Registry Scan Scope** section<br>
+    
+3.  In the **Registry Settings** modal, scroll to the **Registry Scan Scope** section<br>
 
-   
+    
 4. Select your scan mode:
    * **Include containers matching** to create an allowlist
    * **Exclude containers matching** to create a blocklist

@@ -12,7 +12,7 @@ The **registry name** is the name of the hosted docker repository of which we sh
 
 [image: Asset browser interface displaying repository names, types, formats, and online statuses.]
 
-In this example the name of the registry is *docker-hosted*
+In this example the name of the registry is _docker-hosted_
 
 The **credentials** can be either User tokens (recommended) or User credentials.
 

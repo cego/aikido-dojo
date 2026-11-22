@@ -25,9 +25,9 @@ We support every version that is still supported by its vendor. Once a version r
 | Kernel       | 5.11 or later, with BTF and cgroup v2 available. Run `uname -r` to check |
 | Init system  | systemd, which runs the `aikido-endpoint-protection` service             |
 
-The kernel requirements come from the eBPF datapath the agent uses to see package installs. A container image installed with `--container` uses an explicit proxy instead, so it runs on older kernels; see [Device Protection in Containers](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/device-protection-in-containers.md).
+The kernel requirements come from the eBPF datapath the agent uses to see package installs. A container image installed with `--container` uses an explicit proxy instead, so it runs on older kernels; see [Device Protection in Containers](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/device-protection-in-containers).
 
-A desktop install also wants a tray that speaks StatusNotifierItem. That one is cosmetic, and protection runs either way. See [Tray Icon Support on Linux](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/install-device-protection-for-linux/tray-icon-support-on-linux.md).
+A desktop install also wants a tray that speaks StatusNotifierItem. That one is cosmetic, and protection runs either way. See [Tray Icon Support on Linux](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/install-device-protection-for-linux/tray-icon-support-on-linux).
 
 ## Package sources
 
@@ -50,5 +50,5 @@ Device Protection monitors packages from the following sources:
 * Homebrew
 
 {% hint style="info" %}
-Skills are hosted on GitHub rather than a dedicated registry, so the **Block All Installs** and **Force Requests** policies do not apply to them. See [Configuring Installation Policies](/aikido-device-protection/using-aikido-endpoint/configuring-installation-policies.md).
+Skills are hosted on GitHub rather than a dedicated registry, so the **Block All Installs** and **Force Requests** policies do not apply to them. See [Configuring Installation Policies](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/configuring-installation-policies).
 {% endhint %}

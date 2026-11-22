@@ -6,9 +6,9 @@ Aikido prevents secrets at three points before they reach production: in the IDE
 
 {% tabs %}
 {% tab title="From IDE" %}
-When the [Aikido IDE plugin](broken://pages/TtCgRvpjJR8sPsXdszal) is installed you can use the Aikido Expansion Packs to install the pre commit hook with one click.
+When the [Aikido IDE plugin](https://help.aikido.dev/ai-and-dev-tools/ide-plugins-overview) is installed you can use the Aikido Expansion Packs to install the pre commit hook with one click.
 
-[Learn more in the Expansion Packs docs.](/ai-and-dev-tools/ide-plugins-overview/features/aikido-expansion-packs.md)
+[Learn more in the Expansion Packs docs.](https://help.aikido.dev/ai-and-dev-tools/ide-plugins-overview/features/aikido-expansion-packs)
 {% endtab %}
 
 {% tab title="Mac/Linux" %}
@@ -89,7 +89,7 @@ Secret #1:
 
 ## Skipping a specific secret
 
-To skip a [specific secret from being flagged](/code-scanning/scanning-practices/ignoring-secrets-via-code-comments.md), add a comment on the line of the detected secret:
+To skip a [specific secret from being flagged](https://help.aikido.dev/code-scanning/scanning-practices/ignoring-secrets-via-code-comments), add a comment on the line of the detected secret:
 
 ```javascript
 const password = "eRwjQKVUSRX7uYV017B0cRHVKv45Gv8G" // gitleaks:allow
@@ -120,7 +120,6 @@ If you've installed the Aikido pre-commit hook using the install script and want
 ```bash
 curl -fsSL https://raw.githubusercontent.com/AikidoSec/pre-commit/e6f541e65378dd30f3f320628000f837cfba0ec4/installation-samples/install-global/uninstall-aikido-hook.sh | bash
 ```
-
 {% endtab %}
 
 {% tab title="Windows" %}
@@ -129,7 +128,6 @@ If you've installed the Aikido pre-commit hook using the install script and want
 ```powershell
 iex (iwr "https://raw.githubusercontent.com/AikidoSec/pre-commit/e6f541e65378dd30f3f320628000f837cfba0ec4/installation-samples/install-global/uninstall-aikido-hook.ps1" -UseBasicParsing)
 ```
-
 {% endtab %}
 {% endtabs %}
 
@@ -159,5 +157,5 @@ Git will keep using your existing hooks, without running Aikido Secrets.
 
 ## Related articles
 
-* [Ignoring secrets via code comments](/code-scanning/scanning-practices/ignoring-secrets-via-code-comments.md)
-* [Ignoring files using .aikido file](/code-scanning/scanning-practices/ignore-via-code-with-aikido-files.md)
+* [Ignoring secrets via code comments](https://help.aikido.dev/code-scanning/scanning-practices/ignoring-secrets-via-code-comments)
+* [Ignoring files using .aikido file](https://help.aikido.dev/code-scanning/scanning-practices/ignore-via-code-with-aikido-files)

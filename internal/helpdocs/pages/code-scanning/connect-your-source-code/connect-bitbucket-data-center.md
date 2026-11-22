@@ -1,7 +1,5 @@
 # Connect Bitbucket Data Center
 
-Connect your Bitbucket Data Center instance to Aikido for code scanning.
-
 Aikido lets you connect Bitbucket Data Center to scan your repositories.
 
 #### Step 1. Sign in to Aikido

@@ -2,7 +2,7 @@
 
 The Aikido Local Scanner can enforce security gates at different stages of your CI pipeline, including pull requests and releases.
 
-Release gating scans the full build artifact, such as a container image, before it is published or deployed. Unlike [PR gating](/container-image-scanning/local-image-scanning/pr-gating-for-container-images-using-local-image-scanner.md), which scans only the changes introduced in a pull request, release gating evaluates the entire build. If the scan finds issues that meet or exceed your configured severity threshold, the CI pipeline fails and the release is blocked.
+Release gating scans the full build artifact, such as a container image, before it is published or deployed. Unlike [PR gating](https://help.aikido.dev/container-image-scanning/local-image-scanning/pr-gating-for-container-images-using-local-image-scanner), which scans only the changes introduced in a pull request, release gating evaluates the entire build. If the scan finds issues that meet or exceed your configured severity threshold, the CI pipeline fails and the release is blocked.
 
 This ensures that the final artifact meets your security standards before it reaches production.
 

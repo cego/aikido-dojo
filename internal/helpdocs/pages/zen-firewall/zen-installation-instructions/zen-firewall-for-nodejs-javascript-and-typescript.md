@@ -4,74 +4,74 @@
 
 ## Frameworks
 
-{% content-ref url="/pages/EsPdAVdy8SDalwWm2ymA" %}
-[Nodejs (Express)](/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/express.md)
+{% content-ref url="express.md" %}
+[express.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/express)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/5mZyu8SYt2cyorv502Hh" %}
-[Nodejs (Fastify)](/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/fastify.md)
+{% content-ref url="fastify.md" %}
+[fastify.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/fastify)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/h0KKyWVgkVZ8fxDuD9XE" %}
-[Nodejs (hapi)](/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/hapi.md)
+{% content-ref url="hapi.md" %}
+[hapi.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/hapi)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/RGM9aFYLVsXjEhkjBtdG" %}
-[Nodejs (Hono)](/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/hono.md)
+{% content-ref url="hono.md" %}
+[hono.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/hono)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/XZALpGK9o29In52ySDEf" %}
-[Nodejs (ElysiaJS)](/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/elysiajs.md)
+{% content-ref url="elysiajs.md" %}
+[elysiajs.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/elysiajs)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/pOo7LXE9iyDaiYR8xUcy" %}
-[Nodejs (Koa)](/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/koa.md)
+{% content-ref url="koa.md" %}
+[koa.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/koa)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/J3MF9hC0XhRhwUPNks9a" %}
-[Nodejs (micro)](/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/micro.md)
+{% content-ref url="micro.md" %}
+[micro.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/micro)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/hn1aYmvInN66wHY7kySg" %}
-[Nodejs (NestJS)](/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/nestjs.md)
+{% content-ref url="nestjs.md" %}
+[nestjs.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/nestjs)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/taZQGqdw4rpGb7OGzYuD" %}
-[Nodejs (Next.js standalone)](/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/nextjs.md)
+{% content-ref url="nextjs.md" %}
+[nextjs.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/nextjs)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/6veBIpeLet1HzoDtIttK" %}
-[Nodejs (Restify)](/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/restify.md)
+{% content-ref url="restify.md" %}
+[restify.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/restify)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/JUelTBCL7KbLcY8t4q7n" %}
-[Nodejs (Generic middleware)](/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/generic-middleware.md)
+{% content-ref url="generic-middleware.md" %}
+[generic-middleware.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/generic-middleware)
 {% endcontent-ref %}
 
 ## Bundlers
 
-{% content-ref url="/pages/LU0s4shmdCA9R1xbnjHK" %}
-[Nodejs (ESM)](/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/node.js-esm.md)
+{% content-ref url="node.js-esm.md" %}
+[node.js-esm.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/node.js-esm)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/He7VhMZg0l4nJ5RKrQjX" %}
-[Nodejs Bundlers (generic)](/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/bundlers.md)
+{% content-ref url="bundlers.md" %}
+[bundlers.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/bundlers)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/WWNKcqfxDZ7bXTehf6to" %}
-[Nodejs with esbuild](/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/esbuild.md)
+{% content-ref url="esbuild.md" %}
+[esbuild.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/esbuild)
 {% endcontent-ref %}
 
 ## Serverless
 
-{% content-ref url="/pages/jpHM1WsbNK3H74WVQJLu" %}
-[Nodejs (Google Cloud Pub/Sub)](/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/google-cloud-pubsub.md)
+{% content-ref url="google-cloud-pubsub.md" %}
+[google-cloud-pubsub.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/google-cloud-pubsub)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/gkHPtcYxlzodSV1K5QfP" %}
-[Nodejs (Google Cloud Functions)](/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/google-cloud-functions.md)
+{% content-ref url="google-cloud-functions.md" %}
+[google-cloud-functions.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/google-cloud-functions)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/hKWlXuIeiN6G2ggWlUsT" %}
-[Nodejs (AWS Lambda)](/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/aws-lambda.md)
+{% content-ref url="aws-lambda.md" %}
+[aws-lambda.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-nodejs-javascript-and-typescript/aws-lambda)
 {% endcontent-ref %}

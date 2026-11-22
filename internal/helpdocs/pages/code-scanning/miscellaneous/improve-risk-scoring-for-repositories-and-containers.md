@@ -9,7 +9,7 @@ Aikido allows you to add contextual info to all your repositories and containers
 
 ### Configure Repository and Container Sensitivity <a href="#configure-repository-and-container-sensitivity" id="configure-repository-and-container-sensitivity"></a>
 
-**Step 1.** Navigate to [Repositories](https://app.aikido.dev/repositories) overview or [Container](https://app.aikido.dev/containers) overview
+**Step 1.** Navigate to [Repositories](https://app.aikido.dev/repositories?regionRedirect=1) overview or [Container](https://app.aikido.dev/containers?regionRedirect=1) overview
 
 **Step 2.** Click on the triple dots to open the action menu and select **Configure**
 
@@ -23,12 +23,12 @@ Aikido allows you to add contextual info to all your repositories and containers
   * Yes: Select this option if the repository is accessible over the internet using HTTP(S).
   * No: Choose this option if the repository is not connected to the internet.
   * Unknown: If you're unsure about the repository's internet connection status, select this option.
-* **Specify the Domain** (if applicable): If the repository is connected to the internet, you can provide the domain of the service (e.g., <https://example.com>). This will activate Aikido's dynamic testing for surface monitoring (DAST).
+* **Specify the Domain** (if applicable): If the repository is connected to the internet, you can provide the domain of the service (e.g., [https://example.com](https://example.com)). This will activate Aikido's dynamic testing for surface monitoring (DAST).
 * **Setting Sensitivity Levels**
   * Choose Sensitivity Level: Aikido allows you to define the sensitivity level of the data managed by each service/repository. This helps tailor the scanning process to the importance of the data. Sensitivity levels range from "Not Sensitive at All" to "Extremely Sensitive."
   * For each repository, choose the sensitivity level that best represents the data it manages. Consider the nature of the data, its confidentiality, and potential impact if compromised.
-  * Updating the sensitivity level will influence the scoring mechanism of Aikido
+  *   Updating the sensitivity level will influence the scoring mechanism of Aikido
 
-    [image: Data sensitivity setting impacts issue severity score by -5 for non-sensitive data.]
+      [image: Data sensitivity setting impacts issue severity score by -5 for non-sensitive data.]
 
 ***

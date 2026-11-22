@@ -4,7 +4,7 @@ The Thoropass integration automatically pushes vulnerabilities to Thoropass for 
 
 ### How to enable the Thoropass Integration. <a href="#how-to-enable-the-thoropass-integration" id="how-to-enable-the-thoropass-integration"></a>
 
-**Step 1.** Go to [**Settings > Integrations > Thoropass**](https://app.aikido.dev/settings/integrations/compliance/thoropass) and click 'Add Thoropass integration'.
+**Step 1.** Go to [**Settings > Integrations > Thoropass**](https://app.aikido.dev/settings/integrations/compliance/thoropass?regionRedirect=1) and click 'Add Thoropass integration'.
 
 [image: Missing Thoropass integration; option to add and enable automatic vulnerability push.]
 
@@ -12,4 +12,4 @@ The Thoropass integration automatically pushes vulnerabilities to Thoropass for 
 
 [image: Aikido requests read/write access to vulnerabilities in your Thorapass account.]
 
-**Step 3.** You are all set. Aikido will actively push all vulnerabilities to Thoropass on a daily basis. You can also see the active Aikido integration [inside the Thoropass App](https://app.thoropass.com/integrations).
+**Step 3.** You are all set. Aikido will actively push all vulnerabilities to Thoropass on a daily basis. You can also see the active Aikido integration inside the Thoropass App.

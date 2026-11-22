@@ -6,11 +6,11 @@ The Aikido Security Local Scanner is a tool that enables you to perform Aikido S
 
 ### 1. Get your authentication token <a href="#id-1-get-your-authentication-token" id="id-1-get-your-authentication-token"></a>
 
-1. Go to the [Local Scanner Image setup page](https://app.aikido.dev/settings/container-image-registry/add/localscan)
+1. Go to the [Local Scanner Image setup page](https://app.aikido.dev/settings/container-image-registry/add/localscan?regionRedirect=1)
 2. Generate an authentication token and copy. Note that you will only be able to view this token once.
-3. Add this token as argument `--apikey` when running the Local Scanner in your project .
+3.  Add this token as argument `--apikey` when running the Local Scanner in your project .
 
-   [image: Local image scanning setup instructions with binary downloads, token generation, and setup guide.]
+    [image: Local image scanning setup instructions with binary downloads, token generation, and setup guide.]
 
 ### 2. Adding the Local Scanner to your project <a href="#id-2-adding-the-local-scanner-to-your-project" id="id-2-adding-the-local-scanner-to-your-project"></a>
 
@@ -32,7 +32,7 @@ docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aikidosecurity/loca
 
 If you are running this in your CI, be careful to not run scan on images that are based on feature branches, to prevent production and feature results being mixed together in Aikido.
 
-You can also run the scanner in release or PR gating mode, check out [this article](/container-image-scanning/local-image-scanning/pr-gating-for-container-images-using-local-image-scanner.md) for more info.
+You can also run the scanner in release or PR gating mode, check out [this article](https://help.aikido.dev/container-image-scanning/local-image-scanning/pr-gating-for-container-images-using-local-image-scanner) for more info.
 
 ### 4. Check your scanning results <a href="#id-4-check-your-scanning-results" id="id-4-check-your-scanning-results"></a>
 

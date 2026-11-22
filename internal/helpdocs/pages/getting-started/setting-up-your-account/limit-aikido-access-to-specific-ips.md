@@ -16,14 +16,12 @@ Only **workspace admins** can view and manage IP restrictions. Non-admin users a
 
 {% stepper %}
 {% step %}
-
 ### Open IP restrictions
 
-Go to [**IP Restrictions**](https://app.aikido.dev/settings/advanced/ip-locks) in your workspace settings. Use direct link to access.
+Go to [**IP Restrictions**](https://app.aikido.dev/settings/advanced/ip-locks?regionRedirect=1) in your workspace settings. Use direct link to access.
 {% endstep %}
 
 {% step %}
-
 ### Add trusted IP addresses
 
 Click **"Add IP restriction"** and enter one or more IPv4 addresses or CIDR ranges.
@@ -35,7 +33,6 @@ Click **"Save"** to apply the allowlist.
 {% endstep %}
 
 {% step %}
-
 ### Verify your current IP is included
 
 Aikido automatically adds your current IP address when you save. This prevents you from locking yourself out of the workspace.
@@ -46,7 +43,7 @@ Your current IP is shown with a **"Current IP"** badge in the list. You can't re
 
 ## How it works
 
-When at least one IP address is on the allowlist, Aikido enables IP restrictions for your workspace. Any user connecting from an IP that isn't on the list sees a **403 Forbidden** error: *"Your IP is not allowed to access this workspace."*
+When at least one IP address is on the allowlist, Aikido enables IP restrictions for your workspace. Any user connecting from an IP that isn't on the list sees a **403 Forbidden** error: _"Your IP is not allowed to access this workspace."_
 
 **Disabling IP restrictions:** Remove all IP addresses from the allowlist. When you remove the last entry, IP restrictions are turned off automatically and all users can access the workspace again (subject to their normal login permissions).
 
@@ -78,5 +75,5 @@ Before enabling IP restrictions, make sure every team member can reach Aikido fr
 {% endhint %}
 
 {% hint style="info" %}
-IP restrictions for Aikido are separate from IP allowlisting on your Git provider. If you also restrict access to GitHub, GitLab, or another SCM, see [IP Allowlisting for Your Git Provider](/miscellaneous-info/ip-allowlisting-for-your-git-provider.md).
+IP restrictions for Aikido are separate from IP allowlisting on your Git provider. If you also restrict access to GitHub, GitLab, or another SCM, see [IP Allowlisting for Your Git Provider](https://help.aikido.dev/miscellaneous-info/ip-allowlisting-for-your-git-provider).
 {% endhint %}

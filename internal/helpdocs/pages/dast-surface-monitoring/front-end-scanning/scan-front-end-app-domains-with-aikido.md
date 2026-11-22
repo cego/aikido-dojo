@@ -5,7 +5,7 @@ The **Quick Scan** is a fast, non-intrusive check of your front-end app for secu
 Quick Scan falls under Dynamic Application Security Testing (DAST): it inspects the externally-facing components of your software (web pages, headers, cookies, transferred data, third-party libraries) without ever touching your source code.
 
 {% hint style="info" %}
-Looking for deeper testing of APIs, business logic or authenticated flows? Use **Agentic Scan** instead. See [Aikido Pentest](/pentests/aikido-pentest.md).
+Looking for deeper testing of APIs, business logic or authenticated flows? Use **Agentic Scan** instead. See [Aikido Pentest](https://help.aikido.dev/pentests/aikido-pentest).
 {% endhint %}
 
 ## Use Cases
@@ -20,7 +20,7 @@ Looking for deeper testing of APIs, business logic or authenticated flows? Use *
 
 ### Overview of checks performed
 
-To see the checks performed by the Quick Scan, visit our [checks overview page](https://app.aikido.dev/domains/checks). Here, you'll find a detailed list of all the checks performed during the scan. Aikido will only perform safe, non-destructive automated tests (eg no automated SQL injection attempts,..).
+To see the checks performed by the Quick Scan, visit our [checks overview page](https://app.aikido.dev/domains/checks?regionRedirect=1). Here, you'll find a detailed list of all the checks performed during the scan. Aikido will only perform safe, non-destructive automated tests (eg no automated SQL injection attempts,..).
 
 ### Overview of libraries detected
 
@@ -28,7 +28,7 @@ To see a list of all libraries detected by the Quick Scan, visit the **Resources
 
 ## How to Set-up <a href="#add-a-domain-to-be-scanned-with-aikido" id="add-a-domain-to-be-scanned-with-aikido"></a>
 
-**Step 1:** Navigate to the [Domains Overview Page](https://app.aikido.dev/domains) or [Domains Settings](https://app.aikido.dev/settings/domains), click **Add Domain** and select **Quick Scan**
+**Step 1:** Navigate to the [Domains Overview Page](https://app.aikido.dev/domains?regionRedirect=1) or [Domains Settings](https://app.aikido.dev/settings/domains?regionRedirect=1), click **Add Domain** and select **Quick Scan**
 
 [image: Choose scan type modal with Quick Scan, Attack Surface Scan and Agentic Scan options.]
 
@@ -40,4 +40,4 @@ To see a list of all libraries detected by the Quick Scan, visit the **Resources
 
 [image: Form to add domain details, link assets, and classify data sensitivity for issue scoring.]
 
-**Step 5: Optional:** set up authentication if your domain requires login. Open the action menu for the domain and select **Authenticate Domain**. For the full list of supported authentication methods, see [Authenticated Scanning for Front-End Apps](/dast-surface-monitoring/front-end-scanning/authenticated-scanning-for-front-end-apps.md).
+**Step 5: Optional:** set up authentication if your domain requires login. Open the action menu for the domain and select **Authenticate Domain**. For the full list of supported authentication methods, see [Authenticated Scanning for Front-End Apps](https://help.aikido.dev/dast-surface-monitoring/front-end-scanning/authenticated-scanning-for-front-end-apps).

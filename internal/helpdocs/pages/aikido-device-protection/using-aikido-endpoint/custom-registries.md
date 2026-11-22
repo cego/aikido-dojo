@@ -6,11 +6,11 @@ Packages served through a registered domain are checked for malware exactly like
 
 ## How it works
 
-When you register a custom registry, Device Protection recognizes its domain as a proxy for a public ecosystem. Package installs that flow through that domain are inspected on the device and checked against Aikido's malware signatures, just like installs from the public registry itself. Your existing [installation policies](/aikido-device-protection/using-aikido-endpoint/configuring-installation-policies.md) apply to these installs too.
+When you register a custom registry, Device Protection recognizes its domain as a proxy for a public ecosystem. Package installs that flow through that domain are inspected on the device and checked against Aikido's malware signatures, just like installs from the public registry itself. Your existing [installation policies](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/configuring-installation-policies) apply to these installs too.
 
 ## Add a custom registry
 
-1. Go to [Custom Registries](https://app.aikido.dev/endpoint-protection/custom-registries) in your Aikido account.
+1. Go to [Custom Registries](https://app.aikido.dev/endpoint-protection/custom-registries?regionRedirect=1) in your Aikido account.
 2. Click **Add Custom Registry**.
 3. Select the registry **Type**: AWS CodeArtifact or JFrog Artifactory.
 4. Enter the registry **Domain**, for example `my-org.d.codeartifact.us-east-1.amazonaws.com` or `my-company.jfrog.io`.

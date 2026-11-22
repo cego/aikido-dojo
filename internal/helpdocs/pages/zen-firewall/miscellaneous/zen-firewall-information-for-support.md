@@ -1,21 +1,21 @@
-# Information for Support
+# Zen Firewall - Information for Support
 
 When contacting Aikido Support about Zen Firewall, please work through the checks below first and include the requested information in your ticket. This helps us diagnose issues faster and avoid unnecessary back and forth.
 
 ### 1. Check your token
 
-Zen needs a valid token to communicate with Aikido. If your app does not appear in the [Zen dashboard](https://app.aikido.dev/runtime/services), the token is the first thing to verify.
+Zen needs a valid token to communicate with Aikido. If your app does not appear in the [Zen dashboard](https://app.aikido.dev/runtime/services?regionRedirect=1), the token is the first thing to verify.
 
 * Confirm `AIKIDO_TOKEN` is set in the environment where your app actually runs (not just your shell).
 * Make sure the token has not been wrapped in extra quotes or whitespace.
-* Verify the token belongs to the correct app. See [Creating an Aikido Zen Firewall Token](/zen-firewall/zen-installation-instructions/creating-an-aikido-zen-firewall-token.md).
-* Enable [`AIKIDO_DEBUG=true`](/zen-firewall/zen-installation-instructions/configuration-via-environment-variables.md#debugging) and confirm the startup log reports that a token was detected.
+* Verify the token belongs to the correct app. See [Creating an Aikido Zen Firewall Token](https://help.aikido.dev/zen-firewall/zen-installation-instructions/creating-an-aikido-zen-firewall-token).
+* Enable [`AIKIDO_DEBUG=true`](https://help.aikido.dev/zen-firewall/zen-installation-instructions/configuration-via-environment-variables#debugging) and confirm the startup log reports that a token was detected.
 
 ### 2. Check connection to Aikido
 
 Zen requires outbound HTTPS access to Aikido's cloud. If the token is set but the app still does not appear in the dashboard, network restrictions are the most likely cause.
 
-See [Outbound Network Connections for Zen](/zen-firewall/miscellaneous/outbound-network-connections-for-zen.md) for the full list of domains (EU, US, ME) and connectivity test commands. Run those checks from the same host (and same container, if applicable) where your app runs, and share the output if any of them fail.
+See [Outbound Network Connections for Zen](https://help.aikido.dev/zen-firewall/miscellaneous/outbound-network-connections-for-zen) for the full list of domains (EU, US, ME) and connectivity test commands. Run those checks from the same host (and same container, if applicable) where your app runs, and share the output if any of them fail.
 
 ### 3. Information for support
 
@@ -23,7 +23,7 @@ When opening a ticket, please share:
 
 **App & environment**
 
-* Link to the app in the Aikido [Zen dashboard](https://app.aikido.dev/runtime/services)
+* Link to the app in the Aikido [Zen dashboard](https://app.aikido.dev/runtime/services?regionRedirect=1)
 * Programming language and runtime version (e.g. Node.js 20, Python 3.12, PHP 8.3)
 * Framework and version (e.g. Express, Django, Spring MVC, Laravel, ASP.NET Core)
 * Zen package / library version
@@ -33,7 +33,7 @@ When opening a ticket, please share:
 **Configuration**
 
 * Mode: blocking (`AIKIDO_BLOCK=true`) or detection only
-* Any other `AIKIDO_*` environment variables you have set. See [Configuration via Environment Variables](/zen-firewall/zen-installation-instructions/configuration-via-environment-variables.md)
+* Any other `AIKIDO_*` environment variables you have set. See [Configuration via Environment Variables](https://help.aikido.dev/zen-firewall/zen-installation-instructions/configuration-via-environment-variables)
 
 **Issue reproducibility**
 

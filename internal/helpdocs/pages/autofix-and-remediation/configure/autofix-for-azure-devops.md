@@ -1,4 +1,4 @@
-# AutoFix for Azure DevOps using OAuth
+# AutoFix for Azure DevOps
 
 Aikdo Autofix is a tool you can use to have Aikido fix vulnerabilities in 3rd party dependencies in your projects. It will do this by creating pull requests that remove the vulnerability via package updates or by other means. In some cases an Aikido Autofix can remove a whole class of vulnerabilities instead of just 1 issue.
 
@@ -10,10 +10,10 @@ By default, Aikido only has read access on your Azure DevOps instance. To use Ai
 
 [image: Organization security policies for application access, public projects, and user invitations.]
 
-**Step 1. Enable Autofix on the** [**Autofix Settings**](https://app.aikido.dev/settings/integrations/autofix) **page or go to** [**Autofix Page**](https://app.aikido.dev/issues/fix) **and click on Enable Autofix.**
+**Step 1. Enable Autofix on the** [**Autofix Settings**](https://app.aikido.dev/settings/integrations/autofix?regionRedirect=1) **page or go to** [**Autofix Page**](https://app.aikido.dev/issues/fix?regionRedirect=1) **and click on Enable Autofix.**
 
 **Step 2.** Click **Authorize**
 
 **Step 3.** Grant Aikido permissions to **Write**
 
-**Step 4.** Click save and you are all set. You will now be able to execute autofix PRs from the [Autofix page](https://app.aikido.dev/issues/fix) or from the action menu for subissues in the sidebar ([read more here](/autofix-and-remediation/scope/autofix-for-open-source-dependencies.md)).
+**Step 4.** Click save and you are all set. You will now be able to execute autofix PRs from the [Autofix page](https://app.aikido.dev/issues/fix?regionRedirect=1) or from the action menu for subissues in the sidebar ([read more here](https://help.aikido.dev/autofix-and-remediation/scope/autofix-for-open-source-dependencies)).

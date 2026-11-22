@@ -2,7 +2,7 @@
 
 Vanta is a system to help your company attain SOC2 and ISO27001 compliance. Its system is integrated with 3rd party applications to feed it with evidence that it can monitor and bring together in 1 dashboard for your auditor.
 
-Aikido can be found on Vanta's app marketplace. You can also start the installation via [this link](https://app.aikido.dev/settings/integrations/compliance/vanta).
+Aikido can be found on Vanta's app marketplace. You can also start the installation via [this link](https://app.aikido.dev/settings/integrations/compliance/vanta?regionRedirect=1).
 
 [image: Vanta app authorization screen for granting Aikido Security account access.]
 

@@ -37,7 +37,6 @@ In the New MCP Server dialog, select how you want to connect to the MCP server a
   }
 }
 ```
-
 {% endstep %}
 
 {% step %}
@@ -74,7 +73,6 @@ Ensure that all first-party code is scanned for security issues whenever code is
 - If the Aikido MCP server is not installed or not running, inform the user to install it using the official setup guide at  
   https://help.aikido.dev/ide-plugins/aikido-mcp
 ```
-
 {% endstep %}
 
 {% step %}
@@ -85,7 +83,7 @@ Aikido MCP is now available in Jetbrains IDE
 {% endstepper %}
 
 {% hint style="info" %}
-For CI/CD or headless setups where browser login is not possible, see [Token Authentication](/ai-and-dev-tools/aikido-mcp/token-authentication.md).
+For CI/CD or headless setups where browser login is not possible, see [Token Authentication](https://help.aikido.dev/ai-and-dev-tools/aikido-mcp/token-authentication).
 {% endhint %}
 
-For the full list of tools the MCP server exposes, see [Available tools](/ai-and-dev-tools/aikido-mcp/using-aikido-mcp.md#available-tools). For ways to ask your agent to use Aikido, see [Example prompts](/ai-and-dev-tools/aikido-mcp/using-aikido-mcp.md#example-prompts).
+For the full list of tools the MCP server exposes, see [Available tools](https://help.aikido.dev/ai-and-dev-tools/aikido-mcp/using-aikido-mcp#available-tools). For ways to ask your agent to use Aikido, see [Example prompts](https://help.aikido.dev/ai-and-dev-tools/aikido-mcp/using-aikido-mcp#example-prompts).

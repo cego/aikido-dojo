@@ -1,6 +1,6 @@
 # Google Artifact Registry - Private Packages
 
-Private packages stored in a Google Artifact Registry can be retrieved by AutoFix for **Poetry, UV, NPM, PNPM, Yarn, Bun & Go AutoFixes**. Authentication to Google Artifact Registry can be done through [Workload Identity Federation](#using-workload-identity-federation) or a [Service Account](#using-a-service-account).
+Private packages stored in a Google Artifact Registry can be retrieved by AutoFix for **Poetry, UV, NPM, PNPM, Yarn, Bun & Go AutoFixes**. Authentication to Google Artifact Registry can be done through [Workload Identity Federation](https://help.aikido.dev/autofix-and-remediation/connect-private-packages/google-artifact-registry-private-packages#using-workload-identity-federation) or a [Service Account](https://help.aikido.dev/autofix-and-remediation/connect-private-packages/google-artifact-registry-private-packages#using-a-service-account).
 
 ## Using Workload Identity Federation
 
@@ -14,7 +14,7 @@ Workload Identity Federation allows you to grant the Aikido read role access to 
 2. Click **+ Get Started** (or **+ Create Pool** if you already have pools setup).
 3. **Name your pool:** Enter `aikido-identity-pool` as the name and click **Continue**.
 4. **Add a provider to your pool:**
-   * Select **AWS** from the *Select a provider* dropdown list
+   * Select **AWS** from the _Select a provider_ dropdown list
    * Enter the **Provider name:** `aws-provider`
    * Enter Aikido's **AWS Account ID:** `881830977366`
    * Click **Continue**.
@@ -50,10 +50,10 @@ Google Artifact Registry is currently only supported for Poetry, UV, NPM, PNPM, 
 
 Once the steps in the GCP console are done, you can configure AutoFix to authenticate with your private registry by following the steps below:
 
-1. Go to the [AutoFix > Settings](https://app.aikido.dev/issues/fix/settings) page in the Aikido UI
-2. Click on **+ Connect Registry**, the configuration modal will now be shown
+1. Go to the [AutoFix > Settings](https://app.aikido.dev/issues/fix/settings?regionRedirect=1) page in the Aikido UI
+2.  Click on **+ Connect Registry**, the configuration modal will now be shown
 
-   
+    
 3. Select Google Artifact Registry:\
    
 4. Paste your saved **JSON config** content from Step 3 above in the **GCP credentials** field
@@ -88,10 +88,10 @@ Google Artifact Registry is currently only supported for Poetry, UV, NPM, PNPM, 
 
 Once the steps in the GCP console are done, you can configure AutoFix to authenticate with your private registry by following the steps below:
 
-1. Go to the [AutoFix > Settings](https://app.aikido.dev/issues/fix/settings) page in the Aikido UI
-2. Click on **+ Connect Registry**, the configuration modal will now be shown
+1. Go to the [AutoFix > Settings](https://app.aikido.dev/issues/fix/settings?regionRedirect=1) page in the Aikido UI
+2.  Click on **+ Connect Registry**, the configuration modal will now be shown
 
-   
+    
 3. Select Google Artifact Registry:\
    
 4. Paste your saved **Service Acount Key** content from Step 2 above in the **GCP credentials** field
@@ -101,9 +101,9 @@ Once the steps in the GCP console are done, you can configure AutoFix to authent
 
 A Go module path doesn't say which registry hosts the module, so Go needs **2 environment variables**.
 
-Set them in AutoFix → Settings → Connect Registry → [Set Environment Variables](/autofix-and-remediation/connect-private-packages/custom-config-private-packages.md):
+Set them in AutoFix → Settings → Connect Registry → [Set Environment Variables](https://help.aikido.dev/autofix-and-remediation/connect-private-packages/custom-config-private-packages):
 
 * `GOPROXY`: your Artifact Registry Go repository first, then the public Go proxy, e.g. `https://<location>-go.pkg.dev/<project-id>/<repository>,https://proxy.golang.org,direct`
-* `GONOSUMDB`: the module paths of your private modules, so Go doesn't check them against the public checksum database, e.g. `github.com/<your-org>/*`
+* `GONOSUMDB`: the module paths of your private modules, so Go doesn't check them against the public checksum database, e.g. `github.com/<your-org>/*`&#x20;
 
 AutoFix uses your GCP credentials to authenticate to every `go.pkg.dev` host in `GOPROXY`.

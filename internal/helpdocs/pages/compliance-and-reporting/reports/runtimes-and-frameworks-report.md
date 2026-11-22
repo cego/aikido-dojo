@@ -1,6 +1,6 @@
 # Runtimes & Frameworks Report
 
-The [Runtimes & Frameworks](https://app.aikido.dev/reports/runtimes) report gives you a consolidated view of every runtime and framework detected across your repositories, containers, and virtual machines, along with its end-of-life (EOL) status.
+The [Runtimes & Frameworks](https://app.aikido.dev/reports/runtimes?regionRedirect=1) report gives you a consolidated view of every runtime and framework detected across your repositories, containers, and virtual machines, along with its end-of-life (EOL) status.
 
 Aikido discovers runtimes and frameworks by scanning all three surfaces and cross-references each detected version against [endoflife.date](https://endoflife.date), an open dataset that tracks official vendor support timelines.
 

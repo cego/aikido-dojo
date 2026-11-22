@@ -10,7 +10,6 @@ Use GitHub's native CODEOWNERS support and branch protection so the right people
 
 {% stepper %}
 {% step %}
-
 ### Add a CODEOWNERS file
 
 Create a `CODEOWNERS` file in `.github/`, the repository root, or `docs/`. Map the paths AutoFix typically changes (for example lockfiles and package manifests) to the users or teams that should review those PRs:
@@ -31,7 +30,6 @@ Adjust the paths and owners to match your repo layout. See [About code owners](h
 {% endstep %}
 
 {% step %}
-
 ### Require review from code owners
 
 In your repository's branch protection rules (or rulesets) for the target branch:
@@ -49,7 +47,7 @@ GitHub can also automatically request reviews from CODEOWNERS when a PR touches 
 
 ## GitLab
 
-On GitLab, Aikido AutoFix adds CODEOWNERS as reviewers on merge requests when there are fewer than 10 CODEOWNERS for the changed files. You can turn that off with `disable_codeowners_as_reviewers` in your repo's `.aikido` file. See [Disabling CODEOWNERS as reviewers](/autofix-and-remediation/configure/autofix-pr-configuration.md#disabling-codeowners-as-reviewers).
+On GitLab, Aikido AutoFix adds CODEOWNERS as reviewers on merge requests when there are fewer than 10 CODEOWNERS for the changed files. You can turn that off with `disable_codeowners_as_reviewers` in your repo's `.aikido` file. See [Disabling CODEOWNERS as reviewers](https://help.aikido.dev/autofix-and-remediation/configure/autofix-pr-configuration#disabling-codeowners-as-reviewers).
 
 To require those reviews before merge, configure approval rules or CODEOWNER approvals in GitLab itself.
 
@@ -61,4 +59,4 @@ This requires a Workspace Access Token with `account:read` permissions.
 
 Supported owner identifiers include email, team and username. Workspace groups are currently not supported, BitBucket advises to use teams instead.
 
-You can turn this off with `disable_codeowners_as_reviewers` in your repo's `.aikido` file. See [Disabling CODEOWNERS as reviewers](/autofix-and-remediation/configure/autofix-pr-configuration.md#disabling-codeowners-as-reviewers).
+You can turn this off with `disable_codeowners_as_reviewers` in your repo's `.aikido` file. See [Disabling CODEOWNERS as reviewers](https://help.aikido.dev/autofix-and-remediation/configure/autofix-pr-configuration#disabling-codeowners-as-reviewers).

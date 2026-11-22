@@ -1,6 +1,6 @@
 # JetBrains YouTrack
 
-This one-time setup *per workspace* allows everyone in your Aikido organization to create issues directly in YouTrack.
+This one-time setup _per workspace_ allows everyone in your Aikido organization to create issues directly in YouTrack.
 
 Following use cases are supported :
 
@@ -9,16 +9,16 @@ Following use cases are supported :
 
 ## Connecting the Aikido App to YouTrack <a href="#connecting-the-aikido-app-to-youtrack" id="connecting-the-aikido-app-to-youtrack"></a>
 
-1. Navigate to [Integration Settings](https://app.aikido.dev/settings/integrations) within the Aikido app.
-2. In the 'Task Trackers' section, select 'YouTrack'\
-   A modal will request the **Service URL** (of your YouTrack space) and the **Permanent Token**. The permanent token can be generated inside Profile -> Account Security in YouTrack.\
-   ​
+1. Navigate to [Integration Settings](https://app.aikido.dev/settings/integrations?regionRedirect=1) within the Aikido app.
+2.  In the 'Task Trackers' section, select 'YouTrack'\
+    A modal will request the **Service URL** (of your YouTrack space) and the **Permanent Token**. The permanent token can be generated inside Profile -> Account Security in YouTrack.\
+    ​
 
-   [image: JetBrains YouTrack integration setup screen requiring configuration for Service URL and token.]
-3. When you have filled in the credentials correctly, the 'Connected' status will appear.\
-   ​
+    [image: JetBrains YouTrack integration setup screen requiring configuration for Service URL and token.]
+3.  When you have filled in the credentials correctly, the 'Connected' status will appear.\
+    ​
 
-   [image: JetBrains YouTrack issue-tracking integration is successfully connected.]
+    [image: JetBrains YouTrack issue-tracking integration is successfully connected.]
 4. Close the modal & open the YouTrack Integration page.\
    ​
 
@@ -33,25 +33,25 @@ There are two different options to create new tasks from Aikido into YouTrack.
 
 ### 1. Manual Task Creation <a href="#id-1-manual-task-creation" id="id-1-manual-task-creation"></a>
 
-1. Hover over any issue in your feed and click the ***+*** in the **assignee column.**\
-   ​
+1.  Hover over any issue in your feed and click the _**+**_ in the **assignee column.**\
+    ​
 
-   [image: Task assignment table section with options to add or manage assignees.]
+    [image: Task assignment table section with options to add or manage assignees.]
 
-   Alternatively, you can click the triple dots in the last columns to open up the action menu. If you have grouped issues, the triple dot action menu is available on every subissue.\
-   ​
+    Alternatively, you can click the triple dots in the last columns to open up the action menu. If you have grouped issues, the triple dot action menu is available on every subissue.\
+    ​
 
-   [image: Action menu with options: create task, snooze, ignore, copy link, adjust severity.]
+    [image: Action menu with options: create task, snooze, ignore, copy link, adjust severity.]
 
-   ​
-2. Fill in the required details in the popup modal.\
-   ​
+    ​
+2.  Fill in the required details in the popup modal.\
+    ​
 
-   [image: Form for creating a security task in JetBrains YouTrack with summary and details.]
-3. The newly created task in YouTrack will be linked in the Aikido Issue Detail under the 'Tasks' tab (sidepanel).\
-   ​
+    [image: Form for creating a security task in JetBrains YouTrack with summary and details.]
+3.  The newly created task in YouTrack will be linked in the Aikido Issue Detail under the 'Tasks' tab (sidepanel).\
+    ​
 
-   [image: Security alert: HSTS header missing, high severity, reported by admin.]
+    [image: Security alert: HSTS header missing, high severity, reported by admin.]
 
 ### 2. Automated Task Creation <a href="#id-2-automated-task-creation" id="id-2-automated-task-creation"></a>
 
@@ -59,7 +59,7 @@ There are two different options to create new tasks from Aikido into YouTrack.
 Aikido will automatically create tasks **every hour in bulk.** There is at the moment no option to trigger this manually.
 {% endhint %}
 
-1. Go to the [YouTrack Integration](https://app.aikido.dev/settings/integrations/tasktracker) settings page
+1. Go to the [YouTrack Integration](https://app.aikido.dev/settings/integrations/tasktracker?regionRedirect=1) settings page
 2. Make sure to enable '**Autocreation**' by clicking the toggle to **On.**
 3. Define the criteria for automatic task creation.
 

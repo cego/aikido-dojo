@@ -6,7 +6,7 @@ Securing your cloud infrastructure is crucial to protecting your user data. You 
 
 Aikido will surface critical cloud misconfigurations that allow hackers to get into your AWS cloud, such as the risk highlighted in [this blog post](https://www.aikido.dev/blog/how-a-startups-cloud-got-taken-over-by-a-simple-form-that-sends-an-email). We focus on the risks that can have a truly big impact on your company's business and cut the noise.
 
-To view the list of security checks performed by Aikido on your cloud environment, go to the 'checks' tab on the [cloud overview page](https://app.aikido.dev/clouds). Filter to AWS to see specific checks performed on your connected AWS account.
+To view the list of security checks performed by Aikido on your cloud environment, go to the 'checks' tab on the [cloud overview page](https://app.aikido.dev/clouds?regionRedirect=1). Filter to AWS to see specific checks performed on your connected AWS account.
 
 Assuming you're using multiple AWS accounts via 'AWS Organizations' to separate staging from production, we recommend trying out Aikido on your staging account first, to get a feel for the process.
 
@@ -14,12 +14,12 @@ Assuming you're using multiple AWS accounts via 'AWS Organizations' to separate 
 
 After connecting, Aikido will perform the following monitoring:
 
-* Perform a daily compliance scan on all checks listed here: <https://app.aikido.dev/clouds/checks>
+* Perform a daily compliance scan on all checks listed here: [https://app.aikido.dev/clouds/checks](https://app.aikido.dev/clouds/checks?regionRedirect=1)
 * Monitor your Route 53 domains for subdomain takeover attacks.
 
 ### Getting started <a href="#getting-started" id="getting-started"></a>
 
-To get started, head to the [cloud overview page](https://app.aikido.dev/clouds) on Aikido and click 'Connect cloud.' Follow the step-by-step setup wizard to connect your AWS account to Aikido.
+To get started, head to the [cloud overview page](https://app.aikido.dev/clouds?regionRedirect=1) on Aikido and click 'Connect cloud.' Follow the step-by-step setup wizard to connect your AWS account to Aikido.
 
 Aikido will require the creation of a new role in your AWS account. The permissions for this role enable us to do a security audit of your cloud, but not edit your cloud infrastructure. This works by giving the Aikido AWS account a trust relationship with the newly created role in your account.
 
@@ -33,6 +33,6 @@ Within 1-2 minutes after connecting your account, Aikido will report misconfigur
 
 ### Advanced Rules
 
-Besides the checks mentioned above, Aikido offers a suite of complementary checks/rules that you can enable. We call these advanced cloud rules and you can find them [here](https://app.aikido.dev/clouds/checks?cloudCheckType=advanced). After enabling any of these rules, you can expect to see the results (as new issues in [the feed](https://app.aikido.dev/queue)) within a few seconds.
+Besides the checks mentioned above, Aikido offers a suite of complementary checks/rules that you can enable. We call these advanced cloud rules and you can find them [here](https://app.aikido.dev/clouds/checks?cloudCheckType=advanced&regionRedirect=1). After enabling any of these rules, you can expect to see the results (as new issues in [the feed](https://app.aikido.dev/queue?regionRedirect=1)) within a few seconds.
 
-Just like the standard checks, these are evaluated with each scan of your cloud environments. Moreover, they are mapped to the compliance reports. By default, the advanced rules will appear as *disabled* in the compliance reports, unless you activate them.
+Just like the standard checks, these are evaluated with each scan of your cloud environments. Moreover, they are mapped to the compliance reports. By default, the advanced rules will appear as _disabled_ in the compliance reports, unless you activate them.

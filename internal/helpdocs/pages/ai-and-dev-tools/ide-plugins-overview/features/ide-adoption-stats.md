@@ -1,6 +1,6 @@
 # IDE Adoption Stats
 
-The IDE Adoption Stats page gives you visibility into how Aikido is used across your organization. It shows both IDE usage and [Aikido Expansion Pack](/ai-and-dev-tools/ide-plugins-overview/features/aikido-expansion-packs.md) installation and adoption, per developer.
+The IDE Adoption Stats page gives you visibility into how Aikido is used across your organization. It shows both IDE usage and [Aikido Expansion Pack](https://help.aikido.dev/ai-and-dev-tools/ide-plugins-overview/features/aikido-expansion-packs) installation and adoption, per developer.
 
 This helps you understand which IDEs are actively used, which security capabilities are enabled, and where additional rollout or onboarding may be needed.
 

@@ -23,11 +23,11 @@ All Zen security features will be disabled for the configured IPs, so only add s
 {% endhint %}
 
 1. Go to the Firewall tab in the Aikido dashboard
-2. Scroll to the Danger zone section at the bottom of the page<br>
+2.  Scroll to the Danger zone section at the bottom of the page<br>
 
-   
-3. Select Manage Bypass List<br>
+    
+3.  Select Manage Bypass List<br>
 
-   
+    
 4. Add one or more IP addresses or CIDR ranges
 5. Save your changes

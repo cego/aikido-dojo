@@ -1,4 +1,4 @@
-# Deploy Device Protection with Rippling
+# Deploy Aikido Device Protection with Rippling on Windows
 
 Use Rippling to deploy Aikido Device Protection across your managed Windows fleet with the required permissions in place.
 
@@ -16,7 +16,7 @@ Before starting, make sure you have the following from the Aikido Device Protect
 
 * Your **PowerShell install command** (copied from the user group selector on the dashboard, includes token + installer download)
 
-If you're missing it, go back to the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices), click **Connect Device**.
+If you're missing it, go back to the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices?regionRedirect=1), click **Connect Device**.
 {% endstep %}
 
 {% step %}
@@ -50,7 +50,7 @@ Remove-Item $tmp -Force
 ```
 
 4. Click **Save**, then **Deploy** to the same device group.
-   {% endstep %}
+{% endstep %}
 
 {% step %}
 **Reboot devices after installation**
@@ -64,7 +64,6 @@ Rippling does not expose a one-click restart action for Windows in the device li
 ```powershell
 shutdown.exe /r /t 60 /c "Restarting to activate Aikido Device Protection"
 ```
-
 4. Click **Save**, then **Deploy** to the same device group that received the installer.
 
 The agent fully activates on the next boot.
@@ -73,10 +72,10 @@ The agent fully activates on the next boot.
 
 ## Troubleshooting
 
-| Problem                                                      | Fix                                                                                                                                                                             |
-| ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Device doesn't appear in the dashboard after the script runs | Reboot the device; the agent fully registers on the next boot                                                                                                                   |
-| Script exits with an error in the MDM console                | Run the script manually as SYSTEM on a test host to see the full error; confirm the device has internet access to download the installer                                        |
-| Agent service is not running                                 | Reboot the device; if the service is still absent, re-run the install script                                                                                                    |
-| Script is blocked by execution policy                        | Scripts run via MDM execute as SYSTEM and bypass user-level execution policy restrictions; confirm the MDM is not applying an additional policy that restricts script execution |
-| Device shows as inactive after installation                  | The agent needs a reboot to fully activate; check back after rebooting                                                                                                          |
+| Problem | Fix |
+| ------- | --- |
+| Device doesn't appear in the dashboard after the script runs | Reboot the device; the agent fully registers on the next boot |
+| Script exits with an error in the MDM console | Run the script manually as SYSTEM on a test host to see the full error; confirm the device has internet access to download the installer |
+| Agent service is not running | Reboot the device; if the service is still absent, re-run the install script |
+| Script is blocked by execution policy | Scripts run via MDM execute as SYSTEM and bypass user-level execution policy restrictions; confirm the MDM is not applying an additional policy that restricts script execution |
+| Device shows as inactive after installation | The agent needs a reboot to fully activate; check back after rebooting |

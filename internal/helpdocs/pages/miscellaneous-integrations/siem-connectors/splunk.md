@@ -15,13 +15,12 @@ Before connecting, get these from Splunk:
 * **HEC URL** - the base URL of your Splunk HTTP Event Collector (HEC) endpoint.
 * **HEC Port** - the port your Splunk HEC listens on.
 * **HEC Token** - the token you generate in Splunk for authentication (see below).
-* **Username and password** *(optional)* - only needed if you want Aikido to automatically create the Splunk index for you.
+* **Username and password** _(optional)_ - only needed if you want Aikido to automatically create the Splunk index for you.
 
 ### Connecting Splunk
 
 {% stepper %}
 {% step %}
-
 #### Get your Splunk HEC token
 
 If you're on **Splunk Enterprise**, first enable HEC: go to **Settings > Data Inputs > HTTP Event Collector > Global Settings**, and set **All Tokens** to **Enabled**.
@@ -38,7 +37,6 @@ Note the HEC URL and port for your Splunk instance too; you'll need both.
 {% endstep %}
 
 {% step %}
-
 #### Connect a SIEM
 
 Go to **Settings > Integrations** in the Aikido app and add a new SIEM integration. In the **Connect a SIEM** dialog, select **Splunk** and fill in:
@@ -48,7 +46,7 @@ Go to **Settings > Integrations** in the Aikido app and add a new SIEM integrati
 * **Splunk HEC URL** - the base URL of your Splunk HTTP Event Collector.
 * **Splunk HEC Port** - the HEC port.
 
-**Options** *(all optional)*
+**Options** _(all optional)_
 
 * **Allow Insecure Connection** - allows insecure connections (for example, self-signed certificates). Not recommended for production.
 * **Splunk Index** - the index to send data to. Leave empty to use the default index.
@@ -64,7 +62,6 @@ Click **Test connection** to confirm Aikido can reach Splunk, then **Save change
 {% endstep %}
 
 {% step %}
-
 #### Configure which issues sync
 
 On the Splunk integration page, under **Issue input settings**, configure which Aikido issues are synced to your SIEM:

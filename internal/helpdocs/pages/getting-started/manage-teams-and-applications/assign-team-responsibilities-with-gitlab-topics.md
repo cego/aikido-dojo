@@ -10,7 +10,7 @@ Aikido allows you to use **Gitlab Project Topics** to automatically manage team 
 ### Configuration <a href="#assigning-specific-paths" id="assigning-specific-paths"></a>
 
 {% hint style="warning" %}
-This feature is **not enabled by default** and needs to be activated for your account. Please contact **Aikido support** for assistance.
+This feature is **not enabled by default** and needs to be activated for your account. Please contact **Aikido support** for assistance.&#x20;
 {% endhint %}
 
 For each repository you want managed by Aikido:
