@@ -1,4 +1,4 @@
-# Deploy Device Protection with Intune
+# Deploy Aikido Device Protection with Intune on macOS
 
 Use Microsoft Intune to deploy Aikido Device Protection across your managed macOS fleet with the required permissions in place.
 
@@ -10,10 +10,10 @@ Use Microsoft Intune to deploy Aikido Device Protection across your managed macO
 
 Before starting, make sure you have the following from the Aikido Device Protection dashboard:
 
-* The **Aikido Device Protection `.mobileconfig`** (downloaded from the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices))
+* The **Aikido Device Protection `.mobileconfig`** (downloaded from the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices?regionRedirect=1))
 * The **Aikido Device Protection installer** (`.pkg` file, downloaded from the dashboard)
 
-If you're missing any of these, go back to the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices), click **Connect Device**, and complete the pre-flight steps.
+If you're missing any of these, go back to the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices?regionRedirect=1), click **Connect Device**, and complete the pre-flight steps.
 {% endstep %}
 
 {% step %}
@@ -35,7 +35,7 @@ This profile allows the Aikido Device Protection system extension to load silent
 2. Select **macOS app (PKG)** as the app type.
 3. Upload the Aikido Device Protection `.pkg` file.
 4. Complete the remaining tabs (**Detection rules**, **Assignments**) and assign the app as **Required** for the same device group.
-   {% endstep %}
+{% endstep %}
 
 {% step %}
 **Deploy to your devices**
@@ -43,7 +43,7 @@ This profile allows the Aikido Device Protection system extension to load silent
 1. Assign and sync the **Aikido Device Protection** configuration profile.
 2. Verify it appears on a test device.
 3. Assign the **Aikido Device Protection** app.
-   {% endstep %}
+{% endstep %}
 
 {% step %}
 **Reboot devices after installation**
@@ -59,16 +59,16 @@ The agent fully activates on the next boot.
 
 On a test device, confirm:
 
-1. The system extension is activated:
+1.  The system extension is activated:
 
-   ```bash
-   systemextensionsctl list | grep aikido
-   ```
+    ```bash
+    systemextensionsctl list | grep aikido
+    ```
 
-   Expect to see the extension marked `[activated enabled]`.
+    Expect to see the extension marked `[activated enabled]`.
 2. Open **System Settings** → **General** → **Login Items & Extensions** and confirm the Aikido Device Protection entries cannot be toggled off.
-   {% endstep %}
-   {% endstepper %}
+{% endstep %}
+{% endstepper %}
 
 ## Troubleshooting
 

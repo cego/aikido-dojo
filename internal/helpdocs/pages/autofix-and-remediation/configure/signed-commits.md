@@ -24,7 +24,7 @@ To enable signed commits on GitLab, you must use **Personal Access Token (PAT)**
 
 Setup steps:
 
-1. **Navigate to Settings:** In Aikido, go to the [**AutoFix settings** page](https://app.aikido.dev/issues/fix/settings) and click **Authorize** (on initial setup) or **Manage Personal Access Token** (when a token is already set).
+1. **Navigate to Settings:** In Aikido, go to the [**AutoFix settings** page](https://app.aikido.dev/issues/fix/settings?regionRedirect=1) and click **Authorize** (on initial setup) or **Manage Personal Access Token** (when a token is already set).
 2. **Configure the PAT:** Enter the Personal Access Token you generated in GitLab's User Settings in Aikido.
 3. **Generate SSH Key:** Click **Generate SSH key** within Aikido to create your unique signing key.
 4. **Add to GitLab:**
@@ -39,9 +39,9 @@ Aikido creates a unique SSH key for each account, this SSH key can be recreated 
 
 ### Bitbucket Cloud
 
-Signed commits on Bitbucket Cloud require [AutoFix with a Workspace Access Token](/autofix-and-remediation/configure/autofix-for-bitbucket-with-workspace-access-token.md). The SSH key must belong to a real user, and the commit email must be a verified email of that user in your workspace.
+Signed commits on Bitbucket Cloud require [AutoFix with a Workspace Access Token](https://help.aikido.dev/autofix-and-remediation/configure/autofix-for-bitbucket-with-workspace-access-token). The SSH key must belong to a real user, and the commit email must be a verified email of that user in your workspace.
 
-1. **Navigate to Settings:** In Aikido, go to the [**Update Workspace Access Token** page](https://app.aikido.dev/onboarding/bitbucket/update-workspace-access-token) and open the **AutoFix** tab.
+1. **Navigate to Settings:** In Aikido, go to the [**Update Workspace Access Token** page](https://app.aikido.dev/onboarding/bitbucket/update-workspace-access-token?regionRedirect=1) and open the **AutoFix** tab.
 2. **Set the commit email:** In Aikido, enter the email address of the Bitbucket user that will own the SSH key.
 3. **Generate SSH Key:** In the **Advanced** section, click **Generate SSH Key**.
 
@@ -51,7 +51,7 @@ You will now see the `Verified` badge on the commits from Aikido.
 
 ### Bitbucket Data Center
 
-1. **Navigate to AutoFix Settings:** In Aikido, go to the [**AutoFix settings** page](https://app.aikido.dev/issues/fix/settings) and click **Manage Personal Access Token** for Bitbucket Data Center.
+1. **Navigate to AutoFix Settings:** In Aikido, go to the [**AutoFix settings** page](https://app.aikido.dev/issues/fix/settings?regionRedirect=1) and click **Manage Personal Access Token** for Bitbucket Data Center.
 2. **Set the commit email:** In Aikido, enter the email address of the Bitbucket user that will own the SSH key.
 3. **Generate SSH Key:** In the **Advanced** section of the modal, click **Generate SSH Key**.
 

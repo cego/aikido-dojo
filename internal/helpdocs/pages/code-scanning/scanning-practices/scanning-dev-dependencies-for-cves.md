@@ -27,7 +27,7 @@ It is possible to enable dev dependency scanning on per repo basis.
 
 [image: Option to enable or disable scanning of developer dependencies with warning about false positives.]
 
-**Step 4.** Trigger a manual rescan to see results immediately, or wait for the next scheduled scan.
+**Step 4.** Trigger a manual rescan to see results immediately, or wait for the next scheduled scan.&#x20;
 
 {% hint style="info" %}
 Dev dependency findings will also surface on the next push to the default branch via PR gating.

@@ -18,8 +18,6 @@ Options:
   --tag <tag>                      Specify a tag for the scanned image for reporting purposes. This overwrites the default behaviour of deducting the tag from the <image> or <image-name> argument.
   --debug                          Add additional debug information to command output.
   --fail-on <severity>             Runs scanner in gating mode and fails on the given severity or higher. (choices: "low", "medium", "high", "critical")
-  --allowed-distro <distro>        Fail the scan when the base image OS of the scanned image is not in this list. Matches on the distro id as reported in /etc/os-release (e.g. alpine, debian, ubuntu, rhel, amzn, wolfi). Specify this option multiple times to allow multiple distros. (default: [])
-  --allow-unknown-distro           Do not fail on --allowed-distro when no base image OS could be detected (images built FROM scratch).
   --gating-mode <mode>             Indicate whether the scanner should run in release or PR gating mode. Release gating mode scans your main branch and waits to see if there are any issues that should prevent release, in pull request mode, Aikido seeks ONLY new vulnerabilities introduced in a branch. You must supply a base and head commit for the comparison to work. Should be combined with the --fail-on flag (choices: "release", "pr", default: "release")
   --sla-mode                       In release gating mode, only fail the gate on issues that are out of SLA.
   --base-commit-id <commit-id>     Base commit id, this is the commit that Aikido will compare against to determine if a finding is new. Only used for PR gating mode.
@@ -31,8 +29,7 @@ Options:
   --force-create-image-for-tag     Create a new image in Aikido with the tag instead of updating the tag on existing image.
   --scan-timeout <timeout>         Timeout in milliseconds for each scan (defaults to 900000ms).
   --output-cyclonedx-json <output> JSON file to write CycloneDX JSON SBOM to.
-  --output-image-metadata <output> JSON file to write the metadata of the scanned image to (image name, tag, digest and detected base image OS).
-  --scan-javascript-lockfiles.     Also detect JavaScript packages from lockfiles (e.g. package-lock.json, yarn.lock) found inside the image, in addition to installed packages.
+  --scan-javascript-lockfiles      Also detect JavaScript packages from lockfiles (e.g. package-lock.json, yarn.lock) found inside the image, in addition to installed packages.
   --enable-proxy                   Uses HTTPS_PROXY environment variable to proxy requests.
   --ca-bundle <path>               Path to a PEM file containing custom root CA(s) to trust when using --enable-proxy. (env: AIKIDO_CA_BUNDLE)
   --disable-telemetry              Disable all error reporting (telemetry) to Aikido. (env: AIKIDO_DISABLE_TELEMETRY)
@@ -40,7 +37,7 @@ Options:
   -h, --help                       display help for command
 ```
 
-For repository scanning CLI options, see [here](/code-scanning/local-code-scanning/cli-options-for-local-scanner.md).
+For repository scanning CLI options, see [here](https://help.aikido.dev/code-scanning/local-code-scanning/cli-options-for-local-scanner).
 
 ## Common use cases <a href="#common-use-cases" id="common-use-cases"></a>
 

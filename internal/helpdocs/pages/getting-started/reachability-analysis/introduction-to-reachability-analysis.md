@@ -1,8 +1,6 @@
 # Introduction to Reachability Analysis
 
-Learn how Aikido helps you identify which vulnerabilities are exploitable.
-
-Aikido’s reachability analysis is focused on identifying whether a vulnerability is actually exploitable in the context of your application. Instead of flagging every vulnerable dependency or risky pattern as equally critical, Aikido builds a graph of modules, functions, and data flows within your codebase. It then asks a key question: ***Is there an execution path from real application behavior to the vulnerable code?*** Only when such a path exists is the finding considered truly security-relevant.
+Aikido’s reachability analysis is focused on identifying whether a vulnerability is actually exploitable in the context of your application. Instead of flagging every vulnerable dependency or risky pattern as equally critical, Aikido builds a graph of modules, functions, and data flows within your codebase. It then asks a key question: _**Is there an execution path from real application behavior to the vulnerable code?**_ Only when such a path exists is the finding considered truly security-relevant.
 
 ### Conceptual Overview
 
@@ -41,7 +39,7 @@ This graph is intentionally approximate but designed to preserve the properties 
 
 #### 2. Anchoring vulnerabilities
 
-The scanners then map each raw finding to one or more *anchor points* in the graph:
+The scanners then map each raw finding to one or more _anchor points_ in the graph:
 
 * For **SCA**, the anchor is usually a vulnerable symbol (a specific function, class, method, or module) associated with a CVE or advisory.
 * For **SAST**, the anchor is a code location of interest, often a security sink such as `exec`, SQL queries, file system access, or deserialization.
@@ -57,7 +55,7 @@ Algorithmically, this reduces to graph reachability (forward or backward travers
 
 #### 4. Integration with triage and prioritization
 
-Reachability is applied *before* higher-level triage:
+Reachability is applied _before_ higher-level triage:
 
 * Findings with **no reachable path** are removed or heavily downgraded.
 * Findings with a **clear, explainable path** are retained and passed to later stages (e.g., risk scoring, business impact analysis).
@@ -69,18 +67,18 @@ This pipeline ensures that most “cry-wolf” findings are filtered out at the 
 
 Reachability analysis has several practical consequences for how teams experience Aikido:
 
-1. **Noise reduction**
+1.  **Noise reduction**
 
-   Many alerts produced by traditional tools stem from dependencies that are present but never invoked, or from code paths that are effectively dead. By eliminating issues without a demonstrable execution path, Aikido substantially reduces false positives and redundant tickets.
-2. **More meaningful severity**
+    Many alerts produced by traditional tools stem from dependencies that are present but never invoked, or from code paths that are effectively dead. By eliminating issues without a demonstrable execution path, Aikido substantially reduces false positives and redundant tickets.
+2.  **More meaningful severity**
 
-   Severity is no longer just a property of the CVE or rule; it is a property of the CVE *plus* the project’s usage. A medium-severity library issue that is deeply embedded on a hot path may be more urgent than a high-severity issue in a dev-only tool that is never executed in production.
-3. **Developer-aligned explanations**
+    Severity is no longer just a property of the CVE or rule; it is a property of the CVE _plus_ the project’s usage. A medium-severity library issue that is deeply embedded on a hot path may be more urgent than a high-severity issue in a dev-only tool that is never executed in production.
+3.  **Developer-aligned explanations**
 
-   Showing the concrete path (“request handler → service → library function → vulnerable symbol”) reframes security findings as recognizable program behavior. This lowers the cognitive overhead for developers and makes remediation efforts more targeted and efficient.
-4. **Stable signal over time**
+    Showing the concrete path (“request handler → service → library function → vulnerable symbol”) reframes security findings as recognizable program behavior. This lowers the cognitive overhead for developers and makes remediation efforts more targeted and efficient.
+4.  **Stable signal over time**
 
-   Because reachability is recomputed as code and dependencies change, the issue backlog tracks actual architectural evolution. As dead dependencies are removed or code is refactored, previously reachable findings may transition to non-reachable, and vice versa, providing a dynamic, architecture-aware view of risk.
+    Because reachability is recomputed as code and dependencies change, the issue backlog tracks actual architectural evolution. As dead dependencies are removed or code is refactored, previously reachable findings may transition to non-reachable, and vice versa, providing a dynamic, architecture-aware view of risk.
 
 ### Limitations and Design Choices
 

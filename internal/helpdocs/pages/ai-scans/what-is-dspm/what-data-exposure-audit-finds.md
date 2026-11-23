@@ -1,14 +1,12 @@
-# What Data Exposure Audit Finds
+# What an AI Data Exposure scan finds
 
-What Data Exposure Audit checks for in your source code.
+An **AI Data Exposure scan** is Aikido's code-based DSPM. It reasons about how sensitive data enters, moves, is stored, and leaves your application: from APIs and ORM models to logging, queues, third-party integrations, and AI workflows. You don't need to connect databases or cloud data stores. Each finding ships with code-based **Evidence**. See [Track Progress and Findings](https://help.aikido.dev/ai-scans/ai-code-audit-overview/track-progress-and-findings) for how to read it.
 
-A **Data Exposure Audit** is Aikido's code-based DSPM. It reasons about how sensitive data enters, moves, is stored, and leaves your application: from APIs and ORM models to logging, queues, third-party integrations, and AI workflows. You don't need to connect databases or cloud data stores. Each finding ships with code-based **Evidence**. See [Track Progress and Findings](/ai-code-analysis/ai-code-audit-overview/track-progress-and-findings.md) for how to read it.
-
-For how this differs from traditional DSPM, see [Data Exposure Audit (DSPM)](/ai-code-analysis/what-is-dspm.md). To run an audit, see [Run a Data Exposure Audit](/ai-code-analysis/what-is-dspm/data-exposure-audit.md).
+For how this differs from traditional DSPM, see [AI Data Exposure scan](https://help.aikido.dev/ai-scans/what-is-dspm). To run a scan, see [Run an AI Data Exposure scan](https://help.aikido.dev/ai-scans/what-is-dspm/data-exposure-audit).
 
 ## Coverage at a glance
 
-Data Exposure Audit focuses on sensitive data handling in code, including:
+AI Data Exposure scan focuses on sensitive data handling in code, including:
 
 * **Plaintext and weak storage**: secrets, tokens, or regulated personal data (PII, PHI, payment card data) stored without encryption, or with weak substitutes like MD5, SHA-1, or base64 treated as encryption.
 * **Credentials in URLs**: tokens, passwords, or API keys embedded in clone URLs, query strings, redirects, or other request paths where they can leak through logs, proxies, or browser history.
@@ -34,7 +32,7 @@ Findings can involve any sensitive data the code handles, including:
 
 ## Beyond what traditional DSPM sees
 
-Traditional DSPM often tells you sensitive data exists in a store. Data Exposure Audit connects the exposure back to the code path that created it, so you get the destination, the risk, and a remediation you can ship:
+Traditional DSPM often tells you sensitive data exists in a store. AI Data Exposure scan connects the exposure back to the code path that created it, so you get the destination, the risk, and a remediation you can ship:
 
 * **Logging that leaks PII**: for example, a checkout path that logs a full billing object (email, phone, address, card last four) into your observability stack. The fix is to redact those fields and keep only IDs and error codes.
 * **Token mishandling end to end**: where a token enters (OAuth, GitHub App, PAT), what scopes it has, where it's stored or cached, whether it's embedded in URLs, and whether it can leak through logs, traces, errors, or process arguments.
@@ -43,18 +41,18 @@ Traditional DSPM often tells you sensitive data exists in a store. Data Exposure
 
 ## What it doesn't replace
 
-Data Exposure Audit reasons from **source**. It doesn't connect to your live datastores, so it won't inventory what's already sitting in buckets, warehouses, or SaaS apps the way traditional DSPM does. Use it to find and fix how your application exposes data; pair it with cloud and storage reviews when you need estate-wide inventory of data at rest.
+AI Data Exposure scan reasons from **source**. It doesn't connect to your live datastores, so it won't inventory what's already sitting in buckets, warehouses, or SaaS apps the way traditional DSPM does. Use it to find and fix how your application exposes data; pair it with cloud and storage reviews when you need estate-wide inventory of data at rest.
 
-It also isn't a substitute for a [Code Security Audit](/ai-code-analysis/ai-code-audit-overview/what-ai-code-audit-finds.md) or a live [Aikido Pentest](/pentests/aikido-pentest.md). Those cover vulnerability classes and runtime exploitability; Data Exposure Audit focuses on sensitive data handling and exposure paths in code.
+It also isn't a substitute for an [AI Code scan](https://help.aikido.dev/ai-scans/ai-code-audit-overview/what-ai-code-audit-finds) or a live [Aikido Pentest](https://help.aikido.dev/pentests/aikido-pentest). Those cover vulnerability classes and runtime exploitability; AI Data Exposure scan focuses on sensitive data handling and exposure paths in code.
 
 ## FAQ
 
 ### Can you confirm coverage before I start?
 
-Yes. [Contact support](/miscellaneous-info/contact-support.md) to check a specific data type, framework, or finding class before you spend credits.
+Yes. [Contact support](https://help.aikido.dev/miscellaneous-info/contact-support) to check a specific data type, framework, or finding class before you spend credits.
 
 ## Related
 
-{% content-ref url="/pages/Io2yJZC8MsZHFIvz5M38" %}
-[Data Exposure Audit (DSPM)](/ai-code-analysis/what-is-dspm.md)
+{% content-ref url="./" %}
+[.](https://help.aikido.dev/ai-scans/what-is-dspm)
 {% endcontent-ref %}

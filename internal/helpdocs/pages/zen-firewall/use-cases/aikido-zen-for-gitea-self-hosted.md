@@ -1,4 +1,4 @@
-# Aikido Zen for Gitea Self-Hosted
+# Aikido Zen for Gitea
 
 [Gitea](https://about.gitea.com/) is a self-hosted Git service for hosting source code. It typically includes pull requests, issues, releases, and webhooks.
 

@@ -6,7 +6,7 @@ Aikido requests read-only access to your Bitbucket organization to analyze your 
 
 ### 1. Logging in using Bitbucket <a href="#id-1-logging-in-using-bitbucket" id="id-1-logging-in-using-bitbucket"></a>
 
-To get started, navigate to <https://app.aikido.dev/> and log in with Bitbucket. This will look like the screenshot below. Here, Aikido only requests access to your identity on Bitbucket and the associated email address.
+To get started, navigate to [https://app.aikido.dev/](https://app.aikido.dev/?regionRedirect=1) and log in with Bitbucket. This will look like the screenshot below. Here, Aikido only requests access to your identity on Bitbucket and the associated email address.
 
 [image: Access request screen for account information by Aikido User Authentication, with grant or cancel options.]
 

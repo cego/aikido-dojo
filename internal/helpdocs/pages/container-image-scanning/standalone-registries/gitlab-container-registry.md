@@ -1,4 +1,4 @@
-# Gitlab Container Registry
+# GitLab Container Registry
 
 You can now integrate your (cloud) GitLab Container Registry with Aikido to scan your containers for known vulnerabilities.
 
@@ -14,7 +14,7 @@ We'll have to gather your username (see screenshot)
 
 [image: Organization profile showing group name, privacy status, plan type, and group ID.]
 
-**Step 3:** Under personal preferences, Access tokens, create a new token for Aikido (direct link: <https://gitlab.com/-/user_settings/personal_access_tokens>).
+**Step 3:** Under personal preferences, Access tokens, create a new token for Aikido (direct link: [https://gitlab.com/-/user\_settings/personal\_access\_tokens](https://gitlab.com/-/user_settings/personal_access_tokens)).
 
 The scopes included must be: read\_api, read\_registry
 
@@ -22,7 +22,7 @@ See screenshot:
 
 [image: Form for creating a new personal access token with selectable API access scopes.]
 
-**Step 4:** Enter the collected data in Aikido (direct link: <https://app.aikido.dev/settings/container-image-registry/add/gitlab>)
+**Step 4:** Enter the collected data in Aikido (direct link: [https://app.aikido.dev/settings/container-image-registry/add/gitlab](https://app.aikido.dev/settings/container-image-registry/add/gitlab?regionRedirect=1))
 
 [image: GitLab container registry connection form: enter username, access token, and group ID.]
 

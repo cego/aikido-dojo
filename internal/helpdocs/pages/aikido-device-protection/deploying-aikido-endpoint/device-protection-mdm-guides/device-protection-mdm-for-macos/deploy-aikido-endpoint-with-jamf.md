@@ -14,10 +14,10 @@ These steps use Jamf Pro. If you use Jamf School, the menus and payload names ca
 
 Before starting, make sure you have the following from the Aikido Device Protection dashboard:
 
-* The **Aikido Device Protection `.mobileconfig`** (downloaded from the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices))
+* The **Aikido Device Protection `.mobileconfig`** (downloaded from the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices?regionRedirect=1))
 * The **Aikido Device Protection installer** (`.pkg` file, downloaded from the dashboard)
 
-If you're missing any of these, go back to the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices), click **Connect Device**, and complete the pre-flight steps.
+If you're missing any of these, go back to the [Aikido Device Protection dashboard](https://app.aikido.dev/endpoint-protection/devices?regionRedirect=1), click **Connect Device**, and complete the pre-flight steps.
 {% endstep %}
 
 {% step %}
@@ -50,7 +50,7 @@ This profile allows the Aikido Device Protection system extension to load silent
 1. In Jamf Pro, go to **Settings** → **Packages**.
 2. Upload the Aikido Device Protection `.pkg`.
 3. Confirm the package finishes processing before you use it in a policy.
-   {% endstep %}
+{% endstep %}
 
 {% step %}
 **Create the install policy**
@@ -71,7 +71,7 @@ Leaving the **Execution Frequency** at **Ongoing** makes the policy reinstall th
 1. Deploy the **Aikido Device Protection** configuration profile.
 2. Verify it has reached all target devices. Check profile status in the Jamf Pro console.
 3. Deploy the **Aikido Device Protection** install policy.
-   {% endstep %}
+{% endstep %}
 
 {% step %}
 **Reboot devices after installation**
@@ -88,16 +88,16 @@ The agent fully activates on the next boot.
 
 On a test device, confirm:
 
-1. The system extension is activated:
+1.  The system extension is activated:
 
-   ```bash
-   systemextensionsctl list | grep aikido
-   ```
+    ```bash
+    systemextensionsctl list | grep aikido
+    ```
 
-   Expect to see the extension marked `[activated enabled]`.
+    Expect to see the extension marked `[activated enabled]`.
 2. Open **System Settings** → **General** → **Login Items & Extensions** and confirm the Aikido Device Protection entries cannot be toggled off.
-   {% endstep %}
-   {% endstepper %}
+{% endstep %}
+{% endstepper %}
 
 ## Troubleshooting
 

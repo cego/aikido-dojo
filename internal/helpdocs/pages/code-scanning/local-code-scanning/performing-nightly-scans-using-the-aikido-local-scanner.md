@@ -29,12 +29,12 @@ jobs:
         run: aikido-local-scanner scan my-repo --apikey ${{ secrets.AIKIDO_API_KEY }} --repositoryname MyRepo --branchname main
 ```
 
-Detailed info on how to setup a scan using GitHub Actions can be found [here](/code-scanning/local-code-scanning/github-action-setup-for-local-code-scanning.md).\
+Detailed info on how to setup a scan using GitHub Actions can be found [here](https://help.aikido.dev/code-scanning/local-code-scanning/github-action-setup-for-local-code-scanning).\
 Detailed info on how to use the schedule option in a GitHub Action can be found [here](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule).
 
 ## Setting up a nightly scan in GitLab <a href="#setting-up-a-nightly-scan-in-gitlab" id="setting-up-a-nightly-scan-in-gitlab"></a>
 
-You will already need to have setup a pipeline in your GitLab project, refer to [this article](/code-scanning/local-code-scanning/gitlab-self-managed-setup-for-local-code-scanning.md) for more info.\
+You will already need to have setup a pipeline in your GitLab project, refer to [this article](https://help.aikido.dev/code-scanning/local-code-scanning/gitlab-self-managed-setup-for-local-code-scanning) for more info.\
 After you have setup a pipeline for nightly scan, you'll need to schedule it.\
 On the left side bar, select **Build > Pipeline schedules**.\
 Fill in the form with your desired interval, timezone and your default branch. Click 'Create pipeline schedule'. After this, you will see your scheduled pipeline appear in the overview.
@@ -50,7 +50,7 @@ The example below will schedule a scan, every night at midnight
 
 [image: Jenkins build trigger set for daily execution at midnight using cron syntax.]
 
-More info on setting up the Local Scanner in Jenkins can be found [here](/code-scanning/local-code-scanning/jenkins-setup-for-local-code-scanning.md).
+More info on setting up the Local Scanner in Jenkins can be found [here](https://help.aikido.dev/code-scanning/local-code-scanning/jenkins-setup-for-local-code-scanning).
 
 ### Setting up a nightly scan in Azure Devops
 

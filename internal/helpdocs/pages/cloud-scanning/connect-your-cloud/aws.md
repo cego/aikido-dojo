@@ -1,9 +1,9 @@
 # AWS Cloud Scanning
 
-{% content-ref url="/pages/1IkLWJqEbEi1LT8vP510" %}
-[Connect AWS Account](/cloud-scanning/connect-your-cloud/aws/connect-aws-account-to-aikido.md)
+{% content-ref url="connect-aws-account-to-aikido/" %}
+[connect-aws-account-to-aikido](https://help.aikido.dev/cloud-scanning/connect-your-cloud/aws/connect-aws-account-to-aikido)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/IX5987IEoAZcZWg12Yjv" %}
-[Connect AWS Organization](/cloud-scanning/connect-your-cloud/aws/connect-aws-organization-to-aikido.md)
+{% content-ref url="connect-aws-organization-to-aikido.md" %}
+[connect-aws-organization-to-aikido.md](https://help.aikido.dev/cloud-scanning/connect-your-cloud/aws/connect-aws-organization-to-aikido)
 {% endcontent-ref %}

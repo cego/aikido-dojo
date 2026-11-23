@@ -2,7 +2,7 @@
 
 By default, Aikido will not enable scanning on newly created repositories that you did not previously enable. You can change this default behaviour.
 
-**Step 1**. Go to [Settings/ repositories](https://app.aikido.dev/settings/integrations/repositories)
+**Step 1**. Go to [Settings/ repositories](https://app.aikido.dev/settings/integrations/repositories?regionRedirect=1)
 
 **Step 2.** Click 'Actions' dropdown on the top right and select **Repository Settings**.
 

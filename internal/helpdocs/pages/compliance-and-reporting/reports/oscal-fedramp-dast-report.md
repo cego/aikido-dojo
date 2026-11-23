@@ -4,7 +4,7 @@ The OSCAL FedRAMP DAST Report gives you your dynamic scan results in the format 
 
 Aikido builds the file from the findings of your domain and API scans, covering the DAST (Dynamic Application Security Testing) part of your evidence. No configuration is needed.
 
-Use this report for FedRAMP authorization packages, monthly continuous monitoring evidence, or handing scan evidence to a 3PAO (third-party assessment organization). For human readers, use the [Security Audit Report](/compliance-and-reporting/reports/security-audit-report.md) or a [pentest report](/pentests/coverage-and-findings/pentest-reports.md) instead.
+Use this report for FedRAMP authorization packages, monthly continuous monitoring evidence, or handing scan evidence to a 3PAO (third-party assessment organization). For human readers, use the [Security Audit Report](https://help.aikido.dev/compliance-and-reporting/reports/security-audit-report) or a [pentest report](https://help.aikido.dev/pentests/coverage-and-findings/pentest-reports) instead.
 
 ## Download the report
 

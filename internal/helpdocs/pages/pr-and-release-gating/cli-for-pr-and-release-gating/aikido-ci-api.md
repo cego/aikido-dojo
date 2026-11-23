@@ -4,11 +4,11 @@
 
 The Aikido CI API allows you to start new scans for specific branches in a repo. You’ll be able to poll the state of the scans so you can build a gating mechanism inside your CI/CD platform.
 
-Aikido also allows you to manage specific scans yourself. You can upload your own Checkov SARIF and custom SBOMs directly to Aikido to contribute to a feature branch scan. Custom CI systems such as Jenkins and CircleCI can also upload code coverage reports with the same API token. See [Upload code coverage](#upload-code-coverage).
+Aikido also allows you to manage specific scans yourself. You can upload your own Checkov SARIF and custom SBOMs directly to Aikido to contribute to a feature branch scan. Custom CI systems such as Jenkins and CircleCI can also upload code coverage reports with the same API token. See [Upload code coverage](https://help.aikido.dev/pr-and-release-gating/cli-for-pr-and-release-gating/aikido-ci-api#upload-code-coverage).
 
 ## Authentication <a href="#authentication" id="authentication"></a>
 
-1. Go to the [CI integration detail page](https://app.aikido.dev/settings/integrations/continuous-integration).
+1. Go to the [CI integration detail page](https://app.aikido.dev/settings/integrations/continuous-integration?regionRedirect=1).
 2. Generate an authentication token and copy. Note that you will only be able to view this token once.
 3. Add the header `X-AIK-API-SECRET` to every request, with the authentication token as its value.
 
@@ -83,7 +83,7 @@ Fetches the current state of a scan. Use a polling mechanism (eg every 5 seconds
 
 **Response:**
 
-Example for feature branch *scan in progress*
+Example for feature branch _scan in progress_
 
 ```
 {
@@ -132,7 +132,7 @@ Example for feature branch scan completed
 }
 ```
 
-Example for d*efault branch scan completed*
+Example for &#x64;_&#x65;fault branch scan completed_
 
 ```
 {
@@ -217,7 +217,7 @@ This API can be used to upload your own Checkov SARIF or custom SBOMs generated 
 
 **Body:**
 
-Example for *Checkov*
+Example for _Checkov_
 
 ```
 {
@@ -228,7 +228,7 @@ Example for *Checkov*
 }
 ```
 
-Example for *Syft SBOM*
+Example for _Syft SBOM_
 
 ```
 {
@@ -248,7 +248,7 @@ Example for *Syft SBOM*
 
 **Optional fields:**
 
-* scan\_id: (retrieved from *Start Scan*). Do not set this if you want the payload to go to the Aikido live feed.
+* scan\_id: (retrieved from _Start Scan_). Do not set this if you want the payload to go to the Aikido live feed.
 * repository\_id: internal GitHub/Gitlab/Bitbucket/.. repository id (only required if scan\_id is not set)
 
 **Response:**
@@ -263,7 +263,7 @@ Example for *Syft SBOM*
 
 Custom CI such as Jenkins and CircleCI can upload [LCOV](https://github.com/linux-test-project/lcov) or [Cobertura](https://cobertura.github.io/cobertura/) coverage reports with the same `X-AIK-API-SECRET` token.
 
-Use the [Aikido CI API client](https://www.npmjs.com/package/@aikidosec/ci-api-client) `upload-coverage` command. Run it from a checked-out repository after tests write the report. The client reads the coverage files and source metadata, then sends them to Aikido. See [Code Coverage](/code-quality/code-coverage.md) for how uploads appear in Aikido.
+Use the [Aikido CI API client](https://www.npmjs.com/package/@aikidosec/ci-api-client) `upload-coverage` command. Run it from a checked-out repository after tests write the report. The client reads the coverage files and source metadata, then sends them to Aikido. See [Code Coverage](https://help.aikido.dev/code-quality/code-coverage) for how uploads appear in Aikido.
 
 ```sh
 $ aikido-api-client upload-coverage \
@@ -277,4 +277,4 @@ $ aikido-api-client upload-coverage \
 
 `repository_id` is the Git provider repository id, the same id used by the other endpoints on this page. Pass more than one path to `--file-paths` to merge LCOV and Cobertura reports from separate packages or jobs.
 
-Each upload replaces coverage for that repository and branch. In a monorepo, pass every app's report on each run. If you skip unchanged apps, include their latest reports in that same command. See [Monorepos That Test Only Changed Paths](/code-quality/code-coverage/monorepos-that-test-only-changed-paths.md).
+Each upload replaces coverage for that repository and branch. In a monorepo, pass every app's report on each run. If you skip unchanged apps, include their latest reports in that same command. See [Monorepos That Test Only Changed Paths](https://help.aikido.dev/code-quality/code-coverage/monorepos-that-test-only-changed-paths).

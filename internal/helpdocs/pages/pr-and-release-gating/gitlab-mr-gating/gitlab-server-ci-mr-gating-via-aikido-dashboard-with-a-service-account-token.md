@@ -1,13 +1,11 @@
 # GitLab Premium, Ultimate & Server: MR Scans Setup
 
-Publish MR scan results and comments for issues from Aikido. No pipeline code needed.
-
 {% hint style="warning" %}
 This setup is meant for **GitLab Premium, GitLab Ultimate, or GitLab Server**.
 
 Service Accounts are available on these plans. They’re the recommended way to run MR scans.
 
-If you’re on **GitLab Free**, use the [**user-based setup**](/pr-and-release-gating/gitlab-mr-gating/gitlab-free-mr-scans-setup.md) instead.
+If you’re on **GitLab Free**, use the [**user-based setup**](https://help.aikido.dev/pr-and-release-gating/gitlab-mr-gating/gitlab-free-mr-scans-setup) instead.
 {% endhint %}
 
 ## Set up GitLab MR scanning
@@ -78,7 +76,7 @@ Give it at least **Maintainer** access.
 {% step %}
 **Enable the integration**
 
-In Aikido, open the [Integrations](https://app.aikido.dev/settings/integrations?section=ci) page. Then select **GitLab CI** under **MR Quality Gating**.
+In Aikido, open the [Integrations](https://app.aikido.dev/settings/integrations?section=ci&regionRedirect=1) page. Then select **GitLab CI** under **MR Quality Gating**.
 
 <div data-with-frame="true"></div>
 {% endstep %}
@@ -98,7 +96,7 @@ Aikido validates group access and required permissions.
 {% step %}
 **Configure your first repository**
 
-After authorization, Aikido opens the [GitLab MR Checks](https://app.aikido.dev/settings/integrations/gitlab/checks) page.
+After authorization, Aikido opens the [GitLab MR Checks](https://app.aikido.dev/settings/integrations/gitlab/checks?regionRedirect=1) page.
 
 Start with **one repository** first. Confirm everything works before rolling out broadly.
 
@@ -134,7 +132,7 @@ In GitLab, go to **\[Repository]** → **Settings** → **Merge Requests**. Enab
 {% step %}
 **Enable for all repositories**
 
-Once you’re happy with the results, go back to the [GitLab MR Checks](https://app.aikido.dev/settings/integrations/gitlab/checks) page and enable checks for the rest of your repositories.
+Once you’re happy with the results, go back to the [GitLab MR Checks](https://app.aikido.dev/settings/integrations/gitlab/checks?regionRedirect=1) page and enable checks for the rest of your repositories.
 
 <div data-with-frame="true"></div>
 {% endstep %}
@@ -144,7 +142,7 @@ Once you’re happy with the results, go back to the [GitLab MR Checks](https://
 
 In the top-right, open `Actions` and select `Set Default for New Repos` and enable automatic configuration for newly added repositories in the future.
 
-Need the UI walkthrough? See [Default PR/MR gating configuration for new repositories](/pr-and-release-gating/aikido-ci-gating-functionality/default-pr-mr-gating-configuration-for-new-repositories.md).
+Need the UI walkthrough? See [Default PR/MR gating configuration for new repositories](https://help.aikido.dev/pr-and-release-gating/aikido-ci-gating-functionality/default-pr-mr-gating-configuration-for-new-repositories).
 {% endstep %}
 {% endstepper %}
 

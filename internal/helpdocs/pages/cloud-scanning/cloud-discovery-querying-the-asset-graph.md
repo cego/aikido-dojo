@@ -2,7 +2,7 @@
 
 ### How to use <a href="#how-to-use" id="how-to-use"></a>
 
-[Search your cloud inventory](https://app.aikido.dev/clouds/assets) by describing what you are looking for **in natural language** and let the system figure out how to find the relevant asset. Use the examples below to get started or to get inspiration.
+[Search your cloud inventory](https://app.aikido.dev/clouds/assets?regionRedirect=1) by describing what you are looking for **in natural language** and let the system figure out how to find the relevant asset. Use the examples below to get started or to get inspiration.
 
 #### Simple prompts <a href="#simple-prompts" id="simple-prompts"></a>
 
@@ -59,11 +59,11 @@
 ### Prompting Best Practices <a href="#prompting-best-practices" id="prompting-best-practices"></a>
 
 * **Don't struggle to find the perfect terms:** There are no predefined prompts, terms, or rules to follow. You can describe anything you want to see from your cloud environment, and let Aikido figure out what it needs to search and generate the queries.
-* **Prompt engineering:** If you are unsatisfied with the result, try to be more specific about what you want. Example
+*   **Prompt engineering:** If you are unsatisfied with the result, try to be more specific about what you want. Example
 
-  ❌functions with access to rds
+    ❌functions with access to rds
 
-  ✅lambda functions with network access to rds instances
+    ✅lambda functions with network access to rds instances
 * **Use single keywords for broad discovery:** Enter a single keyword, and Aikido will run a broad text search across your assets. For example, searching for a user’s name will return:
   * user with the same or a similar name
   * any groups they belong to,\

@@ -12,7 +12,7 @@ When security issues are found, they're highlighted directly in your code and li
 
 **Step 1.** Head over to the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=AikidoSecurity.aikido-visualstudio) and click **Install.** After installation, you will be asked to add your personal access token (step 2).
 
-**Step 2.** In Aikido, go to the [Visual Studio Integration Screen](https://app.aikido.dev/settings/integrations/ide/visualstudio) and create your token.
+**Step 2.** In Aikido, go to the [Visual Studio Integration Screen](https://app.aikido.dev/settings/integrations/ide/visualstudio?regionRedirect=1) and create your token.
 
 [image: Visual Studio IDE Plugin page showing no registered tokens and option to generate a new PAT.]
 
@@ -24,6 +24,6 @@ The Aikido Extension can be installed on Visual Studio Community Edition, Visual
 
 ## Troubleshooting
 
-{% content-ref url="/pages/jLKPaQyzd9YFiTyIsyzg" %}
-[Visual Studio - Information for Support](/ai-and-dev-tools/ide-plugins-overview/troubleshooting/visual-studio-information-for-support.md)
+{% content-ref url="troubleshooting/visual-studio-information-for-support.md" %}
+[visual-studio-information-for-support.md](https://help.aikido.dev/ai-and-dev-tools/ide-plugins-overview/troubleshooting/visual-studio-information-for-support)
 {% endcontent-ref %}

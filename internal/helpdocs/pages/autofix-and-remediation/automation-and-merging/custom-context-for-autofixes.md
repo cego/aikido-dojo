@@ -16,11 +16,11 @@ Detailed documentation for the Custom Code Context for SAST Rules can be found [
 
 Custom Code Context can be configured for all code repositories or a set of repositories.
 
-## Global Custom Context
+## Global Custom Context&#x20;
 
 **Custom Context per Repo**
 
-If you want to provide custom context for all AutoFix rules in a code repository, add the following to the `.aikido` file in your code repository (more info on `.aikido` files [can be found here](/code-scanning/scanning-practices/ignore-via-code-with-aikido-files.md))
+If you want to provide custom context for all AutoFix rules in a code repository, add the following to the `.aikido` file in your code repository (more info on `.aikido` files [can be found here](https://help.aikido.dev/code-scanning/scanning-practices/ignore-via-code-with-aikido-files))
 
 <pre><code>autofix:
 <strong>  fix_context:
@@ -40,7 +40,7 @@ autofix:
       language: javascript
 ```
 
-The allowed values for language are:
+The allowed values for language are:&#x20;
 
 * .net
 * android

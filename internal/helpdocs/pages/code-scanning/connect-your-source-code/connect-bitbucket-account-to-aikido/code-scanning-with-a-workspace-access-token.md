@@ -6,7 +6,7 @@ Bitbucket only supports the creation of Workspace Access Tokens for their premiu
 
 ### Introduction <a href="#introduction" id="introduction"></a>
 
-You can easily configure Bitbucket Code Scanning via the Aikido interface via the account settings page, or by navigating directly to [this link](https://app.aikido.dev/onboarding/bitbucket/update-workspace-access-token).
+You can easily configure Bitbucket Code Scanning via the Aikido interface via the account settings page, or by navigating directly to [this link](https://app.aikido.dev/onboarding/bitbucket/update-workspace-access-token?regionRedirect=1).
 
 ### Creating a Workspace Access Token <a href="#creating-a-personal-access-token" id="creating-a-personal-access-token"></a>
 
@@ -31,6 +31,6 @@ Choose a descriptive name for the token like "**Aikido Security Code Scanning**"
 {% step %}
 **Copy the token**
 
-After clicking "**Create**", you can copy the token and enter it in the input field on [this page](https://app.aikido.dev/onboarding/bitbucket/update-workspace-access-token)
+After clicking "**Create**", you can copy the token and enter it in the input field on [this page](https://app.aikido.dev/onboarding/bitbucket/update-workspace-access-token?regionRedirect=1)
 {% endstep %}
 {% endstepper %}

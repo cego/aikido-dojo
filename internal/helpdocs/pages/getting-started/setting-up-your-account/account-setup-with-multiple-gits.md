@@ -12,7 +12,7 @@ If you have repositories with multiple Git Providers (such as GitHub and GitLab)
 
 **Step 3:** Choose the preferred Git Provider on the login screen.<br>
 
-**Step 4:** After setting up the new account, merge both accounts. [Click here for more information](/getting-started/setting-up-your-account/link-and-merge-multiple-login-types-github-gitlab-etc.md) on how to set this up.
+**Step 4:** After setting up the new account, merge both accounts. [Click here for more information](https://help.aikido.dev/getting-started/setting-up-your-account/link-and-merge-multiple-login-types-github-gitlab-etc) on how to set this up.
 
 **Step 5:** Switch between different Git accounts using the workspace switcher located in the top left corner.
 

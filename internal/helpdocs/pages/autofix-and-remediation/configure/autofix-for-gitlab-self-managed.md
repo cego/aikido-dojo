@@ -8,7 +8,7 @@ Aikido AutoFix is a tool designed to resolve vulnerabilities in third-party depe
 
 By default, Aikido only has read access on your Gitlab Self Managed instance. To use Aikido AutoFix a separate access token with write access is required.
 
-**Step 1.** Enable write access on the [AutoFix Settings](https://app.aikido.dev/settings/integrations/autofix) page.
+**Step 1.** Enable write access on the [AutoFix Settings](https://app.aikido.dev/settings/integrations/autofix?regionRedirect=1) page.
 
 **Step 2.** Click **Authorize**, and you will see this modal:
 
@@ -20,13 +20,13 @@ By default, Aikido only has read access on your Gitlab Self Managed instance. To
 
 **Step 6.** Copy the newly created token and paste it into the modal in Aikido.
 
-**Step 7.** Click save and you are all set. You will now be able to execute autofix PRs from the [Autofix page](https://app.aikido.dev/issues/fix) or from the action menu for subissues in the sidebar.
+**Step 7.** Click save and you are all set. You will now be able to execute autofix PRs from the [Autofix page](https://app.aikido.dev/issues/fix?regionRedirect=1) or from the action menu for subissues in the sidebar.
 
 ## Using a service account
 
 If you setup Autofix with a PAT for your Gitlab user, you will be the author of the Merge Requests created by AutoFix, which can be confusing.
 
-For premium Gitlab self managed users, we recommend setting up a service account for Aikido AutoFix. This will make it easy to see which PRs are coming from Aikido.
+For premium Gitlab self managed users, we recommend setting up a service account for Aikido AutoFix. This will make it easy to see which PRs are coming from Aikido.&#x20;
 
 **Step 1. Setup a service account**
 

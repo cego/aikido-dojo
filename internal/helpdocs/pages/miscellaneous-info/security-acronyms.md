@@ -26,7 +26,7 @@ EASM - External Attack Surface Management
 
 CNAPP - Cloud-Native Application Protection Platform
 
-DSPM - Data security posture management. See [What is DSPM?](/ai-code-analysis/what-is-dspm.md).
+DSPM - Data security posture management. See [What is DSPM?](https://help.aikido.dev/ai-code-analysis/what-is-dspm).
 
 SIEM - Security Information and Event Management
 

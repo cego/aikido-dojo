@@ -6,7 +6,7 @@ Use one of the methods below to verify that Aikido Device Protection is active o
 
 Open the link below in your browser. The page will immediately show whether your device is protected or not.
 
-{% embed url="<https://device-protection.aikido.help/>" %}
+{% embed url="https://device-protection.aikido.help/" %}
 
 ## Package-based test
 
@@ -14,31 +14,25 @@ Install a safe test package in your preferred language. These packages are harml
 
 {% tabs %}
 {% tab title="npm" %}
-
 ```bash
 npm install aikido-endpoint-test
 ```
-
 {% endtab %}
 
 {% tab title="pip" %}
-
 ```bash
 pip install safe-chain-pi-test
 ```
-
 {% endtab %}
 
 {% tab title="NuGet" %}
-<https://www.nuget.org/packages/AikidoEndpointTest>
+[https://www.nuget.org/packages/AikidoEndpointTest](https://www.nuget.org/packages/AikidoEndpointTest)
 {% endtab %}
 
 {% tab title="Go" %}
-
 ```
 go install github.com/Aikido-demo-apps/endpoint-golang-test@latest
 ```
-
 {% endtab %}
 {% endtabs %}
 
@@ -49,7 +43,7 @@ Install the test extension in your editor. It will trigger a detection if Device
 * **VS Code:** [Aikido Endpoint Test](https://marketplace.visualstudio.com/items?itemName=AikidoSecurity.aikido-endpoint-test)
 * **Open VSX (e.g. Cursor, Windsurf):** [Aikido Endpoint Test](https://open-vsx.org/extension/AikidoSecurity/aikido-endpoint-test)
 
-Test package or extension not blocked? See [Why is a Package Not Blocked?](/aikido-device-protection/using-aikido-endpoint/why-is-a-package-not-blocked.md)
+Test package or extension not blocked? See [Why is a Package Not Blocked?](https://help.aikido.dev/aikido-device-protection/using-aikido-endpoint/why-is-a-package-not-blocked)
 
 ## Automated test
 

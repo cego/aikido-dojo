@@ -8,7 +8,7 @@ Aikido provides a CloudFormation template that creates a new role in your AWS ac
 
 After creation of the role, Aikido only needs the specific ARN to get started, no access keys nor secrets.
 
-In the [Aikido UI](https://app.aikido.dev/issues/fix/settings), go to AutoFix > Settings > Connect Registry,
+In the [Aikido UI](https://app.aikido.dev/issues/fix/settings?regionRedirect=1), go to AutoFix > Settings > Connect Registry,
 
 follow the instructions in the modal:
 
@@ -63,7 +63,6 @@ By setting `UV_INDEX_[INDEX]_USERNAME` to `aws` , AutoFix will automatically pop
 After setting up the AWS CodeArtifact connection, you can use the `CODEARTIFACT_AUTH_TOKEN` environment variable in `settings.xml` . The settings.xml file can be set in the Maven Private Registry configuration, eg:
 
 {% code title="settings.xml" %}
-
 ```
 <servers>
     <server>
@@ -73,7 +72,59 @@ After setting up the AWS CodeArtifact connection, you can use the `CODEARTIFACT_
     </server>
 </servers>
 ```
+{% endcode %}
 
+## NuGet
+
+After setting up the AWS CodeArtifact connection, you can use the `CODEARTIFACT_AUTH_TOKEN` environment variable in `nuget.config`. The `nuget.config` file can be set in the NuGet Private Registry configuration, eg:
+
+{% code title="nuget.config" %}
+```
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <packageSources>
+    <clear />
+    <add key="nuget.org" value="https://api.nuget.org/v3/index.json" protocolVersion="3" />
+    <add key="codeartifact" value="https://mydomain-123456789012.d.codeartifact.eu-west-1.amazonaws.com/nuget/nuget-example/v3/index.json" protocolVersion="3" />
+  </packageSources>
+  <packageSourceCredentials>
+    <codeartifact>
+      <add key="Username" value="aws" />
+      <add key="ClearTextPassword" value="%CODEARTIFACT_AUTH_TOKEN%" />
+    </codeartifact>
+  </packageSourceCredentials>
+</configuration>
+```
+{% endcode %}
+
+The `codeartifact` source key must match the element name under `packageSourceCredentials`. During the AutoFix, `%CODEARTIFACT_AUTH_TOKEN%` is replaced by an actual auth token.
+
+## Cargo
+
+The repository `.cargo/config.toml` names the CodeArtifact source, for example:
+
+{% code title=".cargo/config.toml" %}
+```toml
+[source.crates-io]
+replace-with = "cargo-example"
+
+[source.cargo-example]
+registry = "sparse+https://mydomain-123456789012.d.codeartifact.eu-west-1.amazonaws.com/cargo/cargo-example/"
+```
+{% endcode %}
+
+When setting up the AWS CodeArtifact connection, use the following format for the Token Environment Variable: `CARGO_REGISTRIES_<source>_TOKEN`. The `<source>` placeholder should be replaced by the source name in uppercase letters, with hyphens written as underscores. For the example above the Token Environment Variable should be set to:
+
+```
+CARGO_REGISTRIES_CARGO_EXAMPLE_TOKEN
+```
+
+If `.cargo/config.toml` does not already point at the CodeArtifact index, also set the registry URL:
+
+{% code title="environment variables" %}
+```shell
+CARGO_SOURCE_CARGO_EXAMPLE_REGISTRY=sparse+https://mydomain-123456789012.d.codeartifact.eu-west-1.amazonaws.com/cargo/cargo-example/
+```
 {% endcode %}
 
 ## How to check your configuration
@@ -98,4 +149,4 @@ To enable the connection with AWS CodeArtifact, you need to provide the followin
 
 When these 4 environment variables are set, Aikido AutoFix will set a `CODEARTIFACT_AUTH_TOKEN` environment variable during the process. This environment variable can then be used by the package manager to authenticate with the CodeArtifact registry. See below for registry specific config which is required.
 
-These environment variables can be set in Autofix > Settings > Connect Registry > [Set Environment variables](/autofix-and-remediation/connect-private-packages/custom-config-private-packages.md).
+These environment variables can be set in Autofix > Settings > Connect Registry > [Set Environment variables](https://help.aikido.dev/autofix-and-remediation/connect-private-packages/custom-config-private-packages).

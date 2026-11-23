@@ -1,10 +1,8 @@
 # Guide Agents with Repository Files
 
-Commit markdown in the repository so Aikido agents can follow your architecture, trust boundaries, and accepted risks.
+Aikido agents read markdown in your repositories. This applies to all AI features, such as pentests, Code Quality, Deep Review, and AI Scans. Use the files to explain how the system is built, which behavior is intentional, and which risks you already accept.
 
-Aikido agents read markdown in your repositories. This applies to all AI features, such as pentests, Code Quality, Deep Review, and AI Code Analysis. Use the files to explain how the system is built, which behavior is intentional, and which risks you already accept.
-
-Commit that guidance in the repository when it should apply every time Aikido reviews the code. Use notes on a single run when the context is missing from the source and only applies to that run.
+Commit that guidance in the repository when it should apply every time Aikido reviews the code. In the setup flow, upload a document or add notes when the context is missing from the source and only applies to that run.
 
 ## Add a markdown file
 
@@ -21,7 +19,6 @@ Keep `AGENTS.md` at the repository root. `README.md`, `ARCHITECTURE.md`, and `SE
 On **Exclude Paths**, exclude unrelated applications or services. Leave documentation included so Aikido can read it.
 
 {% code title="AGENTS.md" overflow="wrap" %}
-
 ```markdown
 # Security context
 
@@ -37,7 +34,6 @@ End-user requests are authenticated at the gateway. This service trusts the `X-U
 
 `scripts/migrations/` is one-off operational code. Do not report missing error handling there.
 ```
-
 {% endcode %}
 
 ## Write instructions agents can follow
@@ -55,10 +51,10 @@ Name the path, role, or flow, and say what the agent should treat as intended. A
 | Where                      | When to use it                                                                                                                                        |
 | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Markdown in the repository | Context that should apply every time Aikido reviews this repository: architecture, trust boundaries, accepted risks, and how a flow is meant to work. |
-| Notes on a single run      | Context that is missing from the source and applies to that run only. Up to 2000 characters. Runtime configuration, a proxy, or a one-off exception.  |
+| Notes or an uploaded document | Context that is missing from the source and applies to that run only. Add it in the setup flow. Runtime configuration, a proxy, a one-off exception, or a document that is not in the repository. |
 | **Exclude Paths**          | Drop an unrelated application in a monorepo. Leave documentation included.                                                                            |
 
-Notes apply to that run. A markdown file stays in the repository, so the next review can use it too. Put the durable guidance in the file. Use notes for what the file does not cover.
+Notes and uploaded documents apply to that run. A markdown file stays in the repository, so the next review can use it too. Put the durable guidance in the file. Use notes or an uploaded document for what the file does not cover.
 
 ## What to include
 
@@ -66,7 +62,7 @@ Notes apply to that run. A markdown file stays in the repository, so the next re
 * Trust boundaries, authentication, authorization, and multi-tenant rules.
 * Accepted risks, and what should still be reported.
 * Data that is intentionally public or internal, and where a gateway redacts fields.
-* Trusted admin, keeper, and oracle roles when the repository contains contracts. Put target chains and deployed addresses in the run notes when they are not in the repository.
+* Trusted admin, keeper, and oracle roles when the repository contains contracts. Put target chains and deployed addresses in the run notes, or in an uploaded file, when they are not in the repository.
 * How a cloud account is meant to be segmented, and which exceptions are intentional. Markdown in the infrastructure as code (IaC) repositories explains how a live setting is defined.
 * Quality conventions the team already accepts, such as where strict error handling does not apply.
 
@@ -78,38 +74,38 @@ Aikido checks `AGENTS.md`, `CLAUDE.md`, `.claude/`, and `.cursor/` for accepted 
 
 ### Do these files replace rules and ignores?
 
-These files guide the agents. [Static application security testing (SAST)](/code-scanning/scanning-practices/sast-by-aikido-supported-languages-and-security-focus.md) rules, [custom code rules](/code-quality/add-custom-code-rules.md), and [`.aikido` ignores](/code-scanning/scanning-practices/ignore-via-code-with-aikido-files.md) still apply on their own.
+These files guide the agents. [Static application security testing (SAST)](https://help.aikido.dev/code-scanning/scanning-practices/sast-by-aikido-supported-languages-and-security-focus) rules, [custom code rules](https://help.aikido.dev/code-quality/add-custom-code-rules), and [`.aikido` ignores](https://help.aikido.dev/code-scanning/scanning-practices/ignore-via-code-with-aikido-files) still apply on their own.
 
 ## Related
 
-{% content-ref url="/pages/SyJGqW86Wtsj6J1NqIZi" %}
-[Leveraging Code and Documentation](/pentests/configure-a-pentest/leveraging-code-and-documentation.md)
+{% content-ref url="../pentests/configure-a-pentest/leveraging-code-and-documentation.md" %}
+[leveraging-code-and-documentation.md](https://help.aikido.dev/pentests/configure-a-pentest/leveraging-code-and-documentation)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/QRM3zrTTGojbe4vdVAdr" %}
-[Add Extra Code Context](/code-quality/add-extra-code-context.md)
+{% content-ref url="../code-quality/add-extra-code-context.md" %}
+[add-extra-code-context.md](https://help.aikido.dev/code-quality/add-extra-code-context)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/E9vBfs3IrTAjX523NzzS" %}
-[How Deep Review Works](/deep-review/how-deep-review-works.md)
+{% content-ref url="../deep-review/how-deep-review-works.md" %}
+[how-deep-review-works.md](https://help.aikido.dev/deep-review/how-deep-review-works)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/64GGpVtiCGGThzz1y8B7" %}
-[AI Code Analysis](/ai-code-analysis/ai-code-analysis.md)
+{% content-ref url="../ai-code-analysis/ai-code-analysis.md" %}
+[ai-code-analysis.md](https://help.aikido.dev/ai-scans/ai-code-analysis)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/X4yc23Inhvx1gPKx2AwE" %}
-[Create a Code Security Audit](/ai-code-analysis/ai-code-audit-overview/create-an-ai-code-audit.md)
+{% content-ref url="../ai-code-analysis/ai-code-audit-overview/create-an-ai-code-audit.md" %}
+[create-an-ai-code-audit.md](https://help.aikido.dev/ai-scans/ai-code-audit-overview/create-an-ai-code-audit)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/PMTdILmc0ylkVweiJGtU" %}
-[Run a Data Exposure Audit](/ai-code-analysis/what-is-dspm/data-exposure-audit.md)
+{% content-ref url="../ai-code-analysis/what-is-dspm/data-exposure-audit.md" %}
+[data-exposure-audit.md](https://help.aikido.dev/ai-scans/what-is-dspm/data-exposure-audit)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/sU44cPzbmeqn9z1n9Y1a" %}
-[Run a Cloud Security Audit](/ai-code-analysis/cloud-security-audit/run-a-cloud-security-audit.md)
+{% content-ref url="../ai-code-analysis/cloud-security-audit/run-a-cloud-security-audit.md" %}
+[run-a-cloud-security-audit.md](https://help.aikido.dev/ai-scans/cloud-security-audit/run-a-cloud-security-audit)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/rpzhJqLOk9BfP8JQGOSq" %}
-[Run a Smart Contract Audit](/ai-code-analysis/smart-contract-audit/run-a-smart-contract-audit.md)
+{% content-ref url="../ai-code-analysis/smart-contract-audit/run-a-smart-contract-audit.md" %}
+[run-a-smart-contract-audit.md](https://help.aikido.dev/ai-scans/smart-contract-audit/run-a-smart-contract-audit)
 {% endcontent-ref %}

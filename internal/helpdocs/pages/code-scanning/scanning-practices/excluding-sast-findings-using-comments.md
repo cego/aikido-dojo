@@ -1,6 +1,6 @@
 # Excluding SAST Findings Using Comments
 
-It is possible to ignore specific SAST finding using a `//nosec` comment at the first line or preceding line of the pattern match. By adding this comment, the finding will be ignored in the Aikido feed and marked as *manually suppressed by developer.*
+It is possible to ignore specific SAST finding using a  `//nosec` comment at the first line or preceding line of the pattern match. By adding this comment, the finding will be ignored in the Aikido feed and marked as _manually suppressed by developer._
 
 Below you will find some examples of how a NoSQL injection issue can be ignored using comments.
 

@@ -1,8 +1,8 @@
-# Blocking Known Threat Actors with Zen Firewall
+# Blocking known threat actors with Zen Firewall
 
 Zen Firewall by Aikido helps you control access to your application based on known malicious actors and threats. This feature enhances your security measures by leveraging [CrowdSec's](https://www.crowdsec.net/) comprehensive IP-based threat intelligence to block various types of malicious actors and activities. Unlike content or pattern-based blocking, this feature focuses solely on IP address lists for efficient and reliable traffic filtering.
 
-> Important: Actor blocking operates independently of the global [Blocking/Detection Mode](/zen-firewall/zen-features/blocking-vs-detection-mode-in-zen-firewall.md) setting. When you enable actor blocks, they will always be enforced, even if Zen is in Detection Mode.
+> Important: Actor blocking operates independently of the global [Blocking/Detection Mode](https://help.aikido.dev/zen-firewall/zen-features/blocking-vs-detection-mode-in-zen-firewall) setting. When you enable actor blocks, they will always be enforced, even if Zen is in Detection Mode.
 
 ## Use Cases <a href="#use-cases" id="use-cases"></a>
 

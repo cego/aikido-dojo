@@ -4,54 +4,54 @@
 
 ## Frameworks
 
-{% content-ref url="/pages/dnu3lJYpnE1c04iVwbkp" %}
-[PHP Framework Laravel](/zen-firewall/zen-installation-instructions/zen-firewall-for-php/laravel.md)
+{% content-ref url="laravel.md" %}
+[laravel.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-php/laravel)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/lyvoVQk98GTYE6ZrVoJH" %}
-[PHP Framework Symfony](/zen-firewall/zen-installation-instructions/zen-firewall-for-php/symfony.md)
+{% content-ref url="symfony.md" %}
+[symfony.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-php/symfony)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/h0YAirVRFB4Afqr0vl9f" %}
-[PHP Generic](/zen-firewall/zen-installation-instructions/zen-firewall-for-php/generic-php.md)
+{% content-ref url="generic-php.md" %}
+[generic-php.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-php/generic-php)
 {% endcontent-ref %}
 
 ## FrankenPHP
 
-{% content-ref url="/pages/VJrQCwLkSvLXBXM4oE8Q" %}
-[FrankenPHP classic](/zen-firewall/zen-installation-instructions/zen-firewall-for-php/frankenphp-classic.md)
+{% content-ref url="frankenphp-classic.md" %}
+[frankenphp-classic.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-php/frankenphp-classic)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/sDrY3QQg88oiGRfvVage" %}
-[FrankenPHP worker](/zen-firewall/zen-installation-instructions/zen-firewall-for-php/frankenphp-worker.md)
+{% content-ref url="frankenphp-worker.md" %}
+[frankenphp-worker.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-php/frankenphp-worker)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/pPyRxk1mTsKf3gdKtAgA" %}
-[FrankenPHP (Laravel Octane)](/zen-firewall/zen-installation-instructions/zen-firewall-for-php/frankenphp-laravel-octane.md)
+{% content-ref url="frankenphp-laravel-octane.md" %}
+[frankenphp-laravel-octane.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-php/frankenphp-laravel-octane)
 {% endcontent-ref %}
 
 ## Cloud & OS
 
-{% content-ref url="/pages/rsRpR3Trr3xv0Gxzg8ob" %}
-[PHP on Laravel Forge](/zen-firewall/zen-installation-instructions/zen-firewall-for-php/laravel-forge.md)
+{% content-ref url="laravel-forge.md" %}
+[laravel-forge.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-php/laravel-forge)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/0Pxh9J8WF5b7iovRf1aX" %}
-[PHP on Fly.io](/zen-firewall/zen-installation-instructions/zen-firewall-for-php/fly-io.md)
+{% content-ref url="fly-io.md" %}
+[fly-io.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-php/fly-io)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/VgOOTi6ibx0T19QLAhtI" %}
-[PHP on AWS Elastic Beanstalk](/zen-firewall/zen-installation-instructions/zen-firewall-for-php/aws-elastic-beanstalk.md)
+{% content-ref url="aws-elastic-beanstalk.md" %}
+[aws-elastic-beanstalk.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-php/aws-elastic-beanstalk)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/S52NymFXYr1kViU9Buo6" %}
-[PHP on Caddy with PHP-FPM](/zen-firewall/zen-installation-instructions/zen-firewall-for-php/caddy-php-fpm.md)
+{% content-ref url="caddy-php-fpm.md" %}
+[caddy-php-fpm.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-php/caddy-php-fpm)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/AXl7l68Xt34WI6z2oKLG" %}
-[PHP on nginx or Apache with PHP-FPM](/zen-firewall/zen-installation-instructions/zen-firewall-for-php/nginx-apache-php-fpm.md)
+{% content-ref url="nginx-apache-php-fpm.md" %}
+[nginx-apache-php-fpm.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-php/nginx-apache-php-fpm)
 {% endcontent-ref %}
 
-{% content-ref url="/pages/Bf19rZLEGK4vBH77vpXE" %}
-[PHP on Apache (mod\_php)](/zen-firewall/zen-installation-instructions/zen-firewall-for-php/apache-mod-php.md)
+{% content-ref url="apache-mod-php.md" %}
+[apache-mod-php.md](https://help.aikido.dev/zen-firewall/zen-installation-instructions/zen-firewall-for-php/apache-mod-php)
 {% endcontent-ref %}

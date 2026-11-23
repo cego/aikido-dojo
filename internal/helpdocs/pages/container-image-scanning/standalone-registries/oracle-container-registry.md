@@ -7,9 +7,9 @@ Aikido only needs read (pull) access, and needs to be able to view an index of a
 ## Prerequisites
 
 * The registry url for your Oracle Container Registry (what you use during docker login)
-* A user with pull permissions for the repositories you want scanned.
+*   A user with pull permissions for the repositories you want scanned.
 
-  Scope it to the minimum set of repos or namespaces, make sure we can get a list of the repositories.
+    Scope it to the minimum set of repos or namespaces, make sure we can get a list of the repositories.
 * (Optional) If your registry is behind a firewall, allowlist Aikido’s egress IPs.
 
 ## Set-up

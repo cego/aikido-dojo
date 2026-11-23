@@ -12,9 +12,9 @@ This means when our system detects vulnerabilities in dependencies, it can seaml
 
 Once write access to the repos is set up, you can configure Aikido to authenticate with your private registry by following the steps below:
 
-1. Go to your account's settings page for AutoFix, [here](https://app.aikido.dev/issues/fix/settings).
-2. Click on "*Connect registry*" to see the modal below
+1. Go to your account's settings page for AutoFix, [here](https://app.aikido.dev/issues/fix/settings?regionRedirect=1).
+2. Click on "_Connect registry_" to see the modal below
 
-3. When you select *"Secret Files"* you will be able to enter the content of the Secret File and the name of the environment variable that will be used to read the path to the secret file.
+3. When you select _"Secret Files"_ you will be able to enter the content of the Secret File and the name of the environment variable that will be used to read the path to the secret file.
 
 4. Fill in the "Secret Content" and "Environment Variable" and add as many secret files as needed.

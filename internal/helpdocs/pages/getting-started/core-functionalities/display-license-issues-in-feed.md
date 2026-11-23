@@ -9,7 +9,7 @@ In addition to the license report, Aikido allows you to display licenses directl
 
 ### How to enable Licenses in feed <a href="#how-to-enable-licenses-in-feed" id="how-to-enable-licenses-in-feed"></a>
 
-**Step 1:** Navigate to the [License & SBOM Reports page](https://app.aikido.dev/licenses)
+**Step 1:** Navigate to the [License & SBOM Reports page](https://app.aikido.dev/licenses?regionRedirect=1)
 
 **Step 2:** Click the Action dropdown menu and select 'Display Licenses in Feed'
 

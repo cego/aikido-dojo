@@ -10,9 +10,9 @@ With these custom rules you can make Aikido scan for specific risks in your code
 This functionality is not by default enabled in your workspace. Contact Aikido to enable.
 {% endhint %}
 
-**Step 1:** Go to the [repositories checks](https://app.aikido.dev/repositories/checks) page.
+**Step 1:** Go to the [repositories checks](https://app.aikido.dev/repositories/checks?regionRedirect=1) page.
 
-**Step 2:** Click on "[Create Custom Rule](https://app.aikido.dev/repositories/sast/custom/add)" in the SAST section\
+**Step 2:** Click on "[Create Custom Rule](https://app.aikido.dev/repositories/sast/custom/add?regionRedirect=1)" in the SAST section\
 ​
 
 [image: Repository checks dashboard with options for creating custom security and compliance rules.]
@@ -35,41 +35,41 @@ This functionality is not by default enabled in your workspace. Contact Aikido t
 
 ## Examples <a href="#examples" id="examples"></a>
 
-* **SAST Rule:** Looking for use of the weak MD5 hashing algorithm in javascript.
+*   **SAST Rule:** Looking for use of the weak MD5 hashing algorithm in javascript.
 
-  ```
-  rules:
-    - id: CUSTOM-RULE-XXXX
-      message: It looks like MD5 is used 
-      languages:
-        - javascript
-      paths: 
-        include
-          - "*.js"
-      severity: WARNING
-      pattern-either:
-        - pattern: $CRYPTO.createHash("md5")
-        - pattern: CryptoJS.MD5(...)
-  ```
-* **IaC Rule:** A custom rule for detecting lambda functions that might be dangerous.
+    ```
+    rules:
+      - id: CUSTOM-RULE-XXXX
+        message: It looks like MD5 is used 
+        languages:
+          - javascript
+        paths: 
+          include
+            - "*.js"
+        severity: WARNING
+        pattern-either:
+          - pattern: $CRYPTO.createHash("md5")
+          - pattern: CryptoJS.MD5(...)
+    ```
+*   **IaC Rule:** A custom rule for detecting lambda functions that might be dangerous.
 
-  ```
-  rules:
-     - id: CUSTOM-RULE-530
-       languages:
-         - hcl
-       severity: WARNING
-       message: >
-         A Lambda function was found with the "type:monitored" tag, but without a "service" tag.
-       patterns:
-         - pattern: |-
-             resource "aws_lambda_function" $ANYTHING {
-               ...
-               tags = {..., type = "monitored", ...}
-             }
-         - pattern-not: |-
-             resource "aws_lambda_function" $ANYTHING {
-               ...
-               tags = {..., service= "...", ...}
-             }
-  ```
+    ```
+    rules:
+       - id: CUSTOM-RULE-530
+         languages:
+           - hcl
+         severity: WARNING
+         message: >
+           A Lambda function was found with the "type:monitored" tag, but without a "service" tag.
+         patterns:
+           - pattern: |-
+               resource "aws_lambda_function" $ANYTHING {
+                 ...
+                 tags = {..., type = "monitored", ...}
+               }
+           - pattern-not: |-
+               resource "aws_lambda_function" $ANYTHING {
+                 ...
+                 tags = {..., service= "...", ...}
+               }
+    ```

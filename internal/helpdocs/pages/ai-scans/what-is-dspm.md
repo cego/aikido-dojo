@@ -1,6 +1,4 @@
-# Data Exposure Audit (DSPM)
-
-What DSPM is, and how Aikido's Data Exposure Audit takes a code-based approach.
+# AI Data Exposure scan
 
 Data security posture management (DSPM) helps you understand where sensitive data lives, who can access it, how it's protected, and where it may be exposed.
 
@@ -27,10 +25,10 @@ Code-based DSPM **starts from source instead**. It reasons about how data enters
 
 Traditional DSPM finds sensitive data where it lives. Code-based DSPM finds how it gets exposed.
 
-## Data Exposure Audit in Aikido
+## AI Data Exposure scan in Aikido
 
-**Data Exposure Audit** is the data-focused audit type in [AI Code Analysis](/ai-code-analysis/ai-code-analysis.md). It is Aikido's code-based DSPM, alongside Code Security Audit, Cloud Security Audit, and Smart Contract Audit.
+**AI Data Exposure scan** is the data-focused scan type in [AI Scans](https://help.aikido.dev/ai-scans/ai-code-analysis). It is Aikido's code-based DSPM, alongside AI Code scan, AI Cloud scan, and AI Smart Contract scan.
 
-A Data Exposure Audit maps sensitive data handling in your repositories and returns findings with evidence and remediation in code. No database access required. To run one, see [Run a Data Exposure Audit](/ai-code-analysis/what-is-dspm/data-exposure-audit.md). For the finding classes in scope, see [What Data Exposure Audit Finds](/ai-code-analysis/what-is-dspm/what-data-exposure-audit-finds.md).
+An AI Data Exposure scan maps sensitive data handling in your repositories and returns findings with evidence and remediation in code. No database access required. To run one, see [Run an AI Data Exposure scan](https://help.aikido.dev/ai-scans/what-is-dspm/data-exposure-audit). For the finding classes in scope, see [What an AI Data Exposure scan finds](https://help.aikido.dev/ai-scans/what-is-dspm/what-data-exposure-audit-finds).
 
 For a longer product perspective, see [What developers need to know about DSPM and data exposure in code](https://www.aikido.dev/blog/what-is-dspm).

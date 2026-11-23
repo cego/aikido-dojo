@@ -2,7 +2,7 @@
 
 When this option is enabled, Aikido automatically manages the MCP rule required for LLM and AI usage.
 
-This works together with [Aikido MCP](https://help.aikido.dev/ide-plugins/aikido-mcp) to ensure AI generated code is scanned by Aikido when using MCP compatible tools.
+This works together with [Aikido MCP](https://help.aikido.dev/ai-and-dev-tools/aikido-mcp) to ensure AI generated code is scanned by Aikido when using MCP compatible tools.
 
 #### What this does
 

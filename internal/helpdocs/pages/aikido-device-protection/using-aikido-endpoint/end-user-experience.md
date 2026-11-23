@@ -14,7 +14,6 @@ You can click on each item for more information.
 
 {% columns %}
 {% column %}
-
 <div align="left"></div>
 {% endcolumn %}
 
@@ -37,7 +36,7 @@ You can **Dismiss** the notification or click **Open Dashboard** to view more de
 The events page shows you the details of a package, when it was blocked and the reason. With policy blocks you sometimes have the option to **Request Access**. This allows you to send a request to your workspace admins for an exception.
 
 {% hint style="info" %}
-No desktop on the machine, such as a Linux server or a remote shell? Run `aikidoctl request` to send the same request. See [Request a Blocked Install from the Command Line](/aikido-device-protection/miscellaneous-aikido-endpoint/aikidoctl-cli/request-a-blocked-install.md).
+No desktop on the machine, such as a Linux server or a remote shell? Run `aikidoctl request` to send the same request. See [Request a Blocked Install from the Command Line](https://help.aikido.dev/aikido-device-protection/miscellaneous-aikido-endpoint/aikidoctl-cli/request-a-blocked-install).
 {% endhint %}
 
 Once a package has been approved or denied you will see a message within your dashboard with the result.

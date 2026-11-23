@@ -1,6 +1,6 @@
 # Security Audit Report
 
-The [Security Audit Report](https://app.aikido.dev/reports/audit-reports/external/create) gives you a structured overview of your current security posture. It is designed for sharing with customers, auditors, leadership, or internal stakeholders who need a clear summary of how security is managed.
+The [Security Audit Report](https://app.aikido.dev/reports/audit-reports/external/create?regionRedirect=1) gives you a structured overview of your current security posture. It is designed for sharing with customers, auditors, leadership, or internal stakeholders who need a clear summary of how security is managed.
 
 You choose which sections to include before generating the report. This allows you to tailor it to a specific audience, such as a sales prospect, compliance audit, or board update.
 

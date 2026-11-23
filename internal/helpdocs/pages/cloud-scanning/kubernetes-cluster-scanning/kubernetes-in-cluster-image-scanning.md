@@ -1,7 +1,5 @@
 # Kubernetes In-Cluster Image Scanning
 
-This page describes how Aikido can scan container images within the Kubernetes cluster where they are deployed.
-
 {% hint style="info" %}
 This functionality is available only for **Pro** and **Advanced** plans. **Contact us** via chat for more information.
 {% endhint %}
@@ -23,7 +21,7 @@ You can enable image scanning during the Kubernetes cluster onboarding
 
 It will also require setting the `sbomCollector.enabled=true` value when installing the Helm chart.
 
-Once running, you will see the images in Aikido on [the containers page](https://app.aikido.dev/containers).
+Once running, you will see the images in Aikido on [the containers page](https://app.aikido.dev/containers?regionRedirect=1).
 
 [image: Container images reported via the in-cluster Kubernetes scanning]
 
@@ -47,7 +45,7 @@ Choose this option if you want Aikido to track running images per Kubernetes wor
 
 The scan behavior is a per-cluster setting. You can choose it during Kubernetes cluster onboarding, or change it later:
 
-1. Go to [Clouds](https://app.aikido.dev/clouds), or open **Settings** and select the **Clouds** tab.
+1. Go to [Clouds](https://app.aikido.dev/clouds?regionRedirect=1), or open **Settings** and select the **Clouds** tab.
 2. Click the three dots next to your Kubernetes cluster and select **Configure cloud**.
 3. Choose **Cluster settings** and click **"Continue"**.
 4. Make sure **In-Cluster Image Scanning** is turned on.
@@ -82,7 +80,7 @@ Yes. Images scanned using the in-cluster scanning benefit from all the features 
 
 * **Can I ignore specific images?**
 
-The in-cluster scanning will respect the excluded namespaces you set during the cluster onboarding. If you need to exclude specific images from a scanned namespace, we recommend [deactivating the container in Aikido](https://app.aikido.dev/settings/container-image-registry).
+The in-cluster scanning will respect the excluded namespaces you set during the cluster onboarding. If you need to exclude specific images from a scanned namespace, we recommend [deactivating the container in Aikido](https://app.aikido.dev/settings/container-image-registry?regionRedirect=1).
 
 * **Aikido keeps creating task tracker tickets for containers that no longer exist. What should I do?**
 

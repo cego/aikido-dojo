@@ -6,7 +6,7 @@ You will be able to follow along in the Feed, to whom the ticket is assigned.
 
 ### 1. Set up integration <a href="#id-1-set-up-integration" id="id-1-set-up-integration"></a>
 
-**Step 1.** Go to <https://app.aikido.dev/settings/integrations> and scroll down to the 'Task trackers' section.
+**Step 1.** Go to [https://app.aikido.dev/settings/integrations](https://app.aikido.dev/settings/integrations?regionRedirect=1) and scroll down to the 'Task trackers' section.
 
 **Step 2.** Click on 'Connect' and fill in the serve base URL, the PAT and Group ID
 
@@ -14,7 +14,7 @@ You will be able to follow along in the Feed, to whom the ticket is assigned.
 
 ### 2. Create a GitLab issue for a finding, inside Aikido <a href="#id-2-create-a-gitlab-issue-for-a-finding-inside-aikido" id="id-2-create-a-gitlab-issue-for-a-finding-inside-aikido"></a>
 
-Go to the [Feed](https://app.aikido.dev/queue), and go to the security finding of choice. In the column 'Assignee', you will find the ability to assign a GitLab Issue to someone.
+Go to the [Feed](https://app.aikido.dev/queue?regionRedirect=1), and go to the security finding of choice. In the column 'Assignee', you will find the ability to assign a GitLab Issue to someone.
 
 [image: Assign a new task owner by clicking the plus icon.]
 

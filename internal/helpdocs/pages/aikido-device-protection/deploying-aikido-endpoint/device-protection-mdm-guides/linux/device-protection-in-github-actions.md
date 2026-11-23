@@ -2,80 +2,64 @@
 
 GitHub Actions jobs run on Linux runners, so Device Protection installs the same way it does on any Linux machine. What is specific to GitHub Actions is where the install goes: once on a self-hosted runner that stays around, or inside each job on a hosted runner that is destroyed after the job.
 
-Read [Install Device Protection for Linux](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/install-device-protection-for-linux.md) first for the token and the install flavors. The job-level snippets below use the container flavor, which [Device Protection in Containers](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/device-protection-in-containers.md) explains.
+Read [Install Device Protection for Linux](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/install-device-protection-for-linux) first for the token.
 
 ## GitHub-hosted runners
 
-Add your Device Protection token as a secret named `AIKIDO_TOKEN`, then start the agent before any step that installs packages:
+Add your Device Protection token as a secret named `AIKIDO_TOKEN`, then add the Aikido action as the first step of every job that installs packages:
 
 {% code title=".github/workflows/build.yml" overflow="wrap" %}
-
 ```yaml
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Start Device Protection
-        env:
-          AIKIDO_TOKEN: ${{ secrets.AIKIDO_TOKEN }}
-        run: |
-          curl -fsSL https://github.com/AikidoSec/safe-chain/raw/refs/heads/main/install-scripts/install-endpoint-linux.sh \
-            | sudo AIKIDO_TOKEN="$AIKIDO_TOKEN" sh -s -- --container
-          sudo aikido-endpoint-protection-start --wait-for-healthy
+      - uses: AikidoSec/safechain-internals/github-action-setup@action-v1
+        with:
+          token: ${{ secrets.AIKIDO_TOKEN }}
 
       - uses: actions/checkout@v4
 
       - name: Install dependencies
-        run: |
-          for f in /etc/profile.d/aikido-*.sh; do . "$f"; done
-          npm ci
+        run: npm ci
 ```
-
 {% endcode %}
 
-* **Pass the token after `sudo`.** `sudo` drops the rest of your environment.
-* **Source `/etc/profile.d/aikido-*.sh` in every step that installs packages.** Each step is a new shell, and without those settings downloads skip the agent.
-* **The runner is a VM, but it takes `--container`.** A job cannot reboot the runner, and container mode needs no reboot. That is also why the agent is started explicitly. See [Choose the install flavor](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/install-device-protection-for-linux.md#choose-the-install-flavor).
+* **Add it to every job.** Each job runs on its own machine, and only the steps after the action are covered.
+* **No extra setup in later steps.** The action installs and starts the agent, and exports the proxy and certificate settings to every later step, so you do not need to source `/etc/profile.d/aikido-*.sh`.
+* **Fork pull requests get no secrets**, so the action fails there with an empty token.
 
-To skip the sourcing line, run every step in a login shell, which reads `/etc/profile.d/` on its own:
+| Input        | Required | Default | Description                                                                 |
+| ------------ | -------- | ------- | --------------------------------------------------------------------------- |
+| `token`      | Yes      |         | Your Device Protection token. Pass it from a secret.                        |
+| `self-check` | No       | `false` | When `true`, the step fails unless a known test package is blocked afterwards. |
 
-{% code title=".github/workflows/build.yml" overflow="wrap" %}
-
-```yaml
-defaults:
-  run:
-    shell: bash --login -eo pipefail {0}
-```
-
-{% endcode %}
+The action supports GitHub-hosted Linux runners (x64 and arm64) and uses passwordless `sudo`. It always installs the latest agent release.
 
 ## Job containers
 
-Jobs with `container:` run as root, so use the same steps without `sudo`. The image needs `curl`. If the image already has the agent installed, skip the install and only start it. See [Job containers in GitHub Actions](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/device-protection-in-containers.md#job-containers-in-github-actions).
+Jobs with `container:` run as root. Use the same action step. The image must be Debian/Ubuntu or Enterprise Linux 9/10 and have `bash` and `curl`. If the image already has the agent installed, skip the action and only start the agent. See [Job containers in GitHub Actions](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/device-protection-in-containers#job-containers-in-github-actions).
 
 ## Self-hosted runners
 
-Install the agent on the runner host with `--headless`, then reboot. See [Install Device Protection for Linux](/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/install-device-protection-for-linux.md#choose-the-install-flavor).
+Install the agent on the runner host with `--headless`, then reboot. See [Install Device Protection for Linux](https://help.aikido.dev/aikido-device-protection/deploying-aikido-endpoint/device-protection-mdm-guides/linux/install-device-protection-for-linux#choose-the-install-flavor).
 
 ## Verify it works
 
-{% code title=".github/workflows/build.yml" overflow="wrap" %}
+Set `self-check: true` on the action to fail the job unless the agent blocks a known test package. You can also check manually:
 
+{% code title=".github/workflows/build.yml" overflow="wrap" %}
 ```yaml
       - name: Verify Device Protection
-        run: |
-          for f in /etc/profile.d/aikido-*.sh; do . "$f"; done
-          curl -sS -o /dev/null -w "%{http_code}\n" --max-time 15 https://registry.npmjs.org/safe-chain-test/-/safe-chain-test-0.0.1-security.tgz
+        run: curl -sS -o /dev/null -w "%{http_code}\n" --max-time 15 https://registry.npmjs.org/safe-chain-test/-/safe-chain-test-0.0.1-security.tgz
 ```
-
 {% endcode %}
 
 `403` means the agent blocked the malware test package. `200` means the download skipped the agent.
 
 ## Troubleshooting
 
-| Problem                                                    | Fix                                                                                                                  |
-| ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `Token is required`                                        | The secret did not reach the install. Map it under `env` and pass it after `sudo`. Fork pull requests get no secrets |
-| `Root privileges required`                                 | Prefix the install and the start command with `sudo`                                                                 |
-| Test package returns `200`, or `SELF_SIGNED_CERT_IN_CHAIN` | The step did not source `/etc/profile.d/aikido-*.sh`                                                                 |
+| Problem                                                    | Fix                                                                                              |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| Token error from the action                                | The secret did not reach the step. Check the secret name. Fork pull requests get no secrets      |
+| Test package returns `200`, or `SELF_SIGNED_CERT_IN_CHAIN` | The package install ran before the action step, or in a different job. Add the action to that job first |
