@@ -24,6 +24,8 @@ type Env struct {
 	Stderr     io.Writer
 	Getenv     func(string) string
 	CacheDir   func() (string, error)
+	Home       func() (string, error)                                   // where skill install finds ~/.claude
+	Primer     []byte                                                   // AGENTS.md, which skill install writes
 	Transport  http.RoundTripper                                        // nil in production; tests route requests to a fake server
 	ReadSecret func(ctx context.Context, prompt string) (string, error) // the hidden prompt auth login asks with
 	StdoutTTY  bool                                                     // stdout is a terminal, where a person reads indented JSON

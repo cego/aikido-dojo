@@ -27,11 +27,13 @@ func testEnv(t *testing.T) (Env, map[string]string) {
 	t.Helper()
 	keyring.MockInit()
 	vars := map[string]string{config.EnvConfig: filepath.Join(t.TempDir(), "config.json")}
-	cache := t.TempDir()
+	cache, home := t.TempDir(), t.TempDir()
 	return Env{
 		Stdin:      strings.NewReader(""),
 		Getenv:     func(k string) string { return vars[k] },
 		CacheDir:   func() (string, error) { return cache, nil },
+		Home:       func() (string, error) { return home, nil },
+		Primer:     []byte("# aikido-dojo for agents\n"),
 		Transport:  noNetwork{},
 		ReadSecret: func(context.Context, string) (string, error) { return "", errors.New("the test has no terminal") },
 		Confirm: func(context.Context, string) (bool, error) {
