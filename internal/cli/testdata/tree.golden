@@ -228,6 +228,11 @@ container list
 container scan <container_repo_id>
 	POST /containers/{container_repo_id}/scan scope=containers:write
 	--dry-run bool
+container-build-arg update <container_repo_id>
+	POST /containers/{container_repo_id}/buildArgs scope=containers:write
+	--body string
+	--body-file string
+	--dry-run bool
 container-connectivity update <container_repo_id>
 	PUT /containers/{container_repo_id}/internetConnection scope=containers:write
 	--body string
@@ -278,6 +283,11 @@ container-registry-gitlab create
 	--dry-run bool
 	--registry-name string required body
 	--username string required body
+container-registry-token update <registry_id>
+	PUT /containers/registries/{registry_id}/accessToken scope=containers:write
+	--body string
+	--body-file string
+	--dry-run bool
 container-repo-link create
 	POST /containers/linkCodeRepo scope=containers:write
 	--body string
@@ -833,6 +843,7 @@ repo import
 repo list
 	GET /repositories/code scope=repositories:read paged=per_page:200:empty
 	--filter-branch string
+	--filter-label string
 	--filter-name string
 	--include-config-issues-info bool
 	--include-inactive bool

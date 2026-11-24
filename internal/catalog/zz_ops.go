@@ -9,8 +9,8 @@ import (
 
 // SpecUpdatedAt and SpecSHA256 identify the spec snapshot this catalog was generated from.
 const (
-	SpecUpdatedAt = "2026-10-28T15:45:59Z"
-	SpecSHA256    = "3af7e0f4d6c087e6966fd47124b3337db496d11dc69e3e19089e933882b52664"
+	SpecUpdatedAt = "2026-11-20T17:25:46Z"
+	SpecSHA256    = "cfab919c9226c99719e7589a60b98324f7ca16448a113f572b230d0f611dcafc"
 )
 
 // All is every generated command, sorted by command.
@@ -645,6 +645,21 @@ var All = []ops.Op{
 		},
 	},
 	{
+		ID:          "updateContainerBuildArgs",
+		Command:     "container-build-arg update",
+		Method:      "POST",
+		Path:        "/containers/{container_repo_id}/buildArgs",
+		Summary:     "Update Container AutoFix build args",
+		Description: "Adds the given build args to the container to be used during Autofix. If the container already has a build arg with the same name, its value is overwritten. Other build args for the container are left untouched.",
+		Scope:       "containers:write",
+		Args: []ops.Param{
+			{Name: "container_repo_id", Kind: ops.Integer, Required: true, Usage: "The ID of the container repository"},
+		},
+		Body: &ops.Body{Required: true, Object: true,
+			Secret: []string{"build_args"},
+		},
+	},
+	{
 		ID:          "updateContainerInternetConnection",
 		Command:     "container-connectivity update",
 		Method:      "PUT",
@@ -785,6 +800,21 @@ var All = []ops.Op{
 				{Name: "username", Kind: ops.String, Required: true, Usage: "The GitLab username (use the @ handle, without spaces) (required)"},
 			},
 			Secret: []string{"accesstoken"},
+		},
+	},
+	{
+		ID:          "updateContainerRegistryAccessToken",
+		Command:     "container-registry-token update",
+		Method:      "PUT",
+		Path:        "/containers/registries/{registry_id}/accessToken",
+		Summary:     "Update registry access token",
+		Description: "Update the access token for a container registry",
+		Scope:       "containers:write",
+		Args: []ops.Param{
+			{Name: "registry_id", Kind: ops.Integer, Required: true, Usage: "The ID of the container registry"},
+		},
+		Body: &ops.Body{Required: true, Object: true,
+			Secret: []string{"access_token"},
 		},
 	},
 	{
@@ -2305,6 +2335,7 @@ var All = []ops.Op{
 		Scope:       "repositories:read",
 		Flags: []ops.Param{
 			{Name: "filter_branch", Kind: ops.String, Required: false, Usage: "filter repositories by branch"},
+			{Name: "filter_label", Kind: ops.String, Required: false, Usage: "filter repositories by label"},
 			{Name: "filter_name", Kind: ops.String, Required: false, Usage: "filter repositories by name"},
 			{Name: "include_config_issues_info", Kind: ops.Boolean, Required: false, Usage: "Include configuration issues information (has_missing_lockfile, has_faulty_lockfile, scan_error) in the response"},
 			{Name: "include_inactive", Kind: ops.Boolean, Required: false, Usage: "Include inactive repositories"},

@@ -94,6 +94,8 @@ var Ops = map[string]Op{
 	// Spec types the 200 as one object; a live call on 2026-09-30 returned a JSON array.
 	"listContainerRepos": {Cmd: "container list", Page: UntilEmpty, ResponseArray: true},
 	"scanContainer":      {Cmd: "container scan"},
+	// Spec: build_args are build secrets; its example sets NPM_TOKEN.
+	"updateContainerBuildArgs": {Cmd: "container-build-arg update", Secret: []string{"build_args"}},
 	// Spec says container:write, which it never declares; the token's scope claim in the auth spike (2026-09-29) has containers:write.
 	"updateContainerInternetConnection": {Cmd: "container-connectivity update", Scope: "containers:write"},
 	"addContainerLabel":                 {Cmd: "container-label create"},
@@ -107,12 +109,14 @@ var Ops = map[string]Op{
 	"addGcpArtifactRegistry": {Cmd: "container-registry-gcp create", Secret: []string{"service_account_key"}},
 	// Spec: accesstoken is a GitLab access token.
 	"addGitlabSelfManagedContainerRegistry": {Cmd: "container-registry-gitlab create", Secret: []string{"accesstoken"}},
-	"linkCodeRepoToContainer":               {Cmd: "container-repo-link create"},
-	"unlinkCodeRepoToContainer":             {Cmd: "container-repo-link delete"},
-	"listContainerRepoRunners":              {Cmd: "container-runner list"},
-	"exportRawContainerSbom":                {Cmd: "container-sbom export"},
-	"uploadContainerSBOM":                   {Cmd: "container-sbom import"},
-	"generateContainerSBOM":                 {Cmd: "container-sbom-bulk export"},
+	// Spec: access_token is the registry's new access token.
+	"updateContainerRegistryAccessToken": {Cmd: "container-registry-token update", Secret: []string{"access_token"}},
+	"linkCodeRepoToContainer":            {Cmd: "container-repo-link create"},
+	"unlinkCodeRepoToContainer":          {Cmd: "container-repo-link delete"},
+	"listContainerRepoRunners":           {Cmd: "container-runner list"},
+	"exportRawContainerSbom":             {Cmd: "container-sbom export"},
+	"uploadContainerSBOM":                {Cmd: "container-sbom import"},
+	"generateContainerSBOM":              {Cmd: "container-sbom-bulk export"},
 	// Spec says container:write, which it never declares; the token's scope claim in the auth spike (2026-09-29) has containers:write.
 	"updateContainerSensitivity": {Cmd: "container-sensitivity update", Scope: "containers:write"},
 	"updateTagFilter":            {Cmd: "container-tag-filter update"},
