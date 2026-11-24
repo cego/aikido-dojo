@@ -17,6 +17,7 @@ jobs:
     permissions:
       contents: write # push the spec-drift branch
       pull-requests: write # open or update its PR
+      actions: write # start ci on the branch
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -63,7 +64,7 @@ jobs:
           - Generating the catalog: ${GENERATE}
           - go vet and go test: ${TESTS}
 
-          GitHub holds ci on a PR this workflow opens until a maintainer approves the run; approve it on the PR to get the required checks. Logs: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          github.token pushes don't trigger ci, so this workflow dispatches it on the branch. Logs: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
           if [ "$GENERATE" = failed ]; then
             body="${body}
 
@@ -80,3 +81,4 @@ jobs:
           else
             gh pr create --head spec-drift --title "chore(spec): update the vendored spec" --body "$body" --assignee "$GITHUB_ACTOR"
           fi
+          gh workflow run ci.yml --ref spec-drift
