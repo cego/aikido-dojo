@@ -22,6 +22,7 @@ jobs:
     permissions:
       contents: write # push the docs-drift branch
       pull-requests: write # open or update its PR
+      actions: write # start ci on the branch
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -82,7 +83,7 @@ jobs:
 
           - go vet and go test: ${TESTS}
 
-          GitHub holds ci on a PR this workflow opens until a maintainer approves the run; approve it on the PR to get the required checks. Logs: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          github.token pushes don't trigger ci, so this workflow dispatches it on the branch. Logs: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
           if [ "$TESTS" = failed ]; then
             body="${body}
 
@@ -97,3 +98,4 @@ jobs:
           else
             gh pr create --head docs-drift --title "chore(docs): update the help centre copy" --body "$body" --assignee "$GITHUB_ACTOR"
           fi
+          gh workflow run ci.yml --ref docs-drift
