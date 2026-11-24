@@ -4013,6 +4013,76 @@
         "summary": "Get container registry"
       }
     },
+    "/containers/registries/{registry_id}/accessToken": {
+      "put": {
+        "description": "Update the access token for a container registry",
+        "operationId": "updateContainerRegistryAccessToken",
+        "parameters": [
+          {
+            "description": "The ID of the container registry",
+            "in": "path",
+            "name": "registry_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "minimum": 0,
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "format": "Object",
+                "properties": {
+                  "access_token": {
+                    "description": "The new access token for the container registry",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "access_token"
+                ],
+                "title": "Update registry access token request body"
+              }
+            }
+          },
+          "description": "The parameters needed to update the access token for a container registry",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": 1
+                  },
+                  "format": "object",
+                  "properties": {
+                    "success": {
+                      "description": "The integer 1 indicating success",
+                      "title": "success",
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "The container has been deactivated."
+          }
+        },
+        "security": [
+          {
+            "oauth": [
+              "containers:write"
+            ]
+          }
+        ],
+        "summary": "Update registry access token"
+      }
+    },
     "/containers/sbom": {
       "post": {
         "description": "Upload a self-generated SBOM",
@@ -4693,6 +4763,97 @@
           }
         ],
         "summary": "Get container"
+      }
+    },
+    "/containers/{container_repo_id}/buildArgs": {
+      "post": {
+        "description": "Adds the given build args to the container to be used during Autofix. If the container already has a build arg with the same name, its value is overwritten. Other build args for the container are left untouched.",
+        "operationId": "updateContainerBuildArgs",
+        "parameters": [
+          {
+            "description": "The ID of the container repository",
+            "in": "path",
+            "name": "container_repo_id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "build_args": [
+                    {
+                      "key": "NPM_TOKEN",
+                      "value": "my-token"
+                    }
+                  ]
+                },
+                "format": "Object",
+                "properties": {
+                  "build_args": {
+                    "description": "The build args to set. Names can contain letters, digits and underscores (max 128 characters), values can be at most 1000 characters.",
+                    "items": {
+                      "properties": {
+                        "key": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "key",
+                        "value"
+                      ],
+                      "type": "object"
+                    },
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "build_args"
+                ],
+                "title": "Set container build args request body"
+              }
+            }
+          },
+          "description": "The build args to set while building the container",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": 1
+                  },
+                  "format": "object",
+                  "properties": {
+                    "success": {
+                      "description": "The integer 1 indicating success",
+                      "title": "success",
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "The build args have been set for the container."
+          }
+        },
+        "security": [
+          {
+            "oauth": [
+              "containers:write"
+            ]
+          }
+        ],
+        "summary": "Update Container AutoFix build args"
       }
     },
     "/containers/{container_repo_id}/internetConnection": {
@@ -5591,7 +5752,8 @@
                       "linked_resource": {
                         "id": 1,
                         "type": "code_repo"
-                      }
+                      },
+                      "scan_frequency": "weekly"
                     },
                     "format": "Object",
                     "properties": {
@@ -5640,6 +5802,17 @@
                           }
                         },
                         "type": "object"
+                      },
+                      "scan_frequency": {
+                        "description": "The current scan frequency of the domain",
+                        "enum": [
+                          "daily",
+                          "twice_a_week",
+                          "weekly",
+                          "monthly",
+                          "on_demand"
+                        ],
+                        "type": "string"
                       }
                     },
                     "required": [
@@ -6806,6 +6979,12 @@
                       "timestamp": 1713586140
                     },
                     {
+                      "action": "device_removed",
+                      "device_id": null,
+                      "device_name": "dev-laptop-01",
+                      "timestamp": 1713586140
+                    },
+                    {
                       "action": "domain_blocked",
                       "device_id": 7,
                       "device_name": "dev-laptop-01",
@@ -6822,7 +7001,7 @@
                         "type": "string"
                       },
                       "device_id": {
-                        "title": "id of the device that triggered the log",
+                        "title": "id of the device that triggered the log. Null when the device has since been removed (e.g. on a device_removed log).",
                         "type": "integer"
                       },
                       "device_name": {
@@ -16979,6 +17158,16 @@
             "description": "filter repositories by branch",
             "in": "query",
             "name": "filter_branch",
+            "required": false,
+            "schema": {
+              "default": "",
+              "type": "string"
+            }
+          },
+          {
+            "description": "filter repositories by label",
+            "in": "query",
+            "name": "filter_label",
             "required": false,
             "schema": {
               "default": "",

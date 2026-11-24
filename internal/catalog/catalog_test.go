@@ -7,8 +7,8 @@ import (
 )
 
 func TestEveryOperationHasSchemas(t *testing.T) {
-	if len(All) != 217 {
-		t.Errorf("All = %d ops, want 217", len(All))
+	if len(All) != 219 {
+		t.Errorf("All = %d ops, want 219", len(All))
 	}
 	for _, op := range All {
 		s, err := Schemas(op.ID)

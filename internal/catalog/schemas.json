@@ -11152,6 +11152,11 @@
           "description": "filter repositories by branch",
           "type": "string"
         },
+        "filter_label": {
+          "default": "",
+          "description": "filter repositories by label",
+          "type": "string"
+        },
         "filter_name": {
           "default": "",
           "description": "filter repositories by name",
@@ -11933,7 +11938,8 @@
           "linked_resource": {
             "id": 1,
             "type": "code_repo"
-          }
+          },
+          "scan_frequency": "weekly"
         },
         "properties": {
           "domain": {
@@ -11981,6 +11987,17 @@
               }
             },
             "type": "object"
+          },
+          "scan_frequency": {
+            "description": "The current scan frequency of the domain",
+            "enum": [
+              "daily",
+              "twice_a_week",
+              "weekly",
+              "monthly",
+              "on_demand"
+            ],
+            "type": "string"
           }
         },
         "required": [
@@ -12039,6 +12056,12 @@
           "timestamp": 1713586140
         },
         {
+          "action": "device_removed",
+          "device_id": null,
+          "device_name": "dev-laptop-01",
+          "timestamp": 1713586140
+        },
+        {
           "action": "domain_blocked",
           "device_id": 7,
           "device_name": "dev-laptop-01",
@@ -12053,7 +12076,7 @@
             "type": "string"
           },
           "device_id": {
-            "title": "id of the device that triggered the log",
+            "title": "id of the device that triggered the log. Null when the device has since been removed (e.g. on a device_removed log).",
             "type": "integer"
           },
           "device_name": {
@@ -17107,6 +17130,80 @@
       "application/json"
     ]
   },
+  "updateContainerBuildArgs": {
+    "command": "container-build-arg update",
+    "method": "POST",
+    "path": "/containers/{container_repo_id}/buildArgs",
+    "scope": "containers:write",
+    "args": {
+      "properties": {
+        "container_repo_id": {
+          "description": "The ID of the container repository",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "container_repo_id"
+      ],
+      "type": "object"
+    },
+    "flags": {
+      "properties": {},
+      "type": "object"
+    },
+    "body": {
+      "example": {
+        "build_args": [
+          {
+            "key": "NPM_TOKEN",
+            "value": "my-token"
+          }
+        ]
+      },
+      "properties": {
+        "build_args": {
+          "description": "The build args to set. Names can contain letters, digits and underscores (max 128 characters), values can be at most 1000 characters.",
+          "items": {
+            "properties": {
+              "key": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "key",
+              "value"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "build_args"
+      ],
+      "title": "Set container build args request body",
+      "type": "object"
+    },
+    "response": {
+      "example": {
+        "success": 1
+      },
+      "properties": {
+        "success": {
+          "description": "The integer 1 indicating success",
+          "title": "success",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "response_types": [
+      "application/json"
+    ]
+  },
   "updateContainerInternetConnection": {
     "command": "container-connectivity update",
     "method": "PUT",
@@ -17217,6 +17314,59 @@
       "properties": {
         "success": {
           "description": "The integer 1 indicating success",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "response_types": [
+      "application/json"
+    ]
+  },
+  "updateContainerRegistryAccessToken": {
+    "command": "container-registry-token update",
+    "method": "PUT",
+    "path": "/containers/registries/{registry_id}/accessToken",
+    "scope": "containers:write",
+    "args": {
+      "properties": {
+        "registry_id": {
+          "description": "The ID of the container registry",
+          "format": "int32",
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "registry_id"
+      ],
+      "type": "object"
+    },
+    "flags": {
+      "properties": {},
+      "type": "object"
+    },
+    "body": {
+      "properties": {
+        "access_token": {
+          "description": "The new access token for the container registry",
+          "type": "string"
+        }
+      },
+      "required": [
+        "access_token"
+      ],
+      "title": "Update registry access token request body",
+      "type": "object"
+    },
+    "response": {
+      "example": {
+        "success": 1
+      },
+      "properties": {
+        "success": {
+          "description": "The integer 1 indicating success",
+          "title": "success",
           "type": "integer"
         }
       },
