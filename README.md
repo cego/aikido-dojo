@@ -78,6 +78,11 @@ aikido-dojo docs search 'limit access to specific IPs'
 aikido-dojo --read-only team delete 7
 ```
 
+`skill install` writes AGENTS.md as the `aikido-dojo` skill for every AI agent it finds in your
+home directory: Claude Code, Codex, GitHub Copilot, Gemini CLI, Cursor, OpenCode and Windsurf.
+`--agent` picks agents, and `--dir` names any other skills directory. Run it again after updating
+aikido-dojo.
+
 The help centre is a copy built into each release. `docs sync` fetches the pages Aikido changed
 since; updating aikido-dojo discards them for the copy in the new release.
 
