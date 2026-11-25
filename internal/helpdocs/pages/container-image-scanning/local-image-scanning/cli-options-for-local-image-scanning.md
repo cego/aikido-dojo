@@ -75,6 +75,17 @@ aikido-local-scanner image-scan my-image
 --output-cyclonedx-json sbom.json
 ```
 
+**I want to scan a directory of binaries and write a CycloneDX SBOM**
+
+```shellscript
+aikido-local-scanner image-scan /path/to/directory \
+--apikey AIK_CI_xxx \
+--image-name my-product \
+--output-cyclonedx-json sbom.json
+```
+
+The scan also creates a container in your workspace. See [Compiled artifact scanning with Local Scanner](https://help.aikido.dev/container-image-scanning/local-image-scanning/file-system-scanning-with-local-scanner).
+
 **I want to run an image scan on a registry image for multiple architectures in one command. This will create a separate image in feed with results per architecture.**
 
 ```shellscript

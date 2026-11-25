@@ -39,7 +39,7 @@ Aikido has an extra layer of permissions that can be enabled or disabled (both f
 * **Can snooze issues**: Ability to temporarily snooze findings. When ignore requests are enabled, users without this permission can request to snooze individual issues via the same inbox.
 * **Change Issue Severity**: Ability to modify the severity level of issues.
 * **Can export data:** Ability to export csv reports of vulnerability issues.
-* **Can manage repositories:** Ability to change the scanned branch, set up [multi-branch scanning](https://help.aikido.dev/code-scanning/miscellaneous/support-for-multi-branch-scanning), and edit labels. Default users can also manage custom SAST rules.
+* **Can manage repositories:** Ability to change the scanned branch, set up [multi-branch scanning](https://help.aikido.dev/code-scanning/miscellaneous/support-for-multi-branch-scanning), edit labels, and enable automated AutoFix pull requests for their repositories. Default users can also manage custom SAST rules.
 
 **Limited to Default Users**
 

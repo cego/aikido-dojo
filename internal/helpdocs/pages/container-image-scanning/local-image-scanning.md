@@ -50,6 +50,10 @@ If you are looking for [source code scanning instead, check the code scanning do
 
 ## Other
 
+{% content-ref url="file-system-scanning-with-local-scanner.md" %}
+[file-system-scanning-with-local-scanner.md](https://help.aikido.dev/container-image-scanning/local-image-scanning/file-system-scanning-with-local-scanner)
+{% endcontent-ref %}
+
 {% content-ref url="setting-up-kaniko-image-scanning-with-local-scanner.md" %}
 [setting-up-kaniko-image-scanning-with-local-scanner.md](https://help.aikido.dev/container-image-scanning/local-image-scanning/setting-up-kaniko-image-scanning-with-local-scanner)
 {% endcontent-ref %}
