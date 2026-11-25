@@ -2,6 +2,8 @@
 
 The European Cyber Resilience Act (CRA) defines the cybersecurity requirements for all products with digital elements sold in the EU. One of the main requirements is reporting vulnerabilities and incidents to ENISA, Europe's cybersecurity agency.
 
+# CRA incident reporting
+
 ## What do I have to report under the CRA?
 
 You only have a reporting obligation once you become **aware** that a vulnerability in your product is being actively exploited, or that a severe incident has occurred. Becoming aware can take many forms:
@@ -58,6 +60,31 @@ What Aikido can do is show you which vulnerabilities are most likely to be explo
 
 {% hint style="info" %}
 Aikido helps you prioritize and fix vulnerabilities before they're exploited. It cannot tell you which vulnerabilities you're legally required to report, since that depends on evidence of actual malicious exploitation that only you can confirm, and it does not submit reports to ENISA or your CSIRT on your behalf.
+{% endhint %}
+
+# Software-bill-of-materials (SBOM)
+
+## SBOM export (CycloneDX and SPDX)
+
+The CRA requires manufacturers to identify and document the components in their product, including top-level dependencies, in a machine-readable SBOM. Aikido generates SBOMs from the three places your product's components live:
+
+* **Code**: Open-source dependencies in your [repositories](https://help.aikido.dev/code-scanning/miscellaneous/generate-sbom-based-on-open-source-packages).
+* **Containers**: The packages inside your [container images](https://help.aikido.dev/container-image-scanning/configuration/export-raw-sbom-of-your-containers).
+* **Virtual machines**: The packages installed on your [virtual machines](https://help.aikido.dev/virtual-machine-scanning/local-vm-scanning/setting-up-the-local-vm-scanner-linux).
+
+You can download them from the [SBOM page](https://help.aikido.dev/compliance-and-reporting/licenses-and-sbom-overview/sbom), in CycloneDX, SPDX, or CSV format. See [SBOM and VEX export](https://help.aikido.dev/compliance-and-reporting/licenses-and-sbom-overview/sbom-and-vex-export) for what each export covers.
+
+## Monitor older versions of your product
+
+The CRA doesn't only apply to your latest release. You must keep handling vulnerabilities for as long as you support a product, so older versions that are still in use need to be monitored too, not just the version on your main branch.
+
+Use [multi-branch scanning](https://help.aikido.dev/code-scanning/miscellaneous/support-for-multi-branch-scanning) to do this. Add a branch for every release you still support, for example `release/1.0.0` and `release/1.1.0`. Aikido then scans each branch on a regular basis, so you:
+
+* **Get vulnerability monitoring** for every supported version, and are alerted when a new vulnerability affects an older release.
+* **Can still download the SBOM** of any of those versions. Select the branch in the repository dropdown before you export.
+
+{% hint style="info" %}
+Multi-branch scanning is only available on paid plans. Contact us via the in-app chat to have it enabled.
 {% endhint %}
 
 ## How Aikido helps you meet CRA Annex I requirements

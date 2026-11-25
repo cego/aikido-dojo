@@ -36,7 +36,9 @@ Generate and download your SBOM via our [Export SBOM API](https://apidocs.aikido
 
 # Monitoring self-generated SBOMs
 
-Embedded systems built using tools like Buildroot or Yocto can generate the SBOM at build time. Since these systems often lack a standard container registry, you can upload these self-generated SBOMs to Aikido via the API to monitor supply-chain security and license compliance. 
+Embedded systems built using tools like Buildroot or Yocto can generate the SBOM at build time. Since these systems often lack a standard container registry, you can upload these self-generated SBOMs to Aikido via the API to monitor supply-chain security and license compliance.
+
+When you only have the finished filesystem or a directory of binaries, scan it with [compiled artifact scanning](https://help.aikido.dev/container-image-scanning/local-image-scanning/file-system-scanning-with-local-scanner). 
 
 ## Generating your SBOM via Buildroot / Yocto
 

@@ -15,7 +15,7 @@ Every run writes two files to the log directory:
 
 | OS      | Log directory                         | Files for one run                                                                  |
 | ------- | ------------------------------------- | ---------------------------------------------------------------------------------- |
-| Linux   | `/var/log/aikido-vm-scanner-1.5.3`    | `aikido-vm-scanner-<timestamp>.log` and `aikido-vm-scanner-<timestamp>-report.json` |
+| Linux   | `/var/log/aikido-vm-scanner-1.5.4`    | `aikido-vm-scanner-<timestamp>.log` and `aikido-vm-scanner-<timestamp>-report.json` |
 | Windows | `C:\ProgramData\AikidoVmScanner\Logs` | `AikidoVmScanner-<timestamp>.log` and `AikidoVmScanner-<timestamp>-report.json`     |
 
 The scanner keeps the files from the last 10 runs and removes older ones.
@@ -27,7 +27,7 @@ If the normal log doesn't show why a scan is slow, run the scanner once by hand 
 #### Linux
 
 ```bash
-sudo /opt/aikido-vm-scanner-1.5.3/aikido-vm-scanner -diagnostics
+sudo /opt/aikido-vm-scanner-1.5.4/aikido-vm-scanner -diagnostics
 ```
 
 #### Windows
@@ -54,7 +54,7 @@ These files contain measurements about the scan, the paths of directories and fi
 
 A scan is given 240 minutes by default, and at most 1440 minutes (24 hours). Hosts with very large disks sometimes need more than the default. Add `timeout_minutes` to the existing `config.json` on the machine:
 
-* Linux: `/opt/aikido-vm-scanner-1.5.3/config.json`
+* Linux: `/opt/aikido-vm-scanner-1.5.4/config.json`
 * Windows: `C:\Program Files\AikidoVmScanner\config.json`
 
 ```json

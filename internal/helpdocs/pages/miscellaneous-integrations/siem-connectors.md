@@ -56,6 +56,10 @@ SIEM connectors are currently available by request. [Reach out to support](https
 [google-secops.md](https://help.aikido.dev/miscellaneous-integrations/siem-connectors/google-secops)
 {% endcontent-ref %}
 
+{% content-ref url="cribl.md" %}
+[cribl.md](https://help.aikido.dev/miscellaneous-integrations/siem-connectors/cribl)
+{% endcontent-ref %}
+
 ## Field Reference
 
 {% content-ref url="siem-field-reference.md" %}

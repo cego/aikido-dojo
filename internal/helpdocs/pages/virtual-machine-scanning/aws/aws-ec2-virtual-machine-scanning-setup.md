@@ -50,13 +50,23 @@ Aikido reads the snapshot's data directly through the EBS direct APIs, without a
 {% endstep %}
 
 {% step %}
-Once the scan is done, Aikido keeps the most recent snapshot, one per VM group (for example, one per Auto Scaling Group), and deletes older ones.
+Once the scan is done, Aikido keeps the most recent snapshot, one per VM group (for example, one per Auto Scaling Group), and deletes older ones. You can change this with the [snapshot retention setting](#snapshot-retention).
 
 {% hint style="info" %}
 EBS snapshots are incremental, so keeping the last snapshot makes the next scan's snapshot much faster to create, since AWS only copies the blocks that changed.
 {% endhint %}
 {% endstep %}
 {% endstepper %}
+
+### Snapshot retention <a href="#snapshot-retention" id="snapshot-retention"></a>
+
+By default, Aikido keeps the latest snapshot of each VM group between scans to speed up the next scan. If you prefer to avoid the storage costs of those snapshots in your cloud account, you can have Aikido delete them after each scan.
+
+To change this, go to the [**Virtual Machines** settings page](https://app.aikido.dev/virtual-machines/settings?regionRedirect=1) and toggle **Delete snapshots after each scan** under **Snapshot retention**. Only admins can change this setting.
+
+{% hint style="info" %}
+When snapshots are deleted after each scan, scans take longer, because every new snapshot is a full copy of the disk instead of an incremental one.
+{% endhint %}
 
 ### Custom snapshot tags <a href="#custom-snapshot-tags" id="custom-snapshot-tags"></a>
 

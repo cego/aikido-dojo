@@ -2,20 +2,37 @@
 
 Linking containers to code repositories keeps related vulnerabilities in one place. This is useful when you manage many repositories and images.
 
-Aikido can link containers automatically by reading a specific label or annotation on your Kubernetes workloads.
+Aikido can link containers automatically by reading a specific annotation on your Kubernetes workloads.
 
 #### Standard annotation
 
-Add this label or annotation to your Kubernetes workload, using the key `aikido.dev/repository`. Set the value to your own repository's URL, for example:
+Add the `aikido.dev/repository` annotation to the workload's top-level `metadata.annotations`. Set the value to your own repository's URL.
 
-```
-aikido.dev/repository: 
-https://github.com/AikidoSec/demo-app-1
-```
+For a Deployment, it looks like this:
 
-{% hint style="info" %}
-If both a label and an annotation with this key are set on the same workload, the annotation value is used.
-{% endhint %}
+{% code title="deployment.yaml" %}
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-app
+  annotations:
+    aikido.dev/repository: https://github.com/AikidoSec/demo-app-1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-app
+  template:
+    metadata:
+      labels:
+        app: demo-app
+    spec:
+      containers:
+        - name: demo-app
+          image: demo-app:latest
+```
+{% endcode %}
 
 #### Custom annotation
 
@@ -27,6 +44,6 @@ To use a custom annotation key, reach out to Aikido support to have it mapped fo
 
 #### How it works
 
-* Aikido reads the relevant label or annotation off the Kubernetes workload (standard key, or your mapped custom key).
-* Aikido uses this tag to automatically link the container to the matching code repository.&#x20;
+* Aikido reads the annotation off the Kubernetes workload (standard key, or your mapped custom key).
+* Aikido uses this annotation to automatically link the container to the matching code repository.&#x20;
 * If the container is already linked to a repository, this won't override it.
